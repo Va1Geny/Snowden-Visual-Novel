@@ -1,7 +1,7 @@
 # Snowden Visual Novel — Contribution Guide
 
 ## Project Structure
-Snowden-Visual-Novel/
+**`Snowden-Visual-Novel/`**
 
 **`game/scripts/`** — Main story scripts (.rpy files), organized by chapter
 
