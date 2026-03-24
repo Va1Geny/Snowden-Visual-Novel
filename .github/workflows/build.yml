@@ -1,0 +1,26 @@
+name: Build Ren'Py Project
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Ren'Py Project
+        uses: ArianK16a/action-build-renpy@v2
+        with:
+          path: .
+          sdk_version: "8.3.0"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-build
+          path: renpy-*/
+          retention-days: 7
