@@ -2,28 +2,32 @@
 
 ## Project Structure
 Snowden-Visual-Novel/
-├── game/
-│ ├── scripts/ # Main story scripts (.rpy files), organized by chapter
-│ ├── screens/ # UI screens — main menu, HUD, settings, dialogs
-│ ├── characters/ # Character definitions, sprites assignment, personality configs
-│ ├── images/
-│ │ ├── backgrounds/ # Scene backgrounds (offices, hotels, airports, etc.)
-│ │ ├── sprites/ # Character sprites and expressions
-│ │ └── ui/ # UI elements, buttons, overlays, icons
-│ ├── audio/
-│ │ ├── music/ # Background music and ambient tracks
-│ │ └── sfx/ # Sound effects (typing, alerts, footsteps, etc.)
-│ ├── fonts/ # Custom fonts used in the game
-│ └── options.rpy # Global RenPy configuration (resolution, title, etc.)
-├── docs/ # Game design documents, character sheets, story outlines
-├── .github/
-│ ├── ISSUE_TEMPLATE/ # Bug report and feature request templates
-│ ├── workflows/ # GitHub Actions CI/CD (automated RenPy build)
-│ └── PULL_REQUEST_TEMPLATE.md
-├── .gitignore
-├── LICENSE
-└── README.md
 
+**`game/scripts/`** — Main story scripts (.rpy files), organized by chapter
+
+**`game/screens/`** — UI screens: main menu, HUD, settings, dialogs
+
+**`game/characters/`** — Character definitions, sprite assignments, personality configs
+
+**`game/images/backgrounds/`** — Scene backgrounds (offices, hotels, airports, etc.)
+
+**`game/images/sprites/`** — Character sprites and expressions
+
+**`game/images/ui/`** — UI elements, buttons, overlays, icons
+
+**`game/audio/music/`** — Background music and ambient tracks
+
+**`game/audio/sfx/`** — Sound effects (typing, alerts, footsteps, etc.)
+
+**`game/fonts/`** — Custom fonts used in the game
+
+**`game/options.rpy`** — Global RenPy configuration (resolution, title, etc.)
+
+**`docs/`** — Game design documents, character sheets, story outlines
+
+**`.github/ISSUE_TEMPLATE/`** — Bug report and feature request templates
+
+**`.github/workflows/`** — GitHub Actions CI/CD (automated RenPy build)
 
 ## Branch Strategy
 
