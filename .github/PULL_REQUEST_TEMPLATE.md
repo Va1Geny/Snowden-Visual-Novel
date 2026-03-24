@@ -1,7 +1,7 @@
 # Snowden Visual Novel — Contribution Guide
 
 ## Project Structure
-Snowden-Visual-Novel/
+**`Snowden-Visual-Novel/`**
 
 **`game/scripts/`** — Main story scripts (.rpy files), organized by chapter
 
@@ -95,6 +95,7 @@ Use the following prefixes:
 - [ ] No `.rpyc` compiled files included in the commit
 - [ ] Tested full playthrough of affected scenes
 - [ ] PR targets `develop`, not `main`
+<<<<<<< HEAD
 
 ## What was done?
 <!-- Briefly describe your changes -->
@@ -115,3 +116,5 @@ Use the following prefixes:
 
 ## Jira ticket
 <!-- NSV-XX -->
+=======
+>>>>>>> 23e7e5608b5a7c080a175e26fd18fce263fae2bc
