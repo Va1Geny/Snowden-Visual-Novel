@@ -1,7 +1,5 @@
 game/cache/
 game/saves/
-*.rpyc
-**/*.rpyc
 renpy-*/
 *.apk
 *.exe
