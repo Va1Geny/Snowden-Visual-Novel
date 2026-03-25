@@ -1,4 +1,6 @@
 game/cache/
+*.rpyc
+**/*.rpyc
 game/saves/
 renpy-*/
 *.apk
