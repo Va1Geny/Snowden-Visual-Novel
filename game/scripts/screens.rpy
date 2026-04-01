@@ -1,4 +1,11 @@
-﻿################################################################################
+################################################################################
+## SCREENS.RPY — Custom UI Screens
+## Classified: The Snowden Files
+##
+## This file replaces the default screens with custom themed screens.
+################################################################################
+
+################################################################################
 ## Initialization
 ################################################################################
 
@@ -83,17 +90,6 @@ style frame:
 
 
 ## Say screen ##################################################################
-##
-## The say screen is used to display dialogue to the player. It takes two
-## parameters, who and what, which are the name of the speaking character and
-## the text to be displayed, respectively. (The who parameter can be None if no
-## name is given.)
-##
-## This screen must create a text displayable with id "what", as Ren'Py uses
-## this to manage text display. It can also create displayables with id "who"
-## and id "window" to apply style properties.
-##
-## https://www.renpy.org/doc/html/screen_special.html#say
 
 screen say(who, what):
 
@@ -109,14 +105,10 @@ screen say(who, what):
 
         text what id "what"
 
-
-    ## If there's a side image, display it above the text. Do not display on the
-    ## phone variant - there's no room.
     if not renpy.variant("small"):
         add SideImage() xalign 0.0 yalign 1.0
 
 
-## Make the namebox available for styling through the Character object.
 init python:
     config.character_id_prefixes.append('namebox')
 
@@ -162,14 +154,6 @@ style say_dialogue:
     adjust_spacing False
 
 ## Input screen ################################################################
-##
-## This screen is used to display renpy.input. The prompt parameter is used to
-## pass a text prompt in.
-##
-## This screen must create an input displayable with id "input" to accept the
-## various input parameters.
-##
-## https://www.renpy.org/doc/html/screen_special.html#input
 
 screen input(prompt):
     style_prefix "input"
@@ -197,12 +181,6 @@ style input:
 
 
 ## Choice screen ###############################################################
-##
-## This screen is used to display the in-game choices presented by the menu
-## statement. The one parameter, items, is a list of objects, each with caption
-## and action fields.
-##
-## https://www.renpy.org/doc/html/screen_special.html#choice
 
 screen choice(items):
     style_prefix "choice"
@@ -231,13 +209,9 @@ style choice_button_text is default:
 
 
 ## Quick Menu screen ###########################################################
-##
-## The quick menu is displayed in-game to provide easy access to the out-of-game
-## menus.
 
 screen quick_menu():
 
-    ## Ensure this appears on top of other screens.
     zorder 100
 
     if quick_menu:
@@ -256,8 +230,6 @@ screen quick_menu():
             textbutton _("Prefs") action ShowMenu('preferences')
 
 
-## This code ensures that the quick_menu screen is displayed in-game, whenever
-## the player has not explicitly hidden the interface.
 init python:
     config.overlay_screens.append("quick_menu")
 
@@ -279,13 +251,615 @@ style quick_button_text:
 
 
 ################################################################################
+## CUSTOM GAME SCREENS — Classified Theme
+################################################################################
+
+
+################################################################################
+## MAIN MENU — Classified / Surveillance Theme
+################################################################################
+
+screen main_menu():
+    tag menu
+
+    # Dark background
+    add "#0A0E1A"
+
+    # Animated scanline overlay effect
+    frame:
+        xfill True
+        yfill True
+        background None
+
+        # Data stream columns (simulated with text)
+        for i in range(20):
+            text "01001101":
+                color "#00FFD108"
+                size 14
+                xpos (i * 96 + 10)
+                ypos (i * 53 % 1080)
+
+    # Central content
+    vbox:
+        xalign 0.5
+        yalign 0.45
+        spacing 15
+
+        # Game title with glitch effect
+        text "CLASSIFIED" at title_glitch:
+            color "#00FFD1"
+            size 72
+            bold True
+            xalign 0.5
+            outlines [(2, "#00FFD140", 0, 0)]
+
+        text "THE SNOWDEN FILES":
+            color "#E8E8E8"
+            size 36
+            bold True
+            xalign 0.5
+
+        null height 5
+
+        # Subtitle
+        text "\"The truth will always find a way out.\"":
+            color "#888888"
+            size 20
+            italic True
+            xalign 0.5
+
+        null height 40
+
+        # Menu buttons styled as terminal commands
+        vbox:
+            xalign 0.5
+            spacing 8
+
+            # START MISSION
+            textbutton "> START MISSION":
+                xalign 0.5
+                action Start()
+                text_color "#00FFD1"
+                text_hover_color "#0A0E1A"
+                text_size 24
+                text_bold True
+                xsize 400
+                ysize 50
+
+            # CONTINUE (only if save exists)
+            if renpy.newest_slot():
+                textbutton "> CONTINUE":
+                    xalign 0.5
+                    action FileLoad(renpy.newest_slot(), confirm=False)
+                    text_color "#00FFD1"
+                    text_hover_color "#0A0E1A"
+                    text_size 24
+                    text_bold True
+                    xsize 400
+                    ysize 50
+
+            # DOSSIER
+            textbutton "> DOSSIER":
+                xalign 0.5
+                action ShowMenu("dossier")
+                text_color "#00FFD1"
+                text_hover_color "#0A0E1A"
+                text_size 24
+                text_bold True
+                xsize 400
+                ysize 50
+
+            # SETTINGS
+            textbutton "> SETTINGS":
+                xalign 0.5
+                action ShowMenu("preferences")
+                text_color "#00FFD1"
+                text_hover_color "#0A0E1A"
+                text_size 24
+                text_bold True
+                xsize 400
+                ysize 50
+
+            # EXIT
+            if renpy.variant("pc"):
+                textbutton "> EXIT":
+                    xalign 0.5
+                    action Quit(confirm=True)
+                    text_color "#FF2D55"
+                    text_hover_color "#0A0E1A"
+                    text_size 24
+                    text_bold True
+                    xsize 400
+                    ysize 50
+
+    # Version + disclaimer at bottom
+    vbox:
+        xalign 0.5
+        yalign 0.98
+        spacing 3
+
+        text "v1.0 — Classified: The Snowden Files":
+            color "#333333"
+            size 14
+            xalign 0.5
+
+        text "Fictional dramatization for educational purposes.":
+            color "#333333"
+            size 12
+            xalign 0.5
+
+
+################################################################################
+## DOSSIER / GLOSSARY SCREEN
+################################################################################
+
+screen dossier():
+    tag menu
+
+    add "#0A0E1A"
+
+    viewport:
+        xfill True yfill True
+        scrollbars "vertical"
+        mousewheel True
+
+        vbox:
+            xalign 0.5
+            xsize 1000
+            spacing 20
+            yoffset 40
+
+            text "// NETWORK SECURITY DOSSIER //" style "dossier_title"
+
+            null height 10
+
+            # Glossary entries
+            for term, definition in [
+                ("VPN (Virtual Private Network)", "Creates an encrypted tunnel between your device and a server, hiding your traffic from local network surveillance. Essential on untrusted networks like public Wi-Fi."),
+                ("PGP (Pretty Good Privacy)", "Asymmetric encryption system using public/private key pairs. Public key encrypts, only the matching private key can decrypt. Used for secure email communication."),
+                ("TOR (The Onion Router)", "Anonymization network that routes traffic through multiple relay nodes, each encrypting a layer. Makes it very difficult to trace traffic to its source."),
+                ("HTTPS", "HTTP with TLS/SSL encryption. Secures data between your browser and a web server. Look for the padlock icon in your browser's address bar."),
+                ("Firewall", "Network security system that monitors and filters incoming and outgoing traffic based on predefined rules. Acts as a barrier between trusted and untrusted networks."),
+                ("Metadata", "Data about data — who you communicated with, when, for how long, from where. Does not include the message content but can reveal intimate patterns of life."),
+                ("Man-in-the-Middle Attack", "An attacker secretly intercepts communication between two parties. Both parties think they're talking directly to each other. Key verification prevents this."),
+                ("Caesar Cipher", "Simple substitution cipher where each letter is shifted by a fixed number. Easy to break but historically significant. Example: ROT-3 shifts A→D, B→E, etc."),
+                ("OpSec (Operational Security)", "The practice of protecting critical information by identifying what intelligence the adversary could gather from your actions and taking steps to prevent it."),
+                ("Zero-Day Exploit", "A vulnerability in software unknown to the vendor. Called 'zero-day' because there are zero days of notice before it's exploited. No patch exists yet."),
+                ("AES-256", "Advanced Encryption Standard with 256-bit key. Military-grade symmetric encryption. Would take billions of years to brute-force with current technology."),
+                ("SecureDrop", "Open-source whistleblowing platform that allows anonymous document submission. Used by major news organizations to protect sources."),
+                ("PRISM", "NSA surveillance program providing direct access to user data from major tech companies. Exposed by Snowden in 2013."),
+                ("XKeyscore", "NSA tool for searching and analyzing internet data. Could search content of emails, browsing history, and social media activity in near real-time."),
+            ]:
+                frame:
+                    xfill True
+                    background "#111827"
+                    padding (20, 12)
+
+                    vbox:
+                        spacing 5
+                        text term style "dossier_term"
+                        text definition style "dossier_definition"
+
+            null height 30
+
+            textbutton "> RETURN":
+                xalign 0.5
+                text_color "#00FFD1"
+                text_hover_color "#FFFFFF"
+                text_size 24
+                text_bold True
+                action Return()
+
+            null height 40
+
+
+################################################################################
+## BRIEFING SCREEN (Pre-Chapter 1)
+################################################################################
+
+screen briefing_screen():
+    modal True
+    add "#0A0E1A"
+
+    frame:
+        xalign 0.5 yalign 0.5
+        xsize 1000
+        background "#0A0E1A"
+        padding (50, 40)
+
+        vbox:
+            xalign 0.5
+            spacing 20
+
+            text "▓▓▓ CLASSIFIED ▓▓▓" style "briefing_header"
+
+            null height 10
+
+            frame:
+                xfill True
+                background "#111827"
+                padding (30, 25)
+
+                vbox:
+                    spacing 15
+
+                    text "// MISSION BRIEFING //" color "#00FF00" size 22 bold True xalign 0.5
+
+                    text "OPERATIVE: Edward Snowden" color "#00FFD1" size 20
+                    text "ASSIGNMENT: NSA Systems Administrator" color "#00FFD1" size 20
+                    text "CLEARANCE: TS/SCI" color "#00FFD1" size 20
+
+                    null height 10
+
+                    text "MISSION OBJECTIVE:" color "#FF2D55" size 20 bold True
+                    text "Navigate the moral and technical challenges of the most significant intelligence leak in modern history." color "#E8E8E8" size 18
+
+                    null height 5
+
+                    text "Your decisions will determine the outcome. Every choice matters. Every answer teaches." color "#E8E8E8" size 18
+
+            null height 10
+
+            text "This is both a story AND a test. Choose wisely." style "briefing_warning"
+
+            null height 15
+
+            textbutton "> ACCEPT MISSION":
+                xalign 0.5
+                text_color "#00FFD1"
+                text_hover_color "#0A0E1A"
+                text_size 26
+                text_bold True
+                action Return()
+
+
+################################################################################
+## CHAPTER TITLE CARD SCREEN
+################################################################################
+
+screen chapter_title_screen(number, title, subtitle):
+    modal True
+    add "#000000"
+
+    vbox:
+        align (0.5, 0.5)
+        spacing 20
+
+        text "// CLASSIFIED: CHAPTER [number] //" style "sys_text" at chapter_fade_in
+        text title style "chapter_title_text" at chapter_fade_in
+        text subtitle style "chapter_subtitle_text" at chapter_fade_in
+
+    # Auto-advance after 3 seconds
+    timer 3.0 action Return()
+
+    # Or click to skip
+    key "dismiss" action Return()
+
+
+################################################################################
+## CHAPTER SUMMARY SCREEN
+################################################################################
+
+screen chapter_summary(chapter_num, chapter_name):
+    modal True
+    add "#0A0E1A"
+
+    frame:
+        xalign 0.5 yalign 0.5
+        xsize 900
+        background "#0A0E1A"
+        padding (40, 35)
+
+        vbox:
+            xalign 0.5
+            spacing 15
+
+            text "// CHAPTER [chapter_num] COMPLETE //" style "sys_text"
+            text chapter_name style "summary_title"
+
+            null height 15
+
+            frame:
+                xfill True
+                background "#111827"
+                padding (25, 20)
+
+                vbox:
+                    spacing 10
+
+                    text "// CURRENT STATUS //" color "#00FFD1" size 20 bold True xalign 0.5
+
+                    null height 5
+
+                    hbox:
+                        xfill True
+                        text "Knowledge Score:" style "summary_stat_label"
+                        text "[knowledge_score]" style "summary_stat_value" xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text "Trust Score:" style "summary_stat_label"
+                        text "[trust_score]" style "summary_stat_value" xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text "Suspicion Level:" style "summary_stat_label"
+                        text "[suspicion_level]/5" color "#FF2D55" size 20 bold True xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text "Contacts Secured:" style "summary_stat_label"
+                        text "[contacts_secured]" style "summary_stat_value" xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text "Evidence:" style "summary_stat_label"
+                        if evidence_secured:
+                            text "SECURED" color "#00FF00" size 20 bold True xalign 1.0
+                        else:
+                            text "NOT YET" color "#888888" size 20 xalign 1.0
+
+            null height 15
+
+            if chapter_num < 5:
+                textbutton "> CONTINUE TO CHAPTER [chapter_num + 1]":
+                    xalign 0.5
+                    text_color "#00FFD1"
+                    text_hover_color "#FFFFFF"
+                    text_size 22
+                    text_bold True
+                    action Return()
+            else:
+                textbutton "> PROCEED TO FINAL ASSESSMENT":
+                    xalign 0.5
+                    text_color "#00FFD1"
+                    text_hover_color "#FFFFFF"
+                    text_size 22
+                    text_bold True
+                    action Return()
+
+
+################################################################################
+## GAME HUD — Progress Tracker
+################################################################################
+
+screen game_hud():
+    zorder 50
+
+    if show_hud:
+        frame:
+            xalign 1.0 yalign 0.0
+            xoffset -10 yoffset 10
+            xsize 200
+            background "#0A0E1A99"
+            padding (12, 10)
+
+            vbox:
+                spacing 5
+
+                text "CH [current_chapter]/5" color "#666666" size 14
+                text "KNOWLEDGE: [knowledge_score]" color "#00FFD1" size 14
+
+                hbox:
+                    spacing 5
+                    text "SUSPICION:" color "#888888" size 14
+
+                # Suspicion bar
+                bar:
+                    value suspicion_level
+                    range 5
+                    xsize 120
+                    ysize 8
+                    left_bar Solid("#FF2D55")
+                    right_bar Solid("#333333")
+
+init python:
+    config.overlay_screens.append("game_hud")
+
+
+################################################################################
+## MCQ QUESTION SCREEN
+################################################################################
+
+screen mcq_question(question, answers, correct_index, explanation):
+    modal True
+    default selected = -1
+    default answered = False
+
+    add "#0A0E1ACC"
+
+    frame:
+        xalign 0.5 yalign 0.5
+        xsize 1000
+        background "#0A0E1A"
+        padding (40, 35)
+
+        vbox:
+            xalign 0.5
+            spacing 15
+
+            text "// KNOWLEDGE CHECK //" color "#00FF00" size 22 bold True xalign 0.5
+
+            null height 5
+
+            text question color "#E8E8E8" size 24 xalign 0.5 text_align 0.5
+
+            null height 15
+
+            # Answer buttons
+            for i, answer in enumerate(answers):
+                $ letter = ["A", "B", "C", "D"][i]
+
+                if not answered:
+                    textbutton "[letter]) [answer]":
+                        xsize 850
+                        xalign 0.5
+                        text_size 20
+                        text_color "#00FFD1"
+                        text_hover_color "#FFFFFF"
+                        action [
+                            SetScreenVariable("selected", i),
+                            SetScreenVariable("answered", True)
+                        ]
+                else:
+                    if i == correct_index:
+                        textbutton "[letter]) [answer]":
+                            xsize 850
+                            xalign 0.5
+                            text_size 20
+                            text_color "#00FF00"
+                            text_bold True
+                            action NullAction()
+                    elif i == selected and i != correct_index:
+                        textbutton "[letter]) [answer]":
+                            xsize 850
+                            xalign 0.5
+                            text_size 20
+                            text_color "#FF2D55"
+                            action NullAction()
+                    else:
+                        textbutton "[letter]) [answer]":
+                            xsize 850
+                            xalign 0.5
+                            text_size 20
+                            text_color "#555555"
+                            action NullAction()
+
+            if answered:
+                null height 10
+
+                if selected == correct_index:
+                    text "✓ CORRECT!" color "#00FF00" size 22 bold True xalign 0.5
+                else:
+                    $ correct_letter = ["A", "B", "C", "D"][correct_index]
+                    text "✗ INCORRECT — Correct answer: [correct_letter]" color "#FF2D55" size 22 bold True xalign 0.5
+
+                null height 5
+
+                text explanation color "#AAAAAA" size 17 xalign 0.5 text_align 0.5
+
+                null height 15
+
+                textbutton "> CONTINUE":
+                    xalign 0.5
+                    text_color "#00FFD1"
+                    text_hover_color "#FFFFFF"
+                    text_size 22
+                    text_bold True
+                    if selected == correct_index:
+                        action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+                    else:
+                        action Return()
+
+
+################################################################################
+## TEXT INPUT QUESTION SCREEN
+################################################################################
+
+screen text_input_question_screen(question, correct_answer, hint, explanation):
+    modal True
+    default user_answer = ""
+    default attempts = 0
+    default answered_correctly = False
+    default show_hint = False
+    default show_answer = False
+    default submitted = False
+
+    add "#0A0E1ACC"
+
+    frame:
+        xalign 0.5 yalign 0.5
+        xsize 900
+        background "#0A0E1A"
+        padding (40, 35)
+
+        vbox:
+            xalign 0.5
+            spacing 15
+
+            text "// KNOWLEDGE CHECK — TEXT INPUT //" color "#00FF00" size 20 bold True xalign 0.5
+
+            null height 5
+
+            text question color "#E8E8E8" size 22 xalign 0.5 text_align 0.5
+
+            null height 10
+
+            if show_hint:
+                text "HINT: [hint]" color "#FFD700" size 18 italic True xalign 0.5
+
+            if not answered_correctly and not show_answer:
+                hbox:
+                    xalign 0.5
+                    spacing 10
+
+                    text "> " color "#00FF00" size 24 yalign 0.5
+
+                    input:
+                        value ScreenVariableInputValue("user_answer")
+                        length 30
+                        color "#00FFD1"
+                        size 24
+
+                null height 10
+
+                if submitted and user_answer.strip().upper() != correct_answer.upper():
+                    text "✗ INCORRECT. Try again." color "#FF2D55" size 18 xalign 0.5
+
+                textbutton "> SUBMIT":
+                    xalign 0.5
+                    text_color "#00FFD1"
+                    text_hover_color "#FFFFFF"
+                    text_size 22
+                    text_bold True
+                    action [
+                        SetScreenVariable("submitted", True),
+                        SetScreenVariable("attempts", attempts + 1),
+                        If(user_answer.strip().upper() == correct_answer.upper(),
+                            true=SetScreenVariable("answered_correctly", True),
+                            false=[
+                                If(attempts >= 1,
+                                    true=SetScreenVariable("show_hint", True)),
+                                If(attempts >= 2,
+                                    true=SetScreenVariable("show_answer", True)),
+                            ]
+                        )
+                    ]
+
+            if answered_correctly:
+                text "✓ CORRECT!" color "#00FF00" size 24 bold True xalign 0.5
+                text explanation color "#AAAAAA" size 17 xalign 0.5 text_align 0.5
+
+                null height 10
+
+                textbutton "> CONTINUE":
+                    xalign 0.5
+                    text_color "#00FFD1"
+                    text_hover_color "#FFFFFF"
+                    text_size 22
+                    text_bold True
+                    action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+
+            if show_answer:
+                text "ANSWER: [correct_answer]" color "#FFD700" size 24 bold True xalign 0.5
+                text explanation color "#AAAAAA" size 17 xalign 0.5 text_align 0.5
+
+                null height 10
+
+                textbutton "> CONTINUE":
+                    xalign 0.5
+                    text_color "#00FFD1"
+                    text_hover_color "#FFFFFF"
+                    text_size 22
+                    text_bold True
+                    action Return()
+
+
+################################################################################
 ## Main and Game Menu Screens
 ################################################################################
 
 ## Navigation screen ###########################################################
-##
-## This screen is included in the main and game menus, and provides navigation
-## to other menus, and to start the game.
 
 screen navigation():
 
@@ -322,14 +896,9 @@ screen navigation():
         textbutton _("About") action ShowMenu("about")
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
-
-            ## Help isn't necessary or relevant to mobile devices.
             textbutton _("Help") action ShowMenu("help")
 
         if renpy.variant("pc"):
-
-            ## The quit button is banned on iOS and unnecessary on Android and
-            ## Web.
             textbutton _("Quit") action Quit(confirm=not main_menu)
 
 
@@ -344,76 +913,7 @@ style navigation_button_text:
     properties gui.text_properties("navigation_button")
 
 
-## Main Menu screen ############################################################
-##
-## Used to display the main menu when Ren'Py starts.
-##
-## https://www.renpy.org/doc/html/screen_special.html#main-menu
-
-screen main_menu():
-
-    ## This ensures that any other menu screen is replaced.
-    tag menu
-
-    add gui.main_menu_background
-
-    ## This empty frame darkens the main menu.
-    frame:
-        style "main_menu_frame"
-
-    ## The use statement includes another screen inside this one. The actual
-    ## contents of the main menu are in the navigation screen.
-    use navigation
-
-    if gui.show_name:
-
-        vbox:
-            style "main_menu_vbox"
-
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
-
-
-style main_menu_frame is empty
-style main_menu_vbox is vbox
-style main_menu_text is gui_text
-style main_menu_title is main_menu_text
-style main_menu_version is main_menu_text
-
-style main_menu_frame:
-    xsize 420
-    yfill True
-
-    background "gui/overlay/main_menu.png"
-
-style main_menu_vbox:
-    xalign 1.0
-    xoffset -30
-    xmaximum 1200
-    yalign 1.0
-    yoffset -30
-
-style main_menu_text:
-    properties gui.text_properties("main_menu", accent=True)
-
-style main_menu_title:
-    properties gui.text_properties("title")
-
-style main_menu_version:
-    properties gui.text_properties("version")
-
-
 ## Game Menu screen ############################################################
-##
-## This lays out the basic common structure of a game menu screen. It's called
-## with the screen title, and displays the background, title, and navigation.
-##
-## The scroll parameter can be None, or one of "viewport" or "vpgrid".
-## This screen is intended to be used with one or more children, which are
-## transcluded (placed) inside it.
 
 screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
@@ -429,7 +929,6 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
         hbox:
 
-            ## Reserve space for the navigation section.
             frame:
                 style "game_menu_navigation_frame"
 
@@ -539,19 +1038,11 @@ style return_button:
 
 
 ## About screen ################################################################
-##
-## This screen gives credit and copyright information about the game and Ren'Py.
-##
-## There's nothing special about this screen, and hence it also serves as an
-## example of how to make a custom screen.
 
 screen about():
 
     tag menu
 
-    ## This use statement includes the game_menu screen inside this one. The
-    ## vbox child is then included inside the viewport inside the game_menu
-    ## screen.
     use game_menu(_("About"), scroll="viewport"):
 
         style_prefix "about"
@@ -561,7 +1052,6 @@ screen about():
             label "[config.name!t]"
             text _("Version [config.version!t]\n")
 
-            ## gui.about is usually set in options.rpy.
             if gui.about:
                 text "[gui.about!t]\n"
 
@@ -577,13 +1067,6 @@ style about_label_text:
 
 
 ## Load and Save screens #######################################################
-##
-## These screens are responsible for letting the player save the game and load
-## it again. Since they share nearly everything in common, both are implemented
-## in terms of a third screen, file_slots.
-##
-## https://www.renpy.org/doc/html/screen_special.html#save https://
-## www.renpy.org/doc/html/screen_special.html#load
 
 screen save():
 
@@ -607,11 +1090,8 @@ screen file_slots(title):
 
         fixed:
 
-            ## This ensures the input will get the enter event before any of the
-            ## buttons do.
             order_reverse True
 
-            ## The page name, which can be edited by clicking on a button.
             button:
                 style "page_label"
 
@@ -623,7 +1103,6 @@ screen file_slots(title):
                     style "page_label_text"
                     value page_name_value
 
-            ## The grid of file slots.
             grid gui.file_slot_cols gui.file_slot_rows:
                 style_prefix "slot"
 
@@ -651,7 +1130,6 @@ screen file_slots(title):
 
                         key "save_delete" action FileDelete(slot)
 
-            ## Buttons to access other pages.
             vbox:
                 style_prefix "page"
 
@@ -672,7 +1150,6 @@ screen file_slots(title):
                     if config.has_quicksave:
                         textbutton _("{#quick_page}Q") action FilePage("quick")
 
-                    ## range(1, 10) gives the numbers from 1 to 9.
                     for page in range(1, 10):
                         textbutton "[page]" action FilePage(page)
 
@@ -724,11 +1201,6 @@ style slot_button_text:
 
 
 ## Preferences screen ##########################################################
-##
-## The preferences screen allows the player to configure the game to better suit
-## themselves.
-##
-## https://www.renpy.org/doc/html/screen_special.html#preferences
 
 screen preferences():
 
@@ -755,9 +1227,6 @@ screen preferences():
                     textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-
-                ## Additional vboxes of type "radio_pref" or "check_pref" can be
-                ## added here, to add additional creator-defined preferences.
 
             null height (4 * gui.pref_spacing)
 
@@ -883,18 +1352,11 @@ style slider_vbox:
 
 
 ## History screen ##############################################################
-##
-## This is a screen that displays the dialogue history to the player. While
-## there isn't anything special about this screen, it does have to access the
-## dialogue history stored in _history_list.
-##
-## https://www.renpy.org/doc/html/history.html
 
 screen history():
 
     tag menu
 
-    ## Avoid predicting this screen, as it can be very large.
     predict False
 
     use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0, spacing=gui.history_spacing):
@@ -905,7 +1367,6 @@ screen history():
 
             window:
 
-                ## This lays things out properly if history_height is None.
                 has fixed:
                     yfit True
 
@@ -915,8 +1376,6 @@ screen history():
                         style "history_name"
                         substitute False
 
-                        ## Take the color of the who text from the Character, if
-                        ## set.
                         if "color" in h.who_args:
                             text_color h.who_args["color"]
 
@@ -927,8 +1386,6 @@ screen history():
         if not _history_list:
             label _("The dialogue history is empty.")
 
-
-## This determines what tags are allowed to be displayed on the history screen.
 
 define gui.history_allow_tags = { "alt", "noalt", "rt", "rb", "art" }
 
@@ -973,10 +1430,6 @@ style history_label_text:
 
 
 ## Help screen #################################################################
-##
-## A screen that gives information about key and mouse bindings. It uses other
-## screens (keyboard_help, mouse_help, and gamepad_help) to display the actual
-## help.
 
 screen help():
 
@@ -1140,15 +1593,9 @@ style help_label_text:
 
 
 ## Confirm screen ##############################################################
-##
-## The confirm screen is called when Ren'Py wants to ask the player a yes or no
-## question.
-##
-## https://www.renpy.org/doc/html/screen_special.html#confirm
 
 screen confirm(message, yes_action, no_action):
 
-    ## Ensure other screens do not get input while this screen is displayed.
     modal True
 
     zorder 200
@@ -1175,7 +1622,6 @@ screen confirm(message, yes_action, no_action):
                 textbutton _("Yes") action yes_action
                 textbutton _("No") action no_action
 
-    ## Right-click and escape answer "no".
     key "game_menu" action no_action
 
 
@@ -1203,11 +1649,6 @@ style confirm_button_text:
 
 
 ## Skip indicator screen #######################################################
-##
-## The skip_indicator screen is displayed to indicate that skipping is in
-## progress.
-##
-## https://www.renpy.org/doc/html/screen_special.html#skip-indicator
 
 screen skip_indicator():
 
@@ -1226,7 +1667,6 @@ screen skip_indicator():
             text "▸" at delayed_blink(0.4, 1.0) style "skip_triangle"
 
 
-## This transform is used to blink the arrows one after another.
 transform delayed_blink(delay, cycle):
     alpha .5
 
@@ -1253,17 +1693,10 @@ style skip_text:
     size gui.notify_text_size
 
 style skip_triangle:
-    ## We have to use a font that has the BLACK RIGHT-POINTING SMALL TRIANGLE
-    ## glyph in it.
     font "DejaVuSans.ttf"
 
 
 ## Notify screen ###############################################################
-##
-## The notify screen is used to show the player a message. (For example, when
-## the game is quicksaved or a screenshot has been taken.)
-##
-## https://www.renpy.org/doc/html/screen_special.html#notify-screen
 
 screen notify(message):
 
@@ -1298,11 +1731,6 @@ style notify_text:
 
 
 ## NVL screen ##################################################################
-##
-## This screen is used for NVL-mode dialogue and menus.
-##
-## https://www.renpy.org/doc/html/screen_special.html#nvl
-
 
 screen nvl(dialogue, items=None):
 
@@ -1312,7 +1740,6 @@ screen nvl(dialogue, items=None):
         has vbox:
             spacing gui.nvl_spacing
 
-        ## Displays dialogue in either a vpgrid or the vbox.
         if gui.nvl_height:
 
             vpgrid:
@@ -1325,8 +1752,6 @@ screen nvl(dialogue, items=None):
 
             use nvl_dialogue(dialogue)
 
-        ## Displays the menu, if given. The menu may be displayed incorrectly if
-        ## config.narrator_menu is set to True.
         for i in items:
 
             textbutton i.caption:
@@ -1355,8 +1780,6 @@ screen nvl_dialogue(dialogue):
                     id d.what_id
 
 
-## This controls the maximum number of NVL-mode entries that can be displayed at
-## once.
 define config.nvl_list_length = gui.nvl_list_length
 
 style nvl_window is default
@@ -1416,13 +1839,6 @@ style nvl_button_text:
 
 
 ## Bubble screen ###############################################################
-##
-## The bubble screen is used to display dialogue to the player when using speech
-## bubbles. The bubble screen takes the same parameters as the say screen, must
-## create a displayable with the id of "what", and can create displayables with
-## the "namebox", "who", and "window" ids.
-##
-## https://www.renpy.org/doc/html/bubble.html#bubble-screen
 
 screen bubble(who, what):
     style_prefix "bubble"
@@ -1517,8 +1933,6 @@ style pref_vbox:
     variant "medium"
     xsize 675
 
-## Since a mouse may not be present, we replace the quick menu with a version
-## that uses fewer and bigger buttons that are easier to touch.
 screen quick_menu():
     variant "touch"
 
@@ -1611,11 +2025,3 @@ style vslider:
     xsize gui.slider_size
     base_bar Frame("gui/phone/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
     thumb "gui/phone/slider/vertical_[prefix_]thumb.png"
-
-style slider_vbox:
-    variant "small"
-    xsize None
-
-style slider_slider:
-    variant "small"
-    xsize 900
