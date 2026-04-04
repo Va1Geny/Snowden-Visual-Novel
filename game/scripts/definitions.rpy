@@ -121,6 +121,27 @@ default text_input_attempts = 0
 
 
 ################################################################################
+## PARALLAX SYSTEM
+################################################################################
+
+init python:
+    def mouse_parallax(trans, st, at):
+        # Provide a subtle parallax based on mouse
+        # Ren'Py get_mouse_pos() might return a tuple
+        import pygame
+        x, y = renpy.get_mouse_pos()
+        
+        # Calculate offset from center (assuming 1920x1080)
+        trans.xoffset = (960 - x) * 0.02
+        trans.yoffset = (540 - y) * 0.02
+        return 0
+
+transform parallax:
+    zoom 1.05
+    align (0.5, 0.5)
+    function mouse_parallax
+
+################################################################################
 ## IMAGE DEFINITIONS
 ################################################################################
 
@@ -148,26 +169,40 @@ image editor neutral:
 image russian_official neutral:
     "sprites/russian official neutral.png"
     zoom 0.7
-
 # === Backgrounds ===
 image bg_nsa:
-    "backgrounds/Working inside the NSA's surveillance apparatus.png"
+    "backgrounds/chapter_1/Working inside the NSA's surveillance apparatus.png"
     xysize (1920, 1080)
 
+image bg_nsa_main:
+    "backgrounds/chapter_1/bg_nsa_main.png"
+    xysize (1920, 1080)
+
+image bg_nsa_terminal:
+    "backgrounds/chapter_1/bg_nsa_terminal.png"
+    xysize (1920, 1080)
+
+image bg_nsa_servers:
+    "backgrounds/chapter_2/bg_nsa_servers.png"
+    xysize (1920, 1080)
+
+image bg_nsa_exterior = Movie(play="images/backgrounds/chapter_1/bg_nsa_exterior.webm", loop=True)
+image bg_nsa_checkpoint = Movie(play="images/backgrounds/chapter_1/bg_nsa_checkpoint.webm", loop=True)
+
 image bg_prism:
-    "backgrounds/Discovering the PRISM mass surveillance program.png"
+    "backgrounds/chapter_2/Discovering the PRISM mass surveillance program.png"
     xysize (1920, 1080)
 
 image bg_hong_kong:
-    "backgrounds/The escape to Hong Kong and contact with journalists.png"
+    "backgrounds/chapter_3/The escape to Hong Kong and contact with journalists.png"
     xysize (1920, 1080)
 
 image bg_leak:
-    "backgrounds/The Leak and Global Fallout.png"
+    "backgrounds/chapter_4/The Leak and Global Fallout.png"
     xysize (1920, 1080)
 
 image bg_russia:
-    "backgrounds/Asylum in Russia — and life as a fugitive.png"
+    "backgrounds/chapter_5/Asylum in Russia — and life as a fugitive.png"
     xysize (1920, 1080)
 
 

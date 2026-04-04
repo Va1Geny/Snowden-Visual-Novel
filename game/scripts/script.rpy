@@ -63,14 +63,16 @@ label chapter_1:
 
     call screen chapter_title_screen(1, "INSIDE THE MACHINE", "NSA Facility — Oahu, Hawaii — 2012")
 
-    scene bg_nsa with chapter_transition
+    scene bg_nsa_exterior at parallax with chapter_transition
 
     # --- Scene: Arriving at the NSA ---
 
     narrator_voice "The Tunnel. That's what they call it — the underground NSA facility beneath a pineapple field in Oahu, Hawaii."
 
+    scene bg_nsa_checkpoint at parallax with dissolve
     narrator_voice "Edward Snowden walks through layers of biometric security. Badge. Fingerprint. Retinal scan. The door hisses open."
 
+    scene bg_nsa_main at parallax with dissolve
     show edward neutral at enter_center
     with dissolve
 
@@ -82,6 +84,7 @@ label chapter_1:
     supervisor "Morning, Snowden. We've got a batch of flagged selectors to process. XKeyscore caught some interesting traffic overnight."
 
     e "Yes sir. I'll pull up the queue."
+
 
     supervisor "And don't overthink the 'why.' If the system flags a packet, it's because the math says they're a threat. Your job is to verify the handshake, not question the person."
 
@@ -106,6 +109,10 @@ label chapter_1:
             $ trust_score += 1
             $ renpy.notify("Trust +1")
 
+            scene bg_nsa_terminal at parallax with dissolve
+            show edward neutral at center
+            with dissolve
+
             im "Stay in your lane, Snowden. Do your job. Don't attract attention."
 
             narrator_voice "Edward processes the assigned selectors. Standard targets. Foreign IP addresses. But among the flagged traffic, domestic addresses keep appearing."
@@ -114,6 +121,10 @@ label chapter_1:
             e "I need to check something first..."
             $ suspicion_level += 1
             $ renpy.notify("Suspicion +1")
+
+            scene bg_nsa_terminal at parallax with dissolve
+            show edward neutral at center
+            with dissolve
 
             im "These directories shouldn't be this easy to access. Why does a systems administrator have read access to raw intelligence feeds?"
 
@@ -219,7 +230,7 @@ label chapter_2:
 
     call screen chapter_title_screen(2, "THE PRISM REVELATION", "NSA Servers — Classified Briefings — 2012-2013")
 
-    scene bg_prism with chapter_transition
+    scene bg_prism at parallax with chapter_transition
 
     show edward neutral at enter_center
     with dissolve
@@ -304,6 +315,7 @@ label chapter_2:
         $ renpy.notify("Knowledge -1 (Skipped)")
 
     # --- Choice 2: Copy the files or take notes only? ---
+    scene bg_nsa_servers at parallax with dissolve
     show edward neutral at center
     with dissolve
 
@@ -366,7 +378,7 @@ label chapter_3:
 
     call screen chapter_title_screen(3, "THE CONTACT", "Encrypted Communications — January 2013")
 
-    scene bg_hong_kong with chapter_transition
+    scene bg_hong_kong at parallax with chapter_transition
 
     show edward neutral at enter_left
     with dissolve
@@ -593,7 +605,7 @@ label chapter_4:
 
     call screen chapter_title_screen(4, "THE ESCAPE", "Hong Kong — May 2013")
 
-    scene bg_hong_kong with chapter_transition
+    scene bg_hong_kong at parallax with chapter_transition
 
     show edward neutral at enter_left
     with dissolve
@@ -677,6 +689,7 @@ label chapter_4:
 
     # --- Choice 2: Fly to Russia or seek another country? ---
 
+    scene bg_leak at parallax with dissolve
     show edward neutral at center
     with dissolve
 
@@ -760,7 +773,7 @@ label chapter_5:
 
     call screen chapter_title_screen(5, "PERMANENT RECORD", "Moscow, Russia — 2013 to Present")
 
-    scene bg_russia with chapter_transition
+    scene bg_russia at parallax with chapter_transition
 
     show edward neutral at enter_left
     with dissolve
