@@ -194,6 +194,7 @@ label chapter_1:
             narrator_voice "The report was acknowledged, reviewed, and buried. The system protects itself."
 
         "Stay silent. Keep working. Gather more information.":
+            scene bg_1 at parallax with dissolve
             im "Not yet. I need to understand the full scope before I act. If I report one anomaly, they'll lock me out. I need to see the whole picture."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
@@ -262,6 +263,8 @@ label chapter_2:
     e "Is it? Because what I'm seeing goes way beyond foreign intelligence. This is domestic surveillance on a massive scale."
 
     colleague "Ed... be very careful what you say next. The walls have ears. Literally."
+
+    scene bg_prism1 at parallax with dissolve
 
     # --- Choice 1: Trust colleague or work alone? ---
 
@@ -444,6 +447,8 @@ label ch3_secure_success:
     $ knowledge_score += 1
     $ renpy.notify("Contacts +1 | Knowledge +1")
 
+    scene bg_hong_kong_terminal at parallax with dissolve
+
     narrator_voice "Edward creates an anonymous email account, accessed only through Tor, and uses PGP encryption to contact documentary filmmaker Laura Poitras."
 
     show journalist neutral at enter_right
@@ -472,6 +477,7 @@ label ch3_secure_fail:
     jump ch3_continue
 
 label ch3_greenwald_contact:
+    scene bg_hong_kong_street at parallax with dissolve
     show journalist neutral at enter_right
     with dissolve
 
@@ -605,7 +611,7 @@ label chapter_4:
 
     call screen chapter_title_screen(4, "THE ESCAPE", "Hong Kong — May 2013")
 
-    scene bg_hong_kong at parallax with chapter_transition
+    scene bg_hong_kong_hotel at parallax with chapter_transition
 
     show edward neutral at enter_left
     with dissolve
@@ -746,6 +752,10 @@ label chapter_4:
 
     hide edward neutral with dissolve
 
+    if escape_successful and not identity_exposed:
+        scene bg_hk_airport at parallax with dissolve
+        narrator_voice "Edward boards an international flight just hours before his name hits the global no-fly lists."
+
     # --- Chapter 4 Summary ---
 
     if escape_successful and not identity_exposed:
@@ -773,7 +783,7 @@ label chapter_5:
 
     call screen chapter_title_screen(5, "PERMANENT RECORD", "Moscow, Russia — 2013 to Present")
 
-    scene bg_russia at parallax with chapter_transition
+    scene bg_sheremetyevo at parallax with chapter_transition
 
     show edward neutral at enter_left
     with dissolve
@@ -798,6 +808,10 @@ label chapter_5:
     # --- Reflection Dialogue ---
 
     hide russian_official neutral with dissolve
+
+    scene bg_moscow_apartment at parallax with dissolve
+    show edward neutral at center
+    with dissolve
 
     im "I'm an exile in the physical world, but I've never been more active in the digital one."
 
@@ -885,7 +899,7 @@ label chapter_5:
 
     # --- Final scene ---
 
-    scene black with fade
+    scene bg_moscow_winter_epilogue at parallax with fade
 
     narrator_voice "Edward Snowden remains in Russia. He was granted permanent residency in 2020 and Russian citizenship in 2022."
 

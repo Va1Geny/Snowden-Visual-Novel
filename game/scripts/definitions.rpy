@@ -174,6 +174,10 @@ image bg_nsa:
     "backgrounds/chapter_1/Working inside the NSA's surveillance apparatus.png"
     xysize (1920, 1080)
 
+image bg_1:
+    "backgrounds/chapter_1/bg_1.png"
+    xysize (1920, 1080)
+
 image bg_nsa_main:
     "backgrounds/chapter_1/bg_nsa_main.png"
     xysize (1920, 1080)
@@ -190,19 +194,47 @@ image bg_nsa_exterior = Movie(play="images/backgrounds/chapter_1/bg_nsa_exterior
 image bg_nsa_checkpoint = Movie(play="images/backgrounds/chapter_1/bg_nsa_checkpoint.webm", loop=True)
 
 image bg_prism:
-    "backgrounds/chapter_2/Discovering the PRISM mass surveillance program.png"
+    "backgrounds/chapter_2/bg_prism.png"
+    xysize (1920, 1080)
+
+image bg_prism1:
+    "backgrounds/chapter_2/bg_prism1.png"
     xysize (1920, 1080)
 
 image bg_hong_kong:
-    "backgrounds/chapter_3/The escape to Hong Kong and contact with journalists.png"
+    "backgrounds/chapter_3/bg_hong_kong.png"
+    xysize (1920, 1080)
+
+image bg_hong_kong_street:
+    "backgrounds/chapter_3/bg_hong_kong_street.png"
+    xysize (1920, 1080)
+
+image bg_hong_kong_terminal:
+    "backgrounds/chapter_3/bg_hong_kong_terminal.png"
+    xysize (1920, 1080)
+
+image bg_hk_airport:
+    "backgrounds/chapter_4/bg_hk_airport.png"
+    xysize (1920, 1080)
+
+image bg_hong_kong_hotel:
+    "backgrounds/chapter_4/bg_hong_kong_hotel.png"
     xysize (1920, 1080)
 
 image bg_leak:
-    "backgrounds/chapter_4/The Leak and Global Fallout.png"
+    "backgrounds/chapter_4/bg_leak.png"
     xysize (1920, 1080)
 
-image bg_russia:
-    "backgrounds/chapter_5/Asylum in Russia — and life as a fugitive.png"
+image bg_moscow_apartment:
+    "backgrounds/chapter_5/bg_moscow_apartment.png"
+    xysize (1920, 1080)
+
+image bg_moscow_winter_epilogue:
+    "backgrounds/chapter_5/bg_moscow_winter_epilogue.png"
+    xysize (1920, 1080)
+
+image bg_sheremetyevo:
+    "backgrounds/chapter_5/bg_sheremetyevo.png"
     xysize (1920, 1080)
 
 
