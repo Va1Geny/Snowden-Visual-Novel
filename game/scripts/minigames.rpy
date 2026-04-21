@@ -74,152 +74,727 @@ screen minigame_result(passed, title, explanation):
 
 
 ################################################################################
-## MINIGAME 1: FIREWALL BREACH (Chapter 1)
+## MINIGAME 1: FIREWALL BREACH (Chapter 1) — REDESIGNED
+## Cinematic NSA Workstation-style packet analysis minigame
 ################################################################################
 
 init python:
-    import random
+    import time as _time
 
-    # Packet data for firewall minigame
-    def get_firewall_packets():
-        packets = [
-            {"src": "192.168.1.10", "port": "80", "proto": "HTTP",  "legit": True,  "reason": "Standard web traffic on port 80"},
-            {"src": "10.0.0.5",     "port": "443", "proto": "HTTPS", "legit": True,  "reason": "Encrypted web traffic on port 443"},
-            {"src": "45.33.32.1",   "port": "31337", "proto": "TCP", "legit": False, "reason": "Port 31337 is associated with Back Orifice trojan"},
-            {"src": "172.16.0.1",   "port": "22",  "proto": "SSH",   "legit": True,  "reason": "SSH remote admin from internal network"},
-            {"src": "89.248.174.5", "port": "4444", "proto": "TCP",  "legit": False, "reason": "Port 4444 is commonly used by Metasploit/malware"},
-            {"src": "10.0.0.12",    "port": "53",  "proto": "DNS",   "legit": True,  "reason": "DNS resolution from internal server"},
-            {"src": "203.0.113.99", "port": "23",  "proto": "Telnet","legit": False, "reason": "Telnet from external IP — unencrypted remote access"},
-            {"src": "192.168.1.1",  "port": "3389","proto": "RDP",   "legit": True,  "reason": "Internal Remote Desktop within the LAN"},
+    # ── Packet Data ──────────────────────────────────────────────────────────
+    def get_fw_packets():
+        return [
+            {
+                "source_ip": "192.168.1.10", "port": 80, "protocol": "HTTP",
+                "description": "Web Browser Request", "correct": "ALLOW",
+                "risk_level": "LOW",
+                "explanation": "Port 80 is standard HTTP web traffic from an internal IP. This is normal network activity — safe to allow."
+            },
+            {
+                "source_ip": "10.0.0.5", "port": 443, "protocol": "HTTPS",
+                "description": "Encrypted Web Traffic", "correct": "ALLOW",
+                "risk_level": "LOW",
+                "explanation": "Port 443 is HTTPS — secure, encrypted web traffic. Standard and safe."
+            },
+            {
+                "source_ip": "45.33.32.1", "port": 31337, "protocol": "TCP",
+                "description": "Unknown Connection", "correct": "BLOCK",
+                "risk_level": "CRITICAL",
+                "explanation": "Port 31337 is infamous in hacking culture (pronounced 'elite'). Used historically by Back Orifice malware. Always block unknown external IPs on this port."
+            },
+            {
+                "source_ip": "172.16.0.1", "port": 22, "protocol": "SSH",
+                "description": "Remote Login — Internal", "correct": "ALLOW",
+                "risk_level": "MEDIUM",
+                "explanation": "SSH on port 22 from a known internal IP (172.16.x.x is a private range) is a legitimate remote administration session."
+            },
+            {
+                "source_ip": "89.248.174.5", "port": 4444, "protocol": "TCP",
+                "description": "Suspicious Inbound", "correct": "BLOCK",
+                "risk_level": "CRITICAL",
+                "explanation": "Port 4444 is the default listener port for Metasploit — a common hacking framework. Foreign IP + port 4444 = almost certainly a reverse shell attempt. Block immediately."
+            },
+            {
+                "source_ip": "10.0.0.12", "port": 53, "protocol": "DNS",
+                "description": "Domain Name Lookup", "correct": "ALLOW",
+                "risk_level": "LOW",
+                "explanation": "DNS on port 53 from an internal IP is completely normal — computers need DNS to look up domain names and connect to websites."
+            },
+            {
+                "source_ip": "203.0.113.99", "port": 23, "protocol": "Telnet",
+                "description": "Legacy Protocol Connection", "correct": "BLOCK",
+                "risk_level": "HIGH",
+                "explanation": "Telnet sends ALL data in plain text — no encryption at all. It's outdated and dangerous. From a foreign IP, this is a clear intrusion attempt. Use SSH instead."
+            },
+            {
+                "source_ip": "192.168.1.1", "port": 3389, "protocol": "RDP",
+                "description": "Remote Desktop — Router", "correct": "ALLOW",
+                "risk_level": "MEDIUM",
+                "explanation": "RDP on port 3389 from the internal router IP (192.168.1.1) is internal remote desktop. Acceptable from a trusted internal source."
+            },
         ]
-        return packets
 
+    # ── Timer Class ──────────────────────────────────────────────────────────
+    class PacketTimer(object):
+        def __init__(self, max_time=15.0):
+            self.max_time = max_time
+            self.start_time = None
+            self.active = False
+
+        def start(self):
+            self.start_time = _time.time()
+            self.active = True
+
+        def stop(self):
+            self.active = False
+
+        def get_remaining(self):
+            if not self.active or self.start_time is None:
+                return self.max_time
+            elapsed = _time.time() - self.start_time
+            return max(0.0, self.max_time - elapsed)
+
+        def get_fraction(self):
+            return self.get_remaining() / self.max_time
+
+        def is_expired(self):
+            return self.active and self.get_remaining() <= 0
+
+    packet_timer = PacketTimer()
+
+    # ── Game State ───────────────────────────────────────────────────────────
+    fw_state = {
+        "phase": "incoming",
+        "current_index": 0,
+        "score": 0,
+        "allowed_count": 0,
+        "blocked_count": 0,
+        "answers": [],
+        "last_correct": False,
+        "timed_out": False,
+        "show_continue": False,
+    }
+
+    def fw_reset():
+        fw_state["phase"] = "incoming"
+        fw_state["current_index"] = 0
+        fw_state["score"] = 0
+        fw_state["allowed_count"] = 0
+        fw_state["blocked_count"] = 0
+        fw_state["answers"] = []
+        fw_state["last_correct"] = False
+        fw_state["timed_out"] = False
+        fw_state["show_continue"] = False
+        packet_timer.start()
+
+    def fw_evaluate(choice):
+        pkts = get_fw_packets()
+        idx = fw_state["current_index"]
+        pkt = pkts[idx]
+        is_correct = (choice == pkt["correct"])
+        fw_state["answers"].append({
+            "choice": choice,
+            "correct_answer": pkt["correct"],
+            "is_correct": is_correct,
+        })
+        if is_correct:
+            fw_state["score"] += 1
+        if choice == "ALLOW":
+            fw_state["allowed_count"] += 1
+        else:
+            fw_state["blocked_count"] += 1
+        fw_state["last_correct"] = is_correct
+        fw_state["phase"] = "feedback"
+        fw_state["show_continue"] = False
+        packet_timer.stop()
+        renpy.restart_interaction()
+
+    def fw_handle_timeout():
+        if fw_state["phase"] != "incoming":
+            return
+        fw_state["timed_out"] = True
+        pkts = get_fw_packets()
+        idx = fw_state["current_index"]
+        pkt = pkts[idx]
+        is_correct = ("BLOCK" == pkt["correct"])
+        fw_state["answers"].append({
+            "choice": "BLOCK",
+            "correct_answer": pkt["correct"],
+            "is_correct": is_correct,
+        })
+        if is_correct:
+            fw_state["score"] += 1
+        fw_state["blocked_count"] += 1
+        fw_state["last_correct"] = is_correct
+        fw_state["phase"] = "feedback"
+        fw_state["show_continue"] = False
+        packet_timer.stop()
+        renpy.restart_interaction()
+
+    def fw_next_packet():
+        fw_state["current_index"] += 1
+        fw_state["timed_out"] = False
+        fw_state["show_continue"] = False
+        if fw_state["current_index"] >= 8:
+            fw_state["phase"] = "complete"
+        else:
+            fw_state["phase"] = "incoming"
+            packet_timer.start()
+        renpy.restart_interaction()
+
+    def fw_show_continue():
+        fw_state["show_continue"] = True
+        renpy.restart_interaction()
+
+    def fw_risk_color(level):
+        if level == "LOW":
+            return "#00FF88"
+        elif level == "MEDIUM":
+            return "#FFD700"
+        elif level == "HIGH":
+            return "#FF8C00"
+        elif level == "CRITICAL":
+            return "#FF2D55"
+        return "#888888"
+
+    def fw_get_grade(score):
+        if score >= 7:
+            return ("EXPERT ANALYST", 3)
+        elif score >= 5:
+            return ("ANALYST", 2)
+        elif score >= 3:
+            return ("TRAINEE", 1)
+        else:
+            return ("COMPROMISED", 0)
+
+    def fw_timer_color():
+        f = packet_timer.get_fraction()
+        if f > 0.5:
+            return "#00FFD1"
+        elif f > 0.25:
+            return "#FFD700"
+        else:
+            return "#FF2D55"
+
+# ── ATL Transforms ───────────────────────────────────────────────────────────
+
+transform fw_packet_enter:
+    xoffset 600 alpha 0.0
+    ease 0.45 xoffset 0 alpha 1.0
+
+transform fw_packet_exit_allow:
+    ease 0.35 xoffset -700 alpha 0.0 zoom 0.92
+
+transform fw_packet_exit_block:
+    linear 0.06 xoffset 14
+    linear 0.06 xoffset -14
+    linear 0.06 xoffset 10
+    linear 0.06 xoffset -10
+    linear 0.04 xoffset 0
+    ease 0.3 alpha 0.0 zoom 0.88
+
+transform fw_threat_blink:
+    alpha 1.0
+    linear 0.5 alpha 0.4
+    linear 0.5 alpha 1.0
+    repeat
+
+transform fw_cursor_blink:
+    alpha 1.0
+    linear 0.4 alpha 0.0
+    linear 0.4 alpha 1.0
+    repeat
+
+transform fw_fade_in:
+    alpha 0.0
+    ease 0.5 alpha 1.0
+
+transform fw_feedback_enter:
+    yoffset 30 alpha 0.0
+    ease 0.35 yoffset 0 alpha 1.0
+
+transform fw_result_enter:
+    alpha 0.0 zoom 0.95
+    ease 0.6 alpha 1.0 zoom 1.0
+
+transform fw_title_enter:
+    alpha 0.0 yoffset -20
+    pause 0.2
+    ease 0.5 alpha 1.0 yoffset 0
+
+transform fw_subtitle_enter:
+    alpha 0.0
+    pause 0.7
+    ease 0.4 alpha 1.0
+
+transform fw_tagline_enter:
+    alpha 0.0
+    pause 1.1
+    ease 0.4 alpha 1.0
+
+transform fw_btn_enter:
+    alpha 0.0
+    pause 1.5
+    ease 0.3 alpha 1.0
+
+
+# ── Main Firewall Minigame Screen ────────────────────────────────────────────
 
 screen minigame_firewall():
     modal True
-    default packets = get_firewall_packets()
-    default answers = {}
-    default submitted = False
-    default score = 0
+
+    # Reset state on first show
+    on "show" action Function(fw_reset)
 
     add "#0A0E1A"
 
-    frame:
-        xfill True yfill True
-        background "#0A0E1A"
-        padding (40, 30)
+    # ── Scanline overlay (subtle) ────────────────────────────────────────
+    for _sl_y in range(0, 720, 4):
+        add Solid("#00000010"):
+            xsize 1280 ysize 1
+            xpos 0 ypos _sl_y
 
-        vbox:
-            spacing 10
+    # ══════════════════════════════════════════════════════════════════════
+    #  PHASE: INCOMING / FEEDBACK (main gameplay)
+    #  (Intro/skip is handled by the existing minigame_intro screen)
+    # ══════════════════════════════════════════════════════════════════════
+    if fw_state["phase"] in ("incoming", "feedback"):
 
-            # Header
-            text "// FIREWALL BREACH CHALLENGE //" style "minigame_title"
-            text "Analyze each incoming packet. ALLOW legitimate traffic. BLOCK suspicious packets." style "minigame_instruction"
+        # Timer tick — refresh display for timer bar
+        if fw_state["phase"] == "incoming":
+            timer 0.1 repeat True action Function(renpy.restart_interaction)
+            timer 15.0 action Function(fw_handle_timeout)
 
-            null height 10
+        # Feedback continue delay
+        if fw_state["phase"] == "feedback" and not fw_state["show_continue"]:
+            timer 1.5 action Function(fw_show_continue)
 
-            # Column headers
-            hbox:
-                xfill True
-                spacing 10
-                text "SOURCE IP" color "#888888" size 16 bold True xsize 200
-                text "PORT" color "#888888" size 16 bold True xsize 100
-                text "PROTOCOL" color "#888888" size 16 bold True xsize 120
-                text "ACTION" color "#888888" size 16 bold True xsize 300
+        $ _fw_pkts = get_fw_packets()
+        $ _fw_idx = fw_state["current_index"]
+        $ _fw_pkt = _fw_pkts[_fw_idx]
+        $ _fw_ip = _fw_pkt["source_ip"]
+        $ _fw_port = str(_fw_pkt["port"])
+        $ _fw_proto = _fw_pkt["protocol"]
+        $ _fw_desc = _fw_pkt["description"]
+        $ _fw_risk = _fw_pkt["risk_level"]
+        $ _fw_risk_col = fw_risk_color(_fw_risk)
+        $ _fw_explanation = _fw_pkt["explanation"]
+        $ _fw_correct = _fw_pkt["correct"]
+        $ _fw_remaining = packet_timer.get_remaining()
+        $ _fw_frac = packet_timer.get_fraction()
+        $ _fw_timer_col = fw_timer_color()
+        $ _fw_num = _fw_idx + 1
+        $ _fw_score = fw_state["score"]
 
-            null height 5
+        # ── TOP HUD BAR ─────────────────────────────────────────────────
+        frame:
+            xfill True ysize 100
+            xpos 0 ypos 0
+            background "#0D1220EE"
+            padding (30, 12)
 
-            # Packet rows
-            for i, pkt in enumerate(packets):
+            vbox:
+                spacing 6
+
+                # Title row
                 hbox:
                     xfill True
-                    spacing 10
-                    ysize 50
+                    text "// NSA NETWORK MONITOR //" color "#00FFD180" size 14 bold True yalign 0.5
 
-                    $ src_ip = pkt["src"]
-                    $ port_num = pkt["port"]
-                    $ proto_name = pkt["proto"]
-                    text "[src_ip]" color "#00FFD1" size 16 yalign 0.5 xsize 200
-                    text "[port_num]" color "#FFD700" size 16 yalign 0.5 xsize 100
-                    text "[proto_name]" color "#E8E8E8" size 16 yalign 0.5 xsize 120
+                    hbox:
+                        xalign 1.0
+                        spacing 20
+                        text "AUTHORIZED: [fw_state['allowed_count']]" color "#00FFD1" size 14 bold True yalign 0.5
+                        text "BLOCKED: [fw_state['blocked_count']]" color "#FF2D55" size 14 bold True yalign 0.5
+                        text "SCORE: [_fw_score]" color "#E8E8E8" size 14 bold True yalign 0.5
 
-                    if not submitted:
+                # Progress dots
+                hbox:
+                    spacing 8
+                    for _dot_i in range(8):
+                        if _dot_i < _fw_idx:
+                            # Completed
+                            $ _dot_ans = fw_state["answers"][_dot_i] if _dot_i < len(fw_state["answers"]) else None
+                            if _dot_ans and _dot_ans["is_correct"]:
+                                text "●" color "#00FFD1" size 18
+                            else:
+                                text "●" color "#FF2D55" size 18
+                        elif _dot_i == _fw_idx:
+                            text "◆" color "#FFD700" size 18
+                        else:
+                            text "○" color "#555555" size 18
+
+                    null width 20
+                    text "PACKET [_fw_num] / 8" color "#888888" size 14 yalign 0.5
+
+                # Timer bar
+                if fw_state["phase"] == "incoming":
+                    frame:
+                        xfill True ysize 6
+                        background "#1A1A2E"
+                        padding (0, 0)
+
+                        frame:
+                            xsize int(1220 * _fw_frac)
+                            ysize 6
+                            background _fw_timer_col
+                            xpos 0
+
+                    $ _fw_secs = int(_fw_remaining)
+                    text "[_fw_secs]s" color _fw_timer_col size 12 xalign 1.0
+                else:
+                    frame:
+                        xfill True ysize 6
+                        background "#1A1A2E"
+                        padding (0, 0)
+
+        # ── PACKET CARD ──────────────────────────────────────────────────
+        # Use showif per packet index to trigger enter animation on change
+        for _pc_i in range(8):
+            showif fw_state["current_index"] == _pc_i and fw_state["phase"] in ("incoming", "feedback"):
+                frame at fw_packet_enter:
+                    xalign 0.5 yalign 0.42
+                    xsize 820 ysize 280
+                    background "#131928"
+                    padding (0, 0)
+
+                    # Outer border
+                    add Solid("#00FFD120"):
+                        xsize 820 ysize 1 xpos 0 ypos 0
+                    add Solid("#00FFD120"):
+                        xsize 820 ysize 1 xpos 0 ypos 279
+                    add Solid("#00FFD120"):
+                        xsize 1 ysize 280 xpos 0 ypos 0
+                    add Solid("#00FFD120"):
+                        xsize 1 ysize 280 xpos 819 ypos 0
+
+                    # Corner brackets
+                    text "◢" color "#00FFD140" size 14 xpos 6 ypos 2
+                    text "◣" color "#00FFD140" size 14 xpos 798 ypos 2
+                    text "◤" color "#00FFD140" size 14 xpos 6 ypos 258
+                    text "◥" color "#00FFD140" size 14 xpos 798 ypos 258
+
+                    vbox:
+                        pos (0, 0)
+                        xsize 820
+
+                        # Threat level bar at top
+                        $ _pc_pkts = get_fw_packets()
+                        $ _pc_pkt = _pc_pkts[_pc_i]
+                        $ _pc_risk = _pc_pkt["risk_level"]
+                        $ _pc_rcol = fw_risk_color(_pc_risk)
+
                         hbox:
-                            spacing 10
-                            yalign 0.5
-                            xsize 300
+                            xfill True ysize 32
+                            spacing 0
 
-                            textbutton "ALLOW":
-                                text_size 16
-                                text_color ("#00FF00" if answers.get(i) == "allow" else "#555555")
-                                text_hover_color "#00FF00"
-                                action SetScreenVariable("answers", dict(list(answers.items()) + [(i, "allow")]))
+                            frame:
+                                xsize 180 ysize 32
+                                background _pc_rcol
+                                padding (10, 4)
+                                if _pc_risk == "CRITICAL":
+                                    at fw_threat_blink
+                                text "THREAT: [_pc_risk]" color "#0A0E1A" size 14 bold True yalign 0.5
 
-                            textbutton "BLOCK":
-                                text_size 16
-                                text_color ("#FF2D55" if answers.get(i) == "block" else "#555555")
-                                text_hover_color "#FF2D55"
-                                action SetScreenVariable("answers", dict(list(answers.items()) + [(i, "block")]))
+                            frame:
+                                xfill True ysize 32
+                                background "#0D1220"
+                                padding (15, 4)
+                                $ _pc_desc = _pc_pkt["description"]
+                                text "[_pc_desc]" color "#888888" size 14 yalign 0.5
+
+                        null height 20
+
+                        # Data fields
+                        hbox:
+                            xfill True
+                            spacing 0
+
+                            # Source IP column
+                            vbox:
+                                xsize 320
+                                xalign 0.0
+                                spacing 4
+                                xoffset 30
+                                text "SOURCE IP" color "#888888" size 12 bold True
+                                $ _pc_ip = _pc_pkt["source_ip"]
+                                text "[_pc_ip]" color "#00FFD1" size 26 bold True
+
+                            # Port column
+                            vbox:
+                                xsize 200
+                                spacing 4
+                                text "PORT" color "#888888" size 12 bold True
+                                $ _pc_port = str(_pc_pkt["port"])
+                                text "[_pc_port]" color "#FFD700" size 30 bold True
+
+                            # Protocol column
+                            vbox:
+                                xsize 250
+                                spacing 4
+                                text "PROTOCOL" color "#888888" size 12 bold True
+                                $ _pc_proto = _pc_pkt["protocol"]
+                                text "[_pc_proto]" color "#E8E8E8" size 26 bold True
+
+                        null height 20
+
+                        # Description line
+                        hbox:
+                            xoffset 30
+                            text "CLASSIFICATION: " color "#555555" size 14
+                            $ _pc_desc2 = _pc_pkt["description"]
+                            text "[_pc_desc2]" color "#888888" size 14 italic True
+
+                        # Feedback overlay on card
+                        if fw_state["phase"] == "feedback" and fw_state["current_index"] == _pc_i:
+                            null height 15
+                            hbox:
+                                xoffset 30
+                                if fw_state["last_correct"]:
+                                    text "✓ CORRECT ANALYSIS" color "#00FF88" size 16 bold True
+                                else:
+                                    text "✗ INCORRECT ANALYSIS" color "#FF2D55" size 16 bold True
+
+        # ── ACTION BUTTONS ───────────────────────────────────────────────
+        if fw_state["phase"] == "incoming":
+            hbox at fw_fade_in:
+                xalign 0.5 yalign 0.72
+                spacing 60
+
+                # ALLOW button
+                frame:
+                    xsize 220 ysize 70
+                    background "#0D1220"
+                    padding (0, 0)
+
+                    # Border
+                    add Solid("#00FFD140"):
+                        xsize 220 ysize 1 xpos 0 ypos 0
+                    add Solid("#00FFD140"):
+                        xsize 220 ysize 1 xpos 0 ypos 69
+                    add Solid("#00FFD140"):
+                        xsize 1 ysize 70 xpos 0 ypos 0
+                    add Solid("#00FFD140"):
+                        xsize 1 ysize 70 xpos 219 ypos 0
+
+                    textbutton "✓  ALLOW":
+                        xalign 0.5 yalign 0.5
+                        text_color "#00FFD1"
+                        text_hover_color "#FFFFFF"
+                        text_size 22
+                        text_bold True
+                        action Function(fw_evaluate, "ALLOW")
+
+                # BLOCK button
+                frame:
+                    xsize 220 ysize 70
+                    background "#0D1220"
+                    padding (0, 0)
+
+                    add Solid("#FF2D5540"):
+                        xsize 220 ysize 1 xpos 0 ypos 0
+                    add Solid("#FF2D5540"):
+                        xsize 220 ysize 1 xpos 0 ypos 69
+                    add Solid("#FF2D5540"):
+                        xsize 1 ysize 70 xpos 0 ypos 0
+                    add Solid("#FF2D5540"):
+                        xsize 1 ysize 70 xpos 219 ypos 0
+
+                    textbutton "✗  BLOCK":
+                        xalign 0.5 yalign 0.5
+                        text_color "#FF2D55"
+                        text_hover_color "#FFFFFF"
+                        text_size 22
+                        text_bold True
+                        action Function(fw_evaluate, "BLOCK")
+
+        # ── ANALYSIS TERMINAL (feedback) ─────────────────────────────────
+        if fw_state["phase"] == "feedback":
+            frame at fw_feedback_enter:
+                xalign 0.5 yalign 0.82
+                xsize 820 yminimum 120
+                background "#0A0A14"
+                padding (20, 15)
+
+                # Terminal border
+                add Solid("#00FFD130"):
+                    xsize 820 ysize 1 xpos 0 ypos 0
+                add Solid("#00FFD130"):
+                    xsize 1 ysize 120 xpos 0 ypos 0
+
+                vbox:
+                    spacing 8
+
+                    # Terminal header
+                    text "> ANALYSIS TERMINAL" color "#00FFD180" size 12 bold True
+
+                    if fw_state["timed_out"]:
+                        text "{cps=40}⚠ TIME OUT — Packet auto-blocked (safe default){/cps}" color "#FFD700" size 16 bold True
+                    elif fw_state["last_correct"]:
+                        $ _fb_choice = fw_state["answers"][-1]["choice"]
+                        if _fb_choice == "ALLOW":
+                            text "{cps=40}✓ AUTHORIZATION GRANTED — Packet forwarded{/cps}" color "#00FF88" size 16 bold True
+                        else:
+                            text "{cps=40}✗ PACKET REJECTED — Firewall rule applied{/cps}" color "#00FFD1" size 16 bold True
+                    else:
+                        text "{cps=40}⚠ INCORRECT ANALYSIS — Review required{/cps}" color "#FF2D55" size 16 bold True
+
+                    # Explanation
+                    text "{cps=30}[_fw_explanation]{/cps}" color "#AAAAAA" size 15
+
+                    if fw_state["last_correct"] and not fw_state["timed_out"]:
+                        text "knowledge_score +1" color "#00FF8880" size 13
+
+                    null height 5
+
+                    # Continue button (delayed)
+                    if fw_state["show_continue"]:
+                        textbutton "> CONTINUE →":
+                            text_color "#00FFD1"
+                            text_hover_color "#FFFFFF"
+                            text_size 16
+                            text_bold True
+                            action Function(fw_next_packet)
                     else:
                         hbox:
-                            spacing 10
-                            yalign 0.5
-                            xsize 300
+                            text "> Processing" color "#00FFD180" size 14
+                            text " _" at fw_cursor_blink color "#00FFD1" size 14
 
-                            $ user_ans = answers.get(i, "")
-                            $ correct = "allow" if pkt["legit"] else "block"
-                            $ is_correct = (user_ans == correct)
+        # ── Waiting prompt (incoming phase) ──────────────────────────────
+        if fw_state["phase"] == "incoming":
+            frame:
+                xalign 0.5 yalign 0.82
+                xsize 820 ysize 50
+                background "#0A0A14"
+                padding (20, 12)
 
-                            if is_correct:
-                                text "✓ CORRECT" color "#00FF00" size 16
-                            else:
-                                text "✗ WRONG" color "#FF2D55" size 16
+                add Solid("#00FFD120"):
+                    xsize 820 ysize 1 xpos 0 ypos 0
 
-            null height 15
+                hbox:
+                    text "> Scanning packet... Awaiting your authorization" color "#00FFD160" size 14
+                    text " _" at fw_cursor_blink color "#00FFD1" size 14
 
-            if not submitted:
-                if len(answers) == len(packets):
-                    textbutton "> SUBMIT ANALYSIS":
-                        xalign 0.5
-                        text_style "menu_btn_text"
-                        action [SetScreenVariable("submitted", True)]
+    # ══════════════════════════════════════════════════════════════════════
+    #  PHASE: COMPLETE (Result / Mission Debrief)
+    # ══════════════════════════════════════════════════════════════════════
+    if fw_state["phase"] == "complete":
+        $ _r_score = fw_state["score"]
+        $ _r_allowed = fw_state["allowed_count"]
+        $ _r_blocked = fw_state["blocked_count"]
+        $ _r_grade, _r_bonus = fw_get_grade(_r_score)
+        $ _r_answers = fw_state["answers"]
+
+        frame at fw_result_enter:
+            xfill True yfill True
+            background "#0A0E1A"
+            padding (40, 20)
+
+            vbox:
+                xalign 0.5
+                spacing 10
+
+                text "// FIREWALL ANALYSIS COMPLETE //" color "#00FFD1" size 28 bold True xalign 0.5
+
+                # Mission outcome panel (compact)
+                frame:
+                    xalign 0.5 xsize 700
+                    background "#131928"
+                    padding (25, 15)
+
+                    vbox:
+                        spacing 6
+
+                        text "MISSION OUTCOME" color "#E8E8E8" size 18 bold True xalign 0.5
+
+                        hbox:
+                            xfill True
+                            text "Correctly Handled:" color "#AAAAAA" size 15
+                            text "[_r_score] / 8" color "#00FFD1" size 15 bold True xalign 1.0
+
+                        hbox:
+                            xfill True
+                            text "Allowed: [_r_allowed]   |   Blocked: [_r_blocked]" color "#888888" size 14
+
+                        hbox:
+                            xfill True
+                            text "Knowledge Bonus:" color "#888888" size 15
+                            text "+[_r_bonus]" color "#FFD700" size 15 bold True xalign 1.0
+
+                # Grade display
+                text "GRADE:" color "#888888" size 14 xalign 0.5
+
+                if _r_score >= 7:
+                    text "[_r_grade]" color "#00FF88" size 32 bold True xalign 0.5
+                elif _r_score >= 5:
+                    text "[_r_grade]" color "#00FFD1" size 32 bold True xalign 0.5
+                elif _r_score >= 3:
+                    text "[_r_grade]" color "#FFD700" size 32 bold True xalign 0.5
                 else:
-                    text "Select ALLOW or BLOCK for all [len(packets)] packets to submit." color "#888888" size 18 xalign 0.5
+                    text "[_r_grade]" color "#FF2D55" size 32 bold True xalign 0.5
 
-            else:
-                # Calculate score
-                python:
-                    fw_score = 0
-                    for idx, pkt in enumerate(packets):
-                        correct_action = "allow" if pkt["legit"] else "block"
-                        if answers.get(idx) == correct_action:
-                            fw_score += 1
+                # Per-packet breakdown (scrollable)
+                frame:
+                    xalign 0.5 xsize 700
+                    background "#0D1220"
+                    padding (15, 10)
 
-                text "Score: [fw_score]/[len(packets)]" style "minigame_score"
+                    viewport:
+                        xfill True ysize 200
+                        mousewheel True
+                        scrollbars "vertical"
+
+                        vbox:
+                            spacing 4
+                            text "─── PACKET LOG ───" color "#00FFD160" size 12 bold True
+
+                            $ _r_pkts = get_fw_packets()
+                            for _ri in range(8):
+                                $ _rpkt = _r_pkts[_ri]
+                                $ _rans = _r_answers[_ri] if _ri < len(_r_answers) else None
+
+                                hbox:
+                                    spacing 8
+                                    if _rans and _rans["is_correct"]:
+                                        text "✓" color "#00FF88" size 13 yalign 0.5
+                                    else:
+                                        text "✗" color "#FF2D55" size 13 yalign 0.5
+
+                                    $ _r_ip = _rpkt["source_ip"]
+                                    $ _r_pt = str(_rpkt["port"])
+                                    $ _r_pr = _rpkt["protocol"]
+                                    text "[_r_ip]:[_r_pt]" color "#00FFD1" size 12 yalign 0.5 xsize 180
+                                    text "[_r_pr]" color "#E8E8E8" size 12 yalign 0.5 xsize 70
+
+                                    if _rans:
+                                        $ _r_ch = _rans["choice"]
+                                        $ _r_co = _rans["correct_answer"]
+                                        if _rans["is_correct"]:
+                                            text "[_r_ch]" color "#00FF88" size 12 yalign 0.5
+                                        else:
+                                            text "[_r_ch] (should: [_r_co])" color "#FF2D55" size 12 yalign 0.5
+
+                # Key takeaway (compact)
+                frame:
+                    xalign 0.5 xsize 700
+                    background "#131928"
+                    padding (15, 10)
+
+                    vbox:
+                        spacing 4
+                        text "Dangerous ports: 31337, 4444, 23 (Telnet)" color "#FF2D55" size 13
+                        text "Safe: HTTP(80), HTTPS(443), DNS(53), SSH/RDP from internal IPs" color "#00FF88" size 13
 
                 null height 5
 
-                # Show explanations
-                viewport:
-                    ysize 200
-                    scrollbars "vertical"
-                    mousewheel True
-
-                    vbox:
-                        spacing 5
-                        for i, pkt in enumerate(packets):
-                            $ correct = "ALLOW" if pkt["legit"] else "BLOCK"
-                            $ p_port = pkt["port"]
-                            $ p_proto = pkt["proto"]
-                            $ p_reason = pkt["reason"]
-                            text "Port [p_port] ([p_proto]): [correct] — [p_reason]" color "#AAAAAA" size 14
-
-                null height 10
-
+                # CONTINUE button — always visible at bottom
                 textbutton "> CONTINUE MISSION":
                     xalign 0.5
-                    text_style "menu_btn_text"
-                    action Return(fw_score)
+                    text_color "#00FFD1"
+                    text_hover_color "#FFFFFF"
+                    text_size 22
+                    text_bold True
+                    action Return(_r_score)
 
 
 ################################################################################
