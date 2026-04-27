@@ -468,6 +468,36 @@ screen main_menu():
                 ysize 170
                 fit "contain"
 
+            fixed:
+                xsize 920
+                ysize 170
+                xalign 0.5
+
+                text "ENEMY OF THE STATE":
+                    xalign 0.5
+                    yalign 0.5
+                    color "#006654"
+                    size 84
+                    bold True
+                    outlines [(10, "#00665418", 0, 0), (5, "#00806922", 0, 0)]
+
+                text "ENEMY OF THE STATE" at title_glitch:
+                    xalign 0.5
+                    yalign 0.5
+                    color "#EFFFFA"
+                    size 84
+                    bold True
+                    outlines [(4, "#00806988", 0, 0), (12, "#00806918", 0, 0)]
+
+                text "ENEMY OF THE STATE":
+                    xalign 0.5
+                    yalign 0.5
+                    xoffset 2
+                    yoffset -2
+                    color "#8B8FCC33"
+                    size 84
+                    bold True
+
             frame:
                 xalign 0.5
                 xsize 260
