@@ -1,245 +1,958 @@
-# Characters
-define pro = Character("Edward", color="#ffffff")
-define sup = Character("Supervisor", color="#ffcc00")
-define col = Character("Colleague", color="#aaccff")
-define jour = Character("Journalist", color="#ffaa55")
-define ed = Character("Editor", color="#cc5555")
-define ro = Character("russian Official", color="#cc2222")
+################################################################################
+## SCRIPT.RPY — Main Game Script (All 5 Chapters + Introduction)
+## Classified: The Snowden Files
+################################################################################
 
-# Narrative voices
-define im = Character("Internal Monologue", what_prefix="*", what_suffix="*", color="#888888")
-define sys = Character("System Prompt", color="#00ff00")
-
-# Images
-image edward neutral:
-    "sprites/edward neutral.png"
-    zoom 0.7
-
-image supervisor neutral:
-    "sprites/supervisor neutral.png"
-    zoom 0.7
-
-image colleague neutral:
-    "sprites/colleague neutral.png"
-    zoom 0.7
-
-image journalist neutral:
-    "sprites/journalist neutral.png"
-    zoom 0.7
-
-image editor neutral:
-    "sprites/editor neutral.png"
-    zoom 0.7
-
-image russian official neutral:
-    "sprites/russian official neutral.png"
-    zoom 0.7
-
-image bg_nsa:
-    "backgrounds/Working inside the NSA's surveillance apparatus.png"
-    xysize (1920, 1080)
-
-image bg_prism:
-    "backgrounds/Discovering the PRISM mass surveillance program.png"
-    xysize (1920, 1080)
-
-image bg_hong_kong:
-    "backgrounds/The escape to Hong Kong and contact with journalists.png"
-    xysize (1920, 1080)
-
-image bg_leak:
-    "backgrounds/The Leak and Global Fallout.png"
-    xysize (1920, 1080)
-
-image bg_russia:
-    "backgrounds/Asylum in russia — and life as a fugitive.png"
-    xysize (1920, 1080)
+################################################################################
+## GAME START
+################################################################################
 
 label start:
-    jump scene_1_nsa
+    $ show_hud = False
+    jump intro
 
-label scene_1_nsa:
-    scene bg_nsa with fade
 
-    show supervisor neutral at right
-    sup "Don't overthink the 'why,' 302. Just focus on the selectors. If the system flags a packet, it’s because the math says they’re a threat. Your job is to verify the handshake, not the person."
+################################################################################
+## INTRODUCTION SEQUENCE
+################################################################################
 
-    show colleague neutral at left
-    col "You see this? I can watch this guy’s webcam in real-time. He’s just eating cereal. It’s wild what we can grab without even a ping."
+label intro:
+    scene black
+    with fade
 
-    show edward neutral at center
+    $ renpy.pause(0.5)
+
+    centered "{i}\"The greatest fear I have regarding the outcome of these disclosures\nis that nothing will change.\"{/i}\n\n— Edward Snowden"
+
+    $ renpy.pause(3.0)
+
+    scene black with dissolve
+
+    narrator_voice "The year is 2013."
+
+    narrator_voice "The United States government operates the most sophisticated surveillance network in human history."
+
+    narrator_voice "Billions of phone calls, emails, and internet sessions are collected, analyzed, and stored — all in the name of national security."
+
+    narrator_voice "You are Edward Snowden — NSA contractor, former CIA employee, and the man who is about to make the most consequential decision of his life."
+
+    narrator_voice "Your choices in this story mirror the real dilemmas Snowden faced. Some paths lead to freedom. Others lead to ruin."
+
+    narrator_voice "Along the way, your knowledge of network security will be tested. Every correct answer moves you closer to the truth."
+
+    narrator_voice "Pay attention. Think carefully. The skills you learn here are real — and in the digital age, they matter."
+
+    call screen briefing_screen
+
+    jump chapter_1
+
+
+################################################################################
+##  ██████╗██╗  ██╗ ██╗
+## ██╔════╝██║  ██║███║
+## ██║     ███████║╚██║
+## ██║     ██╔══██║ ██║
+## ╚██████╗██║  ██║ ██║
+##  ╚═════╝╚═╝  ╚═╝ ╚═╝
+## CHAPTER 1: INSIDE THE MACHINE
+################################################################################
+
+label chapter_1:
+    $ current_chapter = 1
+    $ show_hud = True
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 1)
+
+    call screen chapter_title_screen(1, "INSIDE THE MACHINE", "NSA Facility — Oahu, Hawaii — 2012")
+
+    scene bg_nsa_exterior at parallax with chapter_transition
+
+    # --- Scene: Arriving at the NSA ---
+
+    narrator_voice "The Tunnel. That's what they call it — the underground NSA facility beneath a pineapple field in Oahu, Hawaii."
+
+    scene bg_nsa_checkpoint at parallax with dissolve
+    narrator_voice "Edward Snowden walks through layers of biometric security. Badge. Fingerprint. Retinal scan. The door hisses open."
+
+    scene bg_nsa_main at parallax with dissolve
+    show edward neutral at enter_center
+    with dissolve
+
+    im "Another day inside the machine. Rows of monitors tracking billions of data points. Every packet, every connection, every digital breath."
+
+    show supervisor neutral at enter_right
+    with dissolve
+
+    supervisor "Morning, Snowden. We've got a batch of flagged selectors to process. XKeyscore caught some interesting traffic overnight."
+
+    e "Yes sir. I'll pull up the queue."
+
+
+    supervisor "And don't overthink the 'why.' If the system flags a packet, it's because the math says they're a threat. Your job is to verify the handshake, not question the person."
+
+    show colleague neutral at enter_left
+    with dissolve
+
+    colleague "Hey Ed. Check this out — I can watch this guy's webcam feed in real time. He's just eating cereal. It's wild what we can access without even a targeted request."
+
+    e "That's... that's a lot of access for an unflagged individual."
+
+    colleague "Welcome to the NSA, man. Everything is accessible. Everything."
+
+    im "The scale of it is staggering. This isn't targeted surveillance. This is a vacuum cleaner, sucking up everything."
+
+    # --- Choice 1: Follow protocol or explore restricted files? ---
+    hide colleague neutral with dissolve
+    hide supervisor neutral with dissolve
+
     menu:
-        "Copy that. Just keeping the signal clean. Narrowing the search parameters now.":
-            pro "Copy that. Just keeping the signal clean. Narrowing the search parameters now."
-            pass
-        "Do we ever check if the warrant covers the metadata, or just the content?":
-            pro "Do we ever check if the warrant covers the metadata, or just the content?"
-            sup "You're asking the wrong questions. The system decides what's covered."
-            pass
+        "Follow protocol. Process the flagged selectors as assigned.":
+            $ persistent.choice_ch1_1 = "protocol"
+            e "Alright, let's focus on the assignment. Processing the flagged selectors now."
+            $ trust_score += 1
+            $ renpy.notify("Trust +1")
 
-    sup "Before you access the XKeyscore buffer, I need you to re-verify. We’ve had too many 'credential leaks' lately. You know the drill—password alone is just a polite suggestion to a hacker."
+            scene bg_nsa_terminal at parallax with dissolve
+            show edward neutral at stage_center
+            with dissolve
 
-label lesson_1_input:
-    sys "The system requires a secondary token. A code has been sent to your hardware key."
-    $ totp = renpy.input("Task: Please enter the 6-digit TOTP (Time-based One-Time Password) from your authenticator app to sync the session:", length=6).strip()
+            im "Stay in your lane, Snowden. Do your job. Don't attract attention."
 
-    if len(totp) == 6 and totp.isdigit():
-        sys "AUTHENTICATION SUCCESSFUL. ACCESSING XKEYSCORE."
-        jump scene_2_prism
+            narrator_voice "Edward processes the assigned selectors. Standard targets. Foreign IP addresses. But among the flagged traffic, domestic addresses keep appearing."
+
+        "Explore the restricted directories. Something doesn't add up.":
+            $ persistent.choice_ch1_1 = "explore"
+            e "I need to check something first..."
+            $ suspicion_level += 1
+            $ renpy.notify("Suspicion +1")
+
+            scene bg_nsa_terminal at parallax with dissolve
+            show edward neutral at stage_center
+            with dissolve
+
+            im "These directories shouldn't be this easy to access. Why does a systems administrator have read access to raw intelligence feeds?"
+
+            narrator_voice "Edward navigates deeper into the classified file system. Folders upon folders of surveillance programs he's never been briefed on. The scope is enormous."
+
+    # --- Tutorial Exposition ---
+
+    narrator_voice "On his screen, Edward sees the tools of the trade: network monitoring dashboards tracking millions of connections in real time."
+
+    sys "// SYSTEM NOTE: Network monitoring tools analyze traffic patterns. Firewalls filter incoming and outgoing packets based on predefined rules. Access control determines who can see what. //"
+
+    # --- Minigame 1: Firewall Breach ---
+
+    $ mg_intro = renpy.call_screen("minigame_intro", title="FIREWALL BREACH", description="You must analyze incoming network packets and decide which to ALLOW through the firewall and which to BLOCK. Look for suspicious ports, unknown source IPs, and insecure protocols.")
+
+    if mg_intro:
+        $ mg_firewall_score = renpy.call_screen("minigame_firewall")
+        if mg_firewall_score >= 6:
+            $ knowledge_score += 2
+            $ renpy.notify("Knowledge +2")
+            sys "// CHALLENGE PASSED. Your firewall analysis was solid. //"
+        else:
+            $ suspicion_level += 1
+            $ renpy.notify("Suspicion +1")
+            sys "// CHALLENGE FAILED. Poor packet filtering leaves the network vulnerable. //"
     else:
-        sys "ERROR: INVALID TOTP LENGTH OR FORMAT."
-        im "That's not right. The code needs to be exactly six numbers. High-security environments require more than just a password."
-        jump lesson_1_input
+        $ knowledge_score -= 1
+        $ renpy.notify("Knowledge -1 (Skipped)")
 
+    # --- Question Segment 1: MCQ ---
 
-label scene_2_prism:
-    scene bg_prism with fade
-    show edward neutral at center
+    call screen mcq_question(
+        question="What does VPN stand for?",
+        answers=["Virtual Private Network", "Verified Protocol Node", "Virtual Program Network", "Variable Packet Node"],
+        correct_index=0,
+        explanation="A VPN (Virtual Private Network) creates an encrypted tunnel between your device and a VPN server, protecting your traffic from surveillance on the local network."
+    )
 
-    im "The architecture is... infinite. It’s not a targeted tap anymore. It’s a vacuum. We aren't looking for needles in haystacks; we’re just stealing the whole field."
+    # --- Choice 2: Report anomaly or stay silent? ---
+    show edward neutral at stage_center
+    show supervisor neutral at enter_right
+    with dissolve
 
-    sys "CRITICAL ACCESS GRANTED. DIRECT LINK TO EXTERNAL SERVERS ACTIVE. DATA HARVEST RATIO: 1:1."
+    narrator_voice "While processing selectors, Edward discovers domestic IP addresses mixed in with foreign intelligence targets."
 
-    menu:
-        "(Silently copy the directory to the encrypted drive)":
-            pro "Just doing some routine backup... nothing to see here."
-            pass
-        "\"This doesn't look like foreign intelligence. These are domestic IP addresses. Thousands of them.\"":
-            pro "This doesn't look like foreign intelligence. These are domestic IP addresses. Thousands of them."
-            pass
+    e "Sir, I'm seeing domestic addresses in the foreign intelligence queue. These are American citizens."
 
-    im "I need to move these files to a hidden partition. If the system admins see a folder named 'LEAKS,' I’m done. I need a passphrase that a brute-force attack couldn't crack in a billion years."
-
-label lesson_2_input:
-    sys "Task: Create a Master Passphrase for the encrypted volume."
-    $ passphrase = renpy.input("Task: Enter a highly secure password (minimum 12 characters, non-predictable):").strip()
-
-    if len(passphrase) < 12:
-        sys "WARNING: ENTROPY TOO LOW. BRUTE-FORCE VULNERABILITY DETECTED."
-        im "Too short. A simple password will be cracked in seconds. I need something longer, ideally a phrase or at least 12 characters."
-        jump lesson_2_input
-    elif passphrase.lower() in ["password", "p@ssw0rd123", "admin123", "1234567890", "qwertyuiop"]:
-        sys "WARNING: KNOWN WEAK PASSWORD DETECTED."
-        im "That's one of the most common passwords in the world. A dictionary attack would crack this instantly. I need something truly unique."
-        jump lesson_2_input
+    if suspicion_level >= 2:
+        supervisor "Snowden. I've noticed you've been poking around where you shouldn't. Are you having second thoughts about your oath?"
+        e "No sir. Just doing my due diligence."
+        supervisor "Your 'due diligence' is noted. Logged and noted."
+        $ suspicion_level += 1
+        $ renpy.notify("Suspicion +1")
     else:
-        sys "MASTER PASSPHRASE ACCEPTED. ENCRYPTION IN PROGRESS."
-        im "Good. Length and randomness are far superior to complex but short passwords."
-        jump scene_3_hong_kong
-
-
-label scene_3_hong_kong:
-    scene bg_hong_kong with fade
-    show journalist neutral at right
-    show edward neutral at left
-
-    jour "You’re late. And why a Rubik's Cube? It’s a bit theatrical, don't you think?"
-
-    pro "Theatrical keeps us alive. Put your phones in the microwave. Now. We aren't talking until the batteries are physically shielded."
+        supervisor "Those addresses were flagged by the FISA court authorization. Everything is legal, Snowden. Don't make waves."
 
     menu:
-        "If you don't use the PGP key I sent, I’m walking out that door. No more unencrypted talk.":
-            pro "If you don't use the PGP key I sent, I’m walking out that door. No more unencrypted talk."
-            pass
-        "My girlfriend thinks I’m on a business trip. By tomorrow, she’ll think I’m a traitor. We need to move fast.":
-            pro "My girlfriend thinks I’m on a business trip. By tomorrow, she’ll think I’m a traitor. We need to move fast."
-            pass
+        "Report the anomaly to the Inspector General's office.":
+            $ persistent.choice_ch1_2 = "report"
+            e "I should file a formal concern with the IG office."
+            $ trust_score += 2
+            $ renpy.notify("Trust +2")
 
-    pro "The hotel Wi-Fi is a sieve. Every packet we send is being sniffed by local intelligence or the NSA's 'Stellar Wind' sensors. We can't send the invite to the journalists on an open line."
+            supervisor "Do what you have to do. But I'm telling you, this goes nowhere."
 
-label lesson_3_input:
-    sys "The connection is 'UNSECURED'. Configure the Secure Tunnel."
+            im "I filed the report. I used the proper channels. And nothing happened. Nothing."
+
+            narrator_voice "The report was acknowledged, reviewed, and buried. The system protects itself."
+
+        "Stay silent. Keep working. Gather more information.":
+            $ persistent.choice_ch1_2 = "silent"
+            scene bg_1 at parallax with dissolve
+            im "Not yet. I need to understand the full scope before I act. If I report one anomaly, they'll lock me out. I need to see the whole picture."
+            $ trust_score -= 1
+            $ renpy.notify("Trust -1")
+
+            narrator_voice "Edward continues working in silence, but his eyes are open. Every day reveals more."
+
+    hide supervisor neutral with dissolve
+    hide edward neutral with dissolve
+
+    # --- Chapter 1 Summary ---
+
+    if knowledge_score >= 2 and trust_score >= 1:
+        $ ch1_outcome = "good"
+    else:
+        $ ch1_outcome = "bad"
+
+    call screen chapter_summary(1, "INSIDE THE MACHINE")
+
+    jump chapter_2
+
+
+################################################################################
+##  ██████╗██╗  ██╗██████╗
+## ██╔════╝██║  ██║╚════██╗
+## ██║     ███████║ █████╔╝
+## ██║     ██╔══██║██╔═══╝
+## ╚██████╗██║  ██║███████╗
+##  ╚═════╝╚═╝  ╚═╝╚══════╝
+## CHAPTER 2: THE PRISM REVELATION
+################################################################################
+
+label chapter_2:
+    $ current_chapter = 2
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 2)
+
+    call screen chapter_title_screen(2, "THE PRISM REVELATION", "NSA Servers — Classified Briefings — 2012-2013")
+
+    scene bg_prism at parallax with chapter_transition
+
+    show edward neutral at enter_center
+    with dissolve
+
+    # --- Snowden discovers PRISM ---
+
+    im "I found it. The architecture is... infinite. It's not a targeted tap anymore. It's a vacuum."
+
+    im "They call it PRISM — a direct pipeline into the servers of every major tech company. Google. Facebook. Apple. Microsoft. All of them."
+
+    sys "// CLASSIFIED: PRISM — Planning Tool for Resource Integration, Synchronization, and Management. Direct server access to 9 major internet service providers. //"
+
+    im "We aren't looking for needles in haystacks. We're just stealing the whole field."
+
+    narrator_voice "The PRISM program gave the NSA direct access to user data from the world's largest tech companies. Emails, chat logs, file transfers, photos — all accessible without individual warrants."
+
+    sys "// SYSTEM NOTE: PRISM worked by collecting data 'upstream' — directly from fiber-optic cables and company servers, bypassing traditional warrant requirements through the FISA Amendments Act. //"
+
+    # --- Internal conflict with colleague ---
+    show colleague neutral at enter_left
+    with dissolve
+
+    colleague "Ed, you look like you've seen a ghost. What's wrong?"
+
+    e "Have you ever looked at what we're actually collecting? Not the reports. The raw feeds."
+
+    colleague "I try not to think about it too much. We've got clearance, we've got authorization. That's enough for me."
+
+    e "Is it? Because what I'm seeing goes way beyond foreign intelligence. This is domestic surveillance on a massive scale."
+
+    colleague "Ed... be very careful what you say next. The walls have ears. Literally."
+
+    scene bg_prism1 at parallax with dissolve
+
+    # --- Choice 1: Trust colleague or work alone? ---
+
     menu:
-        sys "Task: Select the correct protocol to wrap your traffic in an encrypted layer."
-        "WEP":
-            pro "No, that's not secure. WEP is completely broken. Any script kiddie in the lobby could read it."
-            jump lesson_3_input
-        "HTTP":
-            pro "No, HTTP sends data in plain text. Anyone on the network can sniff the packets."
-            jump lesson_3_input
-        "FTP":
-            pro "FTP is not encrypted. I need something secure."
-            jump lesson_3_input
-        "AES-256 VPN":
-            sys "ENCRYPTION LAYER ACTIVE. SECURE TUNNEL ESTABLISHED."
-            pro "The tunnel is secure. It's an absolute necessity to encrypt traffic on untrusted networks."
-            jump scene_4_leak
+        "Trust the colleague. Share what you've found.":
+            $ persistent.choice_ch2_1 = "trust"
+            e "Look, I need someone I can trust. What I've found... it's bigger than both of us."
+            $ trust_score += 1
+            $ renpy.notify("Trust +1")
 
+            colleague "I... I've had my own doubts. But Ed, if you're thinking what I think you're thinking, you need to be incredibly careful."
 
-label scene_4_leak:
-    scene bg_leak with fade
-    show editor neutral at right
-    show edward neutral at left
-    show journalist neutral at center
+            colleague "Whatever you do, don't use the internal network. They monitor everything. Every keystroke."
 
-    ed "If we print this, the government will come for us with everything they have. Are you 100%% sure these documents are authenticated?"
+            im "At least I'm not completely alone in this."
 
-    pro "The documents speak for themselves. The question is: do the people have a right to know what's being done in their name?"
+        "Work alone. Trust no one inside the NSA.":
+            $ persistent.choice_ch2_1 = "alone"
+            e "Never mind. Forget I said anything. Just tired."
+            $ suspicion_level += 0
+            $ trust_score -= 1
+            $ renpy.notify("Trust -1")
 
-    menu:
-        "Put my name on it. I’m not hiding in the shadows. I want them to know who did this.":
-            pro "Put my name on it. I’m not hiding in the shadows. I want them to know who did this."
-            pass
-        "Just leak the tech. The story is the surveillance, not the man behind the keyboard.":
-            pro "Just leak the tech. The story is the surveillance, not the man behind the keyboard."
-            pass
+            colleague "Sure, man. Get some rest."
 
-    jour "We’re ready to upload the slides to our public server, but wait—if we post the raw files, the NSA will see the 'Author' field in the document properties. They'll know it was you before the ink is dry."
+            im "I can't trust anyone here. One wrong word and I'm done. I need to do this alone."
 
-label lesson_4_input:
-    sys "SANITIZE THE EVIDENCE. RUNNING EXIFCLEANER."
-    menu:
-        sys "Task: Which of the following 'Metadata' should be stripped to ensure anonymity?"
-        "GPS Coordinates":
-            jour "Wait... if we only strip the GPS, the other metadata points can still identify the software version or the exact printer used. Are you sure we shouldn't strip absolutely everything?"
-            jump lesson_4_input
-        "Creation Date":
-            jour "Wait... if we only strip the date, the GPS data could still lead them straight to this hotel. We need to strip more."
-            jump lesson_4_input
-        "Printer Serial Number":
-            jour "Wait... removing the printer serial is good, but what about the creation date and GPS? They'll still know where and when it was made."
-            jump lesson_4_input
-        "All of the Above":
-            jour "Good thinking. Files carry 'invisible' data that can easily identify the creator. We can't leave any breadcrumbs."
-            jump scene_5_russia
+    hide colleague neutral with dissolve
 
+    # --- Question Segment 2: Text Input ---
 
-label scene_5_russia:
-    scene bg_russia with fade
-    show russian official neutral at right
-    show edward neutral at left
+    call screen text_input_question_screen(
+        question="Type the codename of the surveillance program Snowden found:",
+        correct_answer="PRISM",
+        hint="It's named after a glass object that splits light into a spectrum...",
+        explanation="PRISM was the codename for the NSA program that collected user data from major tech platforms.",
+        accepted_answers=["PRISM"],
+        helper_text="You just saw the codename in the scene above, so trust your memory more than your IT knowledge."
+    )
 
-    ro "The airport transit zone is a strange place. You are not in russia, but you are certainly not in America. You are... nowhere. We can offer you 'somewhere,' for a price."
+    # --- Minigame 2: Decrypt the Message ---
 
-    pro "I’m an exile in the physical world, but I’ve never been more active in the digital one. The walls are thick, but the fiber-optics are thin."
+    $ mg_intro2 = renpy.call_screen("minigame_intro", title="DECRYPT THE MESSAGE", description="A classified document name has been encrypted using a Caesar cipher (ROT-3). Decode the message by shifting each letter back by 3 positions in the alphabet.")
+
+    if mg_intro2:
+        $ mg_decrypt_solved = renpy.call_screen("minigame_decrypt")
+        if mg_decrypt_solved:
+            $ knowledge_score += 2
+            $ evidence_secured = True
+            $ renpy.notify("Knowledge +2 | Evidence Secured!")
+        else:
+            $ renpy.notify("Decryption failed.")
+    else:
+        $ knowledge_score -= 1
+        $ renpy.notify("Knowledge -1 (Skipped)")
+
+    # --- Choice 2: Copy the files or take notes only? ---
+    scene bg_nsa_servers at parallax with dissolve
+    show edward neutral at stage_center
+    with dissolve
+
+    im "I have access to everything. The question is: what do I do with it?"
+
+    narrator_voice "Edward stares at his screen. The classified documents are right there. Proof of mass surveillance. Proof of constitutional violations."
 
     menu:
-        "I’m not a guest here. I’m a prisoner of circumstance. But I’d do it all again.":
-            pro "I’m not a guest here. I’m a prisoner of circumstance. But I’d do it all again."
-            pass
-        "Sometimes I stare at the snow and wonder if anyone back home even remembers why I left.":
-            pro "Sometimes I stare at the snow and wonder if anyone back home even remembers why I left."
-            pass
+        "Copy the files to an encrypted drive. This evidence needs to survive.":
+            $ persistent.choice_ch2_2 = "copy"
+            im "I need the original documents. Notes won't be enough. Journalists need primary sources."
+            $ evidence_secured = True
+            $ suspicion_level += 1
+            $ renpy.notify("Evidence Secured! | Suspicion +1")
 
-    pro "I’m leaving the hotel room for an hour. If someone enters and installs a hardware keylogger or a 'Rubber Ducky' USB, my encryption is useless. I need a way to know if the hardware was tampered with."
+            narrator_voice "Edward carefully copies selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk."
 
-label lesson_5_input:
-    sys "SET PROCEDURAL HARDWARE TRIPWIRE."
+            sys "// DATA TRANSFER INITIATED. ENCRYPTION: AES-256. CONTAINER: VERACRYPT HIDDEN VOLUME. //"
+
+        "Take detailed notes only. Digital evidence is too risky.":
+            $ persistent.choice_ch2_2 = "notes"
+            im "If they catch me with files, it's espionage. Notes are deniable."
+            $ trust_score -= 1
+            $ renpy.notify("Trust -1")
+
+            narrator_voice "Edward writes down key details from memory. It's safer, but journalists may question the credibility without primary documents."
+
+    hide edward neutral with dissolve
+
+    # --- MCQ Question ---
+    call screen mcq_question(
+        question="Which protocol encrypts web traffic?",
+        answers=["HTTP", "FTP", "HTTPS", "SMTP"],
+        correct_index=2,
+        explanation="HTTPS (HyperText Transfer Protocol Secure) uses SSL/TLS encryption to secure data transmitted between your browser and a web server. Regular HTTP sends everything in plain text."
+    )
+
+    # --- Chapter 2 Summary ---
+
+    if evidence_secured and knowledge_score >= 4:
+        $ ch2_outcome = "good"
+    else:
+        $ ch2_outcome = "bad"
+
+    call screen chapter_summary(2, "THE PRISM REVELATION")
+
+    jump chapter_3
+
+
+################################################################################
+##  ██████╗██╗  ██╗██████╗
+## ██╔════╝██║  ██║╚════██╗
+## ██║     ███████║ █████╔╝
+## ██║     ██╔══██║ ╚═══██╗
+## ╚██████╗██║  ██║██████╔╝
+##  ╚═════╝╚═╝  ╚═╝╚═════╝
+## CHAPTER 3: THE CONTACT
+################################################################################
+
+label chapter_3:
+    $ current_chapter = 3
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 3)
+
+    call screen chapter_title_screen(3, "THE CONTACT", "Encrypted Communications — January 2013")
+
+    scene bg_hong_kong at parallax with chapter_transition
+
+    show edward neutral at enter_left
+    with dissolve
+
+    # --- Snowden must contact journalists ---
+
+    im "I have the evidence. Now I need someone to publish it. But one wrong email, one unencrypted message, and the NSA will know before the ink is dry."
+
+    narrator_voice "Edward needs to contact journalists who can responsibly publish the classified documents. But the NSA monitors virtually all electronic communication."
+
+    sys "// SYSTEM NOTE: OpSec (Operational Security) is the practice of protecting critical information from adversaries. Every digital action leaves traces. //"
+
+    im "I can't use my work email. I can't use my personal email. I need a completely new identity, on a completely separate network."
+
+    # --- Snowball Effect Check ---
+    if suspicion_level >= 3:
+        narrator_voice "Edward's unusual access patterns have already triggered internal alerts. His options are narrowing."
+
+        sys "// WARNING: INTERNAL SECURITY MONITORING HAS FLAGGED YOUR ACTIVITY //"
+
+        menu:
+            "Try to bluff your way through the security review.":
+                $ persistent.choice_ch3_0 = "bluff"
+                $ suspicion_level += 1
+                $ renpy.notify("Suspicion +1")
+
+                im "I told them I was running diagnostic tests on the archival system. They seemed to buy it... for now."
+
+                narrator_voice "The security team notes the explanation but doesn't close the file. The clock is ticking."
+
+            "Accelerate the timeline. Contact journalists immediately.":
+                $ persistent.choice_ch3_0 = "accelerate"
+                $ trust_score -= 1
+                $ renpy.notify("Trust -1")
+
+                im "No more waiting. If I don't move now, I won't get another chance."
+
+                jump ch3_contact_unsafe
+
+    # --- Choice 1: Secure channel or personal email? ---
+
     menu:
-        sys "Task: Where should you place the unique glitter-nail-polish mark to ensure the laptop casing hasn't been opened?"
-        "On the screen":
-            im "That won't tell me if someone opened the machine to bypass the encryption cleanly."
-            jump lesson_5_input
-        "On the keyboard":
-            im "That's not the vulnerable point. They need to get inside the machine."
-            jump lesson_5_input
-        "On the laptop casing screws":
-            im "Perfect. If they unscrew the bottom panel or open the casing to plant a bug, the hardened polish will crack, and I'll immediately know."
-            im "Digital security is completely irrelevant if physical security is compromised. The 'Evil Maid' attack won't work on me today."
-            jump end_game
+        "Set up a PGP-encrypted email channel using Tor (requires knowledge).":
+            $ persistent.choice_ch3_1 = "pgp"
+            if knowledge_score >= 3:
+                jump ch3_secure_success
+            else:
+                jump ch3_secure_fail
+
+        "Contact Glenn Greenwald directly through his public email.":
+            $ persistent.choice_ch3_1 = "email"
+            $ contacts_secured += 1
+            $ renpy.notify("Contacts +1")
+            jump ch3_greenwald_contact
+
+        "Wait for a safer moment to make contact.":
+            $ persistent.choice_ch3_1 = "wait"
+            $ trust_score -= 1
+            $ renpy.notify("Trust -1")
+            jump ch3_wait
+
+label ch3_secure_success:
+    im "I know how PGP works. Public key, private key. I generate a key pair, publish my public key, and any message encrypted with it can only be read by me."
+
+    sys "// PGP KEY PAIR GENERATED. RSA-4096. FINGERPRINT VERIFIED THROUGH SEPARATE CHANNEL. //"
+
+    $ contacts_secured += 1
+    $ knowledge_score += 1
+    $ renpy.notify("Contacts +1 | Knowledge +1")
+
+    scene bg_hong_kong_terminal at parallax with dissolve
+
+    narrator_voice "Edward creates an anonymous email account, accessed only through Tor, and uses PGP encryption to contact documentary filmmaker Laura Poitras."
+
+    show journalist neutral at enter_right
+    with dissolve
+
+    greenwald "I received your encrypted message. The fingerprint checks out. Who are you?"
+
+    e "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA."
+
+    greenwald "Can you prove it?"
+
+    e "I can prove everything. But we need to meet in person. And you need to learn to use encryption. Your current security is... inadequate."
+
+    jump ch3_continue
+
+label ch3_secure_fail:
+    im "I know I need to use PGP, but I'm not confident in the setup. If I make a mistake with the key exchange..."
+
+    sys "// WARNING: INSUFFICIENT KNOWLEDGE TO ESTABLISH SECURE CHANNEL. PROCEEDING WITH PARTIAL ENCRYPTION. //"
+
+    $ suspicion_level += 1
+    $ renpy.notify("Suspicion +1")
+
+    narrator_voice "Edward attempts to set up encrypted communications, but makes errors in the key exchange process. The channel may not be fully secure."
+
+    jump ch3_continue
+
+label ch3_greenwald_contact:
+    scene bg_hong_kong_street at parallax with dissolve
+    show journalist neutral at enter_right
+    with dissolve
+
+    narrator_voice "Edward reaches out to Glenn Greenwald through his public contact information. It's faster, but less secure."
+
+    e "Mr. Greenwald, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
+
+    greenwald "I get messages like this every week. Can you give me more details?"
+
+    e "Not over this channel. You need to set up PGP encryption. I'll send you instructions."
+
+    greenwald "PGP? I've never used it. Can't we just talk on the phone?"
+
+    im "This is the problem. The people who need to publish this information don't know the first thing about security."
+
+    $ suspicion_level += 1
+    $ renpy.notify("Suspicion +1")
+
+    jump ch3_continue
+
+label ch3_wait:
+    narrator_voice "Edward decides to wait for a safer window. But there may not be one."
+
+    im "Every day I wait is another day they could catch me. But rushing makes mistakes. Mistakes get you caught."
+
+    $ suspicion_level += 1
+    $ renpy.notify("Suspicion +1")
+
+    narrator_voice "Weeks pass. Edward's access patterns grow more suspicious. The window is closing."
+
+    jump ch3_continue
+
+label ch3_contact_unsafe:
+    narrator_voice "With time running out, Edward takes risks he normally wouldn't."
+
+    $ suspicion_level += 1
+    $ contacts_secured += 1
+    $ renpy.notify("Suspicion +1 | Contacts +1")
+
+    im "No time for perfect OpSec. I just need to get the message out."
+
+    jump ch3_continue
+
+label ch3_continue:
+    # --- Question Segment 3: MCQ on Encryption ---
+    hide journalist neutral with dissolve
+    hide edward neutral with dissolve
+
+    call screen mcq_question(
+        question="What is Tor mainly used for?",
+        answers=["To hide where your internet traffic is coming from", "To make your laptop charge faster", "To delete files forever", "To boost a Wi-Fi signal"],
+        correct_index=0,
+        explanation="Tor hides your route by bouncing traffic through several relays, which makes it much harder for observers to trace it back to you.",
+        helper_text="Think about privacy and staying hard to track, not the full acronym."
+    )
+
+    # --- Minigame 3: OpSec Challenge ---
+    $ mg_intro3 = renpy.call_screen("minigame_intro", title="OPSEC CHALLENGE", description="You are Agent X on the clock. Tag each move as SAFE or MISTAKE before your cover gets blown.")
+
+    if mg_intro3:
+        $ mg_opsec_score = renpy.call_screen("minigame_opsec")
+        if mg_opsec_score >= 4:
+            $ contacts_secured += 1
+            $ knowledge_score += 1
+            $ renpy.notify("Contacts +1 | Knowledge +1")
+        else:
+            $ suspicion_level += 1
+            $ renpy.notify("Suspicion +1")
+    else:
+        $ knowledge_score -= 1
+        $ renpy.notify("Knowledge -1 (Skipped)")
+
+    # --- Choice 2: How much to reveal? ---
+    show edward neutral at stage_center
+    show journalist neutral at enter_right
+    with dissolve
+
+    narrator_voice "The journalist asks for more details about the scope of the leaks."
+
+    greenwald "I need to know what we're dealing with. How big is this?"
+
+    menu:
+        "Tell everything. Full transparency builds trust.":
+            $ persistent.choice_ch3_2 = "full"
+            e "It's everything. PRISM, XKeyscore, Boundless Informant, upstream collection — the NSA is collecting data on hundreds of millions of people. American citizens included."
+            $ trust_score += 2
+            $ contacts_secured += 1
+            $ renpy.notify("Trust +2 | Contacts +1")
+
+            greenwald "My God. If this is true... this is the biggest intelligence leak in history."
+
+        "Share only what's necessary. Protect sources and methods.":
+            $ persistent.choice_ch3_2 = "partial"
+            e "I can confirm the NSA is conducting mass domestic surveillance. I'll share the details when we meet in person."
+            $ trust_score += 1
+            $ renpy.notify("Trust +1")
+
+            greenwald "Fair enough. Where do we meet?"
+
+        "Be vague. Don't reveal the scope until you're safe.":
+            $ persistent.choice_ch3_2 = "vague"
+            e "It's significant. That's all I can say right now."
+            $ trust_score -= 1
+            $ renpy.notify("Trust -1")
+
+            greenwald "You're asking me to fly halfway around the world on a vague tip?"
+
+    hide journalist neutral with dissolve
+    hide edward neutral with dissolve
+
+    # --- Chapter 3 Summary ---
+
+    if contacts_secured >= 2:
+        $ ch3_outcome = "good"
+    else:
+        $ ch3_outcome = "bad"
+
+    call screen chapter_summary(3, "THE CONTACT")
+
+    jump chapter_4
 
 
-label end_game:
-    scene black with fade
-    "To be continued..."
-    return
+################################################################################
+##  ██████╗██╗  ██╗██╗  ██╗
+## ██╔════╝██║  ██║██║  ██║
+## ██║     ███████║███████║
+## ██║     ██╔══██║╚════██║
+## ╚██████╗██║  ██║     ██║
+##  ╚═════╝╚═╝  ╚═╝     ╚═╝
+## CHAPTER 4: THE ESCAPE
+################################################################################
+
+label chapter_4:
+    $ current_chapter = 4
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 4)
+
+    call screen chapter_title_screen(4, "THE ESCAPE", "Hong Kong — May 2013")
+
+    scene bg_hong_kong_hotel at parallax with chapter_transition
+
+    show edward neutral at enter_left
+    with dissolve
+
+    # --- Snowden in Hong Kong ---
+
+    narrator_voice "Edward Snowden arrives in Hong Kong with a laptop full of classified documents and a plan that's already falling apart."
+
+    im "I told my employer I needed medical leave for epilepsy treatment. They didn't question it. That bought me a few weeks."
+
+    im "Now I'm in a hotel room in Hong Kong, waiting for journalists who might not come, hunted by an agency that can find anyone."
+
+    sys "// LOCATION: MIRA HOTEL, HONG KONG. STATUS: UNDETECTED — FOR NOW. //"
+
+    # --- Tense dialogue with pressure ---
+
+    show journalist neutral at enter_right
+    with dissolve
+
+    greenwald "You do realize what you're asking me to do? If we publish this, both our lives change forever."
+
+    e "My life changed the moment I read those documents. I can't unread them. I can't unknow what the government is doing to its own people."
+
+    if suspicion_level >= 3:
+        sys "// WARNING: NSA INTERNAL AUDIT HAS FLAGGED YOUR ACCESS ANOMALIES. INVESTIGATION IN PROGRESS. //"
+
+        im "They know something is wrong. I can feel it. The clock is ticking."
+
+    greenwald "The documents check out. Laura and I have verified them. We're ready to publish."
+
+    e "Publish everything. The world needs to see this."
+
+    hide journalist neutral with dissolve
+
+    # --- Choice 1: Hotel Wi-Fi or mobile hotspot? ---
+
+    narrator_voice "Edward needs to send final instructions to the publication team, but the hotel network is compromised."
+
+    menu:
+        "Use the hotel Wi-Fi with a VPN.":
+            $ persistent.choice_ch4_1 = "hotel"
+            $ suspicion_level += 1
+            $ renpy.notify("Suspicion +1")
+
+            im "The VPN encrypts my traffic, but the hotel's network logs will show my room connected to a VPN. That alone is a red flag for anyone watching."
+
+            sys "// WARNING: VPN CONNECTION DETECTED ON LOCAL NETWORK. COMMERCIAL VPN IPs ARE CATALOGUED BY INTELLIGENCE AGENCIES. //"
+            sys "// CHOICE REVIEW: Fast and convenient, but the hotel can still log that a protected tunnel came from your room. Good for speed, bad for stealth. //"
+
+        "Use a personal mobile hotspot with Tor.":
+            $ persistent.choice_ch4_1 = "mobile"
+            $ trust_score += 1
+            $ renpy.notify("Trust +1")
+
+            im "A mobile hotspot bypasses the hotel network entirely. With Tor on top of it, my traffic is encrypted and anonymized through multiple relay nodes."
+
+            sys "// SECURE CONNECTION ESTABLISHED. TRAFFIC ROUTED THROUGH 3 TOR RELAY NODES. //"
+            sys "// CHOICE REVIEW: Slower, but it avoids hotel logs and adds extra privacy layers. Good for stealth, bad for speed. //"
+
+    # --- Question Segment 4: Text Input ---
+
+    call screen text_input_question_screen(
+        question="Type the 3-letter privacy tool that hides your route online:",
+        correct_answer="TOR",
+        hint="It's the same tool mentioned in the safer option above.",
+        explanation="Tor wraps your traffic in several layers and sends it through relays, which helps hide where it started.",
+        accepted_answers=["TOR", "THE ONION ROUTER"],
+        helper_text="Short answer is fine."
+    )
+
+    # --- Minigame 4: Trace the Route ---
+
+    $ mg_intro4 = renpy.call_screen("minigame_intro", title="TRACE THE ROUTE", description="Build a safe route hop by hop. Green nodes help you stay hidden, while the red monitor exposes the whole mission.")
+
+    if mg_intro4:
+        $ mg_trace_solved = renpy.call_screen("minigame_trace")
+        if mg_trace_solved:
+            $ escape_successful = True
+            $ knowledge_score += 2
+            $ renpy.notify("Knowledge +2 | Escape route secured!")
+        else:
+            $ identity_exposed = True
+            $ renpy.notify("Identity Exposed!")
+    else:
+        $ knowledge_score -= 1
+        $ renpy.notify("Knowledge -1 (Skipped)")
+
+    # --- Choice 2: Fly to Russia or seek another country? ---
+
+    scene bg_leak at parallax with dissolve
+
+    narrator_voice "The first stories are published. The world erupts. And now, Edward Snowden is the most wanted man on Earth."
+
+    im "The US government has revoked my passport. I need to move. Now."
+
+    if suspicion_level >= 4:
+        narrator_voice "With his cover blown, Snowden's options have narrowed to almost nothing."
+
+        menu:
+            "Head to the airport immediately. Every minute counts.":
+                $ persistent.choice_ch4_2 = "airport"
+                $ escape_successful = True
+                $ renpy.notify("Escape initiated!")
+
+                im "No time to plan. The passport might still work for a few hours before the revocation hits every system."
+                sys "// ROUTE REVIEW: Best for immediate movement, worst for preparation. Good if you need speed more than certainty. //"
+
+            "Go to the Russian consulate. They're the only ones who might help.":
+                $ persistent.choice_ch4_2 = "russia"
+                $ escape_successful = True
+                $ trust_score -= 1
+                $ renpy.notify("Escape to Russia | Trust -1")
+
+                im "Russia isn't ideal, but beggars can't be choosers. They have their own reasons for helping me."
+                sys "// ROUTE REVIEW: Good for immediate shelter, bad for independence. Help comes with political strings attached. //"
+
+    else:
+        menu:
+            "Fly to Ecuador via Moscow. Multiple stops make tracking harder.":
+                $ persistent.choice_ch4_2 = "ecuador"
+                $ escape_successful = True
+                $ renpy.notify("Escape route planned!")
+
+                im "Ecuador has a history of granting asylum to people the US wants. WikiLeaks arranged the route through Moscow."
+
+                narrator_voice "But Edward will never make it past Moscow. His passport will be revoked mid-flight."
+                sys "// ROUTE REVIEW: Strong asylum logic, but the travel chain is fragile. Good long-term idea, risky short-term execution. //"
+
+            "Seek asylum at a European embassy in Hong Kong.":
+                $ persistent.choice_ch4_2 = "embassy"
+                $ trust_score += 1
+                $ renpy.notify("Trust +1")
+
+                if identity_exposed:
+                    narrator_voice "With his identity already exposed, no embassy will risk the diplomatic fallout of harboring him."
+                    $ escape_successful = False
+                else:
+                    narrator_voice "The European embassies politely decline. No one wants to challenge the United States."
+                    $ escape_successful = False
+
+                im "No one will help. Not officially. Moscow may be my only option."
+                sys "// ROUTE REVIEW: Good legal optics, but embassies rarely want the diplomatic fallout. Good principle, poor odds. //"
+                $ escape_successful = True
+
+            "Stay in Hong Kong and face the legal system.":
+                $ persistent.choice_ch4_2 = "stay"
+                $ escape_successful = False
+                $ renpy.notify("Escape abandoned.")
+
+                im "If I stay, Hong Kong will extradite me. The US legal system won't give me a fair trial under the Espionage Act."
+                sys "// ROUTE REVIEW: Good if you want to make a stand, bad if your goal is to stay free long enough to keep the story alive. //"
+
+    hide edward neutral with dissolve
+
+    if escape_successful and not identity_exposed:
+        scene bg_hk_airport at parallax with dissolve
+        narrator_voice "Edward boards an international flight just hours before his name hits the global no-fly lists."
+
+    # --- Chapter 4 Summary ---
+
+    if escape_successful and not identity_exposed:
+        $ ch4_outcome = "good"
+    else:
+        $ ch4_outcome = "bad"
+
+    call screen chapter_summary(4, "THE ESCAPE")
+
+    jump chapter_5
+
+
+################################################################################
+##  ██████╗██╗  ██╗███████╗
+## ██╔════╝██║  ██║██╔════╝
+## ██║     ███████║███████╗
+## ██║     ██╔══██║╚════██║
+## ╚██████╗██║  ██║███████║
+##  ╚═════╝╚═╝  ╚═╝╚══════╝
+## CHAPTER 5: PERMANENT RECORD
+################################################################################
+
+label chapter_5:
+    $ current_chapter = 5
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 5)
+
+    call screen chapter_title_screen(5, "PERMANENT RECORD", "Moscow, Russia — 2013 to Present")
+
+    scene bg_sheremetyevo at parallax with chapter_transition
+
+    show edward neutral at enter_left
+    with dissolve
+
+    # --- Snowden in Russia ---
+
+    narrator_voice "The Sheremetyevo International Airport transit zone. Edward Snowden has been trapped here for 40 days."
+
+    narrator_voice "His passport is cancelled. No country will grant him asylum without risking the wrath of the United States. Russia is his last option."
+
+    show russian_official neutral at enter_right
+    with dissolve
+
+    russian_official "Mr. Snowden. The transit zone is a strange place, yes? You are not in Russia, but you are certainly not in America."
+
+    russian_official "You are... nowhere. We can offer you 'somewhere.' Russia can grant you temporary asylum."
+
+    e "I don't want to be a pawn in anyone's geopolitical chess game."
+
+    russian_official "You became a pawn the moment you took those files, Mr. Snowden. The only question is which board you want to play on."
+
+    # --- Reflection Dialogue ---
+
+    hide russian_official neutral with dissolve
+
+    scene bg_moscow_apartment at parallax with dissolve
+    show edward neutral at stage_center
+    with dissolve
+
+    im "I'm an exile in the physical world, but I've never been more active in the digital one."
+
+    im "From this small apartment in Moscow, I can still connect to the world. The irony of a surveillance whistleblower living in the surveillance capital of the East is not lost on me."
+
+    narrator_voice "From Moscow, Snowden continues to advocate for digital privacy through encrypted video calls, secure messaging, and speaking engagements."
+
+    # --- Dialogue based on accumulated flags ---
+
+    if trust_score >= 4:
+        im "I trusted the right people. Greenwald, Poitras, the editors — they did what journalists are supposed to do. They told the truth."
+    elif trust_score >= 1:
+        im "Trust is a calculation, not a feeling. I chose carefully, but not perfectly. Some bridges burned that didn't need to."
+    else:
+        im "I trusted no one fully, and it cost me. Some stories never got published. Some evidence was lost. Half-measures half-worked."
+
+    if knowledge_score >= 7:
+        im "My technical knowledge kept me alive. Every encryption key, every secure channel, every OpSec decision mattered."
+    elif knowledge_score >= 4:
+        im "I knew enough to be dangerous, but not enough to be safe. There were gaps in my knowledge that almost got me caught."
+    else:
+        im "Looking back, there's so much I didn't know. So many security mistakes I made. I survived on luck as much as skill."
+
+    # --- Question Segment 5: Final Knowledge Test ---
+
+    # MCQ
+    call screen mcq_question(
+        question="What is metadata in the context of surveillance?",
+        answers=["The content of a message", "Data about data (who, when, where — not what)", "Encrypted file headers", "User passwords"],
+        correct_index=1,
+        explanation="Metadata is 'data about data.' In surveillance terms, it includes who you communicated with, when, for how long, and from where — but not the content of the communication. The NSA argued metadata collection wasn't as invasive as content collection, but metadata can reveal intimate patterns of life."
+    )
+
+    # Text Input
+    call screen text_input_question_screen(
+        question="Type the 3-letter encryption tool Snowden used to message journalists:",
+        correct_answer="PGP",
+        hint="It stands for 'Pretty Good' something, and the short version is enough.",
+        explanation="PGP lets one key lock a message and another key unlock it, which is why Snowden pushed journalists to learn it.",
+        accepted_answers=["PGP", "PRETTY GOOD PRIVACY"],
+        helper_text="Just the 3-letter version works."
+    )
+
+    # MCQ
+    call screen mcq_question(
+        question="What is a 'man-in-the-middle' attack?",
+        answers=["Physical server theft", "Intercepting communication between two parties", "Overloading a server", "Guessing a password"],
+        correct_index=1,
+        explanation="A man-in-the-middle (MITM) attack occurs when an attacker secretly intercepts and possibly alters communication between two parties who believe they are communicating directly. This is why verifying encryption keys through a separate channel is critical."
+    )
+
+    # --- Final Choice: Culminating Moral Decision ---
+
+    show edward neutral at stage_center
+    with dissolve
+
+    narrator_voice "Years have passed. The world has changed — partly because of what Edward Snowden did, and partly in spite of it."
+
+    narrator_voice "A journalist contacts Snowden with a new trove of classified documents from a different whistleblower. The cycle could begin again."
+
+    im "Another person on the inside, seeing what I saw, feeling what I felt. They're asking me what to do."
+
+    menu:
+        "Encourage them to leak. The public deserves to know.":
+            $ persistent.choice_ch5_1 = "encourage"
+            e "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
+            $ trust_score += 2
+            $ renpy.notify("Trust +2")
+
+            narrator_voice "Snowden helps the new whistleblower establish secure communications, passing on the hard lessons of his own experience."
+
+        "Advise caution. Use official channels first.":
+            $ persistent.choice_ch5_1 = "caution"
+            e "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
+            $ trust_score += 1
+            $ knowledge_score += 1
+            $ renpy.notify("Trust +1 | Knowledge +1")
+
+            narrator_voice "Snowden advises a measured approach, hoping the system has improved since his time. Knowing it probably hasn't."
+
+        "Tell them not to do it. The personal cost is too high.":
+            $ persistent.choice_ch5_1 = "refuse"
+            e "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
+            $ trust_score -= 1
+            $ renpy.notify("Trust -1")
+
+            narrator_voice "Snowden's honesty about the personal cost weighs heavily on the would-be whistleblower."
+
+    hide edward neutral with dissolve
+
+    # --- Final scene ---
+
+    scene bg_moscow_winter_epilogue at parallax with fade
+
+    narrator_voice "Edward Snowden remains in Russia. He was granted permanent residency in 2020 and Russian citizenship in 2022."
+
+    narrator_voice "His disclosures led to the USA FREEDOM Act, which reformed some surveillance practices. Major tech companies adopted end-to-end encryption."
+
+    narrator_voice "But mass surveillance continues in new forms. The debate between security and privacy is far from over."
+
+    narrator_voice "The tools Snowden used — encryption, Tor, secure communication — are the same tools available to you."
+
+    narrator_voice "The question is: will you use them?"
+
+    # --- Determine Ending ---
+    jump determine_ending
