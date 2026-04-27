@@ -18,6 +18,24 @@ init python:
     config.overlay_screens.append("game_hud")
     config.overlay_screens.append("scene_stage_line")
 
+    def menu_return_screen():
+        return "main_menu" if main_menu else "pause_hub"
+
+    def display_mode_is_windowed():
+        return not preferences.fullscreen
+
+    def display_mode_is_fullscreen():
+        return preferences.fullscreen
+
+    def toggle_all_audio():
+        target_muted = not all_audio_muted()
+        for mixer in ("music", "sfx", "voice"):
+            preferences.set_mute(mixer, target_muted)
+        renpy.restart_interaction()
+
+    def all_audio_muted():
+        return all(preferences.get_mute(mixer) for mixer in ("music", "sfx", "voice"))
+
 
 default quick_menu = True
 
@@ -107,8 +125,8 @@ style shell_nav_button_text is button_text:
     xalign 0.0
 
 style modal_action_button is button:
-    xsize 440
-    ysize 66
+    xsize 520
+    ysize 74
     left_padding 22
     right_padding 22
     top_padding 4
@@ -122,7 +140,9 @@ style modal_action_button_text is button_text:
     bold True
     color "#EAF4F1"
     hover_color "#F7FFFC"
-    xalign 0.0
+    selected_color "#F7FFFC"
+    xalign 0.5
+    text_align 0.5
 
 style choice_button is button:
     xsize 1120
@@ -167,28 +187,6 @@ style game_menu_label_text is label_text
 
 screen ui_backdrop():
     add "#131421"
-
-    frame:
-        xpos 42
-        ypos 0
-        xsize 2
-        yfill True
-        background "#006654"
-
-    frame:
-        xalign 1.0
-        xoffset -42
-        ypos 0
-        xsize 2
-        yfill True
-        background "#4D5186"
-
-    for i in range(24):
-        text "01001101":
-            color "#00806908"
-            size 13
-            xpos (i * 86 + 18)
-            ypos ((i * 61 + 24) % 1080)
 
 
 screen shell_header(kicker, title, body=None):
@@ -421,17 +419,11 @@ screen scene_stage_line():
             xsize 1920
             ysize 258
 
-        add Solid("#8B8FCC22"):
-            xpos 0
-            ypos 816
-            xsize 1920
-            ysize 2
-
-        add Solid("#00665433"):
+        add Solid("#00665422"):
             xpos 0
             ypos 804
             xsize 1920
-            ysize 12
+            ysize 8
 
 
 ################################################################################
@@ -442,86 +434,86 @@ screen main_menu():
     tag menu
 
     use ui_backdrop
-    
+
     frame:
         xalign 0.5
         yalign 0.5
-        xsize 1120
-        ysize 820
+        xsize 1020
+        ysize 900
         background Solid("#0E1321EE")
-        padding (54, 42)
+        padding (44, 40)
 
         vbox:
             xalign 0.5
             yalign 0.5
-            spacing 18
+            xmaximum 860
+            spacing 16
 
             text "CLASSIFIED INTERFACE":
                 color "#8B8FCC"
                 size 16
                 bold True
                 xalign 0.5
+                text_align 0.5
                 kerning 3
 
             add "images/logo.png":
                 xalign 0.5
-                ysize 170
+                ysize 132
                 fit "contain"
 
             fixed:
-                xsize 920
-                ysize 170
+                xsize 820
+                ysize 96
                 xalign 0.5
 
                 text "ENEMY OF THE STATE":
                     xalign 0.5
                     yalign 0.5
-                    color "#006654"
-                    size 84
+                    text_align 0.5
+                    color "#0C5D52"
+                    size 66
                     bold True
-                    outlines [(10, "#00665418", 0, 0), (5, "#00806922", 0, 0)]
+                    outlines [(6, "#00665414", 0, 0), (3, "#00806916", 0, 0)]
 
                 text "ENEMY OF THE STATE" at title_glitch:
                     xalign 0.5
                     yalign 0.5
+                    text_align 0.5
                     color "#EFFFFA"
-                    size 84
+                    size 66
                     bold True
-                    outlines [(4, "#00806988", 0, 0), (12, "#00806918", 0, 0)]
+                    outlines [(2, "#00806955", 0, 0), (6, "#0080690E", 0, 0)]
 
                 text "ENEMY OF THE STATE":
                     xalign 0.5
                     yalign 0.5
+                    text_align 0.5
                     xoffset 2
                     yoffset -2
-                    color "#8B8FCC33"
-                    size 84
+                    color "#8B8FCC24"
+                    size 66
                     bold True
 
-            frame:
-                xalign 0.5
-                xsize 260
-                ysize 2
-                background Solid("#008069")
-
-            text "\"The truth will always find a way out.\"":
-                color "#8B8FCC"
-                size 22
-                italic True
-                xalign 0.5
-
-            text "Step into a high-stakes whistleblower thriller, track your route through the branch web, and keep the mission alive.":
+            text "A visual novel about surveillance, trust, and digital security under pressure.":
                 color "#AAB0D6"
                 size 18
                 xalign 0.5
                 text_align 0.5
-                xmaximum 700
+                xmaximum 720
 
-            null height 10
+            text "\"The truth will always find a way out.\"":
+                color "#8B8FCC"
+                size 20
+                italic True
+                xalign 0.5
+                text_align 0.5
+
+            null height 6
 
             vbox:
                 xalign 0.5
-                spacing 12
+                spacing 10
 
                 textbutton "START":
                     style "modal_action_button"
@@ -1208,6 +1200,19 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
     default show_answer = False
     default submitted = False
     $ valid_answers = [a.strip().upper() for a in (accepted_answers or [correct_answer])]
+    $ submit_answer_action = [
+        SetScreenVariable("submitted", True),
+        SetScreenVariable("attempts", attempts + 1),
+        If(user_answer.strip().upper() in valid_answers,
+            true=SetScreenVariable("answered_correctly", True),
+            false=[
+                If(attempts >= 1, true=SetScreenVariable("show_hint", True)),
+                If(attempts >= 2, true=SetScreenVariable("show_answer", True))
+            ])
+    ]
+
+    key "K_RETURN" action If(not answered_correctly and not show_answer, true=submit_answer_action, false=NullAction())
+    key "K_KP_ENTER" action If(not answered_correctly and not show_answer, true=submit_answer_action, false=NullAction())
 
     use ui_backdrop
 
@@ -1293,21 +1298,33 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                             vbox:
                                 spacing 12
 
-                                hbox:
+                                frame:
                                     xalign 0.5
-                                    spacing 10
+                                    xsize 780
+                                    background Solid("#101523")
+                                    padding (18, 14)
 
-                                    text ">":
-                                        color "#8B8FCC"
-                                        size 25
-                                        yalign 0.5
+                                    hbox:
+                                        xfill True
+                                        spacing 12
 
-                                    input:
-                                        value ScreenVariableInputValue("user_answer")
-                                        length 30
-                                        color "#EAF4F1"
-                                        size 24
-                                        xmaximum 700
+                                        text ">":
+                                            color "#8B8FCC"
+                                            size 25
+                                            yalign 0.5
+
+                                        input:
+                                            value ScreenVariableInputValue("user_answer")
+                                            length 60
+                                            color "#EAF4F1"
+                                            size 24
+                                            xfill True
+                                            yalign 0.5
+
+                                text "Press Enter ↵ to submit quickly":
+                                    color "#8B8FCC"
+                                    size 16
+                                    xalign 0.5
 
                                 if submitted and user_answer.strip().upper() not in valid_answers:
                                     text "Not quite. Try again.":
@@ -1318,16 +1335,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                         textbutton "SUBMIT":
                             style "modal_action_button"
                             xalign 0.5
-                            action [
-                                SetScreenVariable("submitted", True),
-                                SetScreenVariable("attempts", attempts + 1),
-                                If(user_answer.strip().upper() in valid_answers,
-                                    true=SetScreenVariable("answered_correctly", True),
-                                    false=[
-                                        If(attempts >= 1, true=SetScreenVariable("show_hint", True)),
-                                        If(attempts >= 2, true=SetScreenVariable("show_answer", True))
-                                    ])
-                            ]
+                            action submit_answer_action
 
                     if answered_correctly:
                         frame:
@@ -1479,7 +1487,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
                 textbutton _("Return"):
                     style "shell_nav_button"
-                    action Return()
+                    action ShowMenu(menu_return_screen())
 
         frame:
             xsize 1396
@@ -1522,6 +1530,8 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
+    else:
+        key "game_menu" action ShowMenu("pause_hub")
 
 
 ################################################################################
@@ -1688,10 +1698,12 @@ screen preferences():
                     if renpy.variant("pc") or renpy.variant("web"):
                         textbutton _("Window"):
                             style "shell_nav_button"
+                            selected display_mode_is_windowed()
                             action Preference("display", "window")
 
                         textbutton _("Fullscreen"):
                             style "shell_nav_button"
+                            selected display_mode_is_fullscreen()
                             action Preference("display", "fullscreen")
 
                     textbutton _("Skip Unseen Text"):
@@ -1749,7 +1761,8 @@ screen preferences():
 
                     textbutton _("Mute All"):
                         style "shell_nav_button"
-                        action Preference("all mute", "toggle")
+                        selected all_audio_muted()
+                        action Function(toggle_all_audio)
 
 
 screen history():

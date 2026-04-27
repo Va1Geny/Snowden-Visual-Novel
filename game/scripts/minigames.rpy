@@ -141,7 +141,9 @@ init python:
             self.start_time = None
             self.active = False
 
-        def start(self):
+        def start(self, max_time=None):
+            if max_time is not None:
+                self.max_time = max_time
             self.start_time = _time.time()
             self.active = True
 
@@ -167,6 +169,7 @@ init python:
         "phase": "incoming",
         "current_index": 0,
         "score": 0,
+        "streak": 0,
         "allowed_count": 0,
         "blocked_count": 0,
         "answers": [],
@@ -179,13 +182,14 @@ init python:
         fw_state["phase"] = "incoming"
         fw_state["current_index"] = 0
         fw_state["score"] = 0
+        fw_state["streak"] = 0
         fw_state["allowed_count"] = 0
         fw_state["blocked_count"] = 0
         fw_state["answers"] = []
         fw_state["last_correct"] = False
         fw_state["timed_out"] = False
         fw_state["show_continue"] = False
-        packet_timer.start()
+        packet_timer.start(fw_current_time_limit())
 
     def fw_evaluate(choice):
         pkts = get_fw_packets()
@@ -199,6 +203,9 @@ init python:
         })
         if is_correct:
             fw_state["score"] += 1
+            fw_state["streak"] += 1
+        else:
+            fw_state["streak"] = 0
         if choice == "ALLOW":
             fw_state["allowed_count"] += 1
         else:
@@ -224,6 +231,9 @@ init python:
         })
         if is_correct:
             fw_state["score"] += 1
+            fw_state["streak"] += 1
+        else:
+            fw_state["streak"] = 0
         fw_state["blocked_count"] += 1
         fw_state["last_correct"] = is_correct
         fw_state["phase"] = "feedback"
@@ -239,7 +249,7 @@ init python:
             fw_state["phase"] = "complete"
         else:
             fw_state["phase"] = "incoming"
-            packet_timer.start()
+            packet_timer.start(fw_current_time_limit())
         renpy.restart_interaction()
 
     def fw_show_continue():
@@ -275,6 +285,23 @@ init python:
             return "#FFD700"
         else:
             return "#FF2D55"
+
+    def fw_current_time_limit():
+        limits = [15.0, 14.0, 13.0, 12.0, 12.0, 11.0, 10.0, 9.0]
+        idx = max(0, min(fw_state["current_index"], len(limits) - 1))
+        return limits[idx]
+
+    def fw_packet_tag(packet):
+        protocol_tags = {
+            "HTTP": "WEB REQUEST",
+            "HTTPS": "ENCRYPTED SESSION",
+            "TCP": "RAW TCP HANDSHAKE",
+            "SSH": "REMOTE ACCESS",
+            "DNS": "NAME RESOLUTION",
+            "Telnet": "LEGACY TERMINAL",
+            "RDP": "REMOTE DESKTOP",
+        }
+        return protocol_tags.get(packet["protocol"], "UNCLASSIFIED FLOW")
 
 # ── ATL Transforms ───────────────────────────────────────────────────────────
 
@@ -363,7 +390,7 @@ screen minigame_firewall():
         # Timer tick — refresh display for timer bar
         if fw_state["phase"] == "incoming":
             timer 0.1 repeat True action Function(renpy.restart_interaction)
-            timer 15.0 action Function(fw_handle_timeout)
+            timer fw_current_time_limit() action Function(fw_handle_timeout)
 
         # Feedback continue delay
         if fw_state["phase"] == "feedback" and not fw_state["show_continue"]:
@@ -376,8 +403,6 @@ screen minigame_firewall():
         $ _fw_port = str(_fw_pkt["port"])
         $ _fw_proto = _fw_pkt["protocol"]
         $ _fw_desc = _fw_pkt["description"]
-        $ _fw_risk = _fw_pkt["risk_level"]
-        $ _fw_risk_col = fw_risk_color(_fw_risk)
         $ _fw_explanation = _fw_pkt["explanation"]
         $ _fw_correct = _fw_pkt["correct"]
         $ _fw_remaining = packet_timer.get_remaining()
@@ -385,6 +410,8 @@ screen minigame_firewall():
         $ _fw_timer_col = fw_timer_color()
         $ _fw_num = _fw_idx + 1
         $ _fw_score = fw_state["score"]
+        $ _fw_streak = fw_state["streak"]
+        $ _fw_tag = fw_packet_tag(_fw_pkt)
 
         # ── TOP HUD BAR ─────────────────────────────────────────────────
         frame:
@@ -404,6 +431,7 @@ screen minigame_firewall():
                     hbox:
                         xalign 1.0
                         spacing 20
+                        text "STREAK: [_fw_streak]" color "#FFD700" size 14 bold True yalign 0.5
                         text "AUTHORIZED: [fw_state['allowed_count']]" color "#00FFD1" size 14 bold True yalign 0.5
                         text "BLOCKED: [fw_state['blocked_count']]" color "#FF2D55" size 14 bold True yalign 0.5
                         text "SCORE: [_fw_score]" color "#E8E8E8" size 14 bold True yalign 0.5
@@ -478,30 +506,26 @@ screen minigame_firewall():
                         pos (0, 0)
                         xsize 820
 
-                        # Threat level bar at top
+                        # Signature bar at top
                         $ _pc_pkts = get_fw_packets()
                         $ _pc_pkt = _pc_pkts[_pc_i]
-                        $ _pc_risk = _pc_pkt["risk_level"]
-                        $ _pc_rcol = fw_risk_color(_pc_risk)
+                        $ _pc_tag = fw_packet_tag(_pc_pkt)
 
                         hbox:
                             xfill True ysize 32
                             spacing 0
 
                             frame:
-                                xsize 180 ysize 32
-                                background _pc_rcol
+                                xsize 240 ysize 32
+                                background "#1A2440"
                                 padding (10, 4)
-                                if _pc_risk == "CRITICAL":
-                                    at fw_threat_blink
-                                text "THREAT: [_pc_risk]" color "#0A0E1A" size 14 bold True yalign 0.5
+                                text "SIGNATURE" color "#C9D0F3" size 13 bold True yalign 0.5
 
                             frame:
                                 xfill True ysize 32
                                 background "#0D1220"
                                 padding (15, 4)
-                                $ _pc_desc = _pc_pkt["description"]
-                                text "[_pc_desc]" color "#888888" size 14 yalign 0.5
+                                text "[_pc_tag]" color "#8B8FCC" size 14 bold True yalign 0.5
 
                         null height 20
 
@@ -643,7 +667,7 @@ screen minigame_firewall():
                     text "{cps=30}[_fw_explanation]{/cps}" color "#AAAAAA" size 15
 
                     if fw_state["last_correct"] and not fw_state["timed_out"]:
-                        text "knowledge_score +1" color "#00FF8880" size 13
+                        text "knowledge_score +1 | streak [_fw_streak]" color "#00FF8880" size 13
 
                     null height 5
 
@@ -824,6 +848,26 @@ screen minigame_decrypt():
     default is_correct = False
     default hint_shown = False
     default attempts = 0
+    default time_left = 35
+
+    if not submitted and time_left > 0:
+        timer 1.0 repeat True action SetScreenVariable("time_left", max(0, time_left - 1))
+
+    if not submitted and time_left <= 0:
+        timer 0.01 action [
+            SetScreenVariable("submitted", True),
+            SetScreenVariable("is_correct", False),
+            SetScreenVariable("attempts", 3)
+        ]
+
+    $ decrypt_submit_action = [
+        SetScreenVariable("submitted", True),
+        SetScreenVariable("is_correct", (user_input.strip().upper() == cipher_answer)),
+        SetScreenVariable("attempts", attempts + 1)
+    ]
+
+    key "K_RETURN" action If(not submitted and user_input.strip() != "", true=decrypt_submit_action, false=NullAction())
+    key "K_KP_ENTER" action If(not submitted and user_input.strip() != "", true=decrypt_submit_action, false=NullAction())
 
     add "#0A0E1A"
 
@@ -840,6 +884,12 @@ screen minigame_decrypt():
             text "// DECRYPT THE MESSAGE //" style "minigame_title"
             text "A classified document name has been encrypted using a Caesar cipher." style "minigame_instruction"
 
+            hbox:
+                xalign 0.5
+                spacing 22
+                text "TIME LEFT: [time_left]s" color ("#FF2D55" if time_left <= 10 else "#FFD700" if time_left <= 20 else "#00FFD1") size 20 bold True
+                text "ATTEMPT: [attempts + 1]/3" color "#8B8FCC" size 20 bold True
+
             null height 15
 
             frame:
@@ -852,7 +902,7 @@ screen minigame_decrypt():
                     spacing 15
                     text "ENCRYPTED TEXT:" color "#FF2D55" size 18 bold True
                     text "[cipher_text]" color "#00FFD1" size 48 bold True xalign 0.5
-                    text "Cipher: ROT-3 (Caesar cipher, shift each letter BACK by 3)" color "#FFD700" size 18 xalign 0.5
+                    text "Cipher: ROT-3 | Shift each letter back by 3 before the timer runs out." color "#FFD700" size 18 xalign 0.5
 
             null height 10
 
@@ -875,14 +925,12 @@ screen minigame_decrypt():
 
                 null height 10
 
+                text "Press Enter to submit fast." color "#8B8FCC" size 16 xalign 0.5
+
                 textbutton "> SUBMIT DECRYPTION":
                     xalign 0.5
                     text_style "menu_btn_text"
-                    action [
-                        SetScreenVariable("submitted", True),
-                        SetScreenVariable("is_correct", (user_input.strip().upper() == cipher_answer)),
-                        SetScreenVariable("attempts", attempts + 1)
-                    ]
+                    action decrypt_submit_action
 
             else:
                 if is_correct:
@@ -899,7 +947,7 @@ screen minigame_decrypt():
 
                 else:
                     text "// DECRYPTION FAILED //" color "#FF2D55" size 28 bold True xalign 0.5
-                    text "Your answer: [user_input]" color "#FF2D55" size 20 xalign 0.5
+                    text ("Time expired before the decryption was completed." if time_left <= 0 else "Your answer: [user_input]") color "#FF2D55" size 20 xalign 0.5
 
                     if attempts >= 3:
                         text "ANSWER REVEALED: PRISM" color "#FFD700" size 24 bold True xalign 0.5
@@ -965,6 +1013,13 @@ screen minigame_opsec():
     default scenarios = get_opsec_scenarios()
     default answers = {}
     default submitted = False
+    default time_left = 45
+
+    if not submitted and time_left > 0:
+        timer 1.0 repeat True action SetScreenVariable("time_left", max(0, time_left - 1))
+
+    if not submitted and time_left <= 0:
+        timer 0.01 action SetScreenVariable("submitted", True)
 
     add "#0A0E1A"
 
@@ -978,6 +1033,12 @@ screen minigame_opsec():
 
             text "// OPSEC CHALLENGE //" style "minigame_title"
             text "Review Agent X's actions. Mark each as SAFE or MISTAKE." style "minigame_instruction"
+
+            hbox:
+                xalign 0.5
+                spacing 24
+                text "TIME LEFT: [time_left]s" color ("#FF2D55" if time_left <= 10 else "#FFD700" if time_left <= 20 else "#00FFD1") size 20 bold True
+                text "TAGGED: [len(answers)]/[len(scenarios)]" color "#8B8FCC" size 20 bold True
 
             null height 10
 
@@ -1037,7 +1098,7 @@ screen minigame_opsec():
                         text_style "menu_btn_text"
                         action SetScreenVariable("submitted", True)
                 else:
-                    text "Mark all [len(scenarios)] actions to submit." color "#888888" size 18 xalign 0.5
+                    text ("Time expired. Results locked." if time_left <= 0 else "Mark all [len(scenarios)] actions to submit before time runs out.") color "#888888" size 18 xalign 0.5
             else:
                 python:
                     opsec_score = 0
@@ -1114,8 +1175,12 @@ screen minigame_trace():
     default path = ["home"]
     default moves = 0
     default max_moves = 5
+    default time_left = 32
     default hit_gov = False
     default reached_end = False
+
+    if not reached_end and not hit_gov and moves < max_moves and time_left > 0:
+        timer 1.0 repeat True action SetScreenVariable("time_left", max(0, time_left - 1))
 
     add "#0A0E1A"
 
@@ -1124,7 +1189,7 @@ screen minigame_trace():
         background "#0A0E1A"
         padding (40, 30)
 
-        if not reached_end and not hit_gov and moves < max_moves:
+        if not reached_end and not hit_gov and moves < max_moves and time_left > 0:
             vbox:
                 spacing 16
 
@@ -1145,6 +1210,7 @@ screen minigame_trace():
                             text "LIVE STATUS" color "#8B8FCC" size 16 bold True
                             text "[nodes[current_node]['name']]" color "#EAF4F1" size 28 bold True
                             text "Moves remaining: [max_moves - moves]/[max_moves]" color "#FFD700" size 18
+                            text "Time left: [time_left]s" color ("#FF2D55" if time_left <= 8 else "#00FFD1") size 18 bold True
                             text "Path: " + " -> ".join([nodes[n]["name"] for n in path]) color "#AAB0D6" size 15
 
                     frame:
@@ -1246,6 +1312,10 @@ screen minigame_trace():
                         text "// ROUTE COMPROMISED //" color "#FF2D55" size 38 bold True xalign 0.5
                         text "The route hit the Government Monitor node, so the mission is blown." color "#FF2D55" size 20 xalign 0.5 text_align 0.5
                         text "Even strong tools fail if one hop routes through a known surveillance point." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
+                    elif time_left <= 0:
+                        text "// TIME EXPIRED //" color "#FF2D55" size 38 bold True xalign 0.5
+                        text "You ran out of time before finishing the route." color "#FF2D55" size 20 xalign 0.5 text_align 0.5
+                        text "Good opsec also depends on moving quickly before the surveillance window closes." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
                     else:
                         text "// OUT OF MOVES //" color "#FF2D55" size 38 bold True xalign 0.5
                         text "You ran out of time before reaching the journalist server." color "#FF2D55" size 20 xalign 0.5 text_align 0.5
