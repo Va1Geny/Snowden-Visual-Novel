@@ -11,22 +11,27 @@ label determine_ending:
     # Calculate the ending based on accumulated flags
     if knowledge_score >= 8 and escape_successful and contacts_secured >= 2 and not identity_exposed:
         $ ending_type = "hero"
+        $ persistent.tree_ending = "hero"
         jump ending_hero
 
     elif escape_successful and contacts_secured >= 1 and knowledge_score >= 5:
         $ ending_type = "fugitive"
+        $ persistent.tree_ending = "fugitive"
         jump ending_fugitive
 
     elif identity_exposed and not escape_successful:
         $ ending_type = "imprisoned"
+        $ persistent.tree_ending = "imprisoned"
         jump ending_imprisoned
 
     elif suspicion_level >= 4 and not evidence_secured:
         $ ending_type = "silenced"
+        $ persistent.tree_ending = "silenced"
         jump ending_silenced
 
     else:
         $ ending_type = "betrayed"
+        $ persistent.tree_ending = "betrayed"
         jump ending_betrayed
 
 

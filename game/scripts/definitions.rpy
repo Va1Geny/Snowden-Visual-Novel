@@ -246,18 +246,30 @@ image bg_sheremetyevo:
 
 # Slide in from left
 transform enter_left:
-    xpos -0.3 alpha 0.0
-    ease 0.6 xpos 0.15 alpha 1.0
+    xanchor 0.5
+    yanchor 1.0
+    xpos -0.22 ypos 1.03 alpha 0.0 zoom 0.94
+    ease 0.6 xpos 0.18 ypos 1.03 alpha 1.0 zoom 1.0
 
 # Slide in from right
 transform enter_right:
-    xpos 1.3 alpha 0.0
-    ease 0.6 xpos 0.75 alpha 1.0
+    xanchor 0.5
+    yanchor 1.0
+    xpos 1.22 ypos 1.03 alpha 0.0 zoom 0.94
+    ease 0.6 xpos 0.82 ypos 1.03 alpha 1.0 zoom 1.0
 
 # Fade in from center
 transform enter_center:
-    xpos 0.4 alpha 0.0 zoom 0.9
-    ease 0.5 xpos 0.4 alpha 1.0 zoom 1.0
+    xanchor 0.5
+    yanchor 1.0
+    xpos 0.5 ypos 1.08 alpha 0.0 zoom 0.92
+    ease 0.5 xpos 0.5 ypos 1.03 alpha 1.0 zoom 1.0
+
+transform stage_center:
+    xanchor 0.5
+    yanchor 1.0
+    xpos 0.5
+    ypos 1.03
 
 # === IDLE TRANSFORMS ===
 
@@ -349,3 +361,24 @@ define chapter_transition = Fade(1.0, 0.5, 1.0, color="#000000")
 
 # Glitch-style cut
 define glitch_cut = Fade(0.1, 0.05, 0.1, color="#00FFD1")
+
+
+################################################################################
+## PERSISTENT STORY-TREE INITIALISATION
+## (ensures all tree vars exist before the screen tries to read them)
+################################################################################
+
+init python:
+    _tree_defaults = {
+        'choice_ch1_1': '', 'choice_ch1_2': '',
+        'choice_ch2_1': '', 'choice_ch2_2': '',
+        'choice_ch3_0': '', 'choice_ch3_1': '', 'choice_ch3_2': '',
+        'choice_ch4_1': '', 'choice_ch4_2': '',
+        'choice_ch5_1': '',
+        'tree_ch_reached': 0,
+        'tree_ending': '',
+    }
+    for _tk, _tv in _tree_defaults.items():
+        if getattr(persistent, _tk, None) is None:
+            setattr(persistent, _tk, _tv)
+    del _tree_defaults, _tk, _tv

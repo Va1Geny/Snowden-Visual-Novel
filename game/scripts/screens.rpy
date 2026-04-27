@@ -1,19 +1,29 @@
 ################################################################################
-## SCREENS.RPY — Custom UI Screens
+## SCREENS.RPY — Unified UI System
 ## Classified: The Snowden Files
-##
-## This file replaces the default screens with custom themed screens.
-################################################################################
-
-################################################################################
-## Initialization
 ################################################################################
 
 init offset = -1
 
+define config.game_menu_action = ShowMenu("pause_hub")
+
 
 ################################################################################
-## Styles
+## Shared Setup
+################################################################################
+
+init python:
+    config.character_id_prefixes.append("namebox")
+    config.overlay_screens.append("quick_menu")
+    config.overlay_screens.append("game_hud")
+    config.overlay_screens.append("scene_stage_line")
+
+
+default quick_menu = True
+
+
+################################################################################
+## Base Styles
 ################################################################################
 
 style default:
@@ -31,7 +41,6 @@ style hyperlink_text:
 style gui_text:
     properties gui.text_properties("interface")
 
-
 style button:
     properties gui.button_properties("button")
 
@@ -39,57 +48,189 @@ style button_text is gui_text:
     properties gui.text_properties("button")
     yalign 0.5
 
-
 style label_text is gui_text:
     properties gui.text_properties("label", accent=True)
 
 style prompt_text is gui_text:
     properties gui.text_properties("prompt")
 
+style frame:
+    padding gui.frame_borders.padding
+    background Solid("#161A2B")
 
 style bar:
     ysize gui.bar_size
-    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
+    left_bar Solid("#008069")
+    right_bar Solid("#232843")
 
 style vbar:
     xsize gui.bar_size
-    top_bar Frame("gui/bar/top.png", gui.vbar_borders, tile=gui.bar_tile)
-    bottom_bar Frame("gui/bar/bottom.png", gui.vbar_borders, tile=gui.bar_tile)
+    top_bar Solid("#008069")
+    bottom_bar Solid("#232843")
 
 style scrollbar:
     ysize gui.scrollbar_size
-    base_bar Frame("gui/scrollbar/horizontal_[prefix_]bar.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame("gui/scrollbar/horizontal_[prefix_]thumb.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
+    base_bar Solid("#232843")
+    thumb Solid("#4D5186")
 
 style vscrollbar:
     xsize gui.scrollbar_size
-    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    base_bar Solid("#232843")
+    thumb Solid("#4D5186")
 
 style slider:
     ysize gui.slider_size
-    base_bar Frame("gui/slider/horizontal_[prefix_]bar.png", gui.slider_borders, tile=gui.slider_tile)
-    thumb "gui/slider/horizontal_[prefix_]thumb.png"
+    base_bar Solid("#232843")
+    thumb Solid("#8B8FCC")
 
 style vslider:
     xsize gui.slider_size
-    base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
-    thumb "gui/slider/vertical_[prefix_]thumb.png"
+    base_bar Solid("#232843")
+    thumb Solid("#8B8FCC")
 
+style shell_nav_button is button:
+    xsize 320
+    ysize 58
+    left_padding 18
+    right_padding 18
+    background Solid("#1B2034")
+    hover_background Solid("#006654")
+    selected_background Solid("#002922")
+    insensitive_background Solid("#141827")
 
-style frame:
-    padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+style shell_nav_button_text is button_text:
+    size 22
+    color "#EAF4F1"
+    hover_color "#F7FFFC"
+    selected_color "#F7FFFC"
+    insensitive_color "#6F769A"
+    xalign 0.0
 
+style modal_action_button is button:
+    xsize 440
+    ysize 66
+    left_padding 22
+    right_padding 22
+    top_padding 4
+    bottom_padding 4
+    background Solid("#182033")
+    hover_background Solid("#0B6E5F")
+    selected_background Solid("#002922")
+
+style modal_action_button_text is button_text:
+    size 23
+    bold True
+    color "#EAF4F1"
+    hover_color "#F7FFFC"
+    xalign 0.0
+
+style choice_button is button:
+    xsize 1120
+    yminimum 78
+    left_padding 28
+    right_padding 28
+    top_padding 20
+    bottom_padding 20
+    background Solid("#182033")
+    hover_background Solid("#0B6E5F")
+    selected_background Solid("#002922")
+
+style choice_button_text is button_text:
+    size 28
+    color "#EAF4F1"
+    hover_color "#F7FFFC"
+    xalign 0.5
+    text_align 0.5
+
+style quick_button is button:
+    background Solid("#101523CC")
+    hover_background Solid("#0B6E5F")
+    left_padding 14
+    right_padding 14
+    top_padding 10
+    bottom_padding 10
+
+style quick_button_text is button_text:
+    size 18
+    color "#AAB0D6"
+    hover_color "#F7FFFC"
+
+style game_menu_scrollbar is vscrollbar
+style game_menu_viewport is empty
+style game_menu_label is label
+style game_menu_label_text is label_text
 
 
 ################################################################################
-## In-game screens
+## Shared UI Helpers
 ################################################################################
 
+screen ui_backdrop():
+    add "#131421"
 
-## Say screen ##################################################################
+    frame:
+        xpos 42
+        ypos 0
+        xsize 2
+        yfill True
+        background "#006654"
+
+    frame:
+        xalign 1.0
+        xoffset -42
+        ypos 0
+        xsize 2
+        yfill True
+        background "#4D5186"
+
+    for i in range(24):
+        text "01001101":
+            color "#00806908"
+            size 13
+            xpos (i * 86 + 18)
+            ypos ((i * 61 + 24) % 1080)
+
+
+screen shell_header(kicker, title, body=None):
+    frame:
+        xpos 72
+        ypos 54
+        xsize 1776
+        ysize 116
+        background Solid("#0E1220EE")
+        padding (34, 24)
+
+        hbox:
+            xfill True
+            spacing 28
+
+            vbox:
+                spacing 4
+                yalign 0.5
+
+                text kicker:
+                    color "#8B8FCC"
+                    size 15
+                    bold True
+
+                text title:
+                    color "#EAF4F1"
+                    size 34
+                    bold True
+
+                if body:
+                    text body:
+                        color "#AAB0D6"
+                        size 16
+                        xmaximum 860
+
+            if body:
+                null width 80
+
+
+################################################################################
+## Dialogue Screens
+################################################################################
 
 screen say(who, what):
 
@@ -109,9 +250,6 @@ screen say(who, what):
         add SideImage() xalign 0.0 yalign 1.0
 
 
-init python:
-    config.character_id_prefixes.append('namebox')
-
 style window is default
 style say_label is default
 style say_dialogue is default
@@ -120,643 +258,942 @@ style say_thought is say_dialogue
 style namebox is default
 style namebox_label is say_label
 
-
 style window:
     xalign 0.5
     xfill True
-    yalign gui.textbox_yalign
-    ysize gui.textbox_height
-
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    yalign 1.0
+    ysize 292
+    background Solid("#0D1220E8")
+    top_padding 28
+    bottom_padding 34
 
 style namebox:
-    xpos gui.name_xpos
-    xanchor gui.name_xalign
-    xsize gui.namebox_width
-    ypos gui.name_ypos
-    ysize gui.namebox_height
-
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
-    padding gui.namebox_borders.padding
+    xpos 188
+    ypos 24
+    xpadding 22
+    ypadding 8
+    background Solid("#002922")
 
 style say_label:
-    properties gui.text_properties("name", accent=True)
-    xalign gui.name_xalign
-    yalign 0.5
+    color "#F7FFFC"
+    size 32
+    bold True
+    xalign 0.0
 
 style say_dialogue:
-    properties gui.text_properties("dialogue")
-
-    xpos gui.dialogue_xpos
-    xsize gui.dialogue_width
-    ypos gui.dialogue_ypos
-
+    color "#EAF4F1"
+    size 32
+    xpos 188
+    ypos 84
+    xsize 1544
+    line_spacing 3
     adjust_spacing False
 
-## Input screen ################################################################
 
 screen input(prompt):
     style_prefix "input"
 
     window:
-
         vbox:
-            xanchor gui.dialogue_text_xalign
-            xpos gui.dialogue_xpos
-            xsize gui.dialogue_width
-            ypos gui.dialogue_ypos
+            xpos 188
+            ypos 84
+            xsize 1544
+            spacing 14
 
             text prompt style "input_prompt"
             input id "input"
 
+
 style input_prompt is default
 
 style input_prompt:
-    xalign gui.dialogue_text_xalign
-    properties gui.text_properties("input_prompt")
+    color "#8B8FCC"
+    size 26
 
 style input:
-    xalign gui.dialogue_text_xalign
-    xmaximum gui.dialogue_width
+    color "#F7FFFC"
+    size 30
+    xmaximum 1544
 
-
-## Choice screen ###############################################################
 
 screen choice(items):
     style_prefix "choice"
 
     vbox:
+        xalign 0.5
+        ypos 310
+        spacing 14
+
         for i in items:
             textbutton i.caption action i.action
 
 
-style choice_vbox is vbox
-style choice_button is button
-style choice_button_text is button_text
-
-style choice_vbox:
-    xalign 0.5
-    ypos 405
-    yanchor 0.5
-
-    spacing gui.choice_spacing
-
-style choice_button is default:
-    properties gui.button_properties("choice_button")
-
-style choice_button_text is default:
-    properties gui.text_properties("choice_button")
-
-
-## Quick Menu screen ###########################################################
+################################################################################
+## Quick Menu / HUD
+################################################################################
 
 screen quick_menu():
-
     zorder 100
 
-    if quick_menu:
-
+    if quick_menu and not main_menu:
         hbox:
+            xalign 1.0
+            yalign 0.0
+            xoffset -30
+            yoffset 24
+            spacing 8
             style_prefix "quick"
-            style "quick_menu"
 
             textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("History") action ShowMenu("history")
+            textbutton _("Save") action ShowMenu("save")
+            textbutton _("Prefs") action ShowMenu("preferences")
 
 
-init python:
-    config.overlay_screens.append("quick_menu")
+screen game_hud():
+    zorder 90
 
-default quick_menu = True
+    if show_hud:
+        frame:
+            xalign 1.0
+            yalign 0.0
+            xoffset -30
+            yoffset 76
+            xsize 260
+            background Solid("#0F1423E6")
+            padding (18, 16)
 
-style quick_menu is hbox
-style quick_button is default
-style quick_button_text is button_text
+            vbox:
+                spacing 10
 
-style quick_menu:
-    xalign 0.5
-    yalign 1.0
+                text "FIELD STATUS":
+                    color "#8B8FCC"
+                    size 14
+                    bold True
 
-style quick_button:
-    properties gui.button_properties("quick_button")
+                text "CHAPTER [current_chapter]/5":
+                    color "#EAF4F1"
+                    size 19
+                    bold True
 
-style quick_button_text:
-    properties gui.text_properties("quick_button")
+                hbox:
+                    xfill True
+                    text "Knowledge":
+                        color "#AAB0D6"
+                        size 16
+                    text "[knowledge_score]":
+                        color "#8B8FCC"
+                        size 16
+                        bold True
+                        xalign 1.0
+
+                hbox:
+                    xfill True
+                    text "Trust":
+                        color "#AAB0D6"
+                        size 16
+                    text "[trust_score]":
+                        color "#EAF4F1"
+                        size 16
+                        bold True
+                        xalign 1.0
+
+                text "Suspicion":
+                    color "#AAB0D6"
+                    size 16
+
+                bar:
+                    value suspicion_level
+                    range 5
+                    xsize 210
+                    ysize 10
+                    left_bar Solid("#8B8FCC")
+                    right_bar Solid("#232843")
+
+
+screen scene_stage_line():
+    zorder 5
+
+    if not main_menu and renpy.get_screen("say") and not renpy.get_screen("pause_hub"):
+        add Solid("#02030466"):
+            xpos 0
+            ypos 822
+            xsize 1920
+            ysize 258
+
+        add Solid("#8B8FCC22"):
+            xpos 0
+            ypos 816
+            xsize 1920
+            ysize 2
+
+        add Solid("#00665433"):
+            xpos 0
+            ypos 804
+            xsize 1920
+            ysize 12
 
 
 ################################################################################
-## CUSTOM GAME SCREENS — Classified Theme
-################################################################################
-
-
-################################################################################
-## MAIN MENU — Classified / Surveillance Theme
+## Primary Menus
 ################################################################################
 
 screen main_menu():
     tag menu
 
-    # Dark background
-    add "#0A0E1A"
-
-    # Animated scanline overlay effect
+    use ui_backdrop
+    
     frame:
-        xfill True
-        yfill True
-        background None
-
-        # Data stream columns (simulated with text)
-        for i in range(20):
-            text "01001101":
-                color "#00FFD108"
-                size 14
-                xpos (i * 96 + 10)
-                ypos (i * 53 % 1080)
-
-    # Central content
-    vbox:
         xalign 0.5
-        yalign 0.45
-        spacing 15
+        yalign 0.5
+        xsize 1120
+        ysize 820
+        background Solid("#0E1321EE")
+        padding (54, 42)
 
-        # Game title with glitch effect
-        text "CLASSIFIED" at title_glitch:
-            color "#00FFD1"
-            size 72
-            bold True
-            xalign 0.5
-            outlines [(2, "#00FFD140", 0, 0)]
-
-        text "THE SNOWDEN FILES":
-            color "#E8E8E8"
-            size 36
-            bold True
-            xalign 0.5
-
-        null height 5
-
-        # Subtitle
-        text "\"The truth will always find a way out.\"":
-            color "#888888"
-            size 20
-            italic True
-            xalign 0.5
-
-        null height 40
-
-        # Menu buttons styled as terminal commands
         vbox:
             xalign 0.5
-            spacing 8
+            yalign 0.5
+            spacing 18
 
-            # START MISSION
-            textbutton "> START MISSION":
+            text "CLASSIFIED INTERFACE":
+                color "#8B8FCC"
+                size 16
+                bold True
                 xalign 0.5
+                kerning 3
+
+            fixed:
+                xsize 920
+                ysize 170
+
+                text "ENEMY OF THE STATE":
+                    xalign 0.5
+                    yalign 0.5
+                    color "#006654"
+                    size 84
+                    bold True
+                    outlines [(10, "#00665418", 0, 0), (5, "#00806922", 0, 0)]
+
+                text "ENEMY OF THE STATE" at title_glitch:
+                    xalign 0.5
+                    yalign 0.5
+                    color "#EFFFFA"
+                    size 84
+                    bold True
+                    outlines [(4, "#00806988", 0, 0), (12, "#00806918", 0, 0)]
+
+                text "ENEMY OF THE STATE":
+                    xalign 0.5
+                    yalign 0.5
+                    xoffset 2
+                    yoffset -2
+                    color "#8B8FCC33"
+                    size 84
+                    bold True
+
+            frame:
+                xalign 0.5
+                xsize 260
+                ysize 2
+                background Solid("#008069")
+
+            text "\"The truth will always find a way out.\"":
+                color "#8B8FCC"
+                size 22
+                italic True
+                xalign 0.5
+
+            text "Step into a high-stakes whistleblower thriller, track your route through the branch web, and keep the mission alive.":
+                color "#AAB0D6"
+                size 18
+                xalign 0.5
+                text_align 0.5
+                xmaximum 700
+
+            null height 10
+
+            vbox:
+                xalign 0.5
+                spacing 12
+
+                textbutton "START":
+                    style "modal_action_button"
+                    xalign 0.5
+                    action Start()
+
+                if renpy.newest_slot():
+                    textbutton "CONTINUE":
+                        style "modal_action_button"
+                        xalign 0.5
+                        action FileLoad(renpy.newest_slot(), confirm=False)
+
+                textbutton "DOSSIER":
+                    style "modal_action_button"
+                    xalign 0.5
+                    action ShowMenu("dossier")
+
+                textbutton "STORY TREE":
+                    style "modal_action_button"
+                    xalign 0.5
+                    action ShowMenu("story_tree")
+
+                textbutton "SETTINGS":
+                    style "modal_action_button"
+                    xalign 0.5
+                    action ShowMenu("preferences")
+
+                if renpy.variant("pc"):
+                    textbutton "EXIT":
+                        style "modal_action_button"
+                        xalign 0.5
+                        background Solid("#241926")
+                        hover_background Solid("#4D5186")
+                        action Quit(confirm=True)
+
+            null height 8
+
+            text "v[config.version]":
+                color "#4D5186"
+                size 15
+                xalign 0.5
+
+
+
+screen pause_hub():
+    tag menu
+    modal True
+
+    use ui_backdrop
+    use shell_header(
+        "ESC MENU",
+        "MISSION CONTROL",
+        "Resume, save, adjust settings, or inspect the branch map without dropping into the default Ren'Py interface."
+    )
+
+    frame:
+        xpos 72
+        ypos 214
+        xsize 620
+        ysize 770
+        background Solid("#101523EE")
+        padding (34, 30)
+
+        vbox:
+            spacing 14
+
+            textbutton "RESUME":
+                style "modal_action_button"
+                action Return()
+
+            textbutton "START":
+                style "modal_action_button"
                 action Start()
-                text_color "#00FFD1"
-                text_hover_color "#0A0E1A"
-                text_size 24
-                text_bold True
-                xsize 400
-                ysize 50
 
-            # CONTINUE (only if save exists)
-            if renpy.newest_slot():
-                textbutton "> CONTINUE":
-                    xalign 0.5
-                    action FileLoad(renpy.newest_slot(), confirm=False)
-                    text_color "#00FFD1"
-                    text_hover_color "#0A0E1A"
-                    text_size 24
-                    text_bold True
-                    xsize 400
-                    ysize 50
+            textbutton "SAVE":
+                style "modal_action_button"
+                action ShowMenu("save")
 
-            # DOSSIER
-            textbutton "> DOSSIER":
-                xalign 0.5
-                action ShowMenu("dossier")
-                text_color "#00FFD1"
-                text_hover_color "#0A0E1A"
-                text_size 24
-                text_bold True
-                xsize 400
-                ysize 50
-
-            # SETTINGS
-            textbutton "> SETTINGS":
-                xalign 0.5
+            textbutton "SETTINGS":
+                style "modal_action_button"
                 action ShowMenu("preferences")
-                text_color "#00FFD1"
-                text_hover_color "#0A0E1A"
-                text_size 24
-                text_bold True
-                xsize 400
-                ysize 50
 
-            # EXIT
+            textbutton "STORY TREE":
+                style "modal_action_button"
+                action ShowMenu("story_tree")
+
             if renpy.variant("pc"):
-                textbutton "> EXIT":
-                    xalign 0.5
+                textbutton "EXIT":
+                    style "modal_action_button"
+                    background Solid("#241926")
+                    hover_background Solid("#4D5186")
                     action Quit(confirm=True)
-                    text_color "#FF2D55"
-                    text_hover_color "#0A0E1A"
-                    text_size 24
-                    text_bold True
-                    xsize 400
-                    ysize 50
 
-    # Version + disclaimer at bottom
-    vbox:
-        xalign 0.5
-        yalign 0.98
-        spacing 3
+    frame:
+        xalign 1.0
+        xoffset -72
+        ypos 214
+        xsize 1080
+        ysize 770
+        background Solid("#0E1321E6")
+        padding (36, 32)
 
-        text "v1.0 — Classified: The Snowden Files":
-            color "#333333"
-            size 14
-            xalign 0.5
+        vbox:
+            spacing 18
 
-        text "Fictional dramatization for educational purposes.":
-            color "#333333"
-            size 12
-            xalign 0.5
+            text "TACTICAL STATUS":
+                color "#8B8FCC"
+                size 17
+                bold True
+
+            hbox:
+                spacing 18
+
+                frame:
+                    xsize 320
+                    ysize 150
+                    background Solid("#002922")
+                    padding (22, 18)
+
+                    vbox:
+                        spacing 8
+                        text "Current chapter":
+                            color "#8B8FCC"
+                            size 15
+                            bold True
+                        text "[current_chapter]/5":
+                            color "#EAF4F1"
+                            size 34
+                            bold True
+                        text "Operation branch currently in progress.":
+                            color "#AAB0D6"
+                            size 16
+
+                frame:
+                    xsize 320
+                    ysize 150
+                    background Solid("#171C30")
+                    padding (22, 18)
+
+                    vbox:
+                        spacing 8
+                        text "Knowledge":
+                            color "#8B8FCC"
+                            size 15
+                            bold True
+                        text "[knowledge_score]":
+                            color "#EAF4F1"
+                            size 34
+                            bold True
+                        text "Educational progress accumulated so far.":
+                            color "#AAB0D6"
+                            size 16
+
+                frame:
+                    xsize 320
+                    ysize 150
+                    background Solid("#171C30")
+                    padding (22, 18)
+
+                    vbox:
+                        spacing 8
+                        text "Suspicion":
+                            color "#8B8FCC"
+                            size 15
+                            bold True
+                        text "[suspicion_level]/5":
+                            color "#EAF4F1"
+                            size 34
+                            bold True
+                        text "Operational pressure currently on the player.":
+                            color "#AAB0D6"
+                            size 16
+
+            frame:
+                xfill True
+                ysize 1
+                background Solid("#232843")
+
+            text "This pause menu now uses the same spacing system as the rest of the UI, so buttons, cards, and text blocks stay aligned on different screens.":
+                color "#AAB0D6"
+                size 18
+                xmaximum 960
+
+    key "game_menu" action Return()
 
 
 ################################################################################
-## DOSSIER / GLOSSARY SCREEN
+## Story / Learning Screens
 ################################################################################
 
 screen dossier():
     tag menu
 
-    add "#0A0E1A"
+    use ui_backdrop
+    use shell_header(
+        "REFERENCE DATABASE",
+        "NETWORK SECURITY DOSSIER",
+        "Core cyber-security concepts presented in one scrollable reference layout."
+    )
 
-    viewport:
-        xfill True yfill True
-        scrollbars "vertical"
-        mousewheel True
+    frame:
+        xpos 72
+        ypos 214
+        xsize 1776
+        ysize 770
+        background Solid("#0E1321E6")
+        padding (26, 26)
 
         vbox:
-            xalign 0.5
-            xsize 1000
-            spacing 20
-            yoffset 40
+            xfill True
+            yfill True
+            spacing 18
 
-            text "// NETWORK SECURITY DOSSIER //" style "dossier_title"
+            viewport:
+                xfill True
+                ysize 640
+                scrollbars "vertical"
+                mousewheel True
+                draggable True
+                pagekeys True
 
-            null height 10
-
-            # Glossary entries
-            for term, definition in [
-                ("VPN (Virtual Private Network)", "Creates an encrypted tunnel between your device and a server, hiding your traffic from local network surveillance. Essential on untrusted networks like public Wi-Fi."),
-                ("PGP (Pretty Good Privacy)", "Asymmetric encryption system using public/private key pairs. Public key encrypts, only the matching private key can decrypt. Used for secure email communication."),
-                ("TOR (The Onion Router)", "Anonymization network that routes traffic through multiple relay nodes, each encrypting a layer. Makes it very difficult to trace traffic to its source."),
-                ("HTTPS", "HTTP with TLS/SSL encryption. Secures data between your browser and a web server. Look for the padlock icon in your browser's address bar."),
-                ("Firewall", "Network security system that monitors and filters incoming and outgoing traffic based on predefined rules. Acts as a barrier between trusted and untrusted networks."),
-                ("Metadata", "Data about data — who you communicated with, when, for how long, from where. Does not include the message content but can reveal intimate patterns of life."),
-                ("Man-in-the-Middle Attack", "An attacker secretly intercepts communication between two parties. Both parties think they're talking directly to each other. Key verification prevents this."),
-                ("Caesar Cipher", "Simple substitution cipher where each letter is shifted by a fixed number. Easy to break but historically significant. Example: ROT-3 shifts A→D, B→E, etc."),
-                ("OpSec (Operational Security)", "The practice of protecting critical information by identifying what intelligence the adversary could gather from your actions and taking steps to prevent it."),
-                ("Zero-Day Exploit", "A vulnerability in software unknown to the vendor. Called 'zero-day' because there are zero days of notice before it's exploited. No patch exists yet."),
-                ("AES-256", "Advanced Encryption Standard with 256-bit key. Military-grade symmetric encryption. Would take billions of years to brute-force with current technology."),
-                ("SecureDrop", "Open-source whistleblowing platform that allows anonymous document submission. Used by major news organizations to protect sources."),
-                ("PRISM", "NSA surveillance program providing direct access to user data from major tech companies. Exposed by Snowden in 2013."),
-                ("XKeyscore", "NSA tool for searching and analyzing internet data. Could search content of emails, browsing history, and social media activity in near real-time."),
-            ]:
-                frame:
+                vbox:
+                    spacing 14
                     xfill True
-                    background "#111827"
-                    padding (20, 12)
+                    xmaximum 1670
 
-                    vbox:
-                        spacing 5
-                        text term style "dossier_term"
-                        text definition style "dossier_definition"
+                    for term, definition in [
+                        ("VPN (Virtual Private Network)", "Creates an encrypted tunnel between your device and a server, hiding your traffic from local network surveillance. Essential on untrusted networks like public Wi-Fi."),
+                        ("PGP (Pretty Good Privacy)", "Asymmetric encryption system using public/private key pairs. Public key encrypts, only the matching private key can decrypt. Used for secure email communication."),
+                        ("TOR (The Onion Router)", "Anonymization network that routes traffic through multiple relay nodes, each encrypting a layer. Makes it very difficult to trace traffic to its source."),
+                        ("HTTPS", "HTTP with TLS/SSL encryption. Secures data between your browser and a web server. Look for the padlock icon in your browser's address bar."),
+                        ("Firewall", "Network security system that monitors and filters incoming and outgoing traffic based on predefined rules. Acts as a barrier between trusted and untrusted networks."),
+                        ("Metadata", "Data about data — who you communicated with, when, for how long, from where. Does not include the message content but can reveal intimate patterns of life."),
+                        ("Man-in-the-Middle Attack", "An attacker secretly intercepts communication between two parties. Both parties think they're talking directly to each other. Key verification prevents this."),
+                        ("Caesar Cipher", "Simple substitution cipher where each letter is shifted by a fixed number. Easy to break but historically significant. Example: ROT-3 shifts A to D, B to E, and so on."),
+                        ("OpSec (Operational Security)", "The practice of protecting critical information by identifying what intelligence the adversary could gather from your actions and taking steps to prevent it."),
+                        ("Zero-Day Exploit", "A vulnerability in software unknown to the vendor. Called zero-day because there are zero days of notice before it is exploited. No patch exists yet."),
+                        ("AES-256", "Advanced Encryption Standard with a 256-bit key. Strong symmetric encryption that is effectively impossible to brute-force with current consumer hardware."),
+                        ("SecureDrop", "An open-source whistleblowing platform that allows anonymous document submission. Used by major news organizations to protect sources."),
+                        ("PRISM", "NSA surveillance program providing direct access to user data from major tech companies. Exposed by Snowden in 2013."),
+                        ("XKeyscore", "NSA tool for searching and analyzing internet data. It could search email content, browsing history, and other digital activity in near real time."),
+                    ]:
+                        frame:
+                            xfill True
+                            xmaximum 1670
+                            background Solid("#171C30")
+                            padding (24, 20)
 
-            null height 30
+                            hbox:
+                                spacing 18
+                                xfill True
 
-            textbutton "> RETURN":
-                xalign 0.5
-                text_color "#00FFD1"
-                text_hover_color "#FFFFFF"
-                text_size 24
-                text_bold True
-                action Return()
+                                frame:
+                                    xsize 4
+                                    ysize 76
+                                    background Solid("#006654")
+                                    yalign 0.0
 
-            null height 40
+                                vbox:
+                                    spacing 8
+                                    xfill True
+                                    xmaximum 1600
 
+                                    text term:
+                                        color "#EAF4F1"
+                                        size 24
+                                        bold True
+                                        xfill True
 
-################################################################################
-## BRIEFING SCREEN (Pre-Chapter 1)
-################################################################################
+                                    text definition:
+                                        color "#AAB0D6"
+                                        size 18
+                                        xfill True
+                                        xmaximum 1540
+
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (20, 18)
+
+                hbox:
+                    xfill True
+
+                    text "Use the mouse wheel or drag to browse the archive.":
+                        color "#AAB0D6"
+                        size 17
+                        yalign 0.5
+
+                    textbutton "RETURN":
+                        style "modal_action_button"
+                        xsize 240
+                        xalign 1.0
+                        action Return()
+
+    key "game_menu" action Return()
+
 
 screen briefing_screen():
     modal True
-    add "#0A0E1A"
+
+    use ui_backdrop
 
     frame:
-        xalign 0.5 yalign 0.5
-        xsize 1000
-        background "#0A0E1A"
-        padding (50, 40)
+        xalign 0.5
+        yalign 0.5
+        xsize 980
+        background Solid("#0E1321F2")
+        padding (0, 0)
 
         vbox:
-            xalign 0.5
-            spacing 20
-
-            text "▓▓▓ CLASSIFIED ▓▓▓" style "briefing_header"
-
-            null height 10
+            spacing 0
 
             frame:
                 xfill True
-                background "#111827"
-                padding (30, 25)
+                ysize 66
+                background Solid("#241926")
+                padding (28, 0)
+
+                text "CLASSIFIED BRIEFING":
+                    color "#EAF4F1"
+                    size 26
+                    bold True
+                    xalign 0.5
+                    yalign 0.5
+
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (36, 30)
 
                 vbox:
-                    spacing 15
+                    spacing 18
 
-                    text "// MISSION BRIEFING //" color "#00FF00" size 22 bold True xalign 0.5
+                    text "OPERATIVE: Edward Snowden":
+                        color "#EAF4F1"
+                        size 24
+                        bold True
 
-                    text "OPERATIVE: Edward Snowden" color "#00FFD1" size 20
-                    text "ASSIGNMENT: NSA Systems Administrator" color "#00FFD1" size 20
-                    text "CLEARANCE: TS/SCI" color "#00FFD1" size 20
+                    text "ASSIGNMENT: NSA Systems Administrator":
+                        color "#AAB0D6"
+                        size 20
 
-                    null height 10
+                    text "CLEARANCE: TS/SCI":
+                        color "#8B8FCC"
+                        size 20
+                        bold True
 
-                    text "MISSION OBJECTIVE:" color "#FF2D55" size 20 bold True
-                    text "Navigate the moral and technical challenges of the most significant intelligence leak in modern history." color "#E8E8E8" size 18
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#232843")
 
-                    null height 5
+                    text "Navigate the moral and technical challenges of one of the most significant intelligence leaks in modern history.":
+                        color "#EAF4F1"
+                        size 22
+                        xmaximum 860
 
-                    text "Your decisions will determine the outcome. Every choice matters. Every answer teaches." color "#E8E8E8" size 18
+                    text "Your decisions affect trust, suspicion, and what information can survive the operation.":
+                        color "#AAB0D6"
+                        size 18
+                        xmaximum 860
 
-            null height 10
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (24, 22)
 
-            text "This is both a story AND a test. Choose wisely." style "briefing_warning"
+                textbutton "ACCEPT MISSION":
+                    style "modal_action_button"
+                    xalign 0.5
+                    action Return()
 
-            null height 15
-
-            textbutton "> ACCEPT MISSION":
-                xalign 0.5
-                text_color "#00FFD1"
-                text_hover_color "#0A0E1A"
-                text_size 26
-                text_bold True
-                action Return()
-
-
-################################################################################
-## CHAPTER TITLE CARD SCREEN
-################################################################################
 
 screen chapter_title_screen(number, title, subtitle):
     modal True
-    add "#000000"
 
-    vbox:
-        align (0.5, 0.5)
-        spacing 20
-
-        text "// CLASSIFIED: CHAPTER [number] //" style "sys_text" at chapter_fade_in
-        text title style "chapter_title_text" at chapter_fade_in
-        text subtitle style "chapter_subtitle_text" at chapter_fade_in
-
-    # Auto-advance after 3 seconds
-    timer 3.0 action Return()
-
-    # Or click to skip
-    key "dismiss" action Return()
-
-
-################################################################################
-## CHAPTER SUMMARY SCREEN
-################################################################################
-
-screen chapter_summary(chapter_num, chapter_name):
-    modal True
-    add "#0A0E1A"
+    use ui_backdrop
 
     frame:
-        xalign 0.5 yalign 0.5
-        xsize 900
-        background "#0A0E1A"
-        padding (40, 35)
+        xalign 0.5
+        yalign 0.5
+        xsize 1100
+        background Solid("#0E1321EE")
+        padding (40, 36)
 
         vbox:
             xalign 0.5
-            spacing 15
+            spacing 12
 
-            text "// CHAPTER [chapter_num] COMPLETE //" style "sys_text"
-            text chapter_name style "summary_title"
+            text "CHAPTER [number]":
+                color "#8B8FCC"
+                size 18
+                bold True
+                xalign 0.5
 
-            null height 15
+            text title:
+                color "#EAF4F1"
+                size 58
+                bold True
+                xalign 0.5
+
+            text subtitle:
+                color "#AAB0D6"
+                size 23
+                italic True
+                xalign 0.5
+
+    timer 3.0 action Return()
+    key "dismiss" action Return()
+
+
+screen chapter_summary(chapter_num, chapter_name):
+    modal True
+
+    use ui_backdrop
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 980
+        background Solid("#0E1321F0")
+        padding (0, 0)
+
+        vbox:
+            spacing 0
 
             frame:
                 xfill True
-                background "#111827"
-                padding (25, 20)
+                ysize 80
+                background Solid("#171C30")
+                padding (30, 0)
 
                 vbox:
-                    spacing 10
+                    xalign 0.5
+                    yalign 0.5
+                    spacing 4
 
-                    text "// CURRENT STATUS //" color "#00FFD1" size 20 bold True xalign 0.5
+                    text "CHAPTER [chapter_num] COMPLETE":
+                        color "#8B8FCC"
+                        size 16
+                        bold True
+                        xalign 0.5
 
-                    null height 5
+                    text chapter_name:
+                        color "#EAF4F1"
+                        size 28
+                        bold True
+                        xalign 0.5
 
-                    hbox:
-                        xfill True
-                        text "Knowledge Score:" style "summary_stat_label"
-                        text "[knowledge_score]" style "summary_stat_value" xalign 1.0
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (34, 28)
 
-                    hbox:
-                        xfill True
-                        text "Trust Score:" style "summary_stat_label"
-                        text "[trust_score]" style "summary_stat_value" xalign 1.0
-
-                    hbox:
-                        xfill True
-                        text "Suspicion Level:" style "summary_stat_label"
-                        text "[suspicion_level]/5" color "#FF2D55" size 20 bold True xalign 1.0
-
-                    hbox:
-                        xfill True
-                        text "Contacts Secured:" style "summary_stat_label"
-                        text "[contacts_secured]" style "summary_stat_value" xalign 1.0
+                vbox:
+                    spacing 16
 
                     hbox:
                         xfill True
-                        text "Evidence:" style "summary_stat_label"
+                        text "Knowledge Score":
+                            color "#AAB0D6"
+                            size 21
+                        text "[knowledge_score]":
+                            color "#EAF4F1"
+                            size 21
+                            bold True
+                            xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text "Trust Score":
+                            color "#AAB0D6"
+                            size 21
+                        text "[trust_score]":
+                            color "#EAF4F1"
+                            size 21
+                            bold True
+                            xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text "Suspicion Level":
+                            color "#AAB0D6"
+                            size 21
+                        text "[suspicion_level]/5":
+                            color "#EAF4F1"
+                            size 21
+                            bold True
+                            xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text "Contacts Secured":
+                            color "#AAB0D6"
+                            size 21
+                        text "[contacts_secured]":
+                            color "#EAF4F1"
+                            size 21
+                            bold True
+                            xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text "Evidence":
+                            color "#AAB0D6"
+                            size 21
                         if evidence_secured:
-                            text "SECURED" color "#00FF00" size 20 bold True xalign 1.0
+                            text "SECURED":
+                                color "#EAF4F1"
+                                size 21
+                                bold True
+                                xalign 1.0
                         else:
-                            text "NOT YET" color "#888888" size 20 xalign 1.0
+                            text "NOT YET":
+                                color "#EAF4F1"
+                                size 21
+                                bold True
+                                xalign 1.0
 
-            null height 15
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (24, 22)
 
-            if chapter_num < 5:
-                textbutton "> CONTINUE TO CHAPTER [chapter_num + 1]":
-                    xalign 0.5
-                    text_color "#00FFD1"
-                    text_hover_color "#FFFFFF"
-                    text_size 22
-                    text_bold True
-                    action Return()
-            else:
-                textbutton "> PROCEED TO FINAL ASSESSMENT":
-                    xalign 0.5
-                    text_color "#00FFD1"
-                    text_hover_color "#FFFFFF"
-                    text_size 22
-                    text_bold True
-                    action Return()
-
-
-################################################################################
-## GAME HUD — Progress Tracker
-################################################################################
-
-screen game_hud():
-    zorder 50
-
-    if show_hud:
-        frame:
-            xalign 1.0 yalign 0.0
-            xoffset -10 yoffset 10
-            xsize 200
-            background "#0A0E1A99"
-            padding (12, 10)
-
-            vbox:
-                spacing 5
-
-                text "CH [current_chapter]/5" color "#666666" size 14
-                text "KNOWLEDGE: [knowledge_score]" color "#00FFD1" size 14
-
-                hbox:
-                    spacing 5
-                    text "SUSPICION:" color "#888888" size 14
-
-                # Suspicion bar
-                bar:
-                    value suspicion_level
-                    range 5
-                    xsize 120
-                    ysize 8
-                    left_bar Solid("#FF2D55")
-                    right_bar Solid("#333333")
-
-init python:
-    config.overlay_screens.append("game_hud")
+                if chapter_num < 5:
+                    textbutton "CONTINUE TO CHAPTER [chapter_num + 1]":
+                        style "modal_action_button"
+                        xalign 0.5
+                        action Return()
+                else:
+                    textbutton "PROCEED TO FINAL ASSESSMENT":
+                        style "modal_action_button"
+                        xalign 0.5
+                        action Return()
 
 
-################################################################################
-## MCQ QUESTION SCREEN
-################################################################################
-
-screen mcq_question(question, answers, correct_index, explanation):
+screen mcq_question(question, answers, correct_index, explanation, helper_text=None):
     modal True
     default selected = -1
     default answered = False
 
-    add "#0A0E1ACC"
+    use ui_backdrop
 
     frame:
-        xalign 0.5 yalign 0.5
-        xsize 1000
-        background "#0A0E1A"
-        padding (40, 35)
+        xalign 0.5
+        yalign 0.5
+        xsize 1160
+        background Solid("#0E1321F0")
+        padding (0, 0)
 
         vbox:
-            xalign 0.5
-            spacing 15
+            spacing 0
 
-            text "// KNOWLEDGE CHECK //" color "#00FF00" size 22 bold True xalign 0.5
+            frame:
+                xfill True
+                ysize 76
+                background Solid("#171C30")
+                padding (28, 0)
 
-            null height 5
+                vbox:
+                    xalign 0.5
+                    yalign 0.5
+                    spacing 2
 
-            text question color "#E8E8E8" size 24 xalign 0.5 text_align 0.5
-
-            null height 15
-
-            # Answer buttons
-            for i, answer in enumerate(answers):
-                $ letter = ["A", "B", "C", "D"][i]
-
-                if not answered:
-                    textbutton "[letter]) [answer]":
-                        xsize 850
+                    text "KNOWLEDGE CHECK":
+                        color "#EAF4F1"
+                        size 24
+                        bold True
                         xalign 0.5
-                        text_size 20
-                        text_color "#00FFD1"
-                        text_hover_color "#FFFFFF"
-                        action [
-                            SetScreenVariable("selected", i),
-                            SetScreenVariable("answered", True)
-                        ]
-                else:
-                    if i == correct_index:
-                        textbutton "[letter]) [answer]":
-                            xsize 850
-                            xalign 0.5
-                            text_size 20
-                            text_color "#00FF00"
-                            text_bold True
-                            action NullAction()
-                    elif i == selected and i != correct_index:
-                        textbutton "[letter]) [answer]":
-                            xsize 850
-                            xalign 0.5
-                            text_size 20
-                            text_color "#FF2D55"
-                            action NullAction()
-                    else:
-                        textbutton "[letter]) [answer]":
-                            xsize 850
-                            xalign 0.5
-                            text_size 20
-                            text_color "#555555"
-                            action NullAction()
+
+                    text "Pick the best answer. Every right call boosts your field knowledge.":
+                        color "#8B8FCC"
+                        size 15
+                        xalign 0.5
+
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (34, 28)
+
+                vbox:
+                    spacing 18
+
+                    text question:
+                        color "#EAF4F1"
+                        size 25
+                        xalign 0.5
+                        text_align 0.5
+                        xmaximum 980
+
+                    if helper_text:
+                        frame:
+                            xfill True
+                            background Solid("#171C30")
+                            padding (18, 14)
+
+                            text helper_text:
+                                color "#8B8FCC"
+                                size 18
+                                italic True
+                                xalign 0.5
+                                text_align 0.5
+                                xmaximum 920
+
+                    for i, answer in enumerate(answers):
+                        $ letter = ["A", "B", "C", "D"][i]
+
+                        if not answered:
+                            textbutton "[letter].  [answer]":
+                                style "choice_button"
+                                xalign 0.5
+                                action [
+                                    SetScreenVariable("selected", i),
+                                    SetScreenVariable("answered", True)
+                                ]
+                        elif i == correct_index:
+                            textbutton "[letter].  [answer]":
+                                style "choice_button"
+                                xalign 0.5
+                                background Solid("#002922")
+                                hover_background Solid("#002922")
+                                action NullAction()
+                        elif i == selected:
+                            textbutton "[letter].  [answer]":
+                                style "choice_button"
+                                xalign 0.5
+                                background Solid("#241926")
+                                hover_background Solid("#241926")
+                                action NullAction()
+                        else:
+                            textbutton "[letter].  [answer]":
+                                style "choice_button"
+                                xalign 0.5
+                                background Solid("#1A2034")
+                                hover_background Solid("#1A2034")
+                                action NullAction()
 
             if answered:
-                null height 10
+                frame:
+                    xfill True
+                    background Solid("#171C30")
+                    padding (26, 24)
 
-                if selected == correct_index:
-                    text "✓ CORRECT!" color "#00FF00" size 22 bold True xalign 0.5
-                else:
-                    $ correct_letter = ["A", "B", "C", "D"][correct_index]
-                    text "✗ INCORRECT — Correct answer: [correct_letter]" color "#FF2D55" size 22 bold True xalign 0.5
+                    vbox:
+                        spacing 12
+                        xalign 0.5
 
-                null height 5
+                        if selected == correct_index:
+                            text "Correct - Nice catch":
+                                color "#EAF4F1"
+                                size 24
+                                bold True
+                                xalign 0.5
+                        else:
+                            $ correct_letter = ["A", "B", "C", "D"][correct_index]
+                            text "Not quite - Correct answer: [correct_letter]":
+                                color "#EAF4F1"
+                                size 24
+                                bold True
+                                xalign 0.5
 
-                text explanation color "#AAAAAA" size 17 xalign 0.5 text_align 0.5
+                        text explanation:
+                            color "#AAB0D6"
+                            size 18
+                            xalign 0.5
+                            text_align 0.5
+                            xmaximum 920
 
-                null height 15
-
-                textbutton "> CONTINUE":
-                    xalign 0.5
-                    text_color "#00FFD1"
-                    text_hover_color "#FFFFFF"
-                    text_size 22
-                    text_bold True
-                    if selected == correct_index:
-                        action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
-                    else:
-                        action Return()
+                        textbutton "CONTINUE":
+                            style "modal_action_button"
+                            xalign 0.5
+                            if selected == correct_index:
+                                action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+                            else:
+                                action Return()
 
 
-################################################################################
-## TEXT INPUT QUESTION SCREEN
-################################################################################
-
-screen text_input_question_screen(question, correct_answer, hint, explanation):
+screen text_input_question_screen(question, correct_answer, hint, explanation, accepted_answers=None, helper_text=None):
     modal True
     default user_answer = ""
     default attempts = 0
@@ -764,976 +1201,819 @@ screen text_input_question_screen(question, correct_answer, hint, explanation):
     default show_hint = False
     default show_answer = False
     default submitted = False
+    $ valid_answers = [a.strip().upper() for a in (accepted_answers or [correct_answer])]
 
-    add "#0A0E1ACC"
+    use ui_backdrop
 
     frame:
-        xalign 0.5 yalign 0.5
-        xsize 900
-        background "#0A0E1A"
-        padding (40, 35)
+        xalign 0.5
+        yalign 0.5
+        xsize 1080
+        background Solid("#0E1321F0")
+        padding (0, 0)
 
         vbox:
-            xalign 0.5
-            spacing 15
+            spacing 0
 
-            text "// KNOWLEDGE CHECK — TEXT INPUT //" color "#00FF00" size 20 bold True xalign 0.5
+            frame:
+                xfill True
+                ysize 76
+                background Solid("#171C30")
+                padding (28, 0)
 
-            null height 5
-
-            text question color "#E8E8E8" size 22 xalign 0.5 text_align 0.5
-
-            null height 10
-
-            if show_hint:
-                text "HINT: [hint]" color "#FFD700" size 18 italic True xalign 0.5
-
-            if not answered_correctly and not show_answer:
-                hbox:
+                vbox:
                     xalign 0.5
-                    spacing 10
+                    yalign 0.5
+                    spacing 2
 
-                    text "> " color "#00FF00" size 24 yalign 0.5
-
-                    input:
-                        value ScreenVariableInputValue("user_answer")
-                        length 30
-                        color "#00FFD1"
+                    text "TEXT INPUT CHECK":
+                        color "#EAF4F1"
                         size 24
+                        bold True
+                        xalign 0.5
 
-                null height 10
+                    text "Short answers work. Hints unlock quickly if you need them.":
+                        color "#8B8FCC"
+                        size 15
+                        xalign 0.5
 
-                if submitted and user_answer.strip().upper() != correct_answer.upper():
-                    text "✗ INCORRECT. Try again." color "#FF2D55" size 18 xalign 0.5
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (34, 28)
 
-                textbutton "> SUBMIT":
-                    xalign 0.5
-                    text_color "#00FFD1"
-                    text_hover_color "#FFFFFF"
-                    text_size 22
-                    text_bold True
-                    action [
-                        SetScreenVariable("submitted", True),
-                        SetScreenVariable("attempts", attempts + 1),
-                        If(user_answer.strip().upper() == correct_answer.upper(),
-                            true=SetScreenVariable("answered_correctly", True),
-                            false=[
-                                If(attempts >= 1,
-                                    true=SetScreenVariable("show_hint", True)),
-                                If(attempts >= 2,
-                                    true=SetScreenVariable("show_answer", True)),
+                vbox:
+                    spacing 18
+
+                    text question:
+                        color "#EAF4F1"
+                        size 25
+                        xalign 0.5
+                        text_align 0.5
+                        xmaximum 920
+
+                    if helper_text:
+                        frame:
+                            xfill True
+                            background Solid("#171C30")
+                            padding (18, 14)
+
+                            text helper_text:
+                                color "#8B8FCC"
+                                size 18
+                                italic True
+                                xalign 0.5
+                                text_align 0.5
+                                xmaximum 920
+
+                    if show_hint:
+                        frame:
+                            xfill True
+                            background Solid("#171C30")
+                            padding (18, 14)
+
+                            text "Hint: [hint]":
+                                color "#8B8FCC"
+                                size 18
+                                italic True
+                                xalign 0.5
+
+                    if not answered_correctly and not show_answer:
+                        frame:
+                            xfill True
+                            background Solid("#171C30")
+                            padding (22, 18)
+
+                            vbox:
+                                spacing 12
+
+                                hbox:
+                                    xalign 0.5
+                                    spacing 10
+
+                                    text ">":
+                                        color "#8B8FCC"
+                                        size 25
+                                        yalign 0.5
+
+                                    input:
+                                        value ScreenVariableInputValue("user_answer")
+                                        length 30
+                                        color "#EAF4F1"
+                                        size 24
+                                        xmaximum 700
+
+                                if submitted and user_answer.strip().upper() not in valid_answers:
+                                    text "Not quite. Try again.":
+                                        color "#AAB0D6"
+                                        size 18
+                                        xalign 0.5
+
+                        textbutton "SUBMIT":
+                            style "modal_action_button"
+                            xalign 0.5
+                            action [
+                                SetScreenVariable("submitted", True),
+                                SetScreenVariable("attempts", attempts + 1),
+                                If(user_answer.strip().upper() in valid_answers,
+                                    true=SetScreenVariable("answered_correctly", True),
+                                    false=[
+                                        If(attempts >= 1, true=SetScreenVariable("show_hint", True)),
+                                        If(attempts >= 2, true=SetScreenVariable("show_answer", True))
+                                    ])
                             ]
-                        )
-                    ]
 
-            if answered_correctly:
-                text "✓ CORRECT!" color "#00FF00" size 24 bold True xalign 0.5
-                text explanation color "#AAAAAA" size 17 xalign 0.5 text_align 0.5
+                    if answered_correctly:
+                        frame:
+                            xfill True
+                            background Solid("#171C30")
+                            padding (22, 20)
 
-                null height 10
+                            vbox:
+                                spacing 10
+                                xalign 0.5
 
-                textbutton "> CONTINUE":
-                    xalign 0.5
-                    text_color "#00FFD1"
-                    text_hover_color "#FFFFFF"
-                    text_size 22
-                    text_bold True
-                    action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+                                text "Correct":
+                                    color "#EAF4F1"
+                                    size 24
+                                    bold True
+                                    xalign 0.5
 
-            if show_answer:
-                text "ANSWER: [correct_answer]" color "#FFD700" size 24 bold True xalign 0.5
-                text explanation color "#AAAAAA" size 17 xalign 0.5 text_align 0.5
+                                text explanation:
+                                    color "#AAB0D6"
+                                    size 18
+                                    xalign 0.5
+                                    text_align 0.5
+                                    xmaximum 920
 
-                null height 10
+                                textbutton "CONTINUE":
+                                    style "modal_action_button"
+                                    xalign 0.5
+                                    action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
 
-                textbutton "> CONTINUE":
-                    xalign 0.5
-                    text_color "#00FFD1"
-                    text_hover_color "#FFFFFF"
-                    text_size 22
-                    text_bold True
-                    action Return()
+                    if show_answer:
+                        frame:
+                            xfill True
+                            background Solid("#171C30")
+                            padding (22, 20)
+
+                            vbox:
+                                spacing 10
+                                xalign 0.5
+
+                                text "Answer: [correct_answer]":
+                                    color "#EAF4F1"
+                                    size 24
+                                    bold True
+                                    xalign 0.5
+
+                                text explanation:
+                                    color "#AAB0D6"
+                                    size 18
+                                    xalign 0.5
+                                    text_align 0.5
+                                    xmaximum 920
+
+                                textbutton "CONTINUE":
+                                    style "modal_action_button"
+                                    xalign 0.5
+                                    action Return()
 
 
 ################################################################################
-## Main and Game Menu Screens
+## Menu Shell
 ################################################################################
-
-## Navigation screen ###########################################################
 
 screen navigation():
-
     vbox:
-        style_prefix "navigation"
-
-        xpos gui.navigation_xpos
-        yalign 0.5
-
-        spacing gui.navigation_spacing
+        spacing 12
 
         if main_menu:
-
-            textbutton _("Start") action Start()
-
+            textbutton _("Start"):
+                style "shell_nav_button"
+                action Start()
         else:
+            textbutton _("History"):
+                style "shell_nav_button"
+                action ShowMenu("history")
 
-            textbutton _("History") action ShowMenu("history")
+            textbutton _("Save"):
+                style "shell_nav_button"
+                action ShowMenu("save")
 
-            textbutton _("Save") action ShowMenu("save")
+        textbutton _("Load"):
+            style "shell_nav_button"
+            action ShowMenu("load")
 
-        textbutton _("Load") action ShowMenu("load")
+        textbutton _("Preferences"):
+            style "shell_nav_button"
+            action ShowMenu("preferences")
 
-        textbutton _("Preferences") action ShowMenu("preferences")
+        textbutton _("Dossier"):
+            style "shell_nav_button"
+            action ShowMenu("dossier")
+
+        textbutton _("Story Tree"):
+            style "shell_nav_button"
+            action ShowMenu("story_tree")
 
         if _in_replay:
-
-            textbutton _("End Replay") action EndReplay(confirm=True)
-
+            textbutton _("End Replay"):
+                style "shell_nav_button"
+                action EndReplay(confirm=True)
         elif not main_menu:
+            textbutton _("Main Menu"):
+                style "shell_nav_button"
+                action MainMenu()
 
-            textbutton _("Main Menu") action MainMenu()
-
-        textbutton _("About") action ShowMenu("about")
+        textbutton _("About"):
+            style "shell_nav_button"
+            action ShowMenu("about")
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
-            textbutton _("Help") action ShowMenu("help")
+            textbutton _("Help"):
+                style "shell_nav_button"
+                action ShowMenu("help")
 
         if renpy.variant("pc"):
-            textbutton _("Quit") action Quit(confirm=not main_menu)
+            textbutton _("Quit"):
+                style "shell_nav_button"
+                background Solid("#241926")
+                hover_background Solid("#4D5186")
+                action Quit(confirm=not main_menu)
 
-
-style navigation_button is gui_button
-style navigation_button_text is gui_button_text
-
-style navigation_button:
-    size_group "navigation"
-    properties gui.button_properties("navigation_button")
-
-style navigation_button_text:
-    properties gui.text_properties("navigation_button")
-
-
-## Game Menu screen ############################################################
 
 screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
+    tag menu
 
-    style_prefix "game_menu"
+    use ui_backdrop
+    use shell_header(
+        "ARCHIVE INTERFACE",
+        "[title]",
+        "A single menu grid now drives save, load, settings, history, help, and reference screens."
+    )
 
-    if main_menu:
-        add gui.main_menu_background
-    else:
-        add gui.game_menu_background
+    hbox:
+        xpos 72
+        ypos 214
+        spacing 20
 
-    frame:
-        style "game_menu_outer_frame"
+        frame:
+            xsize 360
+            ysize 770
+            background Solid("#0E1321EE")
+            padding (20, 20)
 
-        hbox:
+            vbox:
+                spacing 18
 
-            frame:
-                style "game_menu_navigation_frame"
+                use navigation
 
-            frame:
-                style "game_menu_content_frame"
+                null height 6
 
-                if scroll == "viewport":
+                textbutton _("Return"):
+                    style "shell_nav_button"
+                    action Return()
 
-                    viewport:
-                        yinitial yinitial
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
+        frame:
+            xsize 1396
+            ysize 770
+            background Solid("#0E1321EE")
+            padding (24, 24)
 
-                        side_yfill True
+            if scroll == "viewport":
+                viewport:
+                    style "game_menu_viewport"
+                    yinitial yinitial
+                    xfill True
+                    yfill True
+                    scrollbars "vertical"
+                    mousewheel True
+                    draggable True
+                    pagekeys True
 
-                        vbox:
-                            spacing spacing
-
-                            transclude
-
-                elif scroll == "vpgrid":
-
-                    vpgrid:
-                        cols 1
-                        yinitial yinitial
-
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-
-                        side_yfill True
-
+                    vbox:
                         spacing spacing
-
+                        xfill True
                         transclude
 
-                else:
+            elif scroll == "vpgrid":
+                vpgrid:
+                    cols 1
+                    yinitial yinitial
+                    xfill True
+                    yfill True
+                    scrollbars "vertical"
+                    mousewheel True
+                    draggable True
+                    pagekeys True
+                    spacing spacing
 
                     transclude
 
-    use navigation
-
-    textbutton _("Return"):
-        style "return_button"
-
-        action Return()
-
-    label title
+            else:
+                transclude
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
 
 
-style game_menu_outer_frame is empty
-style game_menu_navigation_frame is empty
-style game_menu_content_frame is empty
-style game_menu_viewport is gui_viewport
-style game_menu_side is gui_side
-style game_menu_scrollbar is gui_vscrollbar
-
-style game_menu_label is gui_label
-style game_menu_label_text is gui_label_text
-
-style return_button is navigation_button
-style return_button_text is navigation_button_text
-
-style game_menu_outer_frame:
-    bottom_padding 45
-    top_padding 180
-
-    background "gui/overlay/game_menu.png"
-
-style game_menu_navigation_frame:
-    xsize 420
-    yfill True
-
-style game_menu_content_frame:
-    left_margin 60
-    right_margin 30
-    top_margin 15
-
-style game_menu_viewport:
-    xsize 1380
-
-style game_menu_vscrollbar:
-    unscrollable gui.unscrollable
-
-style game_menu_side:
-    spacing 15
-
-style game_menu_label:
-    xpos 75
-    ysize 180
-
-style game_menu_label_text:
-    size 75
-    color gui.accent_color
-    yalign 0.5
-
-style return_button:
-    xpos gui.navigation_xpos
-    yalign 1.0
-    yoffset -45
-
-
-## About screen ################################################################
+################################################################################
+## Standard Menus
+################################################################################
 
 screen about():
-
     tag menu
 
-    use game_menu(_("About"), scroll="viewport"):
+    use game_menu(_("About"), scroll="viewport", spacing=18):
+        frame:
+            xfill True
+            background Solid("#171C30")
+            padding (28, 24)
 
-        style_prefix "about"
+            vbox:
+                spacing 14
 
-        vbox:
+                text "[config.name!t]":
+                    color "#EAF4F1"
+                    size 32
+                    bold True
 
-            label "[config.name!t]"
-            text _("Version [config.version!t]\n")
+                text "Version [config.version!t]":
+                    color "#8B8FCC"
+                    size 20
 
-            if gui.about:
-                text "[gui.about!t]\n"
+                if gui.about:
+                    text "[gui.about!t]":
+                        color "#AAB0D6"
+                        size 19
 
-            text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
+                text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."):
+                    color "#AAB0D6"
+                    size 18
 
+                text "[renpy.license!t]":
+                    color "#AAB0D6"
+                    size 16
 
-style about_label is gui_label
-style about_label_text is gui_label_text
-style about_text is gui_text
-
-style about_label_text:
-    size gui.label_text_size
-
-
-## Load and Save screens #######################################################
 
 screen save():
-
     tag menu
-
     use file_slots(_("Save"))
 
 
 screen load():
-
     tag menu
-
     use file_slots(_("Load"))
 
 
 screen file_slots(title):
-
     default page_name_value = FilePageNameInputValue(pattern=_("Page {}"), auto=_("Automatic saves"), quick=_("Quick saves"))
 
-    use game_menu(title):
-
-        fixed:
-
-            order_reverse True
-
-            button:
-                style "page_label"
-
-                key_events True
-                xalign 0.5
-                action page_name_value.Toggle()
-
-                input:
-                    style "page_label_text"
-                    value page_name_value
-
-            grid gui.file_slot_cols gui.file_slot_rows:
-                style_prefix "slot"
-
-                xalign 0.5
-                yalign 0.5
-
-                spacing gui.slot_spacing
-
-                for i in range(gui.file_slot_cols * gui.file_slot_rows):
-
-                    $ slot = i + 1
-
-                    button:
-                        action FileAction(slot)
-
-                        has vbox
-
-                        add FileScreenshot(slot) xalign 0.5
-
-                        text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
-                            style "slot_time_text"
-
-                        text FileSaveName(slot):
-                            style "slot_name_text"
-
-                        key "save_delete" action FileDelete(slot)
+    use game_menu(title, scroll="viewport", spacing=18):
+        frame:
+            xfill True
+            background Solid("#171C30")
+            padding (24, 22)
 
             vbox:
-                style_prefix "page"
+                spacing 18
 
-                xalign 0.5
-                yalign 1.0
+                button:
+                    xalign 0.5
+                    background Solid("#101523")
+                    hover_background Solid("#1B2034")
+                    padding (18, 10)
+                    action page_name_value.Toggle()
+
+                    input:
+                        value page_name_value
+                        color "#EAF4F1"
+                        size 22
+                        xalign 0.5
+                        text_align 0.5
+
+                grid gui.file_slot_cols gui.file_slot_rows:
+                    xalign 0.5
+                    spacing 18
+
+                    for i in range(gui.file_slot_cols * gui.file_slot_rows):
+                        $ slot = i + 1
+
+                        button:
+                            xsize 414
+                            ysize 330
+                            background Solid("#101523")
+                            hover_background Solid("#1B2034")
+                            padding (14, 14)
+                            action FileAction(slot)
+
+                            has vbox
+                            spacing 10
+
+                            add FileScreenshot(slot) xalign 0.5
+
+                            text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("Empty slot")):
+                                color "#8B8FCC"
+                                size 15
+                                xalign 0.0
+
+                            text FileSaveName(slot):
+                                color "#EAF4F1"
+                                size 18
+                                xalign 0.0
+
+                            key "save_delete" action FileDelete(slot)
 
                 hbox:
                     xalign 0.5
+                    spacing 10
 
-                    spacing gui.page_spacing
-
-                    textbutton _("<") action FilePagePrevious()
-                    key "save_page_prev" action FilePagePrevious()
+                    textbutton _("<"):
+                        style "shell_nav_button"
+                        xsize 74
+                        action FilePagePrevious()
 
                     if config.has_autosave:
-                        textbutton _("{#auto_page}A") action FilePage("auto")
+                        textbutton _("{#auto_page}A"):
+                            style "shell_nav_button"
+                            xsize 74
+                            action FilePage("auto")
 
                     if config.has_quicksave:
-                        textbutton _("{#quick_page}Q") action FilePage("quick")
+                        textbutton _("{#quick_page}Q"):
+                            style "shell_nav_button"
+                            xsize 74
+                            action FilePage("quick")
 
                     for page in range(1, 10):
-                        textbutton "[page]" action FilePage(page)
+                        textbutton "[page]":
+                            style "shell_nav_button"
+                            xsize 74
+                            action FilePage(page)
 
-                    textbutton _(">") action FilePageNext()
-                    key "save_page_next" action FilePageNext()
+                    textbutton _(">"):
+                        style "shell_nav_button"
+                        xsize 74
+                        action FilePageNext()
 
-                if config.has_sync:
-                    if CurrentScreenName() == "save":
-                        textbutton _("Upload Sync"):
-                            action UploadSync()
-                            xalign 0.5
-                    else:
-                        textbutton _("Download Sync"):
-                            action DownloadSync()
-                            xalign 0.5
-
-
-style page_label is gui_label
-style page_label_text is gui_label_text
-style page_button is gui_button
-style page_button_text is gui_button_text
-
-style slot_button is gui_button
-style slot_button_text is gui_button_text
-style slot_time_text is slot_button_text
-style slot_name_text is slot_button_text
-
-style page_label:
-    xpadding 75
-    ypadding 5
-    xalign 0.5
-
-style page_label_text:
-    textalign 0.5
-    layout "subtitle"
-    hover_color gui.hover_color
-
-style page_button:
-    properties gui.button_properties("page_button")
-
-style page_button_text:
-    properties gui.text_properties("page_button")
-
-style slot_button:
-    properties gui.button_properties("slot_button")
-
-style slot_button_text:
-    properties gui.text_properties("slot_button")
-
-
-## Preferences screen ##########################################################
 
 screen preferences():
-
     tag menu
 
-    use game_menu(_("Preferences"), scroll="viewport"):
+    use game_menu(_("Preferences"), scroll="viewport", spacing=18):
+        hbox:
+            spacing 18
+            xfill True
 
-        vbox:
-
-            hbox:
-                box_wrap True
-
-                if renpy.variant("pc") or renpy.variant("web"):
-
-                    vbox:
-                        style_prefix "radio"
-                        label _("Display")
-                        textbutton _("Window") action Preference("display", "window")
-                        textbutton _("Fullscreen") action Preference("display", "fullscreen")
+            frame:
+                xsize 655
+                background Solid("#171C30")
+                padding (24, 22)
 
                 vbox:
-                    style_prefix "check"
-                    label _("Skip")
-                    textbutton _("Unseen Text") action Preference("skip", "toggle")
-                    textbutton _("After Choices") action Preference("after choices", "toggle")
-                    textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                    spacing 18
 
-            null height (4 * gui.pref_spacing)
+                    text "DISPLAY AND FLOW":
+                        color "#8B8FCC"
+                        size 18
+                        bold True
 
-            hbox:
-                style_prefix "slider"
-                box_wrap True
+                    if renpy.variant("pc") or renpy.variant("web"):
+                        textbutton _("Window"):
+                            style "shell_nav_button"
+                            action Preference("display", "window")
+
+                        textbutton _("Fullscreen"):
+                            style "shell_nav_button"
+                            action Preference("display", "fullscreen")
+
+                    textbutton _("Skip Unseen Text"):
+                        style "shell_nav_button"
+                        action Preference("skip", "toggle")
+
+                    textbutton _("Skip After Choices"):
+                        style "shell_nav_button"
+                        action Preference("after choices", "toggle")
+
+                    textbutton _("Transitions"):
+                        style "shell_nav_button"
+                        action InvertSelected(Preference("transitions", "toggle"))
+
+            frame:
+                xsize 655
+                background Solid("#171C30")
+                padding (24, 22)
 
                 vbox:
+                    spacing 18
 
-                    label _("Text Speed")
+                    text "TEXT AND AUDIO":
+                        color "#8B8FCC"
+                        size 18
+                        bold True
 
+                    text "Text Speed":
+                        color "#EAF4F1"
+                        size 18
                     bar value Preference("text speed")
 
-                    label _("Auto-Forward Time")
-
+                    text "Auto-Forward Time":
+                        color "#EAF4F1"
+                        size 18
                     bar value Preference("auto-forward time")
 
-                vbox:
-
                     if config.has_music:
-                        label _("Music Volume")
-
-                        hbox:
-                            bar value Preference("music volume")
+                        text "Music Volume":
+                            color "#EAF4F1"
+                            size 18
+                        bar value Preference("music volume")
 
                     if config.has_sound:
-
-                        label _("Sound Volume")
-
-                        hbox:
-                            bar value Preference("sound volume")
-
-                            if config.sample_sound:
-                                textbutton _("Test") action Play("sound", config.sample_sound)
-
+                        text "Sound Volume":
+                            color "#EAF4F1"
+                            size 18
+                        bar value Preference("sound volume")
 
                     if config.has_voice:
-                        label _("Voice Volume")
+                        text "Voice Volume":
+                            color "#EAF4F1"
+                            size 18
+                        bar value Preference("voice volume")
 
-                        hbox:
-                            bar value Preference("voice volume")
+                    textbutton _("Mute All"):
+                        style "shell_nav_button"
+                        action Preference("all mute", "toggle")
 
-                            if config.sample_voice:
-                                textbutton _("Test") action Play("voice", config.sample_voice)
-
-                    if config.has_music or config.has_sound or config.has_voice:
-                        null height gui.pref_spacing
-
-                        textbutton _("Mute All"):
-                            action Preference("all mute", "toggle")
-                            style "mute_all_button"
-
-
-style pref_label is gui_label
-style pref_label_text is gui_label_text
-style pref_vbox is vbox
-
-style radio_label is pref_label
-style radio_label_text is pref_label_text
-style radio_button is gui_button
-style radio_button_text is gui_button_text
-style radio_vbox is pref_vbox
-
-style check_label is pref_label
-style check_label_text is pref_label_text
-style check_button is gui_button
-style check_button_text is gui_button_text
-style check_vbox is pref_vbox
-
-style slider_label is pref_label
-style slider_label_text is pref_label_text
-style slider_slider is gui_slider
-style slider_button is gui_button
-style slider_button_text is gui_button_text
-style slider_pref_vbox is pref_vbox
-
-style mute_all_button is check_button
-style mute_all_button_text is check_button_text
-
-style pref_label:
-    top_margin gui.pref_spacing
-    bottom_margin 3
-
-style pref_label_text:
-    yalign 1.0
-
-style pref_vbox:
-    xsize 338
-
-style radio_vbox:
-    spacing gui.pref_button_spacing
-
-style radio_button:
-    properties gui.button_properties("radio_button")
-    foreground "gui/button/radio_[prefix_]foreground.png"
-
-style radio_button_text:
-    properties gui.text_properties("radio_button")
-
-style check_vbox:
-    spacing gui.pref_button_spacing
-
-style check_button:
-    properties gui.button_properties("check_button")
-    foreground "gui/button/check_[prefix_]foreground.png"
-
-style check_button_text:
-    properties gui.text_properties("check_button")
-
-style slider_slider:
-    xsize 525
-
-style slider_button:
-    properties gui.button_properties("slider_button")
-    yalign 0.5
-    left_margin 15
-
-style slider_button_text:
-    properties gui.text_properties("slider_button")
-
-style slider_vbox:
-    xsize 675
-
-
-## History screen ##############################################################
 
 screen history():
-
     tag menu
-
     predict False
 
-    use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0, spacing=gui.history_spacing):
+    use game_menu(_("History"), scroll="viewport", spacing=14):
+        if _history_list:
+            for h in _history_list:
+                frame:
+                    xfill True
+                    background Solid("#171C30")
+                    padding (22, 18)
 
-        style_prefix "history"
+                    vbox:
+                        spacing 8
 
-        for h in _history_list:
+                        if h.who:
+                            if "color" in h.who_args:
+                                text h.who:
+                                    color h.who_args["color"]
+                                    size 20
+                                    bold True
+                                    substitute False
+                            else:
+                                text h.who:
+                                    color "#8B8FCC"
+                                    size 20
+                                    bold True
+                                    substitute False
 
-            window:
-
-                has fixed:
-                    yfit True
-
-                if h.who:
-
-                    label h.who:
-                        style "history_name"
-                        substitute False
-
-                        if "color" in h.who_args:
-                            text_color h.who_args["color"]
-
-                $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
-                text what:
-                    substitute False
-
-        if not _history_list:
-            label _("The dialogue history is empty.")
+                        $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
+                        text what:
+                            color "#EAF4F1"
+                            size 19
+                            substitute False
+        else:
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (28, 22)
+                text _("The dialogue history is empty."):
+                    color "#AAB0D6"
+                    size 20
 
 
 define gui.history_allow_tags = { "alt", "noalt", "rt", "rb", "art" }
 
 
-style history_window is empty
-
-style history_name is gui_label
-style history_name_text is gui_label_text
-style history_text is gui_text
-
-style history_label is gui_label
-style history_label_text is gui_label_text
-
-style history_window:
-    xfill True
-    ysize gui.history_height
-
-style history_name:
-    xpos gui.history_name_xpos
-    xanchor gui.history_name_xalign
-    ypos gui.history_name_ypos
-    xsize gui.history_name_width
-
-style history_name_text:
-    min_width gui.history_name_width
-    textalign gui.history_name_xalign
-
-style history_text:
-    xpos gui.history_text_xpos
-    ypos gui.history_text_ypos
-    xanchor gui.history_text_xalign
-    xsize gui.history_text_width
-    min_width gui.history_text_width
-    textalign gui.history_text_xalign
-    layout ("subtitle" if gui.history_text_xalign else "tex")
-
-style history_label:
-    xfill True
-
-style history_label_text:
-    xalign 0.5
-
-
-## Help screen #################################################################
-
 screen help():
-
     tag menu
-
     default device = "keyboard"
 
-    use game_menu(_("Help"), scroll="viewport"):
+    use game_menu(_("Help"), scroll="viewport", spacing=18):
+        hbox:
+            spacing 12
 
-        style_prefix "help"
+            textbutton _("Keyboard"):
+                style "shell_nav_button"
+                xsize 190
+                action SetScreenVariable("device", "keyboard")
 
-        vbox:
-            spacing 23
+            textbutton _("Mouse"):
+                style "shell_nav_button"
+                xsize 190
+                action SetScreenVariable("device", "mouse")
 
-            hbox:
+            if GamepadExists():
+                textbutton _("Gamepad"):
+                    style "shell_nav_button"
+                    xsize 190
+                    action SetScreenVariable("device", "gamepad")
 
-                textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
-                textbutton _("Mouse") action SetScreenVariable("device", "mouse")
-
-                if GamepadExists():
-                    textbutton _("Gamepad") action SetScreenVariable("device", "gamepad")
+        frame:
+            xfill True
+            background Solid("#171C30")
+            padding (24, 22)
 
             if device == "keyboard":
                 use keyboard_help
             elif device == "mouse":
                 use mouse_help
-            elif device == "gamepad":
+            else:
                 use gamepad_help
 
 
 screen keyboard_help():
+    vbox:
+        spacing 12
 
-    hbox:
-        label _("Enter")
-        text _("Advances dialogue and activates the interface.")
+        for key_name, desc in [
+            (_("Enter"), _("Advances dialogue and activates the interface.")),
+            (_("Space"), _("Advances dialogue without selecting choices.")),
+            (_("Arrow Keys"), _("Navigate the interface.")),
+            (_("Escape"), _("Opens the custom mission control menu.")),
+            (_("Ctrl"), _("Skips dialogue while held down.")),
+            (_("Tab"), _("Toggles dialogue skipping.")),
+            (_("Page Up"), _("Rolls back to earlier dialogue.")),
+            (_("Page Down"), _("Rolls forward to later dialogue.")),
+            ("H", _("Hides the user interface.")),
+            ("S", _("Takes a screenshot.")),
+            ("V", _("Toggles self-voicing.")),
+            (_("Shift+A"), _("Opens the accessibility menu.")),
+        ]:
+            hbox:
+                spacing 20
+                xfill True
 
-    hbox:
-        label _("Space")
-        text _("Advances dialogue without selecting choices.")
+                text key_name:
+                    color "#8B8FCC"
+                    size 20
+                    bold True
+                    xsize 220
 
-    hbox:
-        label _("Arrow Keys")
-        text _("Navigate the interface.")
-
-    hbox:
-        label _("Escape")
-        text _("Accesses the game menu.")
-
-    hbox:
-        label _("Ctrl")
-        text _("Skips dialogue while held down.")
-
-    hbox:
-        label _("Tab")
-        text _("Toggles dialogue skipping.")
-
-    hbox:
-        label _("Page Up")
-        text _("Rolls back to earlier dialogue.")
-
-    hbox:
-        label _("Page Down")
-        text _("Rolls forward to later dialogue.")
-
-    hbox:
-        label "H"
-        text _("Hides the user interface.")
-
-    hbox:
-        label "S"
-        text _("Takes a screenshot.")
-
-    hbox:
-        label "V"
-        text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
-
-    hbox:
-        label "Shift+A"
-        text _("Opens the accessibility menu.")
+                text desc:
+                    color "#EAF4F1"
+                    size 19
+                    xfill True
 
 
 screen mouse_help():
+    vbox:
+        spacing 12
 
-    hbox:
-        label _("Left Click")
-        text _("Advances dialogue and activates the interface.")
+        for key_name, desc in [
+            (_("Left Click"), _("Advances dialogue and activates the interface.")),
+            (_("Middle Click"), _("Hides the user interface.")),
+            (_("Right Click"), _("Opens the custom mission control menu.")),
+            (_("Wheel Up"), _("Rolls back to earlier dialogue.")),
+            (_("Wheel Down"), _("Rolls forward to later dialogue.")),
+        ]:
+            hbox:
+                spacing 20
+                xfill True
 
-    hbox:
-        label _("Middle Click")
-        text _("Hides the user interface.")
+                text key_name:
+                    color "#8B8FCC"
+                    size 20
+                    bold True
+                    xsize 220
 
-    hbox:
-        label _("Right Click")
-        text _("Accesses the game menu.")
-
-    hbox:
-        label _("Mouse Wheel Up")
-        text _("Rolls back to earlier dialogue.")
-
-    hbox:
-        label _("Mouse Wheel Down")
-        text _("Rolls forward to later dialogue.")
+                text desc:
+                    color "#EAF4F1"
+                    size 19
+                    xfill True
 
 
 screen gamepad_help():
+    vbox:
+        spacing 12
 
-    hbox:
-        label _("Right Trigger\nA/Bottom Button")
-        text _("Advances dialogue and activates the interface.")
+        for key_name, desc in [
+            (_("A / Bottom Button"), _("Advances dialogue and activates the interface.")),
+            (_("Left Trigger"), _("Rolls back to earlier dialogue.")),
+            (_("Right Shoulder"), _("Rolls forward to later dialogue.")),
+            (_("D-Pad / Sticks"), _("Navigate the interface.")),
+            (_("Start / B"), _("Opens the custom mission control menu.")),
+            (_("Y / Top Button"), _("Hides the user interface.")),
+        ]:
+            hbox:
+                spacing 20
+                xfill True
 
-    hbox:
-        label _("Left Trigger\nLeft Shoulder")
-        text _("Rolls back to earlier dialogue.")
+                text key_name:
+                    color "#8B8FCC"
+                    size 20
+                    bold True
+                    xsize 320
 
-    hbox:
-        label _("Right Shoulder")
-        text _("Rolls forward to later dialogue.")
+                text desc:
+                    color "#EAF4F1"
+                    size 19
+                    xfill True
 
-    hbox:
-        label _("D-Pad, Sticks")
-        text _("Navigate the interface.")
-
-    hbox:
-        label _("Start, Guide, B/Right Button")
-        text _("Accesses the game menu.")
-
-    hbox:
-        label _("Y/Top Button")
-        text _("Hides the user interface.")
-
-    textbutton _("Calibrate") action GamepadCalibrate()
-
-
-style help_button is gui_button
-style help_button_text is gui_button_text
-style help_label is gui_label
-style help_label_text is gui_label_text
-style help_text is gui_text
-
-style help_button:
-    properties gui.button_properties("help_button")
-    xmargin 12
-
-style help_button_text:
-    properties gui.text_properties("help_button")
-
-style help_label:
-    xsize 375
-    right_padding 30
-
-style help_label_text:
-    size gui.text_size
-    xalign 1.0
-    textalign 1.0
-
+        textbutton _("Calibrate"):
+            style "shell_nav_button"
+            xsize 220
+            action GamepadCalibrate()
 
 
 ################################################################################
-## Additional screens
+## Utility Screens
 ################################################################################
-
-
-## Confirm screen ##############################################################
 
 screen confirm(message, yes_action, no_action):
-
     modal True
-
     zorder 200
 
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
+    use ui_backdrop
 
     frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 860
+        background Solid("#0E1321F2")
+        padding (32, 28)
 
         vbox:
-            xalign .5
-            yalign .5
-            spacing 45
+            spacing 22
+            xalign 0.5
 
-            label _(message):
-                style "confirm_prompt"
+            text _(message):
+                color "#EAF4F1"
+                size 28
+                bold True
                 xalign 0.5
+                text_align 0.5
+                xmaximum 720
 
             hbox:
+                spacing 14
                 xalign 0.5
-                spacing 150
 
-                textbutton _("Yes") action yes_action
-                textbutton _("No") action no_action
+                textbutton _("Yes"):
+                    style "modal_action_button"
+                    xsize 220
+                    action yes_action
+
+                textbutton _("No"):
+                    style "modal_action_button"
+                    xsize 220
+                    background Solid("#171C30")
+                    hover_background Solid("#4D5186")
+                    action no_action
 
     key "game_menu" action no_action
 
 
-style confirm_frame is gui_frame
-style confirm_prompt is gui_prompt
-style confirm_prompt_text is gui_prompt_text
-style confirm_button is gui_medium_button
-style confirm_button_text is gui_medium_button_text
-
-style confirm_frame:
-    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
-    padding gui.confirm_frame_borders.padding
-    xalign .5
-    yalign .5
-
-style confirm_prompt_text:
-    textalign 0.5
-    layout "subtitle"
-
-style confirm_button:
-    properties gui.button_properties("confirm_button")
-
-style confirm_button_text:
-    properties gui.text_properties("confirm_button")
-
-
-## Skip indicator screen #######################################################
-
 screen skip_indicator():
-
     zorder 100
-    style_prefix "skip"
 
     frame:
+        xpos 28
+        ypos 24
+        background Solid("#0E1321E6")
+        padding (16, 10)
 
         hbox:
-            spacing 9
+            spacing 8
+            text _("Skipping"):
+                color "#EAF4F1"
+                size 18
+            text ">>":
+                color "#8B8FCC"
+                size 18
 
-            text _("Skipping")
-
-            text "▸" at delayed_blink(0.0, 1.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.2, 1.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.4, 1.0) style "skip_triangle"
-
-
-transform delayed_blink(delay, cycle):
-    alpha .5
-
-    pause delay
-
-    block:
-        linear .2 alpha 1.0
-        pause .2
-        linear .2 alpha 0.5
-        pause (cycle - .4)
-        repeat
-
-
-style skip_frame is empty
-style skip_text is gui_text
-style skip_triangle is skip_text
-
-style skip_frame:
-    ypos gui.skip_ypos
-    background Frame("gui/skip.png", gui.skip_frame_borders, tile=gui.frame_tile)
-    padding gui.skip_frame_borders.padding
-
-style skip_text:
-    size gui.notify_text_size
-
-style skip_triangle:
-    font "DejaVuSans.ttf"
-
-
-## Notify screen ###############################################################
 
 screen notify(message):
-
     zorder 100
-    style_prefix "notify"
 
-    frame at notify_appear:
-        text "[message!tq]"
+    frame:
+        xalign 1.0
+        yalign 0.0
+        xoffset -26
+        yoffset 28
+        background Solid("#0E1321E6")
+        padding (16, 12)
 
-    timer 3.25 action Hide('notify')
+        text "[message!tq]":
+            color "#EAF4F1"
+            size 18
 
-
-transform notify_appear:
-    on show:
-        alpha 0
-        linear .25 alpha 1.0
-    on hide:
-        linear .5 alpha 0.0
-
-
-style notify_frame is empty
-style notify_text is gui_text
-
-style notify_frame:
-    ypos gui.notify_ypos
-
-    background Frame("gui/notify.png", gui.notify_frame_borders, tile=gui.frame_tile)
-    padding gui.notify_frame_borders.padding
-
-style notify_text:
-    properties gui.text_properties("notify")
+    timer 3.25 action Hide("notify")
 
 
-## NVL screen ##################################################################
+################################################################################
+## NVL / Bubble
+################################################################################
 
 screen nvl(dialogue, items=None):
-
     window:
         style "nvl_window"
 
@@ -1741,19 +2021,14 @@ screen nvl(dialogue, items=None):
             spacing gui.nvl_spacing
 
         if gui.nvl_height:
-
             vpgrid:
                 cols 1
                 yinitial 1.0
-
                 use nvl_dialogue(dialogue)
-
         else:
-
             use nvl_dialogue(dialogue)
 
         for i in items:
-
             textbutton i.caption:
                 action i.action
                 style "nvl_button"
@@ -1762,9 +2037,7 @@ screen nvl(dialogue, items=None):
 
 
 screen nvl_dialogue(dialogue):
-
     for d in dialogue:
-
         window:
             id d.window_id
 
@@ -1772,7 +2045,6 @@ screen nvl_dialogue(dialogue):
                 yfit gui.nvl_height is None
 
                 if d.who is not None:
-
                     text d.who:
                         id d.who_id
 
@@ -1784,19 +2056,16 @@ define config.nvl_list_length = gui.nvl_list_length
 
 style nvl_window is default
 style nvl_entry is default
-
 style nvl_label is say_label
 style nvl_dialogue is say_dialogue
-
 style nvl_button is button
 style nvl_button_text is button_text
 
 style nvl_window:
     xfill True
     yfill True
-
-    background "gui/nvl.png"
-    padding gui.nvl_borders.padding
+    background Solid("#0E1321F0")
+    padding (24, 24, 24, 24)
 
 style nvl_entry:
     xfill True
@@ -1818,7 +2087,6 @@ style nvl_dialogue:
     xsize gui.nvl_text_width
     min_width gui.nvl_text_width
     textalign gui.nvl_text_xalign
-    layout ("subtitle" if gui.nvl_text_xalign else "tex")
 
 style nvl_thought:
     xpos gui.nvl_thought_xpos
@@ -1827,18 +2095,21 @@ style nvl_thought:
     xsize gui.nvl_thought_width
     min_width gui.nvl_thought_width
     textalign gui.nvl_thought_xalign
-    layout ("subtitle" if gui.nvl_text_xalign else "tex")
 
 style nvl_button:
-    properties gui.button_properties("nvl_button")
+    background Solid("#1B2034")
+    hover_background Solid("#006654")
+    left_padding 18
+    right_padding 18
+    top_padding 12
+    bottom_padding 12
     xpos gui.nvl_button_xpos
     xanchor gui.nvl_button_xalign
 
 style nvl_button_text:
-    properties gui.text_properties("nvl_button")
+    color "#EAF4F1"
+    size 22
 
-
-## Bubble screen ###############################################################
 
 screen bubble(who, what):
     style_prefix "bubble"
@@ -1847,7 +2118,6 @@ screen bubble(who, what):
         id "window"
 
         if who is not None:
-
             window:
                 id "namebox"
                 style "bubble_namebox"
@@ -1861,6 +2131,7 @@ screen bubble(who, what):
         default ctc = None
         showif ctc:
             add ctc
+
 
 style bubble_window is empty
 style bubble_namebox is empty
@@ -1883,145 +2154,59 @@ style bubble_who:
 style bubble_what:
     align (0.5, 0.5)
     text_align 0.5
-    layout "subtitle"
     color "#000"
 
 define bubble.frame = Frame("gui/bubble.png", 55, 55, 55, 95)
 define bubble.thoughtframe = Frame("gui/thoughtbubble.png", 55, 55, 55, 55)
 
 define bubble.properties = {
-    "bottom_left" : {
-        "window_background" : Transform(bubble.frame, xzoom=1, yzoom=1),
-        "window_bottom_padding" : 27,
+    "bottom_left": {
+        "window_background": Transform(bubble.frame, xzoom=1, yzoom=1),
+        "window_bottom_padding": 27,
     },
-
-    "bottom_right" : {
-        "window_background" : Transform(bubble.frame, xzoom=-1, yzoom=1),
-        "window_bottom_padding" : 27,
+    "bottom_right": {
+        "window_background": Transform(bubble.frame, xzoom=-1, yzoom=1),
+        "window_bottom_padding": 27,
     },
-
-    "top_left" : {
-        "window_background" : Transform(bubble.frame, xzoom=1, yzoom=-1),
-        "window_top_padding" : 27,
+    "top_left": {
+        "window_background": Transform(bubble.frame, xzoom=1, yzoom=-1),
+        "window_top_padding": 27,
     },
-
-    "top_right" : {
-        "window_background" : Transform(bubble.frame, xzoom=-1, yzoom=-1),
-        "window_top_padding" : 27,
+    "top_right": {
+        "window_background": Transform(bubble.frame, xzoom=-1, yzoom=-1),
+        "window_top_padding": 27,
     },
-
-    "thought" : {
-        "window_background" : bubble.thoughtframe,
+    "thought": {
+        "window_background": bubble.thoughtframe,
     }
 }
 
 define bubble.expand_area = {
-    "bottom_left" : (0, 0, 0, 22),
-    "bottom_right" : (0, 0, 0, 22),
-    "top_left" : (0, 22, 0, 0),
-    "top_right" : (0, 22, 0, 0),
-    "thought" : (0, 0, 0, 0),
+    "bottom_left": (0, 0, 0, 22),
+    "bottom_right": (0, 0, 0, 22),
+    "top_left": (0, 22, 0, 0),
+    "top_right": (0, 22, 0, 0),
+    "thought": (0, 0, 0, 0),
 }
-
 
 
 ################################################################################
 ## Mobile Variants
 ################################################################################
 
-style pref_vbox:
-    variant "medium"
-    xsize 675
-
 screen quick_menu():
     variant "touch"
 
     zorder 100
 
-    if quick_menu:
-
+    if quick_menu and not main_menu:
         hbox:
-            style "quick_menu"
+            xalign 0.5
+            yalign 1.0
+            yoffset -18
+            spacing 10
             style_prefix "quick"
 
             textbutton _("Back") action Rollback()
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Menu") action ShowMenu()
-
-
-style window:
-    variant "small"
-    background "gui/phone/textbox.png"
-
-style radio_button:
-    variant "small"
-    foreground "gui/phone/button/radio_[prefix_]foreground.png"
-
-style check_button:
-    variant "small"
-    foreground "gui/phone/button/check_[prefix_]foreground.png"
-
-style nvl_window:
-    variant "small"
-    background "gui/phone/nvl.png"
-
-style main_menu_frame:
-    variant "small"
-    background "gui/phone/overlay/main_menu.png"
-
-style game_menu_outer_frame:
-    variant "small"
-    background "gui/phone/overlay/game_menu.png"
-
-style game_menu_navigation_frame:
-    variant "small"
-    xsize 510
-
-style game_menu_content_frame:
-    variant "small"
-    top_margin 0
-
-style game_menu_viewport:
-    variant "small"
-    xsize 1305
-
-style pref_vbox:
-    variant "small"
-    xsize 600
-
-style bar:
-    variant "small"
-    ysize gui.bar_size
-    left_bar Frame("gui/phone/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-    right_bar Frame("gui/phone/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
-
-style vbar:
-    variant "small"
-    xsize gui.bar_size
-    top_bar Frame("gui/phone/bar/top.png", gui.vbar_borders, tile=gui.bar_tile)
-    bottom_bar Frame("gui/phone/bar/bottom.png", gui.vbar_borders, tile=gui.bar_tile)
-
-style scrollbar:
-    variant "small"
-    ysize gui.scrollbar_size
-    base_bar Frame("gui/phone/scrollbar/horizontal_[prefix_]bar.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame("gui/phone/scrollbar/horizontal_[prefix_]thumb.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
-
-style vscrollbar:
-    variant "small"
-    xsize gui.scrollbar_size
-    base_bar Frame("gui/phone/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame("gui/phone/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-
-style slider:
-    variant "small"
-    ysize gui.slider_size
-    base_bar Frame("gui/phone/slider/horizontal_[prefix_]bar.png", gui.slider_borders, tile=gui.slider_tile)
-    thumb "gui/phone/slider/horizontal_[prefix_]thumb.png"
-
-style vslider:
-    variant "small"
-    xsize gui.slider_size
-    base_bar Frame("gui/phone/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
-    thumb "gui/phone/slider/vertical_[prefix_]thumb.png"
+            textbutton _("Save") action ShowMenu("save")
+            textbutton _("Menu") action ShowMenu("pause_hub")

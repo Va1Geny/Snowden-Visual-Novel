@@ -60,6 +60,7 @@ label intro:
 label chapter_1:
     $ current_chapter = 1
     $ show_hud = True
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 1)
 
     call screen chapter_title_screen(1, "INSIDE THE MACHINE", "NSA Facility — Oahu, Hawaii — 2012")
 
@@ -105,12 +106,13 @@ label chapter_1:
 
     menu:
         "Follow protocol. Process the flagged selectors as assigned.":
+            $ persistent.choice_ch1_1 = "protocol"
             e "Alright, let's focus on the assignment. Processing the flagged selectors now."
             $ trust_score += 1
             $ renpy.notify("Trust +1")
 
             scene bg_nsa_terminal at parallax with dissolve
-            show edward neutral at center
+            show edward neutral at stage_center
             with dissolve
 
             im "Stay in your lane, Snowden. Do your job. Don't attract attention."
@@ -118,12 +120,13 @@ label chapter_1:
             narrator_voice "Edward processes the assigned selectors. Standard targets. Foreign IP addresses. But among the flagged traffic, domestic addresses keep appearing."
 
         "Explore the restricted directories. Something doesn't add up.":
+            $ persistent.choice_ch1_1 = "explore"
             e "I need to check something first..."
             $ suspicion_level += 1
             $ renpy.notify("Suspicion +1")
 
             scene bg_nsa_terminal at parallax with dissolve
-            show edward neutral at center
+            show edward neutral at stage_center
             with dissolve
 
             im "These directories shouldn't be this easy to access. Why does a systems administrator have read access to raw intelligence feeds?"
@@ -164,7 +167,7 @@ label chapter_1:
     )
 
     # --- Choice 2: Report anomaly or stay silent? ---
-    show edward neutral at center
+    show edward neutral at stage_center
     show supervisor neutral at enter_right
     with dissolve
 
@@ -183,6 +186,7 @@ label chapter_1:
 
     menu:
         "Report the anomaly to the Inspector General's office.":
+            $ persistent.choice_ch1_2 = "report"
             e "I should file a formal concern with the IG office."
             $ trust_score += 2
             $ renpy.notify("Trust +2")
@@ -194,6 +198,7 @@ label chapter_1:
             narrator_voice "The report was acknowledged, reviewed, and buried. The system protects itself."
 
         "Stay silent. Keep working. Gather more information.":
+            $ persistent.choice_ch1_2 = "silent"
             scene bg_1 at parallax with dissolve
             im "Not yet. I need to understand the full scope before I act. If I report one anomaly, they'll lock me out. I need to see the whole picture."
             $ trust_score -= 1
@@ -228,6 +233,7 @@ label chapter_1:
 
 label chapter_2:
     $ current_chapter = 2
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 2)
 
     call screen chapter_title_screen(2, "THE PRISM REVELATION", "NSA Servers — Classified Briefings — 2012-2013")
 
@@ -270,6 +276,7 @@ label chapter_2:
 
     menu:
         "Trust the colleague. Share what you've found.":
+            $ persistent.choice_ch2_1 = "trust"
             e "Look, I need someone I can trust. What I've found... it's bigger than both of us."
             $ trust_score += 1
             $ renpy.notify("Trust +1")
@@ -281,6 +288,7 @@ label chapter_2:
             im "At least I'm not completely alone in this."
 
         "Work alone. Trust no one inside the NSA.":
+            $ persistent.choice_ch2_1 = "alone"
             e "Never mind. Forget I said anything. Just tired."
             $ suspicion_level += 0
             $ trust_score -= 1
@@ -295,10 +303,12 @@ label chapter_2:
     # --- Question Segment 2: Text Input ---
 
     call screen text_input_question_screen(
-        question="Type the name of the NSA surveillance program Snowden exposed:",
+        question="Type the codename of the surveillance program Snowden found:",
         correct_answer="PRISM",
         hint="It's named after a glass object that splits light into a spectrum...",
-        explanation="PRISM was a clandestine mass electronic surveillance data mining program launched in 2007 by the NSA, with participation from major tech companies."
+        explanation="PRISM was the codename for the NSA program that collected user data from major tech platforms.",
+        accepted_answers=["PRISM"],
+        helper_text="You just saw the codename in the scene above, so trust your memory more than your IT knowledge."
     )
 
     # --- Minigame 2: Decrypt the Message ---
@@ -319,7 +329,7 @@ label chapter_2:
 
     # --- Choice 2: Copy the files or take notes only? ---
     scene bg_nsa_servers at parallax with dissolve
-    show edward neutral at center
+    show edward neutral at stage_center
     with dissolve
 
     im "I have access to everything. The question is: what do I do with it?"
@@ -328,6 +338,7 @@ label chapter_2:
 
     menu:
         "Copy the files to an encrypted drive. This evidence needs to survive.":
+            $ persistent.choice_ch2_2 = "copy"
             im "I need the original documents. Notes won't be enough. Journalists need primary sources."
             $ evidence_secured = True
             $ suspicion_level += 1
@@ -338,6 +349,7 @@ label chapter_2:
             sys "// DATA TRANSFER INITIATED. ENCRYPTION: AES-256. CONTAINER: VERACRYPT HIDDEN VOLUME. //"
 
         "Take detailed notes only. Digital evidence is too risky.":
+            $ persistent.choice_ch2_2 = "notes"
             im "If they catch me with files, it's espionage. Notes are deniable."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
@@ -378,6 +390,7 @@ label chapter_2:
 
 label chapter_3:
     $ current_chapter = 3
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 3)
 
     call screen chapter_title_screen(3, "THE CONTACT", "Encrypted Communications — January 2013")
 
@@ -404,6 +417,7 @@ label chapter_3:
 
         menu:
             "Try to bluff your way through the security review.":
+                $ persistent.choice_ch3_0 = "bluff"
                 $ suspicion_level += 1
                 $ renpy.notify("Suspicion +1")
 
@@ -412,6 +426,7 @@ label chapter_3:
                 narrator_voice "The security team notes the explanation but doesn't close the file. The clock is ticking."
 
             "Accelerate the timeline. Contact journalists immediately.":
+                $ persistent.choice_ch3_0 = "accelerate"
                 $ trust_score -= 1
                 $ renpy.notify("Trust -1")
 
@@ -423,17 +438,20 @@ label chapter_3:
 
     menu:
         "Set up a PGP-encrypted email channel using Tor (requires knowledge).":
+            $ persistent.choice_ch3_1 = "pgp"
             if knowledge_score >= 3:
                 jump ch3_secure_success
             else:
                 jump ch3_secure_fail
 
         "Contact Glenn Greenwald directly through his public email.":
+            $ persistent.choice_ch3_1 = "email"
             $ contacts_secured += 1
             $ renpy.notify("Contacts +1")
             jump ch3_greenwald_contact
 
         "Wait for a safer moment to make contact.":
+            $ persistent.choice_ch3_1 = "wait"
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
             jump ch3_wait
@@ -527,14 +545,15 @@ label ch3_continue:
     hide edward neutral with dissolve
 
     call screen mcq_question(
-        question="What does TOR stand for?",
-        answers=["Transfer Over Router", "The Onion Router", "Terminal Output Relay", "Timed Output Router"],
-        correct_index=1,
-        explanation="TOR (The Onion Router) anonymizes internet traffic by encrypting it in multiple layers and routing it through a series of volunteer-operated nodes around the world, like layers of an onion."
+        question="What is Tor mainly used for?",
+        answers=["To hide where your internet traffic is coming from", "To make your laptop charge faster", "To delete files forever", "To boost a Wi-Fi signal"],
+        correct_index=0,
+        explanation="Tor hides your route by bouncing traffic through several relays, which makes it much harder for observers to trace it back to you.",
+        helper_text="Think about privacy and staying hard to track, not the full acronym."
     )
 
     # --- Minigame 3: OpSec Challenge ---
-    $ mg_intro3 = renpy.call_screen("minigame_intro", title="OPSEC CHALLENGE", description="Review a series of actions taken by 'Agent X' who is trying to contact a journalist. Identify which actions are SAFE and which are MISTAKES that could blow their cover.")
+    $ mg_intro3 = renpy.call_screen("minigame_intro", title="OPSEC CHALLENGE", description="You are Agent X on the clock. Tag each move as SAFE or MISTAKE before your cover gets blown.")
 
     if mg_intro3:
         $ mg_opsec_score = renpy.call_screen("minigame_opsec")
@@ -550,7 +569,7 @@ label ch3_continue:
         $ renpy.notify("Knowledge -1 (Skipped)")
 
     # --- Choice 2: How much to reveal? ---
-    show edward neutral at center
+    show edward neutral at stage_center
     show journalist neutral at enter_right
     with dissolve
 
@@ -560,6 +579,7 @@ label ch3_continue:
 
     menu:
         "Tell everything. Full transparency builds trust.":
+            $ persistent.choice_ch3_2 = "full"
             e "It's everything. PRISM, XKeyscore, Boundless Informant, upstream collection — the NSA is collecting data on hundreds of millions of people. American citizens included."
             $ trust_score += 2
             $ contacts_secured += 1
@@ -568,6 +588,7 @@ label ch3_continue:
             greenwald "My God. If this is true... this is the biggest intelligence leak in history."
 
         "Share only what's necessary. Protect sources and methods.":
+            $ persistent.choice_ch3_2 = "partial"
             e "I can confirm the NSA is conducting mass domestic surveillance. I'll share the details when we meet in person."
             $ trust_score += 1
             $ renpy.notify("Trust +1")
@@ -575,6 +596,7 @@ label ch3_continue:
             greenwald "Fair enough. Where do we meet?"
 
         "Be vague. Don't reveal the scope until you're safe.":
+            $ persistent.choice_ch3_2 = "vague"
             e "It's significant. That's all I can say right now."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
@@ -608,6 +630,7 @@ label ch3_continue:
 
 label chapter_4:
     $ current_chapter = 4
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 4)
 
     call screen chapter_title_screen(4, "THE ESCAPE", "Hong Kong — May 2013")
 
@@ -651,34 +674,40 @@ label chapter_4:
     narrator_voice "Edward needs to send final instructions to the publication team, but the hotel network is compromised."
 
     menu:
-        "Use the hotel Wi-Fi with a VPN (dangerous — hotel networks are easily monitored).":
+        "Use the hotel Wi-Fi with a VPN.":
+            $ persistent.choice_ch4_1 = "hotel"
             $ suspicion_level += 1
             $ renpy.notify("Suspicion +1")
 
             im "The VPN encrypts my traffic, but the hotel's network logs will show my room connected to a VPN. That alone is a red flag for anyone watching."
 
             sys "// WARNING: VPN CONNECTION DETECTED ON LOCAL NETWORK. COMMERCIAL VPN IPs ARE CATALOGUED BY INTELLIGENCE AGENCIES. //"
+            sys "// CHOICE REVIEW: Fast and convenient, but the hotel can still log that a protected tunnel came from your room. Good for speed, bad for stealth. //"
 
-        "Use a personal mobile hotspot with Tor (safer — direct cellular connection).":
+        "Use a personal mobile hotspot with Tor.":
+            $ persistent.choice_ch4_1 = "mobile"
             $ trust_score += 1
             $ renpy.notify("Trust +1")
 
             im "A mobile hotspot bypasses the hotel network entirely. With Tor on top of it, my traffic is encrypted and anonymized through multiple relay nodes."
 
             sys "// SECURE CONNECTION ESTABLISHED. TRAFFIC ROUTED THROUGH 3 TOR RELAY NODES. //"
+            sys "// CHOICE REVIEW: Slower, but it avoids hotel logs and adds extra privacy layers. Good for stealth, bad for speed. //"
 
     # --- Question Segment 4: Text Input ---
 
     call screen text_input_question_screen(
-        question="What network anonymization tool uses 'onion routing'?",
+        question="Type the 3-letter privacy tool that hides your route online:",
         correct_answer="TOR",
-        hint="It's named after a vegetable with many layers...",
-        explanation="TOR (The Onion Router) encrypts your data in multiple layers, each peeled away at successive relay nodes, making it extremely difficult to trace traffic back to its source."
+        hint="It's the same tool mentioned in the safer option above.",
+        explanation="Tor wraps your traffic in several layers and sends it through relays, which helps hide where it started.",
+        accepted_answers=["TOR", "THE ONION ROUTER"],
+        helper_text="Short answer is fine."
     )
 
     # --- Minigame 4: Trace the Route ---
 
-    $ mg_intro4 = renpy.call_screen("minigame_intro", title="TRACE THE ROUTE", description="Route your network connection from your laptop to the journalist's secure server. Avoid the Government Monitor node! Choose safe routing through VPN and Tor nodes.")
+    $ mg_intro4 = renpy.call_screen("minigame_intro", title="TRACE THE ROUTE", description="Build a safe route hop by hop. Green nodes help you stay hidden, while the red monitor exposes the whole mission.")
 
     if mg_intro4:
         $ mg_trace_solved = renpy.call_screen("minigame_trace")
@@ -696,8 +725,6 @@ label chapter_4:
     # --- Choice 2: Fly to Russia or seek another country? ---
 
     scene bg_leak at parallax with dissolve
-    show edward neutral at center
-    with dissolve
 
     narrator_voice "The first stories are published. The world erupts. And now, Edward Snowden is the most wanted man on Earth."
 
@@ -708,29 +735,36 @@ label chapter_4:
 
         menu:
             "Head to the airport immediately. Every minute counts.":
+                $ persistent.choice_ch4_2 = "airport"
                 $ escape_successful = True
                 $ renpy.notify("Escape initiated!")
 
                 im "No time to plan. The passport might still work for a few hours before the revocation hits every system."
+                sys "// ROUTE REVIEW: Best for immediate movement, worst for preparation. Good if you need speed more than certainty. //"
 
             "Go to the Russian consulate. They're the only ones who might help.":
+                $ persistent.choice_ch4_2 = "russia"
                 $ escape_successful = True
                 $ trust_score -= 1
                 $ renpy.notify("Escape to Russia | Trust -1")
 
                 im "Russia isn't ideal, but beggars can't be choosers. They have their own reasons for helping me."
+                sys "// ROUTE REVIEW: Good for immediate shelter, bad for independence. Help comes with political strings attached. //"
 
     else:
         menu:
             "Fly to Ecuador via Moscow. Multiple stops make tracking harder.":
+                $ persistent.choice_ch4_2 = "ecuador"
                 $ escape_successful = True
                 $ renpy.notify("Escape route planned!")
 
                 im "Ecuador has a history of granting asylum to people the US wants. WikiLeaks arranged the route through Moscow."
 
                 narrator_voice "But Edward will never make it past Moscow. His passport will be revoked mid-flight."
+                sys "// ROUTE REVIEW: Strong asylum logic, but the travel chain is fragile. Good long-term idea, risky short-term execution. //"
 
             "Seek asylum at a European embassy in Hong Kong.":
+                $ persistent.choice_ch4_2 = "embassy"
                 $ trust_score += 1
                 $ renpy.notify("Trust +1")
 
@@ -742,13 +776,16 @@ label chapter_4:
                     $ escape_successful = False
 
                 im "No one will help. Not officially. Moscow may be my only option."
+                sys "// ROUTE REVIEW: Good legal optics, but embassies rarely want the diplomatic fallout. Good principle, poor odds. //"
                 $ escape_successful = True
 
             "Stay in Hong Kong and face the legal system.":
+                $ persistent.choice_ch4_2 = "stay"
                 $ escape_successful = False
                 $ renpy.notify("Escape abandoned.")
 
                 im "If I stay, Hong Kong will extradite me. The US legal system won't give me a fair trial under the Espionage Act."
+                sys "// ROUTE REVIEW: Good if you want to make a stand, bad if your goal is to stay free long enough to keep the story alive. //"
 
     hide edward neutral with dissolve
 
@@ -780,6 +817,7 @@ label chapter_4:
 
 label chapter_5:
     $ current_chapter = 5
+    $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 5)
 
     call screen chapter_title_screen(5, "PERMANENT RECORD", "Moscow, Russia — 2013 to Present")
 
@@ -810,7 +848,7 @@ label chapter_5:
     hide russian_official neutral with dissolve
 
     scene bg_moscow_apartment at parallax with dissolve
-    show edward neutral at center
+    show edward neutral at stage_center
     with dissolve
 
     im "I'm an exile in the physical world, but I've never been more active in the digital one."
@@ -847,10 +885,12 @@ label chapter_5:
 
     # Text Input
     call screen text_input_question_screen(
-        question="Type the encryption software Snowden used to communicate securely with journalists:",
+        question="Type the 3-letter encryption tool Snowden used to message journalists:",
         correct_answer="PGP",
-        hint="It stands for 'Pretty Good' something...",
-        explanation="PGP (Pretty Good Privacy) uses asymmetric encryption — a public key to encrypt messages and a private key to decrypt them. Snowden insisted journalists learn to use PGP before he would communicate with them."
+        hint="It stands for 'Pretty Good' something, and the short version is enough.",
+        explanation="PGP lets one key lock a message and another key unlock it, which is why Snowden pushed journalists to learn it.",
+        accepted_answers=["PGP", "PRETTY GOOD PRIVACY"],
+        helper_text="Just the 3-letter version works."
     )
 
     # MCQ
@@ -863,7 +903,7 @@ label chapter_5:
 
     # --- Final Choice: Culminating Moral Decision ---
 
-    show edward neutral at center
+    show edward neutral at stage_center
     with dissolve
 
     narrator_voice "Years have passed. The world has changed — partly because of what Edward Snowden did, and partly in spite of it."
@@ -874,6 +914,7 @@ label chapter_5:
 
     menu:
         "Encourage them to leak. The public deserves to know.":
+            $ persistent.choice_ch5_1 = "encourage"
             e "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
             $ trust_score += 2
             $ renpy.notify("Trust +2")
@@ -881,6 +922,7 @@ label chapter_5:
             narrator_voice "Snowden helps the new whistleblower establish secure communications, passing on the hard lessons of his own experience."
 
         "Advise caution. Use official channels first.":
+            $ persistent.choice_ch5_1 = "caution"
             e "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
             $ trust_score += 1
             $ knowledge_score += 1
@@ -889,6 +931,7 @@ label chapter_5:
             narrator_voice "Snowden advises a measured approach, hoping the system has improved since his time. Knowing it probably hasn't."
 
         "Tell them not to do it. The personal cost is too high.":
+            $ persistent.choice_ch5_1 = "refuse"
             e "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")

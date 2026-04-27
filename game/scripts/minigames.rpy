@@ -1084,6 +1084,28 @@ init python:
         "secure": ["target"],
     }
 
+    def trace_node_color(node_type, active=False, visited=False):
+        if node_type == "danger":
+            return "#FF2D55" if active else "#6B1F31"
+        if node_type in ("safe", "end"):
+            return "#00FFD1" if active else "#004D45"
+        if node_type == "start":
+            return "#FFD700" if active else "#594700"
+        return "#8B8FCC" if active else "#232843"
+
+    def trace_hint(current_node):
+        hints = {
+            "home": "The hotel path is noisier. The VPN route is the safer opening move.",
+            "isp": "ISP gear is a chokepoint. One branch keeps you moving, the other gets you watched.",
+            "vpn": "Nice start. Stack more privacy-friendly hops instead of cutting back toward surveillance.",
+            "tor1": "Tor helps, but one wrong turn can still expose the route.",
+            "tor2": "You're deep in the safer path now. Finish through the protected relay.",
+            "gov": "The monitor has your traffic. That route is burned.",
+            "cdn": "You're close, but delivery infrastructure is less private than a secure relay.",
+            "secure": "One more clean hop gets the instructions home.",
+        }
+        return hints.get(current_node, "Keep the route tight and avoid the red monitor.")
+
 
 screen minigame_trace():
     modal True
@@ -1091,7 +1113,7 @@ screen minigame_trace():
     default current_node = "home"
     default path = ["home"]
     default moves = 0
-    default max_moves = 4
+    default max_moves = 5
     default hit_gov = False
     default reached_end = False
 
@@ -1102,43 +1124,100 @@ screen minigame_trace():
         background "#0A0E1A"
         padding (40, 30)
 
-        vbox:
-            spacing 10
+        if not reached_end and not hit_gov and moves < max_moves:
+            vbox:
+                spacing 16
 
-            text "// TRACE THE ROUTE //" style "minigame_title"
-            text "Route your connection to the Journalist Server. Avoid the Government Monitor node!" style "minigame_instruction"
-            text "Moves remaining: [max_moves - moves]/[max_moves]" color "#FFD700" size 18 xalign 0.5
+                text "// TRACE THE ROUTE //" style "minigame_title"
+                text "Build a clean route to the journalist server. One bad hop sends everything through government eyes." style "minigame_instruction"
 
-            null height 5
+                hbox:
+                    xfill True
+                    spacing 16
 
-            if not reached_end and not hit_gov and moves < max_moves:
-                # Show current position and options
+                    frame:
+                        xsize 330
+                        background "#111827"
+                        padding (20, 16)
+
+                        vbox:
+                            spacing 8
+                            text "LIVE STATUS" color "#8B8FCC" size 16 bold True
+                            text "[nodes[current_node]['name']]" color "#EAF4F1" size 28 bold True
+                            text "Moves remaining: [max_moves - moves]/[max_moves]" color "#FFD700" size 18
+                            text "Path: " + " -> ".join([nodes[n]["name"] for n in path]) color "#AAB0D6" size 15
+
+                    frame:
+                        xfill True
+                        background "#111827"
+                        padding (20, 16)
+
+                        text trace_hint(current_node):
+                            color "#EAF4F1"
+                            size 19
+                            xalign 0.5
+                            text_align 0.5
+
+                frame:
+                    xfill True
+                    ysize 420
+                    background "#0D1220"
+                    padding (24, 20)
+
+                    fixed:
+                        xfill True
+                        yfill True
+
+                        for node_id, node in nodes.items():
+                            $ visited = node_id in path
+                            $ active = current_node == node_id
+                            $ node_color = trace_node_color(node["type"], active, visited)
+                            $ x_pos = int(node["x"] * 1420)
+                            $ y_pos = int(node["y"] * 320)
+
+                            frame:
+                                xpos x_pos
+                                ypos y_pos
+                                xsize 220
+                                ysize 78
+                                background node_color
+                                padding (14, 10)
+
+                                vbox:
+                                    spacing 2
+                                    text node["name"]:
+                                        color ("#0A0E1A" if active else "#EAF4F1")
+                                        size 18
+                                        bold True
+                                        xalign 0.5
+                                        text_align 0.5
+
+                                    text ("CURRENT" if active else "VISITED" if visited else node["type"].upper()):
+                                        color ("#0A0E1A" if active else "#C8D8D0")
+                                        size 13
+                                        xalign 0.5
+
                 frame:
                     xfill True
                     background "#111827"
-                    padding (20, 15)
+                    padding (20, 18)
 
                     vbox:
-                        spacing 10
-                        $ cn = nodes[current_node]
-                        $ cn_name = cn["name"]
-                        text "Current Location: [cn_name]" color "#00FFD1" size 22 bold True
+                        spacing 12
+                        text "AVAILABLE HOPS" color "#8B8FCC" size 17 bold True
 
-                        text "Path taken: " + " → ".join([nodes[n]["name"] for n in path]) color "#888888" size 16
+                        hbox:
+                            spacing 16
 
-                        null height 10
-                        text "Available Routes:" color "#E8E8E8" size 20
-
-                        if current_node in safe_connections:
-                            for next_node in safe_connections[current_node]:
+                            for next_node in safe_connections.get(current_node, []):
                                 $ nn = nodes[next_node]
-                                $ nn_name = nn["name"]
-                                $ node_color = "#FF2D55" if nn["type"] == "danger" else ("#00FFD1" if nn["type"] == "safe" else ("#FFD700" if nn["type"] == "end" else "#E8E8E8"))
+                                $ btn_bg = "#241926" if nn["type"] == "danger" else "#002922" if nn["type"] in ("safe", "end") else "#171C30"
 
-                                textbutton "> [nn_name]":
-                                    text_size 20
-                                    text_color node_color
-                                    text_hover_color "#FFFFFF"
+                                textbutton nn["name"]:
+                                    style "modal_action_button"
+                                    background Solid(btn_bg)
+                                    hover_background Solid("#006654" if nn["type"] != "danger" else "#7A203A")
+                                    xsize 430
                                     action [
                                         SetScreenVariable("current_node", next_node),
                                         SetScreenVariable("path", path + [next_node]),
@@ -1147,50 +1226,32 @@ screen minigame_trace():
                                         SetScreenVariable("reached_end", next_node == "target"),
                                     ]
 
-            elif reached_end and not hit_gov:
-                # Success!
-                text "// ROUTE SECURED //" color "#00FF00" size 36 bold True xalign 0.5
+        else:
+            frame:
+                xalign 0.5
+                yalign 0.5
+                xsize 940
+                background "#111827"
+                padding (32, 28)
 
-                null height 10
-
-                text "Path: " + " → ".join([nodes[n]["name"] for n in path]) color "#00FFD1" size 18 xalign 0.5
-                text "You successfully routed through secure nodes, avoiding government surveillance!" color "#AAAAAA" size 18 xalign 0.5 text_align 0.5
-
-                null height 15
-
-                textbutton "> CONTINUE MISSION":
+                vbox:
+                    spacing 14
                     xalign 0.5
-                    text_style "menu_btn_text"
-                    action Return(True)
 
-            elif hit_gov:
-                # Hit government monitor
-                text "// ROUTE COMPROMISED //" color "#FF2D55" size 36 bold True xalign 0.5
+                    if reached_end and not hit_gov:
+                        text "// ROUTE SECURED //" color "#00FF88" size 38 bold True xalign 0.5
+                        text "Path: " + " -> ".join([nodes[n]["name"] for n in path]) color "#00FFD1" size 18 xalign 0.5 text_align 0.5
+                        text "You chained together the safer hops and kept the instructions away from the monitor." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
+                    elif hit_gov:
+                        text "// ROUTE COMPROMISED //" color "#FF2D55" size 38 bold True xalign 0.5
+                        text "The route hit the Government Monitor node, so the mission is blown." color "#FF2D55" size 20 xalign 0.5 text_align 0.5
+                        text "Even strong tools fail if one hop routes through a known surveillance point." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
+                    else:
+                        text "// OUT OF MOVES //" color "#FF2D55" size 38 bold True xalign 0.5
+                        text "You ran out of time before reaching the journalist server." color "#FF2D55" size 20 xalign 0.5 text_align 0.5
+                        text "Tight, efficient routing matters. Extra hops create delay and more chances to get exposed." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
 
-                null height 10
-
-                text "Your traffic passed through the Government Monitor node!" color "#FF2D55" size 20 xalign 0.5
-                text "In real networks, government surveillance nodes can inspect unencrypted traffic. Always use VPN and Tor to route around known monitoring points." color "#AAAAAA" size 18 xalign 0.5 text_align 0.5
-
-                null height 15
-
-                textbutton "> CONTINUE MISSION":
-                    xalign 0.5
-                    text_style "menu_btn_text"
-                    action Return(False)
-
-            else:
-                # Out of moves
-                text "// OUT OF MOVES //" color "#FF2D55" size 36 bold True xalign 0.5
-
-                null height 10
-
-                text "You ran out of routing moves before reaching the target." color "#FF2D55" size 20 xalign 0.5
-                text "Efficient routing is critical in network security. Every extra hop increases latency and detection risk." color "#AAAAAA" size 18 xalign 0.5 text_align 0.5
-
-                null height 15
-
-                textbutton "> CONTINUE MISSION":
-                    xalign 0.5
-                    text_style "menu_btn_text"
-                    action Return(False)
+                    textbutton "> CONTINUE MISSION":
+                        xalign 0.5
+                        text_style "menu_btn_text"
+                        action Return(reached_end and not hit_gov)

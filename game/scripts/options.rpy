@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.name = _("Classified: The Snowden Files")
+define config.name = _("Enemy of the State")
 
 
 ## Determines if the title given above is shown on the main menu screen. Set
@@ -41,7 +41,7 @@ Fictional dramatization for educational purposes.
 ## distribution. This must be ASCII-only, and must not contain spaces, colons,
 ## or semicolons.
 
-define build.name = "ClassifiedTheSnowdenFiles"
+define build.name = "EnemyOfTheState"
 
 
 ## Sounds and music ############################################################
