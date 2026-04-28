@@ -10,7 +10,7 @@ init offset = -1
 ################################################################################
 
 # === PROTAGONIST ===
-define e = Character("EDWARD SNOWDEN",
+define e = Character("You",
     image="edward",
     color="#00FFD1",
     what_color="#E8E8E8",
