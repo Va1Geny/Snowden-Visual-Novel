@@ -11,6 +11,7 @@ init offset = -1
 
 # === PROTAGONIST ===
 define e = Character("EDWARD SNOWDEN",
+    image="edward",
     color="#00FFD1",
     what_color="#E8E8E8",
     who_size=22,
@@ -19,6 +20,7 @@ define e = Character("EDWARD SNOWDEN",
 
 # === JOURNALISTS ===
 define greenwald = Character("GLENN GREENWALD",
+    image="journalist",
     color="#FFD700",
     what_color="#E8E8E8",
     who_bold=True,
@@ -26,6 +28,7 @@ define greenwald = Character("GLENN GREENWALD",
     what_size=20)
 
 define poitras = Character("LAURA POITRAS",
+    image="journalist",
     color="#FF69B4",
     what_color="#E8E8E8",
     who_bold=True,
@@ -41,6 +44,7 @@ define nsa_chief = Character("NSA DIRECTOR",
     what_size=20)
 
 define supervisor = Character("SUPERVISOR",
+    image="supervisor",
     color="#FF6B35",
     what_color="#E8E8E8",
     who_bold=True,
@@ -49,6 +53,7 @@ define supervisor = Character("SUPERVISOR",
 
 # === ALLIES / NEUTRAL ===
 define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
+    image="colleague",
     color="#888888",
     what_color="#CCCCCC",
     who_bold=False,
@@ -56,6 +61,7 @@ define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
     what_size=20)
 
 define russian_official = Character("RUSSIAN OFFICIAL",
+    image="russian_official",
     color="#CC2222",
     what_color="#E8E8E8",
     who_bold=True,
@@ -125,6 +131,25 @@ default text_input_attempts = 0
 ################################################################################
 
 init python:
+    def speaker_dimmer(event, interact=True, **kwargs):
+        if not interact:
+            return
+
+        if event == "begin":
+            speaker = renpy.get_say_image_tag()
+            
+            # List of character tags to monitor
+            char_tags = ["edward", "supervisor", "colleague", "journalist", "editor", "russian_official"]
+            
+            for tag in char_tags:
+                if renpy.showing(tag):
+                    if tag == speaker:
+                        renpy.show(tag, at_list=[active_char])
+                    else:
+                        renpy.show(tag, at_list=[inactive_char])
+
+    config.character_callback = speaker_dimmer
+
     def mouse_parallax(trans, st, at):
         # Provide a subtle parallax based on mouse
         # Ren'Py get_mouse_pos() might return a tuple
@@ -237,6 +262,14 @@ image bg_sheremetyevo:
 ################################################################################
 ## ATL TRANSFORMS — Character Animations
 ################################################################################
+
+# === ACTIVE / INACTIVE STATES ===
+
+transform active_char:
+    ease 0.25 matrixcolor SaturationMatrix(1.0) zoom 1.18 alpha 1.0
+
+transform inactive_char:
+    ease 0.25 matrixcolor SaturationMatrix(0.3) zoom 1.12 alpha 0.9
 
 # === ENTRANCE TRANSFORMS ===
 
