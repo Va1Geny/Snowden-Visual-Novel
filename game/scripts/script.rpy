@@ -137,15 +137,54 @@ label chapter_1:
 
             narrator_voice "Edward navigates deeper into the classified file system. Folders upon folders of surveillance programs he's never been briefed on. The scope is enormous."
 
-    # --- Tutorial Exposition ---
+    # --- Tutorial Exposition: Firewall Learning Section ---
+    # (Structured as a self-contained briefing — can be branched into the story tree later)
 
     narrator_voice "On his screen, Edward sees the tools of the trade: network monitoring dashboards tracking millions of connections in real time."
 
     im "Every network has a firewall — a security system that monitors all incoming and outgoing traffic and decides what gets through based on predefined rules. Think of it as a barrier between trusted and untrusted networks."
 
-    im "The firewall inspects each packet for red flags: suspicious port numbers, unknown source IP addresses, insecure protocols. If the rules are configured correctly, malicious traffic gets blocked before it ever reaches the internal network."
+    im "The firewall inspects each packet for three things: the source IP address, the destination port number, and the protocol. Get those right and you can tell the difference between normal traffic and an intrusion attempt."
 
-    sys "// SYSTEM NOTE: A firewall filters packets based on rules. It checks source IPs, destination ports, and protocols. Suspicious traffic is BLOCKED; legitimate traffic is ALLOWED through. //"
+    # --- IP Addresses: Internal vs External ---
+
+    im "First, IP addresses. Every device on a network has one — it's like a street address for computers. But not all addresses are equal."
+
+    im "Private IP ranges — 192.168.x.x, 10.0.x.x, and 172.16.x.x — belong to your own internal network. Traffic from these addresses is usually safe because it's coming from inside the building."
+
+    im "But an IP like 45.33.32.1 or 89.248.174.5? That's an external address — someone on the internet reaching into our network. External IPs demand much more scrutiny."
+
+    sys "// SYSTEM NOTE: Private IPs (192.168.x.x, 10.0.x.x, 172.16.x.x) = internal/trusted. Public IPs = external/unknown — verify before allowing. //"
+
+    # --- Ports: The Doors Into a Network ---
+
+    im "Next, ports. If an IP address is the building's street address, a port is a specific door. Every network service listens on a numbered port, and knowing which port does what is fundamental."
+
+    im "Port 80 is HTTP — standard, unencrypted web traffic. Port 443 is HTTPS — the same thing but encrypted with TLS. These are the two most common ports on the internet, and traffic on them is usually legitimate."
+
+    im "Port 53 is DNS — the Domain Name System. It's how computers translate website names like 'google.com' into IP addresses. Without DNS, nothing works. It's the phone book of the internet."
+
+    im "Port 22 is SSH — Secure Shell. It's used for remote administration, letting an authorised user log into a server from another location. From an internal IP, it's normal. From an external IP, it needs careful review."
+
+    im "Port 3389 is RDP — Remote Desktop Protocol. It lets someone control a computer's desktop remotely. Like SSH, it's fine from a trusted internal source, but dangerous if exposed to the outside."
+
+    sys "// SAFE PORTS (common services): 80 = HTTP | 443 = HTTPS | 53 = DNS | 22 = SSH | 3389 = RDP //"
+
+    # --- Dangerous Ports and Protocols ---
+
+    im "Then there are the ports that should set off alarm bells. Port 23 is Telnet — an ancient protocol that sends everything in plain text, including passwords. It has no encryption at all. Telnet should never be used; SSH replaced it decades ago."
+
+    im "Port 31337 — pronounced 'elite' in hacker culture — is historically associated with the Back Orifice trojan. If you see traffic on port 31337 from an unknown external IP, it's almost certainly malicious."
+
+    im "And port 4444 — the default listener for Metasploit, one of the most widely used hacking frameworks. An external IP connecting on port 4444 usually means someone is trying to establish a reverse shell — giving themselves remote control of the target machine."
+
+    sys "// DANGER PORTS: 23 = Telnet (unencrypted!) | 31337 = Known hacker port | 4444 = Metasploit reverse shell //"
+
+    # --- Putting It Together ---
+
+    im "So the logic is straightforward: check the IP, check the port, check the protocol. Internal IP on a standard port? Probably safe. External IP on a suspicious port with no encryption? Block it immediately."
+
+    sys "// FIREWALL RULE: ALLOW = internal IPs on standard ports | BLOCK = external IPs on suspicious ports or unencrypted protocols. When in doubt, block. //"
 
     # --- Minigame 1: Firewall Breach ---
 
@@ -323,13 +362,34 @@ label chapter_2:
         helper_text="You just saw the codename in the scene above, so trust your memory more than your IT knowledge."
     )
 
-    # --- Minigame 2: Decrypt the Message ---
+    # --- Minigame 2: Decrypt the Message — Learning Section ---
+    # (Structured as a self-contained briefing — can be branched into the story tree later)
 
     im "Some of these classified filenames are encoded with a Caesar cipher — one of the oldest encryption methods in history. It's a simple substitution cipher where each letter is shifted by a fixed number of positions in the alphabet."
 
-    im "For example, with ROT-3, the letter A becomes D, B becomes E, C becomes F, and so on. To decrypt, you just shift each letter back by 3. It's easy to break, but it's the building block for understanding how modern encryption works."
+    # --- How Caesar Cipher Works ---
 
-    sys "// SYSTEM NOTE: Caesar Cipher — a substitution cipher that shifts letters by a fixed key. ROT-3 means shift 3 positions forward to encrypt, 3 positions back to decrypt. //"
+    im "Here's how it works. The alphabet is a loop: A B C D E F... all the way to Z, and then it wraps back to A. A Caesar cipher shifts every letter forward by a fixed number — the key."
+
+    im "With ROT-3 — a rotation of 3 — the letter A becomes D, B becomes E, C becomes F. The word 'CAT' encrypts to 'FDW'. Every letter moves exactly three places forward."
+
+    sys "// SYSTEM NOTE: Caesar Cipher encryption with ROT-3: A→D, B→E, C→F, D→G ... X→A, Y→B, Z→C //"
+
+    # --- Decryption: Reversing the Shift ---
+
+    im "To decrypt, you do the reverse — shift each letter back by the same number. So D becomes A, E becomes B, F becomes C. Decryption undoes the encryption."
+
+    im "Let me work through an example. If I see the letter 'S', I count back 3: S... R... Q... P. So S decrypts to P. If I see 'U', count back 3: U... T... S... R. So U becomes R."
+
+    sys "// DECRYPTION RULE: Take each letter → count backwards by the key number → that's your plaintext letter. ROT-3 decryption: D→A, E→B, F→C, G→D ... //"
+
+    # --- Why It Matters ---
+
+    im "The Caesar cipher is trivially easy to break — there are only 25 possible shifts, so you can try them all in seconds. But it teaches the fundamental principle behind all encryption: transform readable data into unreadable data using a key, and reverse the process with the same key."
+
+    im "Modern encryption like AES-256 uses the same concept — just with keys that are billions of times more complex, making brute-force attacks effectively impossible."
+
+    sys "// CHALLENGE PREP: You'll see an encrypted word. Shift each letter back by 3 to reveal the name of a classified NSA program. //"
 
     $ mg_intro2 = renpy.call_screen("minigame_intro", title="DECRYPT THE MESSAGE", description="A classified document name has been encrypted using a Caesar cipher (ROT-3). Decode the message by shifting each letter back by 3 positions in the alphabet.")
 
@@ -591,11 +651,40 @@ label ch3_continue:
         helper_text="Think about privacy and staying hard to track, not the full acronym."
     )
 
-    # --- Minigame 3: OpSec Challenge ---
+    # --- Minigame 3: OpSec Challenge — Learning Section ---
+    # (Structured as a self-contained briefing — can be branched into the story tree later)
 
     im "But technology alone isn't enough. OpSec — Operational Security — is the practice of thinking like your adversary. What can they learn from your actions? Every digital footprint, every unguarded conversation, every pattern of behaviour is a piece of the puzzle they're assembling."
 
     im "Good OpSec means denying the adversary those pieces. It means asking yourself before every action: could this reveal my identity, my location, or my intent?"
+
+    # --- IP Address Exposure ---
+
+    im "The most basic OpSec failure is IP exposure. Your home IP address is assigned by your Internet Service Provider and tied directly to your name and physical address. If you log into a secure service from your home IP without a VPN, you've just stamped your real identity on the connection."
+
+    sys "// OPSEC RULE #1: Never access sensitive services from a traceable IP address. Use a VPN or Tor to mask your connection. //"
+
+    # --- Anonymous Communication Tools ---
+
+    im "The right tools make anonymity possible. Tor anonymizes your connection through multiple relay nodes. SecureDrop — an open-source platform used by major newsrooms — lets whistleblowers submit documents anonymously. Burner email accounts, created from public locations like libraries, add another layer of separation between your real identity and your actions."
+
+    sys "// SAFE PRACTICE: Tor + SecureDrop + burner accounts from public locations = maximum anonymity //"
+
+    # --- Work Email and Monitored Channels ---
+
+    im "The biggest mistake an insider can make is using work infrastructure for anything sensitive. Work email, work Wi-Fi, work devices — all of these are monitored, logged, and directly tied to your employee identity. Sending classified documents via work email is essentially confessing."
+
+    sys "// OPSEC RULE #2: Work infrastructure is monitored. Never use work email, devices, or networks for sensitive communication. //"
+
+    # --- Password Hygiene ---
+
+    im "And then there's password reuse — the silent killer. If you use your personal Facebook password for an encrypted file container, you've created a bridge between your public identity and your secret activity. When one account is compromised, every account sharing that password falls."
+
+    sys "// OPSEC RULE #3: Never reuse passwords. Every service gets a unique, strong password. Use a password manager. //"
+
+    # --- Putting It Together ---
+
+    im "The challenge is simple: review a series of actions by a fictional 'Agent X' and decide whether each one is a SAFE practice or a MISTAKE. Everything I've just explained will tell you the answer."
 
     sys "// SYSTEM NOTE: OpSec protects critical information by identifying what intelligence an adversary could gather from your actions, then taking steps to prevent that exposure. //"
 
@@ -719,6 +808,12 @@ label chapter_4:
 
     hide journalist neutral with dissolve
 
+    im "What scares me most isn't just the surveillance — it's the NSA's offensive capabilities. They stockpile zero-day exploits — vulnerabilities in software that the vendor doesn't even know about. Called 'zero-day' because there are zero days of notice before they're exploited. No patch exists yet."
+
+    im "If the NSA wants into your laptop, they don't need your password. They use a zero-day to bypass everything — your firewall, your encryption, your operating system. And the vendor can't fix what they don't know is broken."
+
+    sys "// SYSTEM NOTE: A zero-day exploit targets an unknown software vulnerability. Because no patch exists, even fully updated systems are at risk. Intelligence agencies hoard zero-days as offensive weapons. //"
+
     # --- Choice 1: Hotel Wi-Fi or mobile hotspot? ---
 
     narrator_voice "Edward needs to send final instructions to the publication team, but the hotel network is compromised. Every network connection is a potential leak."
@@ -757,13 +852,62 @@ label chapter_4:
         helper_text="Short answer is fine."
     )
 
-    # --- Minigame 4: Trace the Route ---
+    # --- Minigame 4: Trace the Route — Learning Section ---
+    # (Structured as a self-contained briefing — can be branched into the story tree later)
 
     im "When you route traffic through Tor, you're building a chain of relay nodes. Each node only knows the hop before it and the hop after it — never the full path. Pick the right nodes and your trail goes cold."
 
-    im "But if even one node in the chain is compromised — a monitored relay, a hostile exit point — the entire route is exposed and your identity with it."
+    im "But if even one node in the chain is compromised — a monitored relay, a hostile exit point — the entire route is exposed and your identity with it. So understanding what each type of node does is critical."
 
-    sys "// SYSTEM NOTE: Tor routes traffic through 3+ relay nodes. Each encrypts a layer. A compromised node can expose the route. Choose nodes carefully. //"
+    # --- The Starting Point: Your Device ---
+
+    im "It all starts at your device — your laptop, your phone. This is where traffic originates. Right now, it carries your real IP address and your real identity. The goal is to strip that identity away before the traffic reaches its destination."
+
+    # --- ISP Router ---
+
+    im "The first hop is usually your ISP router — the Internet Service Provider that connects you to the internet. Your ISP can see every website you visit, every connection you make. They log this data and, in many countries, hand it over to law enforcement on request."
+
+    im "Going through the ISP is unavoidable — it's your on-ramp to the internet. But it's a chokepoint. If someone is watching at this level, they see everything unless you've already encrypted your traffic."
+
+    sys "// NODE TYPE: ISP ROUTER — Your gateway to the internet. Sees all unencrypted traffic. A surveillance chokepoint. //"
+
+    # --- VPN Server ---
+
+    im "A VPN server is your first line of defence. It creates an encrypted tunnel between your device and the VPN server. Your ISP can see that you've connected to a VPN, but they can't see what you're doing through it."
+
+    im "Starting your route through a VPN before entering the Tor network is called 'VPN over Tor' — it hides the fact that you're using Tor from your ISP, adding an extra layer of protection."
+
+    sys "// NODE TYPE: VPN SERVER — Encrypts your traffic before it hits the internet. Hides your activity from your ISP. Safe opening move. //"
+
+    # --- Tor Nodes ---
+
+    im "Tor nodes are the backbone of anonymous routing. Each Tor relay adds a layer of encryption — like nesting your message inside multiple sealed envelopes. The first relay knows who you are but not where you're going. The last relay knows where you're going but not who you are."
+
+    im "The more Tor nodes you route through, the harder it is to trace the connection back to you. But each hop adds latency — there's a trade-off between anonymity and speed."
+
+    sys "// NODE TYPE: TOR NODE — Adds encryption layers and anonymity. Multiple Tor hops = harder to trace. Safe nodes. //"
+
+    # --- Government Monitor (Danger!) ---
+
+    im "The one node you must avoid at all costs is the government monitoring point. Intelligence agencies like the NSA operate surveillance nodes that intercept and log all traffic passing through them. If your route goes through a government monitor, the entire chain is compromised."
+
+    im "It doesn't matter how many Tor nodes you've used — if even one hop routes through a known surveillance point, the adversary can correlate timing data to identify you. This is called a 'traffic correlation attack'."
+
+    sys "// NODE TYPE: GOV MONITOR — Intercepts all traffic. If your route hits this node, your identity is exposed. AVOID AT ALL COSTS. //"
+
+    # --- CDN Server vs Secure Relay ---
+
+    im "Near the end of the route, you'll see two types of final relay. A CDN — Content Delivery Network — is standard internet infrastructure. It's fast but not designed for privacy. Your traffic is delivered efficiently, but CDN logs can be subpoenaed."
+
+    im "A secure relay, on the other hand, is specifically designed for private communication. It doesn't log traffic, strips metadata, and forwards your message with minimal exposure. When anonymity matters, always prefer the secure relay."
+
+    sys "// NODE TYPE: CDN SERVER — Fast but logs traffic. SECURE RELAY — Private, no logs. Choose secure relay for maximum anonymity. //"
+
+    # --- Route Strategy ---
+
+    im "So the optimal route is: start with a VPN to hide your Tor usage, chain through Tor nodes for anonymity, avoid the government monitor completely, and exit through a secure relay to reach the destination without leaving a trail."
+
+    sys "// ROUTE STRATEGY: VPN → Tor nodes → Secure relay → Destination. Avoid GOV MONITOR. Fewer hops = less exposure time. //"
 
     $ mg_intro4 = renpy.call_screen("minigame_intro", title="TRACE THE ROUTE", description="Build a safe route hop by hop. Green nodes help you stay hidden, while the red monitor exposes the whole mission.")
 
