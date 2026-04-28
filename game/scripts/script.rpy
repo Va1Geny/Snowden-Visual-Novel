@@ -113,7 +113,6 @@ label chapter_1:
             $ renpy.notify("Trust +1")
 
             scene bg_nsa_terminal at parallax with dissolve
-            show edward neutral at stage_center
             with dissolve
 
             im "Stay in your lane, Snowden. Do your job. Don't attract attention."
@@ -127,7 +126,6 @@ label chapter_1:
             $ renpy.notify("Suspicion +1")
 
             scene bg_nsa_terminal at parallax with dissolve
-            show edward neutral at stage_center
             with dissolve
 
             im "These directories shouldn't be this easy to access. Why does a systems administrator have read access to raw intelligence feeds?"
@@ -168,7 +166,6 @@ label chapter_1:
     )
 
     # --- Choice 2: Report anomaly or stay silent? ---
-    show edward neutral at stage_center
     show supervisor neutral at enter_right
     with dissolve
 
@@ -240,7 +237,6 @@ label chapter_2:
 
     scene bg_prism at parallax with chapter_transition
 
-    show edward neutral at enter_center
     with dissolve
 
     # --- Snowden discovers PRISM ---
@@ -473,13 +469,13 @@ label ch3_secure_success:
     show journalist neutral at enter_right
     with dissolve
 
-    greenwald "I received your encrypted message. The fingerprint checks out. Who are you?"
+    poitras "I received your encrypted message. The fingerprint checks out. Who are you?"
 
     e "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA."
 
-    greenwald "Can you prove it?"
+    poitras "Can you prove it?"
 
-    e "I can prove everything. But we need to meet in person. And you need to learn to use encryption. Your current security is... inadequate."
+    e "I can prove everything. But we need to meet in person. I'll also reach out to Glenn Greenwald — together, you can publish the full story."
 
     jump ch3_continue
 
@@ -778,7 +774,6 @@ label chapter_4:
 
                 im "No one will help. Not officially. Moscow may be my only option."
                 sys "// ROUTE REVIEW: Good legal optics, but embassies rarely want the diplomatic fallout. Good principle, poor odds. //"
-                $ escape_successful = True
 
             "Stay in Hong Kong and face the legal system.":
                 $ tree_record_choice("choice_ch4_2", "stay")

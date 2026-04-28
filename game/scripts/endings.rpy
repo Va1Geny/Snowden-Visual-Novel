@@ -57,7 +57,7 @@ label ending_hero:
 
     narrator_voice "In boardrooms and bedrooms, in parliaments and classrooms, people are asking the question he wanted them to ask: {i}Who is watching the watchers?{/i}"
 
-    $ ending_action = renpy.call_screen("ending_screen",
+    call screen ending_screen(
         title="// ENDING 1: THE HERO //",
         color="#00FFD1",
         description="Snowden successfully leaked all documents, escaped to safety, and his disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed.",
@@ -67,7 +67,7 @@ label ending_hero:
             "Whistleblowing platforms like SecureDrop exist to protect sources. Technology can be a shield for truth."
         ]
     )
-    if ending_action == "restart":
+    if _return == "restart":
         jump start
     return
 
@@ -94,7 +94,7 @@ label ending_fugitive:
 
     narrator_voice "He will never eat at his favorite diner again. Never see his family without a screen between them. The price of partial truth."
 
-    $ ending_action = renpy.call_screen("ending_screen",
+    call screen ending_screen(
         title="// ENDING 2: THE FUGITIVE //",
         color="#FFD700",
         description="Snowden leaked crucial files and escaped, but lives in permanent exile. The truth reached the public, but gaps in his operational security meant some evidence was lost. The surveillance debate continues, but reform is slow.",
@@ -104,7 +104,7 @@ label ending_fugitive:
             "Digital security requires constant vigilance — one mistake can compromise months of careful planning."
         ]
     )
-    if ending_action == "restart":
+    if _return == "restart":
         jump start
     return
 
@@ -131,7 +131,7 @@ label ending_imprisoned:
 
     narrator_voice "The truth dies in a cell. And the machine keeps running."
 
-    $ ending_action = renpy.call_screen("ending_screen",
+    call screen ending_screen(
         title="// ENDING 3: IMPRISONED //",
         color="#FF2D55",
         description="Snowden's identity was exposed before he could escape. He was arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed.",
@@ -141,7 +141,7 @@ label ending_imprisoned:
             "Physical security is as important as digital security. Cameras, keyloggers, and 'evil maid' attacks can bypass the strongest encryption."
         ]
     )
-    if ending_action == "restart":
+    if _return == "restart":
         jump start
     return
 
@@ -168,7 +168,7 @@ label ending_silenced:
 
     narrator_voice "The greatest surveillance apparatus in history continues to grow, invisible and unchallenged."
 
-    $ ending_action = renpy.call_screen("ending_screen",
+    call screen ending_screen(
         title="// ENDING 4: SILENCED //",
         color="#FF2D55",
         description="NSA internal monitors detected Snowden's suspicious behavior before he could act. His clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret.",
@@ -178,7 +178,7 @@ label ending_silenced:
             "Firewalls work both ways: they keep threats out, but they also monitor what goes out. Data Loss Prevention (DLP) systems watch for unauthorized transfers."
         ]
     )
-    if ending_action == "restart":
+    if _return == "restart":
         jump start
     return
 
@@ -205,7 +205,7 @@ label ending_betrayed:
 
     narrator_voice "It was as if he never existed at all."
 
-    $ ending_action = renpy.call_screen("ending_screen",
+    call screen ending_screen(
         title="// ENDING 5: BETRAYED //",
         color="#FF2D55",
         description="Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. Snowden vanished without a trace.",
@@ -215,7 +215,7 @@ label ending_betrayed:
             "Zero-day exploits can break any system. Defense in depth (multiple layers of security) is the only way to mitigate unknown vulnerabilities."
         ]
     )
-    if ending_action == "restart":
+    if _return == "restart":
         jump start
     return
 
@@ -347,7 +347,7 @@ screen ending_screen(title, color, description, lessons):
                             text_hover_color "#FFFFFF"
                             text_size 24
                             text_bold True
-                            action Return("restart")
+                            action [Return("restart")]
 
                         textbutton "> MAIN MENU":
                             text_color "#888888"

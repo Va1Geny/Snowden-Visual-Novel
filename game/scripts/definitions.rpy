@@ -170,10 +170,6 @@ image russian_official neutral:
     "sprites/russian official neutral.png"
     zoom 1.0
 # === Backgrounds ===
-image bg_nsa:
-    "backgrounds/chapter_1/Working inside the NSA's surveillance apparatus.png"
-    xysize (1920, 1080)
-
 image bg_1:
     "backgrounds/chapter_1/bg_1.png"
     xysize (1920, 1080)
@@ -248,28 +244,28 @@ image bg_sheremetyevo:
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
-    xpos -0.20 ypos 1.34 alpha 0.0 zoom 1.10
-    ease 0.6 xpos 0.20 ypos 1.30 alpha 1.0 zoom 1.18
+    xpos -0.20 ypos 1.50 alpha 0.0 zoom 1.0
+    ease 0.6 xpos 0.20 ypos 1.60 alpha 1.0 zoom 1.18
 
 # Slide in from right
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 1.20 ypos 1.34 alpha 0.0 zoom 1.10
-    ease 0.6 xpos 0.80 ypos 1.30 alpha 1.0 zoom 1.18
+    xpos 1.20 ypos 1.50 alpha 0.0 zoom 1.0
+    ease 0.6 xpos 0.80 ypos 1.60 alpha 1.0 zoom 1.18
 
 # Fade in from center
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.5 ypos 1.36 alpha 0.0 zoom 1.08
-    ease 0.5 xpos 0.5 ypos 1.30 alpha 1.0 zoom 1.20
+    xpos 0.5 ypos 1.50 alpha 0.0 zoom 1.0
+    ease 0.5 xpos 0.5 ypos 1.60 alpha 1.0 zoom 1.18
 
 transform stage_center:
     xanchor 0.5
     yanchor 1.0
     xpos 0.5
-    ypos 1.30
+    ypos 1.50
 
 # === IDLE TRANSFORMS ===
 
