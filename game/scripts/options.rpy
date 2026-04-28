@@ -1,4 +1,4 @@
-﻿## This file contains options that can be changed to customize your game.
+## This file contains options that can be changed to customize your game.
 ##
 ## Lines beginning with two '#' marks are comments, and you shouldn't uncomment
 ## them. Lines beginning with a single '#' mark are commented-out code, and you
@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.name = _("Skill Labs Project")
+define config.name = _("Enemy of the State")
 
 
 ## Determines if the title given above is shown on the main menu screen. Set
@@ -30,6 +30,10 @@ define config.version = "1.0"
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
+An educational visual novel about Edward Snowden and network security.
+Designed to teach students aged 16-18 the fundamentals of network security through interactive storytelling.
+
+Fictional dramatization for educational purposes.
 """)
 
 
@@ -37,7 +41,7 @@ define gui.about = _p("""
 ## distribution. This must be ASCII-only, and must not contain spaces, colons,
 ## or semicolons.
 
-define build.name = "SkillLabsProject"
+define build.name = "EnemyOfTheState"
 
 
 ## Sounds and music ############################################################
@@ -48,7 +52,7 @@ define build.name = "SkillLabsProject"
 
 define config.has_sound = True
 define config.has_music = True
-define config.has_voice = True
+define config.has_voice = False
 
 
 ## To allow the user to play a test sound on the sound or voice channel,
