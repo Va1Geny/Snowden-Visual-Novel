@@ -254,7 +254,7 @@ label chapter_1:
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
 
-            narrator_voice "Edward continues working in silence, but his eyes are open. Every day reveals more."
+            narrator_voice "You continue working in silence, but your eyes are open. Every day reveals more."
 
     hide supervisor neutral with dissolve
     hide edward neutral with dissolve
@@ -412,7 +412,7 @@ label chapter_2:
 
     im "I have access to everything. The question is: what do I do with it?"
 
-    narrator_voice "Edward stares at his screen. The classified documents are right there. Proof of mass surveillance. Proof of constitutional violations. But taking them means crossing a line there's no coming back from."
+    narrator_voice "You stare at your screen. The classified documents are right there. Proof of mass surveillance. Proof of constitutional violations. But taking them means crossing a line there's no coming back from."
 
     im "If I copy these files, I'm committing espionage under the law. If I don't, no one will ever know this is happening. The proper channels have already failed me — my report to the Inspector General disappeared into a black hole."
 
@@ -424,7 +424,7 @@ label chapter_2:
             $ suspicion_level += 1
             $ renpy.notify("Evidence Secured! | Suspicion +1")
 
-            narrator_voice "Edward carefully copies selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk — the NSA logs all data movement, and an unusual transfer could trigger an automated alert."
+            narrator_voice "You carefully copy selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk — the NSA logs all data movement, and an unusual transfer could trigger an automated alert."
 
             im "The files are protected with AES-256 encryption — the Advanced Encryption Standard with a 256-bit key. It's the same encryption the US government uses to protect its own top-secret data. Effectively impossible to brute-force with any existing hardware."
 
@@ -436,7 +436,7 @@ label chapter_2:
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
 
-            narrator_voice "Edward writes down key details from memory. It's safer, but journalists may question the credibility without primary documents."
+            narrator_voice "You write down key details from memory. It's safer, but journalists may question the credibility without primary documents."
 
     hide edward neutral with dissolve
 
@@ -490,7 +490,7 @@ label chapter_3:
 
     im "I have the evidence. Now I need someone to publish it. But one wrong email, one unencrypted message, and the NSA will know before the ink is dry."
 
-    narrator_voice "Edward needs to contact journalists who can responsibly publish the classified documents. But the NSA monitors virtually all electronic communication — the very programs he plans to expose are the ones hunting for people like him."
+    narrator_voice "You need to contact journalists who can responsibly publish the classified documents. But the NSA monitors virtually all electronic communication — the very programs you plan to expose are the ones hunting for people like you."
 
     im "The NSA doesn't just collect data in bulk. They have tools that flag specific patterns: a new email address contacting a known journalist, an encrypted connection from a government network, a Tor exit node accessing a news site. Any of these could trigger an alert."
 
@@ -500,7 +500,7 @@ label chapter_3:
 
     # --- Snowball Effect Check ---
     if suspicion_level >= 3:
-        narrator_voice "Edward's unusual access patterns have already triggered internal alerts. His options are narrowing."
+        narrator_voice "Your unusual access patterns have already triggered internal alerts. Your options are narrowing."
 
         sys "// WARNING: INTERNAL SECURITY MONITORING HAS FLAGGED YOUR ACTIVITY //"
 
@@ -529,7 +529,7 @@ label chapter_3:
 
     im "The challenge is reaching them securely. PGP encryption with Tor would make my messages virtually untraceable — but it requires technical knowledge to set up correctly. One mistake in the key exchange and the whole channel is compromised."
 
-    narrator_voice "Edward weighs his options. Each method of contact carries its own risks and rewards."
+    narrator_voice "You weigh your options. Each method of contact carries its own risks and rewards."
 
     menu:
         "Set up a PGP-encrypted email channel using Tor (requires knowledge).":
@@ -562,7 +562,7 @@ label ch3_secure_success:
 
     scene bg_hong_kong_terminal at parallax with dissolve
 
-    narrator_voice "Edward creates an anonymous email account, accessed only through Tor, and uses PGP encryption to contact documentary filmmaker Laura Poitras."
+    narrator_voice "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Laura Poitras."
 
     show journalist neutral at enter_right
     with dissolve
@@ -585,7 +585,7 @@ label ch3_secure_fail:
     $ suspicion_level += 1
     $ renpy.notify("Suspicion +1")
 
-    narrator_voice "Edward attempts to set up encrypted communications, but makes errors in the key exchange process. The channel may not be fully secure."
+    narrator_voice "You attempt to set up encrypted communications, but make errors in the key exchange process. The channel may not be fully secure."
 
     jump ch3_continue
 
@@ -594,7 +594,7 @@ label ch3_greenwald_contact:
     show journalist neutral at enter_right
     with dissolve
 
-    narrator_voice "Edward reaches out to Glenn Greenwald through his public contact information. It's faster, but less secure."
+    narrator_voice "You reach out to Glenn Greenwald through his public contact information. It's faster, but less secure."
 
     e "Mr. Greenwald, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
 
@@ -612,19 +612,19 @@ label ch3_greenwald_contact:
     jump ch3_continue
 
 label ch3_wait:
-    narrator_voice "Edward decides to wait for a safer window. But there may not be one."
+    narrator_voice "You decide to wait for a safer window. But there may not be one."
 
     im "Every day I wait is another day they could catch me. But rushing makes mistakes. Mistakes get you caught."
 
     $ suspicion_level += 1
     $ renpy.notify("Suspicion +1")
 
-    narrator_voice "Weeks pass. Edward's access patterns grow more suspicious. The window is closing."
+    narrator_voice "Weeks pass. Your access patterns grow more suspicious. The window is closing."
 
     jump ch3_continue
 
 label ch3_contact_unsafe:
-    narrator_voice "With time running out, Edward takes risks he normally wouldn't."
+    narrator_voice "With time running out, you take risks you normally wouldn't."
 
     $ suspicion_level += 1
     $ contacts_secured += 1
