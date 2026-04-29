@@ -80,15 +80,20 @@ label chapter_1:
 
     im "Another day inside the machine. Rows of monitors tracking billions of data points. Every packet, every connection, every digital breath."
 
+    im "I'm a systems administrator — I keep this infrastructure running. The irony is, the more access I have to maintain the system, the more I see what the system actually does."
+
     show supervisor neutral at enter_right
     with dissolve
 
     supervisor "Morning, Snowden. We've got a batch of flagged selectors to process. XKeyscore caught some interesting traffic overnight."
 
+    im "XKeyscore — the NSA's most powerful search tool. It can search virtually anything a person does on the internet: emails, browsing history, chat sessions, even webcam feeds. All in near real time, all without a warrant."
+
     e "Yes sir. I'll pull up the queue."
 
-
     supervisor "And don't overthink the 'why.' If the system flags a packet, it's because the math says they're a threat. Your job is to verify the handshake, not question the person."
+
+    im "Verify the handshake. That's NSA-speak for confirming the network connection is legitimate — checking that the source and destination match the selector criteria. But nobody asks whether the criteria themselves are legitimate."
 
     show colleague neutral at enter_left
     with dissolve
@@ -99,7 +104,7 @@ label chapter_1:
 
     colleague "Welcome to the NSA, man. Everything is accessible. Everything."
 
-    im "The scale of it is staggering. This isn't targeted surveillance. This is a vacuum cleaner, sucking up everything."
+    im "The scale of it is staggering. This isn't targeted surveillance. This is a vacuum cleaner, sucking up everything. Emails, phone records, browsing histories — all stored, all searchable, all belonging to ordinary people who've done nothing wrong."
 
     # --- Choice 1: Follow protocol or explore restricted files? ---
     hide colleague neutral with dissolve
@@ -132,11 +137,54 @@ label chapter_1:
 
             narrator_voice "Edward navigates deeper into the classified file system. Folders upon folders of surveillance programs he's never been briefed on. The scope is enormous."
 
-    # --- Tutorial Exposition ---
+    # --- Tutorial Exposition: Firewall Learning Section ---
+    # (Structured as a self-contained briefing — can be branched into the story tree later)
 
     narrator_voice "On his screen, Edward sees the tools of the trade: network monitoring dashboards tracking millions of connections in real time."
 
-    sys "// SYSTEM NOTE: Network monitoring tools analyze traffic patterns. Firewalls filter incoming and outgoing packets based on predefined rules. Access control determines who can see what. //"
+    im "Every network has a firewall — a security system that monitors all incoming and outgoing traffic and decides what gets through based on predefined rules. Think of it as a barrier between trusted and untrusted networks."
+
+    im "The firewall inspects each packet for three things: the source IP address, the destination port number, and the protocol. Get those right and you can tell the difference between normal traffic and an intrusion attempt."
+
+    # --- IP Addresses: Internal vs External ---
+
+    im "First, IP addresses. Every device on a network has one — it's like a street address for computers. But not all addresses are equal."
+
+    im "Private IP ranges — 192.168.x.x, 10.0.x.x, and 172.16.x.x — belong to your own internal network. Traffic from these addresses is usually safe because it's coming from inside the building."
+
+    im "But an IP like 45.33.32.1 or 89.248.174.5? That's an external address — someone on the internet reaching into our network. External IPs demand much more scrutiny."
+
+    sys "// SYSTEM NOTE: Private IPs (192.168.x.x, 10.0.x.x, 172.16.x.x) = internal/trusted. Public IPs = external/unknown — verify before allowing. //"
+
+    # --- Ports: The Doors Into a Network ---
+
+    im "Next, ports. If an IP address is the building's street address, a port is a specific door. Every network service listens on a numbered port, and knowing which port does what is fundamental."
+
+    im "Port 80 is HTTP — standard, unencrypted web traffic. Port 443 is HTTPS — the same thing but encrypted with TLS. These are the two most common ports on the internet, and traffic on them is usually legitimate."
+
+    im "Port 53 is DNS — the Domain Name System. It's how computers translate website names like 'google.com' into IP addresses. Without DNS, nothing works. It's the phone book of the internet."
+
+    im "Port 22 is SSH — Secure Shell. It's used for remote administration, letting an authorised user log into a server from another location. From an internal IP, it's normal. From an external IP, it needs careful review."
+
+    im "Port 3389 is RDP — Remote Desktop Protocol. It lets someone control a computer's desktop remotely. Like SSH, it's fine from a trusted internal source, but dangerous if exposed to the outside."
+
+    sys "// SAFE PORTS (common services): 80 = HTTP | 443 = HTTPS | 53 = DNS | 22 = SSH | 3389 = RDP //"
+
+    # --- Dangerous Ports and Protocols ---
+
+    im "Then there are the ports that should set off alarm bells. Port 23 is Telnet — an ancient protocol that sends everything in plain text, including passwords. It has no encryption at all. Telnet should never be used; SSH replaced it decades ago."
+
+    im "Port 31337 — pronounced 'elite' in hacker culture — is historically associated with the Back Orifice trojan. If you see traffic on port 31337 from an unknown external IP, it's almost certainly malicious."
+
+    im "And port 4444 — the default listener for Metasploit, one of the most widely used hacking frameworks. An external IP connecting on port 4444 usually means someone is trying to establish a reverse shell — giving themselves remote control of the target machine."
+
+    sys "// DANGER PORTS: 23 = Telnet (unencrypted!) | 31337 = Known hacker port | 4444 = Metasploit reverse shell //"
+
+    # --- Putting It Together ---
+
+    im "So the logic is straightforward: check the IP, check the port, check the protocol. Internal IP on a standard port? Probably safe. External IP on a suspicious port with no encryption? Block it immediately."
+
+    sys "// FIREWALL RULE: ALLOW = internal IPs on standard ports | BLOCK = external IPs on suspicious ports or unencrypted protocols. When in doubt, block. //"
 
     # --- Minigame 1: Firewall Breach ---
 
@@ -157,6 +205,10 @@ label chapter_1:
         $ renpy.notify("Knowledge -1 (Skipped)")
 
     # --- Question Segment 1: MCQ ---
+
+    im "Working here, I've learned how critical a VPN is. A VPN — Virtual Private Network — creates an encrypted tunnel between your device and a remote server. Anyone watching the local network sees only scrambled data, not what you're actually doing."
+
+    im "On untrusted networks like public Wi-Fi, a VPN is essential. Without one, your browsing history, login credentials, and private messages are all visible to anyone sniffing the network."
 
     call screen mcq_question(
         question="What does VPN stand for?",
@@ -202,7 +254,7 @@ label chapter_1:
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
 
-            narrator_voice "Edward continues working in silence, but his eyes are open. Every day reveals more."
+            narrator_voice "You continue working in silence, but your eyes are open. Every day reveals more."
 
     hide supervisor neutral with dissolve
     hide edward neutral with dissolve
@@ -241,17 +293,19 @@ label chapter_2:
 
     # --- Snowden discovers PRISM ---
 
-    im "I found it. The architecture is... infinite. It's not a targeted tap anymore. It's a vacuum."
+    im "I found it. Hidden in the classified briefing materials — a program so vast it makes everything else look like a hobby project."
 
-    im "They call it PRISM — a direct pipeline into the servers of every major tech company. Google. Facebook. Apple. Microsoft. All of them."
+    im "They call it PRISM — a direct pipeline into the servers of every major tech company. Google. Facebook. Apple. Microsoft. Yahoo. All of them. Nine companies in total, handing over user data on demand."
 
     sys "// CLASSIFIED: PRISM — Planning Tool for Resource Integration, Synchronization, and Management. Direct server access to 9 major internet service providers. //"
 
-    im "We aren't looking for needles in haystacks. We're just stealing the whole field."
+    im "We aren't looking for needles in haystacks. We're just stealing the whole field. Every email, every photo, every chat message — all vacuumed up and stored in data centres the size of small cities."
 
-    narrator_voice "The PRISM program gave the NSA direct access to user data from the world's largest tech companies. Emails, chat logs, file transfers, photos — all accessible without individual warrants."
+    narrator_voice "The PRISM program gave the NSA direct access to user data from the world's largest tech companies. Emails, chat logs, file transfers, photos — all accessible without individual warrants. The legal basis? A secret interpretation of the FISA Amendments Act that no court had publicly reviewed."
 
     sys "// SYSTEM NOTE: PRISM worked by collecting data 'upstream' — directly from fiber-optic cables and company servers, bypassing traditional warrant requirements through the FISA Amendments Act. //"
+
+    im "And there's more. Boundless Informant — a tool that counts and visualises exactly how much data the NSA collects from each country. In one month alone, 97 billion pieces of intelligence were gathered worldwide. The American public has no idea."
 
     # --- Internal conflict with colleague ---
     show colleague neutral at enter_left
@@ -308,7 +362,34 @@ label chapter_2:
         helper_text="You just saw the codename in the scene above, so trust your memory more than your IT knowledge."
     )
 
-    # --- Minigame 2: Decrypt the Message ---
+    # --- Minigame 2: Decrypt the Message — Learning Section ---
+    # (Structured as a self-contained briefing — can be branched into the story tree later)
+
+    im "Some of these classified filenames are encoded with a Caesar cipher — one of the oldest encryption methods in history. It's a simple substitution cipher where each letter is shifted by a fixed number of positions in the alphabet."
+
+    # --- How Caesar Cipher Works ---
+
+    im "Here's how it works. The alphabet is a loop: A B C D E F... all the way to Z, and then it wraps back to A. A Caesar cipher shifts every letter forward by a fixed number — the key."
+
+    im "With ROT-3 — a rotation of 3 — the letter A becomes D, B becomes E, C becomes F. The word 'CAT' encrypts to 'FDW'. Every letter moves exactly three places forward."
+
+    sys "// SYSTEM NOTE: Caesar Cipher encryption with ROT-3: A→D, B→E, C→F, D→G ... X→A, Y→B, Z→C //"
+
+    # --- Decryption: Reversing the Shift ---
+
+    im "To decrypt, you do the reverse — shift each letter back by the same number. So D becomes A, E becomes B, F becomes C. Decryption undoes the encryption."
+
+    im "Let me work through an example. If I see the letter 'S', I count back 3: S... R... Q... P. So S decrypts to P. If I see 'U', count back 3: U... T... S... R. So U becomes R."
+
+    sys "// DECRYPTION RULE: Take each letter → count backwards by the key number → that's your plaintext letter. ROT-3 decryption: D→A, E→B, F→C, G→D ... //"
+
+    # --- Why It Matters ---
+
+    im "The Caesar cipher is trivially easy to break — there are only 25 possible shifts, so you can try them all in seconds. But it teaches the fundamental principle behind all encryption: transform readable data into unreadable data using a key, and reverse the process with the same key."
+
+    im "Modern encryption like AES-256 uses the same concept — just with keys that are billions of times more complex, making brute-force attacks effectively impossible."
+
+    sys "// CHALLENGE PREP: You'll see an encrypted word. Shift each letter back by 3 to reveal the name of a classified NSA program. //"
 
     call minigame_2_decrypt
 
@@ -319,17 +400,21 @@ label chapter_2:
 
     im "I have access to everything. The question is: what do I do with it?"
 
-    narrator_voice "Edward stares at his screen. The classified documents are right there. Proof of mass surveillance. Proof of constitutional violations."
+    narrator_voice "You stare at your screen. The classified documents are right there. Proof of mass surveillance. Proof of constitutional violations. But taking them means crossing a line there's no coming back from."
+
+    im "If I copy these files, I'm committing espionage under the law. If I don't, no one will ever know this is happening. The proper channels have already failed me — my report to the Inspector General disappeared into a black hole."
 
     menu:
         "Copy the files to an encrypted drive. This evidence needs to survive.":
             $ tree_record_choice("choice_ch2_2", "copy")
-            im "I need the original documents. Notes won't be enough. Journalists need primary sources."
+            im "I need the original documents. Notes won't be enough. Journalists need primary sources — verifiable proof that can't be denied or dismissed."
             $ evidence_secured = True
             $ suspicion_level += 1
             $ renpy.notify("Evidence Secured! | Suspicion +1")
 
-            narrator_voice "Edward carefully copies selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk."
+            narrator_voice "You carefully copy selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk — the NSA logs all data movement, and an unusual transfer could trigger an automated alert."
+
+            im "The files are protected with AES-256 encryption — the Advanced Encryption Standard with a 256-bit key. It's the same encryption the US government uses to protect its own top-secret data. Effectively impossible to brute-force with any existing hardware."
 
             sys "// DATA TRANSFER INITIATED. ENCRYPTION: AES-256. CONTAINER: VERACRYPT HIDDEN VOLUME. //"
 
@@ -339,11 +424,16 @@ label chapter_2:
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
 
-            narrator_voice "Edward writes down key details from memory. It's safer, but journalists may question the credibility without primary documents."
+            narrator_voice "You write down key details from memory. It's safer, but journalists may question the credibility without primary documents."
 
     hide edward neutral with dissolve
 
     # --- MCQ Question ---
+
+    im "When transferring these documents, the protocol matters. Standard HTTP sends everything in plain text — anyone on the network can read it. But HTTPS adds a layer of TLS/SSL encryption, securing the data between your browser and the web server."
+
+    im "That padlock icon in your browser's address bar? That's HTTPS at work. It's the difference between shouting your secrets across a room and whispering them through a sealed envelope."
+
     call screen mcq_question(
         question="Which protocol encrypts web traffic?",
         answers=["HTTP", "FTP", "HTTPS", "SMTP"],
@@ -388,15 +478,17 @@ label chapter_3:
 
     im "I have the evidence. Now I need someone to publish it. But one wrong email, one unencrypted message, and the NSA will know before the ink is dry."
 
-    narrator_voice "Edward needs to contact journalists who can responsibly publish the classified documents. But the NSA monitors virtually all electronic communication."
+    narrator_voice "You need to contact journalists who can responsibly publish the classified documents. But the NSA monitors virtually all electronic communication — the very programs you plan to expose are the ones hunting for people like you."
+
+    im "The NSA doesn't just collect data in bulk. They have tools that flag specific patterns: a new email address contacting a known journalist, an encrypted connection from a government network, a Tor exit node accessing a news site. Any of these could trigger an alert."
 
     sys "// SYSTEM NOTE: OpSec (Operational Security) is the practice of protecting critical information from adversaries. Every digital action leaves traces. //"
 
-    im "I can't use my work email. I can't use my personal email. I need a completely new identity, on a completely separate network."
+    im "I can't use my work email. I can't use my personal email. I need a completely new identity, on a completely separate network. And I need to make contact without anyone inside the NSA knowing I've reached out."
 
     # --- Snowball Effect Check ---
     if suspicion_level >= 3:
-        narrator_voice "Edward's unusual access patterns have already triggered internal alerts. His options are narrowing."
+        narrator_voice "Your unusual access patterns have already triggered internal alerts. Your options are narrowing."
 
         sys "// WARNING: INTERNAL SECURITY MONITORING HAS FLAGGED YOUR ACTIVITY //"
 
@@ -420,6 +512,12 @@ label chapter_3:
                 jump ch3_contact_unsafe
 
     # --- Choice 1: Secure channel or personal email? ---
+
+    im "I've identified two journalists who might have the courage to publish: Laura Poitras, a documentary filmmaker who's been investigating NSA surveillance for years, and Glenn Greenwald, a constitutional lawyer turned journalist at The Guardian."
+
+    im "The challenge is reaching them securely. PGP encryption with Tor would make my messages virtually untraceable — but it requires technical knowledge to set up correctly. One mistake in the key exchange and the whole channel is compromised."
+
+    narrator_voice "You weigh your options. Each method of contact carries its own risks and rewards."
 
     menu:
         "Set up a PGP-encrypted email channel using Tor (requires knowledge).":
@@ -452,7 +550,7 @@ label ch3_secure_success:
 
     scene bg_hong_kong_terminal at parallax with dissolve
 
-    narrator_voice "Edward creates an anonymous email account, accessed only through Tor, and uses PGP encryption to contact documentary filmmaker Laura Poitras."
+    narrator_voice "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Laura Poitras."
 
     show journalist neutral at enter_right
     with dissolve
@@ -475,7 +573,7 @@ label ch3_secure_fail:
     $ suspicion_level += 1
     $ renpy.notify("Suspicion +1")
 
-    narrator_voice "Edward attempts to set up encrypted communications, but makes errors in the key exchange process. The channel may not be fully secure."
+    narrator_voice "You attempt to set up encrypted communications, but make errors in the key exchange process. The channel may not be fully secure."
 
     jump ch3_continue
 
@@ -484,7 +582,7 @@ label ch3_greenwald_contact:
     show journalist neutral at enter_right
     with dissolve
 
-    narrator_voice "Edward reaches out to Glenn Greenwald through his public contact information. It's faster, but less secure."
+    narrator_voice "You reach out to Glenn Greenwald through his public contact information. It's faster, but less secure."
 
     e "Mr. Greenwald, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
 
@@ -502,19 +600,19 @@ label ch3_greenwald_contact:
     jump ch3_continue
 
 label ch3_wait:
-    narrator_voice "Edward decides to wait for a safer window. But there may not be one."
+    narrator_voice "You decide to wait for a safer window. But there may not be one."
 
     im "Every day I wait is another day they could catch me. But rushing makes mistakes. Mistakes get you caught."
 
     $ suspicion_level += 1
     $ renpy.notify("Suspicion +1")
 
-    narrator_voice "Weeks pass. Edward's access patterns grow more suspicious. The window is closing."
+    narrator_voice "Weeks pass. Your access patterns grow more suspicious. The window is closing."
 
     jump ch3_continue
 
 label ch3_contact_unsafe:
-    narrator_voice "With time running out, Edward takes risks he normally wouldn't."
+    narrator_voice "With time running out, you take risks you normally wouldn't."
 
     $ suspicion_level += 1
     $ contacts_secured += 1
@@ -529,6 +627,10 @@ label ch3_continue:
     hide journalist neutral with dissolve
     hide edward neutral with dissolve
 
+    im "Everything I've done to contact journalists relies on one tool above all others: Tor — The Onion Router. It's an anonymization network that routes your traffic through multiple relay nodes around the world, each encrypting another layer."
+
+    im "By the time your traffic reaches its destination, tracing it back to the source is nearly impossible. That's what makes Tor the tool of choice for anyone who needs to communicate without being tracked."
+
     call screen mcq_question(
         question="What is Tor mainly used for?",
         answers=["To hide where your internet traffic is coming from", "To make your laptop charge faster", "To delete files forever", "To boost a Wi-Fi signal"],
@@ -537,7 +639,43 @@ label ch3_continue:
         helper_text="Think about privacy and staying hard to track, not the full acronym."
     )
 
-    # --- Minigame 3: OpSec Challenge ---
+    # --- Minigame 3: OpSec Challenge — Learning Section ---
+    # (Structured as a self-contained briefing — can be branched into the story tree later)
+
+    im "But technology alone isn't enough. OpSec — Operational Security — is the practice of thinking like your adversary. What can they learn from your actions? Every digital footprint, every unguarded conversation, every pattern of behaviour is a piece of the puzzle they're assembling."
+
+    im "Good OpSec means denying the adversary those pieces. It means asking yourself before every action: could this reveal my identity, my location, or my intent?"
+
+    # --- IP Address Exposure ---
+
+    im "The most basic OpSec failure is IP exposure. Your home IP address is assigned by your Internet Service Provider and tied directly to your name and physical address. If you log into a secure service from your home IP without a VPN, you've just stamped your real identity on the connection."
+
+    sys "// OPSEC RULE #1: Never access sensitive services from a traceable IP address. Use a VPN or Tor to mask your connection. //"
+
+    # --- Anonymous Communication Tools ---
+
+    im "The right tools make anonymity possible. Tor anonymizes your connection through multiple relay nodes. SecureDrop — an open-source platform used by major newsrooms — lets whistleblowers submit documents anonymously. Burner email accounts, created from public locations like libraries, add another layer of separation between your real identity and your actions."
+
+    sys "// SAFE PRACTICE: Tor + SecureDrop + burner accounts from public locations = maximum anonymity //"
+
+    # --- Work Email and Monitored Channels ---
+
+    im "The biggest mistake an insider can make is using work infrastructure for anything sensitive. Work email, work Wi-Fi, work devices — all of these are monitored, logged, and directly tied to your employee identity. Sending classified documents via work email is essentially confessing."
+
+    sys "// OPSEC RULE #2: Work infrastructure is monitored. Never use work email, devices, or networks for sensitive communication. //"
+
+    # --- Password Hygiene ---
+
+    im "And then there's password reuse — the silent killer. If you use your personal Facebook password for an encrypted file container, you've created a bridge between your public identity and your secret activity. When one account is compromised, every account sharing that password falls."
+
+    sys "// OPSEC RULE #3: Never reuse passwords. Every service gets a unique, strong password. Use a password manager. //"
+
+    # --- Putting It Together ---
+
+    im "The challenge is simple: review a series of actions by a fictional 'Agent X' and decide whether each one is a SAFE practice or a MISTAKE. Everything I've just explained will tell you the answer."
+
+    sys "// SYSTEM NOTE: OpSec protects critical information by identifying what intelligence an adversary could gather from your actions, then taking steps to prevent that exposure. //"
+
     $ mg_intro3 = renpy.call_screen("minigame_intro", title="OPSEC CHALLENGE", description="You are Agent X on the clock. Tag each move as SAFE or MISTAKE before your cover gets blown.")
 
     if mg_intro3:
@@ -628,9 +766,11 @@ label chapter_4:
 
     narrator_voice "Edward Snowden arrives in Hong Kong with a laptop full of classified documents and a plan that's already falling apart."
 
+    im "I chose Hong Kong deliberately. It has its own legal system, independent from mainland China. Extradition would take time — time I need to get the story published before the government can suppress it."
+
     im "I told my employer I needed medical leave for epilepsy treatment. They didn't question it. That bought me a few weeks."
 
-    im "Now I'm in a hotel room in Hong Kong, waiting for journalists who might not come, hunted by an agency that can find anyone."
+    im "Now I'm in a hotel room in Hong Kong, waiting for journalists who might not come, hunted by an agency that can find anyone. I've wedged pillows against the door, piled cushions against the window. Even the smoke detector might have a camera."
 
     sys "// LOCATION: MIRA HOTEL, HONG KONG. STATUS: UNDETECTED — FOR NOW. //"
 
@@ -643,6 +783,8 @@ label chapter_4:
 
     e "My life changed the moment I read those documents. I can't unread them. I can't unknow what the government is doing to its own people."
 
+    im "Greenwald flew here from Rio de Janeiro. Poitras from Berlin. They left their lives behind on the strength of encrypted emails from a stranger. That took courage."
+
     if suspicion_level >= 3:
         sys "// WARNING: NSA INTERNAL AUDIT HAS FLAGGED YOUR ACCESS ANOMALIES. INVESTIGATION IN PROGRESS. //"
 
@@ -654,9 +796,17 @@ label chapter_4:
 
     hide journalist neutral with dissolve
 
+    im "What scares me most isn't just the surveillance — it's the NSA's offensive capabilities. They stockpile zero-day exploits — vulnerabilities in software that the vendor doesn't even know about. Called 'zero-day' because there are zero days of notice before they're exploited. No patch exists yet."
+
+    im "If the NSA wants into your laptop, they don't need your password. They use a zero-day to bypass everything — your firewall, your encryption, your operating system. And the vendor can't fix what they don't know is broken."
+
+    sys "// SYSTEM NOTE: A zero-day exploit targets an unknown software vulnerability. Because no patch exists, even fully updated systems are at risk. Intelligence agencies hoard zero-days as offensive weapons. //"
+
     # --- Choice 1: Hotel Wi-Fi or mobile hotspot? ---
 
-    narrator_voice "Edward needs to send final instructions to the publication team, but the hotel network is compromised."
+    narrator_voice "Edward needs to send final instructions to the publication team, but the hotel network is compromised. Every network connection is a potential leak."
+
+    im "The hotel Wi-Fi is managed by the hotel — they can see every device that connects, every connection made. Intelligence agencies routinely request hotel network logs. I need to decide how to send this last message."
 
     menu:
         "Use the hotel Wi-Fi with a VPN.":
@@ -690,7 +840,62 @@ label chapter_4:
         helper_text="Short answer is fine."
     )
 
-    # --- Minigame 4: Trace the Route ---
+    # --- Minigame 4: Trace the Route — Learning Section ---
+    # (Structured as a self-contained briefing — can be branched into the story tree later)
+
+    im "When you route traffic through Tor, you're building a chain of relay nodes. Each node only knows the hop before it and the hop after it — never the full path. Pick the right nodes and your trail goes cold."
+
+    im "But if even one node in the chain is compromised — a monitored relay, a hostile exit point — the entire route is exposed and your identity with it. So understanding what each type of node does is critical."
+
+    # --- The Starting Point: Your Device ---
+
+    im "It all starts at your device — your laptop, your phone. This is where traffic originates. Right now, it carries your real IP address and your real identity. The goal is to strip that identity away before the traffic reaches its destination."
+
+    # --- ISP Router ---
+
+    im "The first hop is usually your ISP router — the Internet Service Provider that connects you to the internet. Your ISP can see every website you visit, every connection you make. They log this data and, in many countries, hand it over to law enforcement on request."
+
+    im "Going through the ISP is unavoidable — it's your on-ramp to the internet. But it's a chokepoint. If someone is watching at this level, they see everything unless you've already encrypted your traffic."
+
+    sys "// NODE TYPE: ISP ROUTER — Your gateway to the internet. Sees all unencrypted traffic. A surveillance chokepoint. //"
+
+    # --- VPN Server ---
+
+    im "A VPN server is your first line of defence. It creates an encrypted tunnel between your device and the VPN server. Your ISP can see that you've connected to a VPN, but they can't see what you're doing through it."
+
+    im "Starting your route through a VPN before entering the Tor network is called 'VPN over Tor' — it hides the fact that you're using Tor from your ISP, adding an extra layer of protection."
+
+    sys "// NODE TYPE: VPN SERVER — Encrypts your traffic before it hits the internet. Hides your activity from your ISP. Safe opening move. //"
+
+    # --- Tor Nodes ---
+
+    im "Tor nodes are the backbone of anonymous routing. Each Tor relay adds a layer of encryption — like nesting your message inside multiple sealed envelopes. The first relay knows who you are but not where you're going. The last relay knows where you're going but not who you are."
+
+    im "The more Tor nodes you route through, the harder it is to trace the connection back to you. But each hop adds latency — there's a trade-off between anonymity and speed."
+
+    sys "// NODE TYPE: TOR NODE — Adds encryption layers and anonymity. Multiple Tor hops = harder to trace. Safe nodes. //"
+
+    # --- Government Monitor (Danger!) ---
+
+    im "The one node you must avoid at all costs is the government monitoring point. Intelligence agencies like the NSA operate surveillance nodes that intercept and log all traffic passing through them. If your route goes through a government monitor, the entire chain is compromised."
+
+    im "It doesn't matter how many Tor nodes you've used — if even one hop routes through a known surveillance point, the adversary can correlate timing data to identify you. This is called a 'traffic correlation attack'."
+
+    sys "// NODE TYPE: GOV MONITOR — Intercepts all traffic. If your route hits this node, your identity is exposed. AVOID AT ALL COSTS. //"
+
+    # --- CDN Server vs Secure Relay ---
+
+    im "Near the end of the route, you'll see two types of final relay. A CDN — Content Delivery Network — is standard internet infrastructure. It's fast but not designed for privacy. Your traffic is delivered efficiently, but CDN logs can be subpoenaed."
+
+    im "A secure relay, on the other hand, is specifically designed for private communication. It doesn't log traffic, strips metadata, and forwards your message with minimal exposure. When anonymity matters, always prefer the secure relay."
+
+    sys "// NODE TYPE: CDN SERVER — Fast but logs traffic. SECURE RELAY — Private, no logs. Choose secure relay for maximum anonymity. //"
+
+    # --- Route Strategy ---
+
+    im "So the optimal route is: start with a VPN to hide your Tor usage, chain through Tor nodes for anonymity, avoid the government monitor completely, and exit through a secure relay to reach the destination without leaving a trail."
+
+    sys "// ROUTE STRATEGY: VPN → Tor nodes → Secure relay → Destination. Avoid GOV MONITOR. Fewer hops = less exposure time. //"
 
     $ mg_intro4 = renpy.call_screen("minigame_intro", title="TRACE THE ROUTE", description="Build a safe route hop by hop. Green nodes help you stay hidden, while the red monitor exposes the whole mission.")
 
@@ -812,9 +1017,9 @@ label chapter_5:
 
     # --- Snowden in Russia ---
 
-    narrator_voice "The Sheremetyevo International Airport transit zone. Edward Snowden has been trapped here for 40 days."
+    narrator_voice "The Sheremetyevo International Airport transit zone. Edward Snowden has been trapped here for 40 days. Sleeping on chairs, eating airport food, living in legal limbo."
 
-    narrator_voice "His passport is cancelled. No country will grant him asylum without risking the wrath of the United States. Russia is his last option."
+    narrator_voice "His passport is cancelled. No country will grant him asylum without risking the wrath of the United States. Twenty-one countries rejected his application. Russia is his last option."
 
     show russian_official neutral at enter_right
     with dissolve
@@ -827,6 +1032,8 @@ label chapter_5:
 
     russian_official "You became a pawn the moment you took those files, Mr. Snowden. The only question is which board you want to play on."
 
+    im "He's right. I have no leverage. The US government pressured every ally to refuse me. Bolivia's presidential plane was even forced to land in Austria because they suspected I was on board. That's how far they'll go."
+
     # --- Reflection Dialogue ---
 
     hide russian_official neutral with dissolve
@@ -837,9 +1044,11 @@ label chapter_5:
 
     im "I'm an exile in the physical world, but I've never been more active in the digital one."
 
-    im "From this small apartment in Moscow, I can still connect to the world. The irony of a surveillance whistleblower living in the surveillance capital of the East is not lost on me."
+    im "From this small apartment in Moscow, I can still connect to the world. I use encrypted video calls to speak at conferences, secure messaging to coordinate with press freedom organisations. The irony of a surveillance whistleblower living in the surveillance capital of the East is not lost on me."
 
-    narrator_voice "From Moscow, Snowden continues to advocate for digital privacy through encrypted video calls, secure messaging, and speaking engagements."
+    narrator_voice "From Moscow, Snowden continues to advocate for digital privacy. He develops tools to help journalists protect their sources, speaks to millions through encrypted channels, and becomes the face of the global privacy debate."
+
+    im "SecureDrop — an open-source whistleblowing platform — was adopted by dozens of major news organizations after the leaks. It allows anonymous document submission, protecting sources the way I wish I had been protected. The tools I helped popularise are now standard practice in investigative journalism."
 
     # --- Dialogue based on accumulated flags ---
 
@@ -859,6 +1068,10 @@ label chapter_5:
 
     # --- Question Segment 5: Final Knowledge Test ---
 
+    im "People think metadata is harmless — it's just 'data about data.' Who you called, when, for how long, from where. Not the content of the message itself."
+
+    im "But metadata reveals patterns of life. Call a doctor at midnight, a divorce lawyer the next morning, and a locksmith that afternoon — the content doesn't matter. The pattern tells the whole story. Intelligence agencies consider metadata even more valuable than content in many cases."
+
     # MCQ
     call screen mcq_question(
         question="What is metadata in the context of surveillance?",
@@ -866,6 +1079,8 @@ label chapter_5:
         correct_index=1,
         explanation="Metadata is 'data about data.' In surveillance terms, it includes who you communicated with, when, for how long, and from where — but not the content of the communication. The NSA argued metadata collection wasn't as invasive as content collection, but metadata can reveal intimate patterns of life."
     )
+
+    im "PGP — Pretty Good Privacy. It's the asymmetric encryption system that made the whole operation possible. I publish a public key that anyone can use to encrypt a message to me, but only my private key can decrypt it. Without PGP, every email to the journalists would have been an open letter to the NSA."
 
     # Text Input
     call screen text_input_question_screen(
@@ -876,6 +1091,10 @@ label chapter_5:
         accepted_answers=["PGP", "PRETTY GOOD PRIVACY"],
         helper_text="Just the 3-letter version works."
     )
+
+    im "The scariest attack is one you never see — a man-in-the-middle. An attacker secretly positions themselves between you and the person you're talking to, intercepting every message. Both sides think they're communicating directly, but the attacker sees everything."
+
+    im "The only defence is key verification — confirming encryption fingerprints through a separate, trusted channel. If you skip that step, you could be handing your secrets directly to the adversary."
 
     # MCQ
     call screen mcq_question(
