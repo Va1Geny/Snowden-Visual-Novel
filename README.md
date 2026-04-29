@@ -40,7 +40,7 @@ faced: **loyalty vs. conscience, security vs. freedom, silence vs. truth.**
 This visual novel is a **fictional dramatization** based on publicly 
 available information. It is created for educational and artistic 
 purposes. All dialogue is fictional and does not represent the actual 
-words of real individuals.
+words.
 
 ## 🛠️ Built With
 
