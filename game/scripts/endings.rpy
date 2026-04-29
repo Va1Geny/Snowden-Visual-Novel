@@ -43,6 +43,8 @@ label ending_hero:
     scene black with chapter_transition
     $ show_hud = False
 
+    show logo_watermark
+
     narrator_voice "The documents are out. Every major newspaper in the world carries the story."
 
     narrator_voice "PRISM. XKeyscore. Boundless Informant. The names of the programs become household words."
@@ -79,6 +81,8 @@ label ending_hero:
 label ending_fugitive:
     scene black with chapter_transition
     $ show_hud = False
+
+    show logo_watermark
 
     narrator_voice "The documents reach the journalists. The stories are published."
 
@@ -117,6 +121,8 @@ label ending_imprisoned:
     scene black with chapter_transition
     $ show_hud = False
 
+    show logo_watermark
+
     narrator_voice "They were waiting for him at the airport."
 
     narrator_voice "The moment Snowden's passport was scanned, the system flagged him. Every camera, every sensor, every algorithm turned its eye toward Gate 14."
@@ -153,6 +159,8 @@ label ending_imprisoned:
 label ending_silenced:
     scene black with chapter_transition
     $ show_hud = False
+
+    show logo_watermark
 
     narrator_voice "The internal monitoring system flagged Edward Snowden's access patterns three weeks before he planned to act."
 
@@ -191,6 +199,8 @@ label ending_betrayed:
     scene black with chapter_transition
     $ show_hud = False
 
+    show logo_watermark
+
     narrator_voice "The journalist's email was compromised from the start."
 
     narrator_voice "What Snowden thought was a secure PGP channel was actually a honeypot — a man-in-the-middle operation run by the very agency he was trying to expose."
@@ -227,6 +237,14 @@ label ending_betrayed:
 screen ending_screen(title, color, description, lessons):
     modal True
     add "#0A0E1A"
+
+    add "images/logo.png":
+        xalign 0.5
+        yalign 0.5
+        alpha 0.15
+        fit "contain"
+        xsize 900
+        ysize 900
 
     viewport:
         xfill True yfill True

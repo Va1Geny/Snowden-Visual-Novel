@@ -456,3 +456,49 @@ style stage_badge is frame:
     left_padding 14
     right_padding 14
 
+# === Clean the Message Minigame Styles ===
+
+style ctm_field_label:
+    font "DejaVuSans.ttf"
+    color "#5A7080"
+    size 15
+    bold True
+
+style ctm_field_value:
+    font "DejaVuSans.ttf"
+    color "#B8C8D8"
+    size 16
+
+style ctm_threat is button:
+    background Solid("#1A1018")
+    hover_background Solid("#2A1420")
+    padding (8, 4)
+
+style ctm_threat_text is button_text:
+    font "DejaVuSans.ttf"
+    size 16
+    color "#FF3355"
+    hover_color "#FF6680"
+
+style ctm_cleaned_text:
+    font "DejaVuSans.ttf"
+    size 16
+    color "#00FF88"
+
+style ctm_body_text:
+    font "DejaVuSans.ttf"
+    size 16
+    color "#B8C8D8"
+    line_spacing 4
+
+style ctm_scanner_label:
+    font "DejaVuSans.ttf"
+    color "#5A7080"
+    size 14
+    bold True
+
+style ctm_scanner_value:
+    font "DejaVuSans.ttf"
+    color "#D8E4F0"
+    size 14
+

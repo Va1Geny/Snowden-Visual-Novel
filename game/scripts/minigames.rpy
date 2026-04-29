@@ -375,6 +375,14 @@ screen minigame_firewall():
 
     add "#0A0E1A"
 
+    add "images/logo.png":
+        xalign 0.5
+        yalign 0.5
+        alpha 0.15
+        fit "contain"
+        xsize 900
+        ysize 900
+
     # ── Scanline overlay (subtle) ────────────────────────────────────────
     for _sl_y in range(0, 720, 4):
         add Solid("#00000010"):
@@ -635,54 +643,56 @@ screen minigame_firewall():
         # ── ANALYSIS TERMINAL (feedback) ─────────────────────────────────
         if fw_state["phase"] == "feedback":
             frame at fw_feedback_enter:
-                xalign 0.5 yalign 0.82
-                xsize 820 yminimum 120
-                background "#0A0A14"
-                padding (20, 15)
+                xalign 0.5 yalign 0.5
+                xsize 642 ysize 282
+                background "#00FFD130"
+                padding (1, 1)
 
-                # Terminal border
-                add Solid("#00FFD130"):
-                    xsize 820 ysize 1 xpos 0 ypos 0
-                add Solid("#00FFD130"):
-                    xsize 1 ysize 120 xpos 0 ypos 0
+                frame:
+                    xsize 640 ysize 280
+                    background "#0A0A14E6"
+                    padding (29, 19)
 
-                vbox:
-                    spacing 8
+                    vbox:
+                        spacing 10
+                        xalign 0.5
 
-                    # Terminal header
-                    text "> ANALYSIS TERMINAL" color "#00FFD180" size 12 bold True
+                        # Terminal header
+                        text "> ANALYSIS TERMINAL <" color "#00FFD180" size 14 bold True xalign 0.5
 
-                    if fw_state["timed_out"]:
-                        text "{cps=40}⚠ TIME OUT — Packet auto-blocked (safe default){/cps}" color "#FFD700" size 16 bold True
-                    elif fw_state["last_correct"]:
-                        $ _fb_choice = fw_state["answers"][-1]["choice"]
-                        if _fb_choice == "ALLOW":
-                            text "{cps=40}✓ AUTHORIZATION GRANTED — Packet forwarded{/cps}" color "#00FF88" size 16 bold True
+                        if fw_state["timed_out"]:
+                            text "{cps=40}⚠ TIME OUT — Packet auto-blocked{/cps}" color "#FFD700" size 16 bold True xalign 0.5
+                        elif fw_state["last_correct"]:
+                            $ _fb_choice = fw_state["answers"][-1]["choice"]
+                            if _fb_choice == "ALLOW":
+                                text "{cps=40}✓ AUTHORIZATION GRANTED{/cps}" color "#00FF88" size 18 bold True xalign 0.5
+                            else:
+                                text "{cps=40}✗ PACKET REJECTED{/cps}" color "#00FFD1" size 18 bold True xalign 0.5
                         else:
-                            text "{cps=40}✗ PACKET REJECTED — Firewall rule applied{/cps}" color "#00FFD1" size 16 bold True
-                    else:
-                        text "{cps=40}⚠ INCORRECT ANALYSIS — Review required{/cps}" color "#FF2D55" size 16 bold True
+                            text "{cps=40}⚠ INCORRECT ANALYSIS{/cps}" color "#FF2D55" size 18 bold True xalign 0.5
 
-                    # Explanation
-                    text "{cps=30}[_fw_explanation]{/cps}" color "#AAAAAA" size 15
+                        # Explanation
+                        text "{cps=30}[_fw_explanation]{/cps}" color "#AAAAAA" size 15 text_align 0.5 xalign 0.5 justify True
 
-                    if fw_state["last_correct"] and not fw_state["timed_out"]:
-                        text "knowledge_score +1 | streak [_fw_streak]" color "#00FF8880" size 13
+                        if fw_state["last_correct"] and not fw_state["timed_out"]:
+                            text "knowledge_score +1 | streak [_fw_streak]" color "#00FF8880" size 13 xalign 0.5
 
-                    null height 5
+                        null height 5
 
-                    # Continue button (delayed)
-                    if fw_state["show_continue"]:
-                        textbutton "> CONTINUE →":
-                            text_color "#00FFD1"
-                            text_hover_color "#FFFFFF"
-                            text_size 16
-                            text_bold True
-                            action Function(fw_next_packet)
-                    else:
-                        hbox:
-                            text "> Processing" color "#00FFD180" size 14
-                            text " _" at fw_cursor_blink color "#00FFD1" size 14
+                        # Continue button (delayed)
+                        if fw_state["show_continue"]:
+                            textbutton "> CONTINUE →":
+                                xalign 0.5
+                                text_color "#00FFD1"
+                                text_hover_color "#FFFFFF"
+                                text_size 16
+                                text_bold True
+                                action Function(fw_next_packet)
+                        else:
+                            hbox:
+                                xalign 0.5
+                                text "> Processing" color "#00FFD180" size 14
+                                text " _" at fw_cursor_blink color "#00FFD1" size 14
 
         # ── Waiting prompt (incoming phase) ──────────────────────────────
         if fw_state["phase"] == "incoming":
@@ -1685,6 +1695,14 @@ screen decrypt_game():
 
     add "#080C10"
 
+    add "images/logo.png":
+        xalign 0.5
+        yalign 0.5
+        alpha 0.15
+        fit "contain"
+        xsize 900
+        ysize 900
+
     fixed:
         for idx, stream in enumerate(decrypt_state.get("bg_streams", [])):
             text "[stream]":
@@ -2256,6 +2274,7 @@ screen decrypt_result():
 
 
 label minigame_2_decrypt:
+    window hide
     $ mg_intro2 = renpy.call_screen("minigame_intro", title="DECRYPT THE MESSAGE", description="A classified NSA transmission has been encrypted with a Caesar cipher. Crack three intercepted words by shifting each cipher letter back by 3.")
     if not mg_intro2:
         $ knowledge_score -= 1
@@ -2264,6 +2283,8 @@ label minigame_2_decrypt:
         return
 
     $ decrypt_reset_game()
+    $ quick_menu = False
+    $ show_hud = False
 
     while True:
         $ _decrypt_step = renpy.call_screen("decrypt_game")
@@ -2297,149 +2318,16 @@ label decrypt_game_results:
 
     $ mg_decrypt_solved = total >= 3
     $ renpy.notify("Decryption score: {}/9".format(total))
+    
+    $ quick_menu = True
+    $ show_hud = True
     return
 
 
 ################################################################################
-## MINIGAME 3: OPSEC CHALLENGE (Chapter 3)
+## MINIGAME 3: CLEAN THE MESSAGE (Chapter 3)
+## -> Implemented in minigame_ctm.rpy
 ################################################################################
-
-init python:
-    def get_opsec_scenarios():
-        return [
-            {
-                "action": "Agent X logged into his secure email from his home IP address without using a VPN.",
-                "is_mistake": True,
-                "reason": "Home IP can be traced directly to his identity by the ISA."
-            },
-            {
-                "action": "Agent X used the Tor browser to access the journalist's SecureDrop site.",
-                "is_mistake": False,
-                "reason": "Tor anonymizes your connection through multiple relay nodes."
-            },
-            {
-                "action": "Agent X sent the documents via regular email using his work address.",
-                "is_mistake": True,
-                "reason": "Work email is monitored and directly tied to his identity."
-            },
-            {
-                "action": "Agent X created a new identity with a burner email, accessed from a public library.",
-                "is_mistake": False,
-                "reason": "Using a burner email from a public location helps maintain anonymity."
-            },
-            {
-                "action": "Agent X reused his personal Facebook password for the encrypted file container.",
-                "is_mistake": True,
-                "reason": "Password reuse means if one account is compromised, all are compromised."
-            },
-        ]
-
-
-screen minigame_opsec():
-    modal True
-    default scenarios = get_opsec_scenarios()
-    default answers = {}
-    default submitted = False
-    default time_left = 45
-
-    if not submitted and time_left > 0:
-        timer 1.0 repeat True action SetScreenVariable("time_left", max(0, time_left - 1))
-
-    if not submitted and time_left <= 0:
-        timer 0.01 action SetScreenVariable("submitted", True)
-
-    add "#0A0E1A"
-
-    frame:
-        xfill True yfill True
-        background "#0A0E1A"
-        padding (50, 40)
-
-        vbox:
-            spacing 15
-
-            text "// OPSEC CHALLENGE //" style "minigame_title"
-            text "Review Agent X's actions. Mark each as SAFE or MISTAKE." style "minigame_instruction"
-
-            hbox:
-                xalign 0.5
-                spacing 24
-                text "TIME LEFT: [time_left]s" color ("#FF2D55" if time_left <= 10 else "#FFD700" if time_left <= 20 else "#00FFD1") size 20 bold True
-                text "TAGGED: [len(answers)]/[len(scenarios)]" color "#8B8FCC" size 20 bold True
-
-            null height 10
-
-            viewport:
-                ysize 700
-                scrollbars "vertical"
-                mousewheel True
-
-                vbox:
-                    spacing 15
-
-                    for i, scenario in enumerate(scenarios):
-                        frame:
-                            xfill True
-                            background "#111827"
-                            padding (20, 15)
-
-                            vbox:
-                                spacing 10
-                                text "Action [i+1]:" color "#00FFD1" size 16 bold True
-                                text scenario["action"] color "#E8E8E8" size 18
-
-                                if not submitted:
-                                    hbox:
-                                        spacing 15
-
-                                        textbutton "✓ SAFE":
-                                            text_size 18
-                                            text_color ("#00FF00" if answers.get(i) == "safe" else "#555555")
-                                            text_hover_color "#00FF00"
-                                            action SetScreenVariable("answers", dict(list(answers.items()) + [(i, "safe")]))
-
-                                        textbutton "✗ MISTAKE":
-                                            text_size 18
-                                            text_color ("#FF2D55" if answers.get(i) == "mistake" else "#555555")
-                                            text_hover_color "#FF2D55"
-                                            action SetScreenVariable("answers", dict(list(answers.items()) + [(i, "mistake")]))
-
-                                else:
-                                    $ user_ans = answers.get(i, "")
-                                    $ correct_ans = "mistake" if scenario["is_mistake"] else "safe"
-                                    $ got_it = (user_ans == correct_ans)
-
-                                    if got_it:
-                                        text "✓ CORRECT" color "#00FF00" size 16
-                                    else:
-                                        text "✗ INCORRECT — Should be: [correct_ans.upper()]" color "#FF2D55" size 16
-
-                                    text scenario["reason"] color "#AAAAAA" size 15 italic True
-
-            null height 10
-
-            if not submitted:
-                if len(answers) == len(scenarios):
-                    textbutton "> SUBMIT ANALYSIS":
-                        xalign 0.5
-                        text_style "menu_btn_text"
-                        action SetScreenVariable("submitted", True)
-                else:
-                    text ("Time expired. Results locked." if time_left <= 0 else "Mark all [len(scenarios)] actions to submit before time runs out.") color "#888888" size 18 xalign 0.5
-            else:
-                python:
-                    opsec_score = 0
-                    for idx, sc in enumerate(scenarios):
-                        correct_a = "mistake" if sc["is_mistake"] else "safe"
-                        if answers.get(idx) == correct_a:
-                            opsec_score += 1
-
-                text "Score: [opsec_score]/[len(scenarios)]" style "minigame_score"
-
-                textbutton "> CONTINUE MISSION":
-                    xalign 0.5
-                    text_style "menu_btn_text"
-                    action Return(opsec_score)
 
 
 ################################################################################
@@ -2510,6 +2398,14 @@ screen minigame_trace():
         timer 1.0 repeat True action SetScreenVariable("time_left", max(0, time_left - 1))
 
     add "#0A0E1A"
+
+    add "images/logo.png":
+        xalign 0.5
+        yalign 0.5
+        alpha 0.15
+        fit "contain"
+        xsize 900
+        ysize 900
 
     frame:
         xfill True yfill True
