@@ -826,151 +826,1478 @@ screen minigame_firewall():
 ################################################################################
 
 init python:
-    def caesar_encrypt(text, shift):
-        result = ""
-        for ch in text:
-            if ch.isalpha():
-                base = ord('A') if ch.isupper() else ord('a')
-                result += chr((ord(ch) - base + shift) % 26 + base)
-            else:
-                result += ch
-        return result
+    import random
+    import time
 
-    # The secret word to decrypt
-    cipher_answer = "PRISM"
-    cipher_text = caesar_encrypt(cipher_answer, 3)  # SULVP
+    caesar_map = {
+        "A": "X", "B": "Y", "C": "Z",
+        "D": "A", "E": "B", "F": "C",
+        "G": "D", "H": "E", "I": "F",
+        "J": "G", "K": "H", "L": "I",
+        "M": "J", "N": "K", "O": "L",
+        "P": "M", "Q": "N", "R": "O",
+        "S": "P", "T": "Q", "U": "R",
+        "V": "S", "W": "T", "X": "U",
+        "Y": "V", "Z": "W"
+    }
 
-
-screen minigame_decrypt():
-    modal True
-    default user_input = ""
-    default submitted = False
-    default is_correct = False
-    default hint_shown = False
-    default attempts = 0
-    default time_left = 35
-
-    if not submitted and time_left > 0:
-        timer 1.0 repeat True action SetScreenVariable("time_left", max(0, time_left - 1))
-
-    if not submitted and time_left <= 0:
-        timer 0.01 action [
-            SetScreenVariable("submitted", True),
-            SetScreenVariable("is_correct", False),
-            SetScreenVariable("attempts", 3)
-        ]
-
-    $ decrypt_submit_action = [
-        SetScreenVariable("submitted", True),
-        SetScreenVariable("is_correct", (user_input.strip().upper() == cipher_answer)),
-        SetScreenVariable("attempts", attempts + 1)
+    decrypt_puzzles = [
+        {
+            "word": "PRISM",
+            "encrypted": "SULVP",
+            "difficulty": "EASY",
+            "headline": "NSA PRISM INTERCEPT",
+            "context": [
+                "> PRISM was the codename for the NSA's secret",
+                "  surveillance program that collected data from",
+                "  internet companies including Google, Facebook,",
+                "  and Apple. Snowden revealed it in 2013."
+            ],
+            "hint": "This is the name of the surveillance program Snowden risked everything to expose."
+        },
+        {
+            "word": "ENCRYPTED",
+            "encrypted": "HQFUBSWHG",
+            "difficulty": "MEDIUM",
+            "headline": "PGP CHANNEL ANALYSIS",
+            "context": [
+                "> To protect his communications, Snowden used",
+                "  ENCRYPTION — the process of scrambling data",
+                "  so only the intended recipient can read it.",
+                "  PGP encryption was his primary tool."
+            ],
+            "hint": "When data is scrambled to prevent unauthorized reading, it is ."
+        },
+        {
+            "word": "SURVEILLANCE",
+            "encrypted": "VXUYHLOODQFH",
+            "difficulty": "HARD",
+            "headline": "BULK COLLECTION DOSSIER",
+            "context": [
+                "> The NSA's mass program monitored the",
+                "  phone calls, emails, and internet activity",
+                "  of millions of people — most of whom were",
+                "  never suspected of any crime."
+            ],
+            "hint": "Watching, monitoring, and tracking people's activities — what the NSA was doing."
+        }
     ]
 
-    key "K_RETURN" action If(not submitted and user_input.strip() != "", true=decrypt_submit_action, false=NullAction())
-    key "K_KP_ENTER" action If(not submitted and user_input.strip() != "", true=decrypt_submit_action, false=NullAction())
+    decrypt_state = {
+        "current_stage": 0,
+        "total_score": 0,
+        "stage_scores": [0, 0, 0],
+        "stage_times": [0, 0, 0],
+        "hints_used": [0, 0, 0],
+        "stars_earned": [0, 0, 0],
+        "letters_placed": [],
+        "phase": "intro"
+    }
 
-    add "#0A0E1A"
+    def decrypt_build_bg_streams():
+        streams = []
+        letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        for _i in range(6):
+            rows = []
+            for _j in range(20):
+                rows.append(" ".join(random.choice(letters) for _k in range(14)))
+            streams.append("\n".join(rows))
+        return streams
+
+    def decrypt_score_stars(score):
+        return {
+            3: u"★★★",
+            2: u"★★☆",
+            1: u"★☆☆",
+            0: u"☆☆☆"
+        }.get(score, u"☆☆☆")
+
+    def decrypt_stage_rating(score):
+        return {
+            3: "Perfect",
+            2: "Good",
+            1: "Passed",
+            0: "Assisted"
+        }.get(score, "Incomplete")
+
+    def decrypt_clearance_title(total):
+        if total >= 8:
+            return "LEVEL 3 — MASTER CRYPTOGRAPHER"
+        elif total >= 6:
+            return "LEVEL 2 — CRYPTOGRAPHER"
+        elif total >= 4:
+            return "LEVEL 1 — CIPHER ANALYST"
+        return "UNCLEARED — Further training required"
+
+    def decrypt_log(message, reset=False):
+        if reset:
+            decrypt_state["log_lines"] = []
+        decrypt_state.setdefault("log_lines", []).append(message)
+        decrypt_state["log_lines"] = decrypt_state["log_lines"][-8:]
+
+    def decrypt_get_selected_position():
+        letters = decrypt_state.get("letters_placed", [])
+        puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+        selected = decrypt_state.get("selected_position", None)
+
+        if selected is not None and 0 <= selected < len(letters):
+            return selected
+
+        for idx, value in enumerate(letters):
+            if value != puzzle["word"][idx]:
+                return idx
+
+        return 0
+
+    def decrypt_record_activity():
+        decrypt_state["last_input_at"] = time.time()
+        decrypt_state["hint_flash_letter"] = None
+
+    def decrypt_reset_stage(stage_index):
+        puzzle = decrypt_puzzles[stage_index]
+        decrypt_state["current_stage"] = stage_index
+        decrypt_state["phase"] = "playing"
+        decrypt_state["letters_placed"] = [""] * len(puzzle["word"])
+        decrypt_state["revealed_positions"] = []
+        decrypt_state["selected_position"] = 0
+        decrypt_state["hover_letter"] = None
+        decrypt_state["wrong_position"] = None
+        decrypt_state["wrong_flash_serial"] = 0
+        decrypt_state["word_complete_serial"] = 0
+        decrypt_state["cursor_visible"] = True
+        decrypt_state["wheel_angle"] = 0.0
+        decrypt_state["bg_streams"] = decrypt_build_bg_streams()
+        decrypt_state["stage_started_at"] = time.time()
+        decrypt_state["last_input_at"] = time.time()
+        decrypt_state["hint_flash_letter"] = None
+        decrypt_state["attempts"] = decrypt_state.get("attempts", [0, 0, 0])
+        decrypt_log(reset=True, message="")
+        for line in puzzle["context"]:
+            decrypt_log(line)
+        decrypt_log("> Awaiting decryption input...")
+        renpy.restart_interaction()
+
+    def decrypt_reset_game():
+        decrypt_state["current_stage"] = 0
+        decrypt_state["total_score"] = 0
+        decrypt_state["stage_scores"] = [0, 0, 0]
+        decrypt_state["stage_times"] = [0, 0, 0]
+        decrypt_state["hints_used"] = [0, 0, 0]
+        decrypt_state["stars_earned"] = [0, 0, 0]
+        decrypt_state["attempts"] = [0, 0, 0]
+        decrypt_state["phase"] = "intro"
+        decrypt_reset_stage(0)
+
+    def decrypt_elapsed(stage_index=None):
+        if stage_index is None:
+            stage_index = decrypt_state["current_stage"]
+        if decrypt_state["stage_times"][stage_index]:
+            return int(decrypt_state["stage_times"][stage_index])
+        started_at = decrypt_state.get("stage_started_at", time.time())
+        return max(0, int(time.time() - started_at))
+
+    def decrypt_set_hover_letter(letter):
+        decrypt_state["hover_letter"] = letter
+        decrypt_state["wheel_angle"] = -(ord(letter) - ord("A")) * (360.0 / 26.0)
+        renpy.restart_interaction()
+
+    def decrypt_clear_hover_letter():
+        decrypt_state["hover_letter"] = None
+        renpy.restart_interaction()
+
+    def decrypt_select_position(position):
+        if decrypt_state["phase"] != "playing":
+            return
+        decrypt_state["selected_position"] = position
+        puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+        decrypt_state["wheel_angle"] = -(ord(puzzle["encrypted"][position]) - ord("A")) * (360.0 / 26.0)
+        decrypt_record_activity()
+        renpy.restart_interaction()
+
+    def decrypt_mark_wrong(position, message="> Incorrect. Try again."):
+        decrypt_state["wrong_position"] = position
+        decrypt_state["wrong_flash_serial"] += 1
+        decrypt_state["selected_position"] = position
+        decrypt_state["letters_placed"][position] = ""
+        decrypt_log(message)
+        renpy.restart_interaction()
+
+    def decrypt_advance_selection():
+        puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+        for idx, value in enumerate(decrypt_state["letters_placed"]):
+            if value != puzzle["word"][idx]:
+                decrypt_state["selected_position"] = idx
+                return
+        decrypt_state["selected_position"] = len(puzzle["word"]) - 1
+
+    def decrypt_place_letter(position, letter, source="keyboard"):
+        if decrypt_state["phase"] != "playing":
+            return
+
+        puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+        if position is None:
+            position = decrypt_get_selected_position()
+
+        if position < 0 or position >= len(puzzle["word"]):
+            return
+
+        decrypt_record_activity()
+
+        if letter == puzzle["word"][position]:
+            decrypt_state["letters_placed"][position] = letter
+            decrypt_state["wrong_position"] = None
+            decrypt_log("> " + puzzle["encrypted"][position] + " -> " + letter + " mapped.")
+            decrypt_advance_selection()
+            renpy.restart_interaction()
+            decrypt_check_word()
+            return
+
+        decrypt_state["attempts"][decrypt_state["current_stage"]] += 1
+        decrypt_mark_wrong(position)
+
+    def decrypt_type_letter(letter):
+        if decrypt_state["phase"] != "playing":
+            return
+
+        decrypt_place_letter(decrypt_get_selected_position(), letter.upper(), source="hardware")
+
+    def decrypt_use_cipher_letter(cipher_letter):
+        if decrypt_state["phase"] != "playing":
+            return
+
+        puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+        decrypt_set_hover_letter(cipher_letter)
+        decrypt_record_activity()
+        for idx, encrypted_letter in enumerate(puzzle["encrypted"]):
+            if encrypted_letter == cipher_letter and decrypt_state["letters_placed"][idx] != puzzle["word"][idx]:
+                decrypt_state["selected_position"] = idx
+                decrypt_log("> Reference focus: " + cipher_letter + " -> " + caesar_map[cipher_letter])
+                renpy.restart_interaction()
+                return
+
+        decrypt_log("> Reference focus: " + cipher_letter + " -> " + caesar_map[cipher_letter])
+        renpy.restart_interaction()
+
+    def decrypt_delete_letter():
+        if decrypt_state["phase"] != "playing":
+            return
+
+        position = decrypt_state.get("selected_position", None)
+        if position is not None and position not in decrypt_state.get("revealed_positions", []) and decrypt_state["letters_placed"][position]:
+            decrypt_state["letters_placed"][position] = ""
+            decrypt_log("> Entry cleared.")
+        else:
+            for idx in range(len(decrypt_state["letters_placed"]) - 1, -1, -1):
+                if idx not in decrypt_state.get("revealed_positions", []) and decrypt_state["letters_placed"][idx]:
+                    decrypt_state["letters_placed"][idx] = ""
+                    decrypt_state["selected_position"] = idx
+                    decrypt_log("> Entry cleared.")
+                    break
+
+        decrypt_record_activity()
+        decrypt_state["wrong_position"] = None
+        renpy.restart_interaction()
+
+    def decrypt_give_hint():
+        if decrypt_state["phase"] != "playing":
+            return
+
+        stage_index = decrypt_state["current_stage"]
+        if decrypt_state["hints_used"][stage_index] >= 2:
+            return
+
+        if time.time() - decrypt_state.get("last_input_at", time.time()) < 10.0:
+            return
+
+        puzzle = decrypt_puzzles[stage_index]
+        candidates = [idx for idx, value in enumerate(decrypt_state["letters_placed"]) if value != puzzle["word"][idx]]
+        if not candidates:
+            return
+
+        hint_index = random.choice(candidates)
+        decrypt_state["letters_placed"][hint_index] = puzzle["word"][hint_index]
+        if hint_index not in decrypt_state["revealed_positions"]:
+            decrypt_state["revealed_positions"].append(hint_index)
+        decrypt_state["hints_used"][stage_index] += 1
+        decrypt_state["hint_flash_letter"] = puzzle["encrypted"][hint_index]
+        decrypt_state["selected_position"] = hint_index
+        decrypt_state["wrong_position"] = None
+        decrypt_state["last_input_at"] = time.time()
+        decrypt_log("> Hint activated — one letter revealed")
+        renpy.notify("Hint activated")
+        renpy.restart_interaction()
+        decrypt_check_word()
+
+    def decrypt_confirm_word():
+        if decrypt_state["phase"] != "playing":
+            return
+
+        puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+        for idx, letter in enumerate(decrypt_state["letters_placed"]):
+            if letter != puzzle["word"][idx]:
+                decrypt_state["attempts"][decrypt_state["current_stage"]] += 1
+                decrypt_mark_wrong(idx)
+                return
+
+        decrypt_check_word()
+
+    def decrypt_calculate_stage_score(word_index):
+        hints = decrypt_state["hints_used"][word_index]
+        stage_time = decrypt_state["stage_times"][word_index]
+
+        if hints == 0 and stage_time <= 30:
+            return 3
+        elif hints <= 1 and stage_time <= 60:
+            return 2
+        elif hints <= 2:
+            return 1
+        return 0
+
+    def decrypt_check_word():
+        stage_index = decrypt_state["current_stage"]
+        puzzle = decrypt_puzzles[stage_index]
+
+        if decrypt_state["letters_placed"] != list(puzzle["word"]):
+            return False
+
+        decrypt_state["stage_times"][stage_index] = decrypt_elapsed(stage_index)
+        score = decrypt_calculate_stage_score(stage_index)
+        decrypt_state["stage_scores"][stage_index] = score
+        decrypt_state["stars_earned"][stage_index] = score
+        decrypt_state["total_score"] = sum(decrypt_state["stage_scores"])
+        decrypt_state["phase"] = "word_complete"
+        decrypt_state["wrong_position"] = None
+        decrypt_state["word_complete_serial"] += 1
+        decrypt_log("> " + puzzle["word"] + " — DECRYPTION SUCCESSFUL")
+        renpy.notify("Encryption cracked! +1")
+        renpy.restart_interaction()
+        return True
+
+    def decrypt_next_stage():
+        stage_index = decrypt_state["current_stage"] + 1
+        if stage_index >= len(decrypt_puzzles):
+            decrypt_state["phase"] = "complete"
+            renpy.restart_interaction()
+            return False
+
+        decrypt_reset_stage(stage_index)
+        return True
+
+    def decrypt_calculate_score():
+        decrypt_state["total_score"] = sum(decrypt_state["stage_scores"])
+        return decrypt_state["total_score"]
+
+    def decrypt_tick_cursor():
+        if decrypt_state.get("phase") == "playing":
+            decrypt_state["cursor_visible"] = not decrypt_state.get("cursor_visible", True)
+            renpy.restart_interaction()
+
+
+transform letter_reveal:
+    alpha 0.0
+    zoom 0.5
+    yoffset -10
+    ease 0.25 alpha 1.0 zoom 1.0 yoffset 0
+
+transform letter_wrong_shake:
+    xoffset 0
+    ease 0.05 xoffset -12
+    ease 0.05 xoffset 12
+    ease 0.05 xoffset -8
+    ease 0.05 xoffset 8
+    ease 0.05 xoffset 0
+
+transform word_complete_pulse:
+    zoom 1.0
+    ease 0.15 zoom 1.06
+    ease 0.15 zoom 1.0
+    ease 0.15 zoom 1.04
+    ease 0.15 zoom 1.0
+
+transform star_earn:
+    alpha 0.0
+    zoom 0.3
+    rotate -20
+    ease 0.4 alpha 1.0 zoom 1.0 rotate 0
+
+transform wheel_spin:
+    rotate 0
+    linear 20.0 rotate 360
+    repeat
+
+transform wheel_snap_to(angle):
+    rotate angle
+    ease 0.3 rotate angle
+
+transform bg_scroll_down(delay=0.0):
+    yoffset -720
+    pause delay
+    linear 30.0 yoffset 720
+    repeat
+
+transform stage_transition_in:
+    alpha 0.0
+    zoom 0.96
+    ease 0.3 alpha 1.0 zoom 1.0
+
+transform stage_transition_out:
+    alpha 1.0
+    zoom 1.0
+    ease 0.25 alpha 0.0 zoom 1.03
+
+
+screen decrypt_alphabet_panel():
+    $ puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+    $ alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    frame:
+        xfill True
+        background Solid("#0C1018EE")
+        padding (20, 16)
+
+        vbox:
+            spacing 10
+
+            text "⬡  CAESAR CIPHER REFERENCE — SHIFT: 3  ⬡":
+                color "#00FFD1"
+                size 20
+                bold True
+                font "DejaVuSans.ttf"
+
+            for row_start in (0, 13):
+                hbox:
+                    spacing 6
+
+                    vbox:
+                        spacing 18
+                        yalign 0.5
+
+                        text ("CIPHER →" if row_start == 0 else ""):
+                            color "#607080"
+                            size 14
+                            font "DejaVuSans.ttf"
+
+                        text ("PLAIN  →" if row_start == 0 else ""):
+                            color "#607080"
+                            size 14
+                            font "DejaVuSans.ttf"
+
+                    for idx in range(row_start, row_start + 13):
+                        $ cipher_letter = alphabet[idx]
+                        $ plain_letter = caesar_map[cipher_letter]
+                        $ is_focus = decrypt_state.get("hover_letter") == cipher_letter or decrypt_state.get("hint_flash_letter") == cipher_letter
+                        $ appears_here = cipher_letter in puzzle["encrypted"]
+                        $ cipher_color = "#FFD700" if is_focus else "#B9C7CF" if appears_here else "#8B98A6"
+                        $ connector_color = "#00FFD1" if is_focus else "#2A3A4A"
+                        $ plain_color = "#00FFD1" if is_focus else "#A4B8C5"
+
+                        vbox:
+                            spacing 1
+                            xalign 0.5
+
+                            button:
+                                style ("alphabet_cell_highlighted_cipher" if is_focus else "alphabet_cell")
+                                background Solid("#3A2912" if is_focus else "#18212B" if appears_here else "#111820")
+                                hovered Function(decrypt_set_hover_letter, cipher_letter)
+                                unhovered Function(decrypt_clear_hover_letter)
+                                action Function(decrypt_use_cipher_letter, cipher_letter)
+
+                                text "[cipher_letter]":
+                                    font "DejaVuSans.ttf"
+                                    size 20
+                                    bold True
+                                    color cipher_color
+                                    xalign 0.5
+                                    yalign 0.5
+
+                            text "│":
+                                xalign 0.5
+                                color connector_color
+                                size 16
+                                font "DejaVuSans.ttf"
+
+                            frame:
+                                xsize 50
+                                ysize 42
+                                background Solid("#003E38" if is_focus else "#111820")
+                                padding (0, 0)
+
+                                text "[plain_letter]":
+                                    font "DejaVuSans.ttf"
+                                    size 20
+                                    bold True
+                                    color plain_color
+                                    xalign 0.5
+                                    yalign 0.5
+
+
+screen decrypt_word_display():
+    $ puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+    $ selected = decrypt_get_selected_position()
+    $ focus_letter = decrypt_state.get("hover_letter") or puzzle["encrypted"][selected]
+    frame:
+        xfill True
+        background Solid("#0C1018EE")
+        padding (28, 22)
+
+        vbox:
+            spacing 18
+            xalign 0.5
+
+            text "⬡  INTERCEPTED TRANSMISSION  ⬡":
+                color "#00FFD1"
+                size 24
+                bold True
+                font "DejaVuSans.ttf"
+                xalign 0.5
+                text_align 0.5
+
+            text "⚡ ENCRYPTED MESSAGE DETECTED — [puzzle['headline']]":
+                color "#E8E8E8"
+                size 18
+                font "DejaVuSans.ttf"
+                xalign 0.5
+                text_align 0.5
+
+            if decrypt_state["phase"] == "word_complete":
+                vbox at word_complete_pulse:
+                    spacing 12
+                    xalign 0.5
+
+                    hbox:
+                        xalign 0.5
+                        spacing 14
+
+                        for idx, letter in enumerate(puzzle["encrypted"]):
+                            $ tile_focus = letter == focus_letter or decrypt_state.get("hint_flash_letter") == letter
+                            button:
+                                style "cipher_tile"
+                                background Solid("#2B2312" if tile_focus else "#161E2A")
+                                hovered Function(decrypt_set_hover_letter, letter)
+                                unhovered Function(decrypt_clear_hover_letter)
+                                action Function(decrypt_select_position, idx)
+
+                                text "[letter]":
+                                    font "DejaVuSans.ttf"
+                                    size 38
+                                    bold True
+                                    color "#FFD700"
+                                    xalign 0.5
+                                    yalign 0.5
+
+                    hbox:
+                        xalign 0.5
+                        spacing 14
+
+                        for idx, letter in enumerate(decrypt_state["letters_placed"]):
+                            frame:
+                                style "decoded_tile_correct"
+                                at letter_reveal
+
+                                text "[letter]":
+                                    font "DejaVuSans.ttf"
+                                    size 34
+                                    bold True
+                                    color "#39FF14"
+                                    xalign 0.5
+                                    yalign 0.5
+            else:
+                hbox:
+                    xalign 0.5
+                    spacing 14
+
+                    for idx, letter in enumerate(puzzle["encrypted"]):
+                        $ tile_focus = letter == focus_letter or decrypt_state.get("hint_flash_letter") == letter
+                        button:
+                            style "cipher_tile"
+                            background Solid("#2B2312" if tile_focus else "#161E2A")
+                            hovered Function(decrypt_set_hover_letter, letter)
+                            unhovered Function(decrypt_clear_hover_letter)
+                            action Function(decrypt_select_position, idx)
+
+                            text "[letter]":
+                                font "DejaVuSans.ttf"
+                                size 38
+                                bold True
+                                color "#FFD700"
+                                xalign 0.5
+                                yalign 0.5
+
+                hbox:
+                    xalign 0.5
+                    spacing 14
+
+                    for idx, letter in enumerate(decrypt_state["letters_placed"]):
+                        $ is_selected = idx == selected
+                        $ is_revealed = idx in decrypt_state.get("revealed_positions", [])
+                        $ is_wrong = idx == decrypt_state.get("wrong_position")
+                        $ decoded_style = "decoded_tile_correct" if is_revealed else "decoded_tile_active" if is_selected else "decoded_tile"
+                        $ decoded_background = "#12331A" if is_revealed else "#132330" if is_selected else "#0F1520"
+                        $ decoded_color = "#39FF14" if is_revealed else "#E8E8E8"
+                        $ empty_color = "#00FFD1" if is_selected else "#607080"
+                        if is_wrong:
+                            button:
+                                style decoded_style
+                                background Solid(decoded_background)
+                                action Function(decrypt_select_position, idx)
+                                at letter_wrong_shake
+
+                                if letter:
+                                    text "[letter]":
+                                        font "DejaVuSans.ttf"
+                                        size 34
+                                        bold True
+                                        color decoded_color
+                                        xalign 0.5
+                                        yalign 0.5
+                                        at letter_reveal
+                                else:
+                                    text ("_" if is_selected and decrypt_state.get("cursor_visible", True) else ""):
+                                        font "DejaVuSans.ttf"
+                                        size 30
+                                        color empty_color
+                                        xalign 0.5
+                                        yalign 0.72
+                        else:
+                            button:
+                                style decoded_style
+                                background Solid(decoded_background)
+                                action Function(decrypt_select_position, idx)
+
+                                if letter:
+                                    text "[letter]":
+                                        font "DejaVuSans.ttf"
+                                        size 34
+                                        bold True
+                                        color decoded_color
+                                        xalign 0.5
+                                        yalign 0.5
+                                        at letter_reveal
+                                else:
+                                    text ("_" if is_selected and decrypt_state.get("cursor_visible", True) else ""):
+                                        font "DejaVuSans.ttf"
+                                        size 30
+                                        color empty_color
+                                        xalign 0.5
+                                        yalign 0.72
+
+            text "Select a tile, inspect the cipher map, then type the decoded letter on your keyboard.":
+                color "#607080"
+                size 16
+                xalign 0.5
+                text_align 0.5
+
+            if decrypt_state["phase"] == "word_complete":
+                text "🔒 WORD LOCKED — READY FOR NEXT TRANSMISSION":
+                    color "#39FF14"
+                    size 18
+                    bold True
+                    xalign 0.5
+                    font "DejaVuSans.ttf"
+
+
+screen decrypt_keyboard():
+    $ selected = decrypt_get_selected_position()
+    $ mapped_hint = caesar_map[decrypt_puzzles[decrypt_state["current_stage"]]["encrypted"][selected]]
+    frame:
+        xfill True
+        background Solid("#0C1018EE")
+        padding (24, 20)
+
+        vbox:
+            spacing 16
+
+            text "⬡  KEYBOARD INPUT  ⬡":
+                color "#00FFD1"
+                size 22
+                bold True
+                font "DejaVuSans.ttf"
+
+            text "Type A-Z on your physical keyboard. Use Backspace to clear and Enter to confirm.":
+                color "#E8E8E8"
+                size 20
+                xalign 0.5
+                text_align 0.5
+
+            hbox:
+                xalign 0.5
+                spacing 20
+
+                text "Selected cell: [selected + 1] / [len(decrypt_state['letters_placed'])]":
+                    color "#607080"
+                    size 18
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+
+                text "Cipher hint: [decrypt_puzzles[decrypt_state['current_stage']]['encrypted'][selected]] -> [mapped_hint]":
+                    color "#FFD700"
+                    size 18
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+
+                textbutton "⌫ DELETE":
+                    style "keyboard_key"
+                    text_style "keyboard_key_text"
+                    action Function(decrypt_delete_letter)
+
+                if "" not in decrypt_state["letters_placed"]:
+                    textbutton "✓ CONFIRM":
+                        style "keyboard_key"
+                        text_style "keyboard_key_text"
+                        action Function(decrypt_confirm_word)
+
+
+screen decrypt_cipher_wheel():
+    vbox:
+        xalign 0.5
+        spacing 6
+
+        fixed:
+            xsize 190
+            ysize 190
+            xalign 0.5
+
+            text "◌":
+                xalign 0.5
+                yalign 0.5
+                size 180
+                color "#00FFD140"
+                font "DejaVuSans.ttf"
+
+            text "◌":
+                xalign 0.5
+                yalign 0.5
+                size 134
+                color "#39FF1440"
+                font "DejaVuSans.ttf"
+
+            fixed at wheel_spin:
+                xalign 0.5
+                yalign 0.5
+                xsize 160
+                ysize 160
+
+                text "A B C D E F G":
+                    xpos 34
+                    ypos 12
+                    size 11
+                    color "#FFD700"
+                    font "DejaVuSans.ttf"
+
+                text "H I J K L M":
+                    xpos 88
+                    ypos 46
+                    size 11
+                    color "#FFD700"
+                    font "DejaVuSans.ttf"
+
+                text "N O P Q R":
+                    xpos 96
+                    ypos 88
+                    size 11
+                    color "#FFD700"
+                    font "DejaVuSans.ttf"
+
+                text "S T U V W":
+                    xpos 18
+                    ypos 126
+                    size 11
+                    color "#FFD700"
+                    font "DejaVuSans.ttf"
+
+                text "X Y Z":
+                    xpos 12
+                    ypos 66
+                    size 11
+                    color "#FFD700"
+                    font "DejaVuSans.ttf"
+
+            fixed at wheel_snap_to(decrypt_state.get("wheel_angle", 0.0)):
+                xalign 0.5
+                yalign 0.5
+                xsize 126
+                ysize 126
+
+                text "X Y Z A B C":
+                    xpos 22
+                    ypos 15
+                    size 10
+                    color "#00FFD1"
+                    font "DejaVuSans.ttf"
+
+                text "D E F G H":
+                    xpos 70
+                    ypos 42
+                    size 10
+                    color "#00FFD1"
+                    font "DejaVuSans.ttf"
+
+                text "I J K L M":
+                    xpos 76
+                    ypos 78
+                    size 10
+                    color "#00FFD1"
+                    font "DejaVuSans.ttf"
+
+                text "N O P Q R":
+                    xpos 14
+                    ypos 94
+                    size 10
+                    color "#00FFD1"
+                    font "DejaVuSans.ttf"
+
+                text "S T U V W":
+                    xpos 4
+                    ypos 58
+                    size 10
+                    color "#00FFD1"
+                    font "DejaVuSans.ttf"
+
+            # Small dot in center instead of text
+            add Solid("#00FFD160"):
+                xsize 6
+                ysize 6
+                xalign 0.5
+                yalign 0.5
+
+        text "ROT-3  ◆  SHIFT 3":
+            xalign 0.5
+            size 13
+            bold True
+            color "#8B8FCC"
+            font "DejaVuSans.ttf"
+
+
+screen decrypt_game():
+    modal True
+    tag decrypt_game
+    $ puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
+    $ stage_index = decrypt_state["current_stage"]
+
+    if decrypt_state["phase"] == "playing":
+        timer 25.0 repeat True action Function(decrypt_give_hint)
+        timer 0.5 repeat True action Function(decrypt_tick_cursor)
+        for _letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            key ("K_" + _letter.lower()) action Function(decrypt_type_letter, _letter)
+        key "K_BACKSPACE" action Function(decrypt_delete_letter)
+        key "K_DELETE" action Function(decrypt_delete_letter)
+        key "K_RETURN" action Function(decrypt_confirm_word)
+        key "K_KP_ENTER" action Function(decrypt_confirm_word)
+
+    add "#080C10"
+
+    fixed:
+        for idx, stream in enumerate(decrypt_state.get("bg_streams", [])):
+            text "[stream]":
+                xpos 30 + (idx * 310)
+                ypos -620 + (idx * 80)
+                color "#2A3A4A10"
+                size 18
+                line_spacing 2
+                font "DejaVuSans.ttf"
+                at bg_scroll_down(idx * 0.25)
+
+    # ── TOP HEADER BAR ──
+    # xsize capped at 1540 so it does not collide with the quick-menu / HUD in the top-right corner
+    frame:
+        xpos 52
+        ypos 20
+        xsize 1540
+        ysize 72
+        background Solid("#0C1018F0")
+        padding (24, 14)
+
+        hbox:
+            xfill True
+
+            text "// DECRYPTION TERMINAL //  Stage: [stage_index + 1]/3  [puzzle['difficulty']]":
+                color "#E8E8E8"
+                size 20
+                bold True
+                font "DejaVuSans.ttf"
+                yalign 0.5
+
+            text "[decrypt_score_stars(decrypt_state['stage_scores'][0])] [decrypt_score_stars(decrypt_state['stage_scores'][1])] [decrypt_score_stars(decrypt_state['stage_scores'][2])]  Score: [decrypt_state['total_score']]/9":
+                color "#00FFD1"
+                size 18
+                bold True
+                font "DejaVuSans.ttf"
+                xalign 1.0
+                yalign 0.5
+
+    # ── CIPHER DISPLAY (CENTERED) ──
+    frame:
+        xpos 52
+        ypos 106
+        xsize 1816
+        ysize 340
+        background Solid("#0C1018EE")
+        padding (0, 0)
+
+        fixed:
+            xfill True
+            yfill True
+            text "⬡":
+                xpos 12
+                ypos 8
+                color "#607080"
+                size 18
+            text "⬡":
+                xpos 1786
+                ypos 8
+                color "#607080"
+                size 18
+            text "⬡":
+                xpos 12
+                ypos 310
+                color "#607080"
+                size 18
+            text "⬡":
+                xpos 1786
+                ypos 310
+                color "#607080"
+                size 18
+            use decrypt_word_display
+
+    # ── BOTTOM ROW: Score/Stars + Cipher Wheel + Analysis Log ──
+    # Score stars panel
+    frame:
+        xpos 52
+        ypos 460
+        xsize 600
+        ysize 270
+        background Solid("#0C1018EE")
+        padding (22, 18)
+
+        vbox:
+            spacing 8
+            xalign 0.5
+
+            text "⬡  STAGE PROGRESS  ⬡":
+                color "#00FFD1"
+                size 20
+                bold True
+                xalign 0.5
+                font "DejaVuSans.ttf"
+
+            null height 6
+
+            for _si in range(3):
+                $ _sp = decrypt_puzzles[_si]
+                $ _ss = decrypt_state["stage_scores"][_si]
+                $ _st = decrypt_score_stars(_ss)
+                $ _sr = decrypt_stage_rating(_ss)
+                $ _sw = _sp["word"]
+                $ _sd = _sp["difficulty"]
+                $ _done = decrypt_state["stage_times"][_si] > 0
+                $ _active = _si == stage_index and decrypt_state["phase"] == "playing"
+
+                hbox:
+                    xfill True
+                    spacing 12
+
+                    text "Stage [_si + 1]":
+                        color ("#FFD700" if _active else "#607080")
+                        size 16
+                        bold _active
+                        font "DejaVuSans.ttf"
+                        yalign 0.5
+
+                    text "[_sd]":
+                        color ("#8B8FCC" if _active else "#4D5186")
+                        size 14
+                        font "DejaVuSans.ttf"
+                        yalign 0.5
+
+                    if _done:
+                        text "[_sw]":
+                            color "#39FF14"
+                            size 16
+                            bold True
+                            font "DejaVuSans.ttf"
+                            yalign 0.5
+
+                        text "[_st]":
+                            color "#FFD700"
+                            size 16
+                            font "DejaVuSans.ttf"
+                            xalign 1.0
+                            yalign 0.5
+
+                        text "[_sr]":
+                            color "#00FFD1"
+                            size 14
+                            font "DejaVuSans.ttf"
+                            xalign 1.0
+                            yalign 0.5
+                    elif _active:
+                        text "IN PROGRESS...":
+                            color "#FFD700"
+                            size 14
+                            italic True
+                            font "DejaVuSans.ttf"
+                            yalign 0.5
+                    else:
+                        text "LOCKED":
+                            color "#333840"
+                            size 14
+                            font "DejaVuSans.ttf"
+                            yalign 0.5
+
+            null height 4
+
+            hbox:
+                xfill True
+                text "Total Score:":
+                    color "#888888"
+                    size 16
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+                text "[decrypt_state['total_score']] / 9":
+                    color "#00FFD1"
+                    size 18
+                    bold True
+                    font "DejaVuSans.ttf"
+                    xalign 1.0
+                    yalign 0.5
+
+    # Cipher wheel panel
+    frame:
+        xpos 668
+        ypos 460
+        xsize 430
+        ysize 270
+        background Solid("#0C1018EE")
+        padding (22, 18)
+
+        vbox:
+            spacing 6
+            xalign 0.5
+            $ hint_color = "#FFD700" if decrypt_state["hints_used"][stage_index] else "#607080"
+
+            text "⬡  CIPHER WHEEL  ⬡":
+                color "#00FFD1"
+                size 20
+                bold True
+                xalign 0.5
+                font "DejaVuSans.ttf"
+
+            use decrypt_cipher_wheel
+
+            hbox:
+                xalign 0.5
+                spacing 18
+
+                text "Elapsed: [decrypt_elapsed()]s":
+                    color "#E8E8E8"
+                    size 15
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+
+                text "Hints: [decrypt_state['hints_used'][stage_index]] / 2":
+                    color hint_color
+                    size 15
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+
+    # Analysis log panel
+    frame:
+        xpos 1114
+        ypos 460
+        xsize 754
+        ysize 270
+        style "decrypt_terminal"
+        padding (22, 18)
+
+        vbox:
+            spacing 10
+
+            text "⬡  ANALYSIS LOG  ⬡":
+                color "#00FFD1"
+                size 20
+                bold True
+                font "DejaVuSans.ttf"
+
+            text "[puzzle['hint']]":
+                color "#FFD700"
+                size 15
+                italic True
+                text_align 0.0
+
+            $ log_text = "\n".join([line for line in decrypt_state.get("log_lines", [])[-6:] if line])
+            text "[log_text]":
+                color "#E8E8E8"
+                size 14
+                font "DejaVuSans.ttf"
+                text_align 0.0
+                line_spacing 2
+
+    # ── CAESAR CIPHER REFERENCE (BOTTOM LEFT) ──
+    frame:
+        xpos 52
+        ypos 744
+        xsize 1430
+        ysize 274
+        background Solid("#0C1018EE")
+        padding (0, 0)
+
+        fixed:
+            xfill True
+            yfill True
+            text "⬡":
+                xpos 12
+                ypos 8
+                color "#607080"
+                size 18
+            text "⬡":
+                xpos 1400
+                ypos 8
+                color "#607080"
+                size 18
+            use decrypt_alphabet_panel
+
+    # ── DECRYPTION CONTROLS (BOTTOM RIGHT) ──
+    frame:
+        xpos 1498
+        ypos 744
+        xsize 370
+        ysize 274
+        background Solid("#0C1018EE")
+        padding (22, 18)
+
+        vbox:
+            spacing 10
+
+            text "⬡  CONTROLS  ⬡":
+                color "#00FFD1"
+                size 18
+                bold True
+                font "DejaVuSans.ttf"
+                xalign 0.5
+
+            null height 4
+
+            hbox:
+                spacing 8
+                text "A-Z":
+                    color "#FFD700"
+                    size 14
+                    bold True
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+                text "Type decoded letter":
+                    color "#AAB0D6"
+                    size 13
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+
+            hbox:
+                spacing 8
+                text "⌫":
+                    color "#FFD700"
+                    size 14
+                    bold True
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+                text "Clear selected cell":
+                    color "#AAB0D6"
+                    size 13
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+
+            hbox:
+                spacing 8
+                text "Enter":
+                    color "#FFD700"
+                    size 14
+                    bold True
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+                text "Confirm full word":
+                    color "#AAB0D6"
+                    size 13
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+
+            hbox:
+                spacing 8
+                text "Click":
+                    color "#FFD700"
+                    size 14
+                    bold True
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+                text "Select cipher tile":
+                    color "#AAB0D6"
+                    size 13
+                    font "DejaVuSans.ttf"
+                    yalign 0.5
+
+            null height 4
+
+            add Solid("#00FFD120"):
+                xsize 326
+                ysize 1
+
+            null height 2
+
+            text "💡 Hints auto-reveal after 25s of inactivity":
+                color "#607080"
+                size 12
+                font "DejaVuSans.ttf"
+                text_align 0.5
+                xalign 0.5
+
+    if decrypt_state["phase"] == "word_complete":
+        $ next_cta = "> LOAD NEXT TRANSMISSION" if stage_index < 2 else "> OPEN DEBRIEF"
+        frame:
+            xalign 0.5
+            yalign 0.5
+            xsize 760
+            ysize 240
+            background Solid("#08130DDC")
+            padding (28, 22)
+            at stage_transition_in
+
+            vbox:
+                xalign 0.5
+                yalign 0.5
+                spacing 14
+
+                text "// DECRYPTION SUCCESSFUL //":
+                    color "#39FF14"
+                    size 30
+                    bold True
+                    xalign 0.5
+                    font "DejaVuSans.ttf"
+
+                text "[puzzle['word']]  [decrypt_score_stars(decrypt_state['stage_scores'][stage_index])]":
+                    color "#E8E8E8"
+                    size 28
+                    bold True
+                    xalign 0.5
+                    font "DejaVuSans.ttf"
+                    at star_earn
+
+                text "Time: [decrypt_state['stage_times'][stage_index]]s   Rating: [decrypt_stage_rating(decrypt_state['stage_scores'][stage_index])]":
+                    color "#00FFD1"
+                    size 18
+                    xalign 0.5
+                    font "DejaVuSans.ttf"
+
+                textbutton "[next_cta]":
+                    style "modal_action_button"
+                    text_style "modal_action_button_text"
+                    xalign 0.5
+                    action Return("next")
+
+
+screen decrypt_stage_transition(word, score, stars):
+    modal True
+    tag decrypt_transition
+
+    add "#080C10EE"
 
     frame:
-        xfill True yfill True
-        background "#0A0E1A"
-        padding (60, 60)
+        xalign 0.5
+        yalign 0.5
+        xsize 900
+        ysize 360
+        background Solid("#0C1018F4")
+        padding (40, 34)
+        at stage_transition_in
 
         vbox:
             xalign 0.5
             yalign 0.5
-            spacing 20
+            spacing 16
 
-            text "// DECRYPT THE MESSAGE //" style "minigame_title"
-            text "A classified document name has been encrypted using a Caesar cipher." style "minigame_instruction"
-
-            hbox:
+            text "// STAGE [decrypt_state['current_stage'] + 1] COMPLETE //":
+                color "#39FF14"
+                size 30
+                bold True
                 xalign 0.5
-                spacing 22
-                text "TIME LEFT: [time_left]s" color ("#FF2D55" if time_left <= 10 else "#FFD700" if time_left <= 20 else "#00FFD1") size 20 bold True
-                text "ATTEMPT: [attempts + 1]/3" color "#8B8FCC" size 20 bold True
+                font "DejaVuSans.ttf"
 
-            null height 15
-
-            frame:
+            text "Word: [word]":
+                color "#E8E8E8"
+                size 28
                 xalign 0.5
-                xsize 700
-                background "#111827"
-                padding (30, 20)
+                font "DejaVuSans.ttf"
 
-                vbox:
-                    spacing 15
-                    text "ENCRYPTED TEXT:" color "#FF2D55" size 18 bold True
-                    text "[cipher_text]" color "#00FFD1" size 48 bold True xalign 0.5
-                    text "Cipher: ROT-3 | Shift each letter back by 3 before the timer runs out." color "#FFD700" size 18 xalign 0.5
+            text "Time: [decrypt_state['stage_times'][decrypt_state['current_stage']]]s":
+                color "#00FFD1"
+                size 20
+                xalign 0.5
+                font "DejaVuSans.ttf"
 
-            null height 10
+            text "Stars: [stars]   Rating: [decrypt_stage_rating(score)]":
+                color "#FFD700"
+                size 22
+                xalign 0.5
+                font "DejaVuSans.ttf"
 
-            if hint_shown:
-                text "HINT: This is the name of the NSA's mass surveillance program." color "#FFD700" size 18 xalign 0.5 italic True
+            text "Loading next transmission...":
+                color "#607080"
+                size 18
+                xalign 0.5
+                font "DejaVuSans.ttf"
 
-            if not submitted:
+            bar:
+                value AnimatedValue(0.0, 1.0, 1.7)
+                xmaximum 640
+                ymaximum 18
+                xalign 0.5
+
+    timer 1.9 action Return(True)
+
+
+screen decrypt_result():
+    modal True
+    tag decrypt_result
+    $ total = decrypt_calculate_score()
+    $ clearance_color = "#39FF14" if total >= 6 else "#00FFD1" if total >= 4 else "#FF2D55"
+
+    add "#080C10"
+
+    fixed:
+        for idx, stream in enumerate(decrypt_build_bg_streams()):
+            text "[stream]":
+                xpos 24 + (idx * 320)
+                ypos -580 + (idx * 90)
+                color "#2A3A4A0F"
+                size 18
+                line_spacing 2
+                font "DejaVuSans.ttf"
+                at bg_scroll_down(idx * 0.25)
+
+    frame:
+        xalign 0.5
+        ypos 86
+        xsize 1240
+        ysize 360
+        background Solid("#0C1018EE")
+        padding (34, 28)
+
+        vbox:
+            spacing 18
+
+            text "// DECRYPTION MISSION: COMPLETE //":
+                color "#00FFD1"
+                size 34
+                bold True
+                xalign 0.5
+                font "DejaVuSans.ttf"
+
+            for idx, puzzle in enumerate(decrypt_puzzles):
                 hbox:
-                    xalign 0.5
-                    spacing 10
+                    xfill True
 
-                    text "> " color "#00FF00" size 24 yalign 0.5
+                    text "[puzzle['word']] [decrypt_score_stars(decrypt_state['stage_scores'][idx])]":
+                        color "#E8E8E8"
+                        size 25
+                        font "DejaVuSans.ttf"
 
-                    input:
-                        value ScreenVariableInputValue("user_input")
-                        length 10
-                        color "#00FFD1"
-                        size 28
-                        allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                    text "Decoded in [decrypt_state['stage_times'][idx]]s ([decrypt_stage_rating(decrypt_state['stage_scores'][idx])])":
+                        color "#607080"
+                        size 21
+                        xalign 1.0
 
-                null height 10
+            null height 8
 
-                text "Press Enter to submit fast." color "#8B8FCC" size 16 xalign 0.5
+            text "TOTAL SCORE: [total] / 9":
+                color "#FFD700"
+                size 30
+                bold True
+                xalign 0.5
+                font "DejaVuSans.ttf"
 
-                textbutton "> SUBMIT DECRYPTION":
-                    xalign 0.5
-                    text_style "menu_btn_text"
-                    action decrypt_submit_action
+            text "CLEARANCE: [decrypt_clearance_title(total)]":
+                color clearance_color
+                size 26
+                bold True
+                xalign 0.5
+                font "DejaVuSans.ttf"
 
+    frame:
+        xalign 0.5
+        ypos 484
+        xsize 1240
+        ysize 300
+        background Solid("#0C1018EE")
+        padding (34, 28)
+
+        vbox:
+            spacing 18
+
+            text "⬡  WHAT YOU LEARNED  ⬡":
+                color "#00FFD1"
+                size 28
+                bold True
+                font "DejaVuSans.ttf"
+
+            text "A Caesar cipher is one of the oldest encryption methods — used by Julius Caesar in 58 BC.":
+                color "#E8E8E8"
+                size 22
+
+            text "Modern encryption like AES-256 or PGP follows the same idea of protecting meaning, but uses mathematics so advanced that the message stays unreadable without the right key.":
+                color "#E8E8E8"
+                size 22
+
+            text "Snowden used PGP encryption to contact journalists. Without encryption, his communications could have been intercepted long before the files reached the public.":
+                color "#E8E8E8"
+                size 22
+
+    textbutton "> CONTINUE MISSION":
+        style "modal_action_button"
+        text_style "modal_action_button_text"
+        xalign 0.5
+        ypos 828
+        action Return(True)
+
+
+label minigame_2_decrypt:
+    $ mg_intro2 = renpy.call_screen("minigame_intro", title="DECRYPT THE MESSAGE", description="A classified NSA transmission has been encrypted with a Caesar cipher. Crack three intercepted words by shifting each cipher letter back by 3.")
+    if not mg_intro2:
+        $ knowledge_score -= 1
+        $ mg_decrypt_solved = False
+        $ renpy.notify("Knowledge -1 (Skipped)")
+        return
+
+    $ decrypt_reset_game()
+
+    while True:
+        $ _decrypt_step = renpy.call_screen("decrypt_game")
+
+        if decrypt_state["phase"] == "word_complete":
+            if decrypt_state["current_stage"] < len(decrypt_puzzles) - 1:
+                $ _stage_index = decrypt_state["current_stage"]
+                $ _stage_word = decrypt_puzzles[_stage_index]["word"]
+                $ _stage_score = decrypt_state["stage_scores"][_stage_index]
+                $ _stage_stars = decrypt_score_stars(_stage_score)
+                call screen decrypt_stage_transition(_stage_word, _stage_score, _stage_stars)
+                $ decrypt_next_stage()
             else:
-                if is_correct:
-                    text "// DECRYPTION SUCCESSFUL //" color "#00FF00" size 28 bold True xalign 0.5
-                    text "The classified program name is: PRISM" color "#00FFD1" size 24 xalign 0.5
-                    text "PRISM allowed the NSA to collect data directly from major tech companies' servers, including emails, photos, and file transfers." color "#AAAAAA" size 18 xalign 0.5 text_align 0.5
+                $ decrypt_state["phase"] = "complete"
+                jump decrypt_game_results
 
-                    null height 15
+label decrypt_game_results:
+    call screen decrypt_result
+    $ total = decrypt_calculate_score()
+    if total >= 7:
+        $ knowledge_score += 3
+        $ evidence_secured = True
+    elif total >= 5:
+        $ knowledge_score += 2
+        $ evidence_secured = True
+    elif total >= 3:
+        $ knowledge_score += 1
+        $ evidence_secured = True
+    else:
+        $ suspicion_level += 1
 
-                    textbutton "> CONTINUE MISSION":
-                        xalign 0.5
-                        text_style "menu_btn_text"
-                        action Return(True)
-
-                else:
-                    text "// DECRYPTION FAILED //" color "#FF2D55" size 28 bold True xalign 0.5
-                    text ("Time expired before the decryption was completed." if time_left <= 0 else "Your answer: [user_input]") color "#FF2D55" size 20 xalign 0.5
-
-                    if attempts >= 3:
-                        text "ANSWER REVEALED: PRISM" color "#FFD700" size 24 bold True xalign 0.5
-                        text "The Caesar cipher shifts each letter. S→P, U→R, L→I, V→S, P→M = PRISM" color "#AAAAAA" size 18 xalign 0.5 text_align 0.5
-
-                        null height 10
-
-                        textbutton "> CONTINUE MISSION":
-                            xalign 0.5
-                            text_style "menu_btn_text"
-                            action Return(False)
-                    else:
-                        if attempts >= 2:
-                            $ hint_shown = True
-
-                        textbutton "> TRY AGAIN":
-                            xalign 0.5
-                            text_style "menu_btn_text"
-                            action [
-                                SetScreenVariable("submitted", False),
-                                SetScreenVariable("user_input", ""),
-                                SetScreenVariable("hint_shown", attempts >= 1)
-                            ]
+    $ mg_decrypt_solved = total >= 3
+    $ renpy.notify("Decryption score: {}/9".format(total))
+    return
 
 
 ################################################################################
@@ -1325,3 +2652,4 @@ screen minigame_trace():
                         xalign 0.5
                         text_style "menu_btn_text"
                         action Return(reached_end and not hit_gov)
+
