@@ -198,6 +198,8 @@ init python:
 
     build.documentation('*.html')
     build.documentation('*.txt')
+    
+    config.keymap['rollback'].append('K_BACKSPACE')
 
 
 ## A Google Play license key is required to perform in-app purchases. It can be
