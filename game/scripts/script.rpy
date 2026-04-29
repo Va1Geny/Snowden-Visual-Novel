@@ -310,19 +310,7 @@ label chapter_2:
 
     # --- Minigame 2: Decrypt the Message ---
 
-    $ mg_intro2 = renpy.call_screen("minigame_intro", title="DECRYPT THE MESSAGE", description="A classified document name has been encrypted using a Caesar cipher (ROT-3). Decode the message by shifting each letter back by 3 positions in the alphabet.")
-
-    if mg_intro2:
-        $ mg_decrypt_solved = renpy.call_screen("minigame_decrypt")
-        if mg_decrypt_solved:
-            $ knowledge_score += 2
-            $ evidence_secured = True
-            $ renpy.notify("Knowledge +2 | Evidence Secured!")
-        else:
-            $ renpy.notify("Decryption failed.")
-    else:
-        $ knowledge_score -= 1
-        $ renpy.notify("Knowledge -1 (Skipped)")
+    call minigame_2_decrypt
 
     # --- Choice 2: Copy the files or take notes only? ---
     scene bg_nsa_servers at parallax with dissolve

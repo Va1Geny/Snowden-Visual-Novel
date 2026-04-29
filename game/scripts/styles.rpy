@@ -287,3 +287,172 @@ style tree_hud_meta:
     font "DejaVuSans.ttf"
     color "#AAB0D6"
     size 15
+
+# === Decrypt Minigame Styles ===
+style cipher_tile is button:
+    xsize 84
+    ysize 84
+    background Solid("#161E2A")
+    hover_background Solid("#2B2312")
+    insensitive_background Solid("#161E2A")
+    top_padding 6
+    bottom_padding 6
+    left_padding 6
+    right_padding 6
+
+style cipher_tile_text is button_text:
+    font "DejaVuSans.ttf"
+    size 38
+    bold True
+    color "#FFD700"
+    hover_color "#FFD700"
+    xalign 0.5
+    text_align 0.5
+
+style decoded_tile is button:
+    xsize 84
+    ysize 76
+    background Solid("#0F1520")
+    hover_background Solid("#152131")
+    insensitive_background Solid("#0F1520")
+    top_padding 4
+    bottom_padding 4
+    left_padding 6
+    right_padding 6
+
+style decoded_tile_text is button_text:
+    font "DejaVuSans.ttf"
+    size 34
+    bold True
+    color "#E8E8E8"
+    hover_color "#E8E8E8"
+    xalign 0.5
+    text_align 0.5
+
+style decoded_tile_correct is button:
+    xsize 84
+    ysize 76
+    background Solid("#12331A")
+    hover_background Solid("#174321")
+    insensitive_background Solid("#12331A")
+    top_padding 4
+    bottom_padding 4
+    left_padding 6
+    right_padding 6
+
+style decoded_tile_correct_text is button_text:
+    font "DejaVuSans.ttf"
+    size 34
+    bold True
+    color "#39FF14"
+    hover_color "#39FF14"
+    xalign 0.5
+    text_align 0.5
+
+style decoded_tile_active is button:
+    xsize 84
+    ysize 76
+    background Solid("#132330")
+    hover_background Solid("#183043")
+    insensitive_background Solid("#132330")
+    top_padding 4
+    bottom_padding 4
+    left_padding 6
+    right_padding 6
+
+style decoded_tile_active_text is button_text:
+    font "DejaVuSans.ttf"
+    size 34
+    bold True
+    color "#00FFD1"
+    hover_color "#00FFD1"
+    xalign 0.5
+    text_align 0.5
+
+style alphabet_cell is button:
+    xsize 50
+    ysize 42
+    background Solid("#111820")
+    hover_background Solid("#18212B")
+    insensitive_background Solid("#111820")
+    top_padding 0
+    bottom_padding 0
+    left_padding 0
+    right_padding 0
+
+style alphabet_cell_text is button_text:
+    font "DejaVuSans.ttf"
+    size 22
+    bold True
+    color "#A4B8C5"
+    hover_color "#E8E8E8"
+    xalign 0.5
+    text_align 0.5
+
+style alphabet_cell_highlighted_cipher is button:
+    xsize 50
+    ysize 42
+    background Solid("#3A2912")
+    hover_background Solid("#4D3418")
+    insensitive_background Solid("#3A2912")
+    top_padding 0
+    bottom_padding 0
+    left_padding 0
+    right_padding 0
+
+style alphabet_cell_highlighted_cipher_text is button_text:
+    font "DejaVuSans.ttf"
+    size 22
+    bold True
+    color "#FFD700"
+    hover_color "#FFD700"
+    xalign 0.5
+    text_align 0.5
+
+style alphabet_cell_highlighted_plain is frame:
+    xsize 50
+    ysize 42
+    background Solid("#003E38")
+    top_padding 0
+    bottom_padding 0
+    left_padding 0
+    right_padding 0
+
+style keyboard_key is button:
+    xsize 84
+    ysize 48
+    background Solid("#161E2A")
+    hover_background Solid("#0D3440")
+    insensitive_background Solid("#10161E")
+    top_padding 0
+    bottom_padding 0
+    left_padding 0
+    right_padding 0
+
+style keyboard_key_text is button_text:
+    font "DejaVuSans.ttf"
+    size 22
+    bold True
+    color "#E8E8E8"
+    hover_color "#00FFD1"
+    xalign 0.5
+    text_align 0.5
+
+style keyboard_key_hover is keyboard_key:
+    background Solid("#0D3440")
+    hover_background Solid("#125568")
+
+style decrypt_terminal is frame:
+    background Solid("#0C1018EE")
+    top_padding 22
+    bottom_padding 18
+    left_padding 22
+    right_padding 22
+
+style stage_badge is frame:
+    background Solid("#111820")
+    top_padding 8
+    bottom_padding 8
+    left_padding 14
+    right_padding 14
+
