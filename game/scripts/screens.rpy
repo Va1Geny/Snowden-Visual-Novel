@@ -319,7 +319,7 @@ screen choice(items):
 
     vbox:
         xalign 0.5
-        ypos 310
+        yalign 0.5
         spacing 14
 
         for i in items:
@@ -708,6 +708,7 @@ screen dossier():
     tag menu
 
     use ui_backdrop
+    add "logo_watermark"
     use shell_header(
         "REFERENCE DATABASE",
         "NETWORK SECURITY DOSSIER",
@@ -815,6 +816,7 @@ screen briefing_screen():
     modal True
 
     use ui_backdrop
+    add "logo_watermark"
 
     frame:
         xalign 0.5
@@ -891,6 +893,7 @@ screen chapter_title_screen(number, title, subtitle):
     modal True
 
     use ui_backdrop
+    add "logo_watermark"
 
     frame:
         xalign 0.5
@@ -929,6 +932,7 @@ screen chapter_summary(chapter_num, chapter_name):
     modal True
 
     use ui_backdrop
+    add "logo_watermark"
 
     frame:
         xalign 0.5
@@ -1056,6 +1060,7 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
     default answered = False
 
     use ui_backdrop
+    add "logo_watermark"
 
     frame:
         xalign 0.5
@@ -1215,6 +1220,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
     key "K_KP_ENTER" action If(not answered_correctly and not show_answer, true=submit_answer_action, false=NullAction())
 
     use ui_backdrop
+    add "logo_watermark"
 
     frame:
         xalign 0.5
@@ -1952,6 +1958,7 @@ screen confirm(message, yes_action, no_action):
     zorder 200
 
     use ui_backdrop
+    add "logo_watermark"
 
     frame:
         xalign 0.5
