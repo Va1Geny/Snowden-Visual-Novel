@@ -9,6 +9,7 @@
 
 label start:
     $ show_hud = False
+    $ tree_reset_current_run()
     jump intro
 
 
@@ -106,13 +107,12 @@ label chapter_1:
 
     menu:
         "Follow protocol. Process the flagged selectors as assigned.":
-            $ persistent.choice_ch1_1 = "protocol"
+            $ tree_record_choice("choice_ch1_1", "protocol")
             e "Alright, let's focus on the assignment. Processing the flagged selectors now."
             $ trust_score += 1
             $ renpy.notify("Trust +1")
 
             scene bg_nsa_terminal at parallax with dissolve
-            show edward neutral at stage_center
             with dissolve
 
             im "Stay in your lane, Snowden. Do your job. Don't attract attention."
@@ -120,13 +120,12 @@ label chapter_1:
             narrator_voice "Edward processes the assigned selectors. Standard targets. Foreign IP addresses. But among the flagged traffic, domestic addresses keep appearing."
 
         "Explore the restricted directories. Something doesn't add up.":
-            $ persistent.choice_ch1_1 = "explore"
+            $ tree_record_choice("choice_ch1_1", "explore")
             e "I need to check something first..."
             $ suspicion_level += 1
             $ renpy.notify("Suspicion +1")
 
             scene bg_nsa_terminal at parallax with dissolve
-            show edward neutral at stage_center
             with dissolve
 
             im "These directories shouldn't be this easy to access. Why does a systems administrator have read access to raw intelligence feeds?"
@@ -167,7 +166,6 @@ label chapter_1:
     )
 
     # --- Choice 2: Report anomaly or stay silent? ---
-    show edward neutral at stage_center
     show supervisor neutral at enter_right
     with dissolve
 
@@ -186,7 +184,7 @@ label chapter_1:
 
     menu:
         "Report the anomaly to the Inspector General's office.":
-            $ persistent.choice_ch1_2 = "report"
+            $ tree_record_choice("choice_ch1_2", "report")
             e "I should file a formal concern with the IG office."
             $ trust_score += 2
             $ renpy.notify("Trust +2")
@@ -198,7 +196,7 @@ label chapter_1:
             narrator_voice "The report was acknowledged, reviewed, and buried. The system protects itself."
 
         "Stay silent. Keep working. Gather more information.":
-            $ persistent.choice_ch1_2 = "silent"
+            $ tree_record_choice("choice_ch1_2", "silent")
             scene bg_1 at parallax with dissolve
             im "Not yet. I need to understand the full scope before I act. If I report one anomaly, they'll lock me out. I need to see the whole picture."
             $ trust_score -= 1
@@ -239,7 +237,6 @@ label chapter_2:
 
     scene bg_prism at parallax with chapter_transition
 
-    show edward neutral at enter_center
     with dissolve
 
     # --- Snowden discovers PRISM ---
@@ -276,7 +273,7 @@ label chapter_2:
 
     menu:
         "Trust the colleague. Share what you've found.":
-            $ persistent.choice_ch2_1 = "trust"
+            $ tree_record_choice("choice_ch2_1", "trust")
             e "Look, I need someone I can trust. What I've found... it's bigger than both of us."
             $ trust_score += 1
             $ renpy.notify("Trust +1")
@@ -288,7 +285,7 @@ label chapter_2:
             im "At least I'm not completely alone in this."
 
         "Work alone. Trust no one inside the NSA.":
-            $ persistent.choice_ch2_1 = "alone"
+            $ tree_record_choice("choice_ch2_1", "alone")
             e "Never mind. Forget I said anything. Just tired."
             $ suspicion_level += 0
             $ trust_score -= 1
@@ -338,7 +335,7 @@ label chapter_2:
 
     menu:
         "Copy the files to an encrypted drive. This evidence needs to survive.":
-            $ persistent.choice_ch2_2 = "copy"
+            $ tree_record_choice("choice_ch2_2", "copy")
             im "I need the original documents. Notes won't be enough. Journalists need primary sources."
             $ evidence_secured = True
             $ suspicion_level += 1
@@ -349,7 +346,7 @@ label chapter_2:
             sys "// DATA TRANSFER INITIATED. ENCRYPTION: AES-256. CONTAINER: VERACRYPT HIDDEN VOLUME. //"
 
         "Take detailed notes only. Digital evidence is too risky.":
-            $ persistent.choice_ch2_2 = "notes"
+            $ tree_record_choice("choice_ch2_2", "notes")
             im "If they catch me with files, it's espionage. Notes are deniable."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
@@ -417,7 +414,7 @@ label chapter_3:
 
         menu:
             "Try to bluff your way through the security review.":
-                $ persistent.choice_ch3_0 = "bluff"
+                $ tree_record_choice("choice_ch3_0", "bluff")
                 $ suspicion_level += 1
                 $ renpy.notify("Suspicion +1")
 
@@ -426,7 +423,7 @@ label chapter_3:
                 narrator_voice "The security team notes the explanation but doesn't close the file. The clock is ticking."
 
             "Accelerate the timeline. Contact journalists immediately.":
-                $ persistent.choice_ch3_0 = "accelerate"
+                $ tree_record_choice("choice_ch3_0", "accelerate")
                 $ trust_score -= 1
                 $ renpy.notify("Trust -1")
 
@@ -438,20 +435,20 @@ label chapter_3:
 
     menu:
         "Set up a PGP-encrypted email channel using Tor (requires knowledge).":
-            $ persistent.choice_ch3_1 = "pgp"
+            $ tree_record_choice("choice_ch3_1", "pgp")
             if knowledge_score >= 3:
                 jump ch3_secure_success
             else:
                 jump ch3_secure_fail
 
         "Contact Glenn Greenwald directly through his public email.":
-            $ persistent.choice_ch3_1 = "email"
+            $ tree_record_choice("choice_ch3_1", "email")
             $ contacts_secured += 1
             $ renpy.notify("Contacts +1")
             jump ch3_greenwald_contact
 
         "Wait for a safer moment to make contact.":
-            $ persistent.choice_ch3_1 = "wait"
+            $ tree_record_choice("choice_ch3_1", "wait")
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
             jump ch3_wait
@@ -472,13 +469,13 @@ label ch3_secure_success:
     show journalist neutral at enter_right
     with dissolve
 
-    greenwald "I received your encrypted message. The fingerprint checks out. Who are you?"
+    poitras "I received your encrypted message. The fingerprint checks out. Who are you?"
 
     e "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA."
 
-    greenwald "Can you prove it?"
+    poitras "Can you prove it?"
 
-    e "I can prove everything. But we need to meet in person. And you need to learn to use encryption. Your current security is... inadequate."
+    e "I can prove everything. But we need to meet in person. I'll also reach out to Glenn Greenwald — together, you can publish the full story."
 
     jump ch3_continue
 
@@ -579,7 +576,7 @@ label ch3_continue:
 
     menu:
         "Tell everything. Full transparency builds trust.":
-            $ persistent.choice_ch3_2 = "full"
+            $ tree_record_choice("choice_ch3_2", "full")
             e "It's everything. PRISM, XKeyscore, Boundless Informant, upstream collection — the NSA is collecting data on hundreds of millions of people. American citizens included."
             $ trust_score += 2
             $ contacts_secured += 1
@@ -588,7 +585,7 @@ label ch3_continue:
             greenwald "My God. If this is true... this is the biggest intelligence leak in history."
 
         "Share only what's necessary. Protect sources and methods.":
-            $ persistent.choice_ch3_2 = "partial"
+            $ tree_record_choice("choice_ch3_2", "partial")
             e "I can confirm the NSA is conducting mass domestic surveillance. I'll share the details when we meet in person."
             $ trust_score += 1
             $ renpy.notify("Trust +1")
@@ -596,7 +593,7 @@ label ch3_continue:
             greenwald "Fair enough. Where do we meet?"
 
         "Be vague. Don't reveal the scope until you're safe.":
-            $ persistent.choice_ch3_2 = "vague"
+            $ tree_record_choice("choice_ch3_2", "vague")
             e "It's significant. That's all I can say right now."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
@@ -675,7 +672,7 @@ label chapter_4:
 
     menu:
         "Use the hotel Wi-Fi with a VPN.":
-            $ persistent.choice_ch4_1 = "hotel"
+            $ tree_record_choice("choice_ch4_1", "hotel")
             $ suspicion_level += 1
             $ renpy.notify("Suspicion +1")
 
@@ -685,7 +682,7 @@ label chapter_4:
             sys "// CHOICE REVIEW: Fast and convenient, but the hotel can still log that a protected tunnel came from your room. Good for speed, bad for stealth. //"
 
         "Use a personal mobile hotspot with Tor.":
-            $ persistent.choice_ch4_1 = "mobile"
+            $ tree_record_choice("choice_ch4_1", "mobile")
             $ trust_score += 1
             $ renpy.notify("Trust +1")
 
@@ -735,7 +732,7 @@ label chapter_4:
 
         menu:
             "Head to the airport immediately. Every minute counts.":
-                $ persistent.choice_ch4_2 = "airport"
+                $ tree_record_choice("choice_ch4_2", "airport")
                 $ escape_successful = True
                 $ renpy.notify("Escape initiated!")
 
@@ -743,7 +740,7 @@ label chapter_4:
                 sys "// ROUTE REVIEW: Best for immediate movement, worst for preparation. Good if you need speed more than certainty. //"
 
             "Go to the Russian consulate. They're the only ones who might help.":
-                $ persistent.choice_ch4_2 = "russia"
+                $ tree_record_choice("choice_ch4_2", "russia")
                 $ escape_successful = True
                 $ trust_score -= 1
                 $ renpy.notify("Escape to Russia | Trust -1")
@@ -754,7 +751,7 @@ label chapter_4:
     else:
         menu:
             "Fly to Ecuador via Moscow. Multiple stops make tracking harder.":
-                $ persistent.choice_ch4_2 = "ecuador"
+                $ tree_record_choice("choice_ch4_2", "ecuador")
                 $ escape_successful = True
                 $ renpy.notify("Escape route planned!")
 
@@ -764,7 +761,7 @@ label chapter_4:
                 sys "// ROUTE REVIEW: Strong asylum logic, but the travel chain is fragile. Good long-term idea, risky short-term execution. //"
 
             "Seek asylum at a European embassy in Hong Kong.":
-                $ persistent.choice_ch4_2 = "embassy"
+                $ tree_record_choice("choice_ch4_2", "embassy")
                 $ trust_score += 1
                 $ renpy.notify("Trust +1")
 
@@ -777,10 +774,9 @@ label chapter_4:
 
                 im "No one will help. Not officially. Moscow may be my only option."
                 sys "// ROUTE REVIEW: Good legal optics, but embassies rarely want the diplomatic fallout. Good principle, poor odds. //"
-                $ escape_successful = True
 
             "Stay in Hong Kong and face the legal system.":
-                $ persistent.choice_ch4_2 = "stay"
+                $ tree_record_choice("choice_ch4_2", "stay")
                 $ escape_successful = False
                 $ renpy.notify("Escape abandoned.")
 
@@ -914,7 +910,7 @@ label chapter_5:
 
     menu:
         "Encourage them to leak. The public deserves to know.":
-            $ persistent.choice_ch5_1 = "encourage"
+            $ tree_record_choice("choice_ch5_1", "encourage")
             e "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
             $ trust_score += 2
             $ renpy.notify("Trust +2")
@@ -922,7 +918,7 @@ label chapter_5:
             narrator_voice "Snowden helps the new whistleblower establish secure communications, passing on the hard lessons of his own experience."
 
         "Advise caution. Use official channels first.":
-            $ persistent.choice_ch5_1 = "caution"
+            $ tree_record_choice("choice_ch5_1", "caution")
             e "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
             $ trust_score += 1
             $ knowledge_score += 1
@@ -931,7 +927,7 @@ label chapter_5:
             narrator_voice "Snowden advises a measured approach, hoping the system has improved since his time. Knowing it probably hasn't."
 
         "Tell them not to do it. The personal cost is too high.":
-            $ persistent.choice_ch5_1 = "refuse"
+            $ tree_record_choice("choice_ch5_1", "refuse")
             e "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")

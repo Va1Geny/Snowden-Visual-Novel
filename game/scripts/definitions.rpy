@@ -10,7 +10,8 @@ init offset = -1
 ################################################################################
 
 # === PROTAGONIST ===
-define e = Character("EDWARD SNOWDEN",
+define e = Character("You",
+    image="edward",
     color="#00FFD1",
     what_color="#E8E8E8",
     who_size=22,
@@ -19,6 +20,7 @@ define e = Character("EDWARD SNOWDEN",
 
 # === JOURNALISTS ===
 define greenwald = Character("GLENN GREENWALD",
+    image="journalist",
     color="#FFD700",
     what_color="#E8E8E8",
     who_bold=True,
@@ -26,6 +28,7 @@ define greenwald = Character("GLENN GREENWALD",
     what_size=20)
 
 define poitras = Character("LAURA POITRAS",
+    image="journalist",
     color="#FF69B4",
     what_color="#E8E8E8",
     who_bold=True,
@@ -41,6 +44,7 @@ define nsa_chief = Character("NSA DIRECTOR",
     what_size=20)
 
 define supervisor = Character("SUPERVISOR",
+    image="supervisor",
     color="#FF6B35",
     what_color="#E8E8E8",
     who_bold=True,
@@ -49,6 +53,7 @@ define supervisor = Character("SUPERVISOR",
 
 # === ALLIES / NEUTRAL ===
 define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
+    image="colleague",
     color="#888888",
     what_color="#CCCCCC",
     who_bold=False,
@@ -56,6 +61,7 @@ define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
     what_size=20)
 
 define russian_official = Character("RUSSIAN OFFICIAL",
+    image="russian_official",
     color="#CC2222",
     what_color="#E8E8E8",
     who_bold=True,
@@ -125,6 +131,25 @@ default text_input_attempts = 0
 ################################################################################
 
 init python:
+    def speaker_dimmer(event, interact=True, **kwargs):
+        if not interact:
+            return
+
+        if event == "begin":
+            speaker = renpy.get_say_image_tag()
+            
+            # List of character tags to monitor
+            char_tags = ["edward", "supervisor", "colleague", "journalist", "editor", "russian_official"]
+            
+            for tag in char_tags:
+                if renpy.showing(tag):
+                    if tag == speaker:
+                        renpy.show(tag, at_list=[active_char])
+                    else:
+                        renpy.show(tag, at_list=[inactive_char])
+
+    config.character_callback = speaker_dimmer
+
     def mouse_parallax(trans, st, at):
         # Provide a subtle parallax based on mouse
         # Ren'Py get_mouse_pos() might return a tuple
@@ -148,32 +173,28 @@ transform parallax:
 # === Character Sprites ===
 image edward neutral:
     "sprites/edward neutral.png"
-    zoom 0.7
+    zoom 1.02
 
 image supervisor neutral:
     "sprites/supervisor neutral.png"
-    zoom 0.7
+    zoom 1.0
 
 image colleague neutral:
     "sprites/colleague neutral.png"
-    zoom 0.7
+    zoom 0.98
 
 image journalist neutral:
     "sprites/journalist neutral.png"
-    zoom 0.7
+    zoom 1.02
 
 image editor neutral:
     "sprites/editor neutral.png"
-    zoom 0.7
+    zoom 1.0
 
 image russian_official neutral:
     "sprites/russian official neutral.png"
-    zoom 0.7
+    zoom 1.0
 # === Backgrounds ===
-image bg_nsa:
-    "backgrounds/chapter_1/Working inside the NSA's surveillance apparatus.png"
-    xysize (1920, 1080)
-
 image bg_1:
     "backgrounds/chapter_1/bg_1.png"
     xysize (1920, 1080)
@@ -242,34 +263,42 @@ image bg_sheremetyevo:
 ## ATL TRANSFORMS — Character Animations
 ################################################################################
 
+# === ACTIVE / INACTIVE STATES ===
+
+transform active_char:
+    ease 0.25 matrixcolor SaturationMatrix(1.0) zoom 1.18 alpha 1.0
+
+transform inactive_char:
+    ease 0.25 matrixcolor SaturationMatrix(0.3) zoom 1.12 alpha 0.9
+
 # === ENTRANCE TRANSFORMS ===
 
 # Slide in from left
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
-    xpos -0.22 ypos 1.03 alpha 0.0 zoom 0.94
-    ease 0.6 xpos 0.18 ypos 1.03 alpha 1.0 zoom 1.0
+    xpos -0.20 ypos 1.50 alpha 0.0 zoom 1.0
+    ease 0.6 xpos 0.20 ypos 1.60 alpha 1.0 zoom 1.18
 
 # Slide in from right
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 1.22 ypos 1.03 alpha 0.0 zoom 0.94
-    ease 0.6 xpos 0.82 ypos 1.03 alpha 1.0 zoom 1.0
+    xpos 1.20 ypos 1.50 alpha 0.0 zoom 1.0
+    ease 0.6 xpos 0.80 ypos 1.60 alpha 1.0 zoom 1.18
 
 # Fade in from center
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.5 ypos 1.08 alpha 0.0 zoom 0.92
-    ease 0.5 xpos 0.5 ypos 1.03 alpha 1.0 zoom 1.0
+    xpos 0.5 ypos 1.50 alpha 0.0 zoom 1.0
+    ease 0.5 xpos 0.5 ypos 1.60 alpha 1.0 zoom 1.18
 
 transform stage_center:
     xanchor 0.5
     yanchor 1.0
     xpos 0.5
-    ypos 1.03
+    ypos 1.50
 
 # === IDLE TRANSFORMS ===
 
@@ -369,6 +398,20 @@ define glitch_cut = Fade(0.1, 0.05, 0.1, color="#00FFD1")
 ################################################################################
 
 init python:
+    _tree_choice_map = {
+        'choice_ch1_1': ("protocol", "explore"),
+        'choice_ch1_2': ("report", "silent"),
+        'choice_ch2_1': ("trust", "alone"),
+        'choice_ch2_2': ("copy", "notes"),
+        'choice_ch3_0': ("bluff", "accelerate"),
+        'choice_ch3_1': ("pgp", "email", "wait"),
+        'choice_ch3_2': ("full", "partial", "vague"),
+        'choice_ch4_1': ("hotel", "mobile"),
+        'choice_ch4_2': ("airport", "russia", "ecuador", "embassy", "stay"),
+        'choice_ch5_1': ("encourage", "caution", "refuse"),
+    }
+    _tree_endings = ("hero", "fugitive", "imprisoned", "silenced", "betrayed")
+
     _tree_defaults = {
         'choice_ch1_1': '', 'choice_ch1_2': '',
         'choice_ch2_1': '', 'choice_ch2_2': '',
@@ -377,8 +420,66 @@ init python:
         'choice_ch5_1': '',
         'tree_ch_reached': 0,
         'tree_ending': '',
+        'tree_ending_unlocked': [],
     }
+
+    for _choice_var in _tree_choice_map:
+        _tree_defaults[_choice_var + "_unlocked"] = []
+
     for _tk, _tv in _tree_defaults.items():
         if getattr(persistent, _tk, None) is None:
             setattr(persistent, _tk, _tv)
-    del _tree_defaults, _tk, _tv
+
+    for _choice_var in _tree_choice_map:
+        _current_value = getattr(persistent, _choice_var, "")
+        _unlocked_name = _choice_var + "_unlocked"
+        _unlocked_values = list(getattr(persistent, _unlocked_name, []) or [])
+        if _current_value and _current_value not in _unlocked_values:
+            _unlocked_values.append(_current_value)
+            setattr(persistent, _unlocked_name, _unlocked_values)
+
+    _ending_value = getattr(persistent, "tree_ending", "")
+    _ending_unlocked = list(getattr(persistent, "tree_ending_unlocked", []) or [])
+    if _ending_value and _ending_value not in _ending_unlocked:
+        _ending_unlocked.append(_ending_value)
+        setattr(persistent, "tree_ending_unlocked", _ending_unlocked)
+
+    def tree_record_choice(choice_var, value):
+        setattr(persistent, choice_var, value)
+        unlocked_name = choice_var + "_unlocked"
+        unlocked_values = list(getattr(persistent, unlocked_name, []) or [])
+        if value not in unlocked_values:
+            unlocked_values.append(value)
+            setattr(persistent, unlocked_name, unlocked_values)
+        renpy.save_persistent()
+
+    def tree_reset_current_run():
+        for _name in _tree_choice_map:
+            setattr(persistent, _name, "")
+        setattr(persistent, "tree_ending", "")
+        renpy.save_persistent()
+
+    def tree_choice_is_unlocked(choice_var, value):
+        return value in list(getattr(persistent, choice_var + "_unlocked", []) or [])
+
+    def tree_unlocked_choice_count():
+        total = 0
+        for _name in _tree_choice_map:
+            total += len(list(getattr(persistent, _name + "_unlocked", []) or []))
+        return total
+
+    def tree_total_choice_count():
+        return sum(len(_values) for _values in _tree_choice_map.values())
+
+    def tree_record_ending(value):
+        setattr(persistent, "tree_ending", value)
+        unlocked_endings = list(getattr(persistent, "tree_ending_unlocked", []) or [])
+        if value not in unlocked_endings:
+            unlocked_endings.append(value)
+            setattr(persistent, "tree_ending_unlocked", unlocked_endings)
+        renpy.save_persistent()
+
+    def tree_ending_is_unlocked(value):
+        return value in list(getattr(persistent, "tree_ending_unlocked", []) or [])
+
+    del _tree_defaults, _tk, _tv, _choice_var, _current_value, _unlocked_name, _unlocked_values, _ending_value, _ending_unlocked

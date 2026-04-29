@@ -4,21 +4,6 @@
 ################################################################################
 
 init python:
-    # Initialize persistent story-tree variables with safe defaults
-    _st_defaults = {
-        'choice_ch1_1': '', 'choice_ch1_2': '',
-        'choice_ch2_1': '', 'choice_ch2_2': '',
-        'choice_ch3_0': '', 'choice_ch3_1': '', 'choice_ch3_2': '',
-        'choice_ch4_1': '', 'choice_ch4_2': '',
-        'choice_ch5_1': '',
-        'tree_ch_reached': 0,
-        'tree_ending': ''
-    }
-    for _k, _dv in _st_defaults.items():
-        if getattr(persistent, _k, None) is None:
-            setattr(persistent, _k, _dv)
-    del _st_defaults, _k, _dv
-
     # ── Helper functions ─────────────────────────────────────────────────────
 
     def _ch():
@@ -26,50 +11,57 @@ init python:
         return getattr(persistent, 'tree_ch_reached', 0)
 
     def _cv(var):
-        """Get the stored choice value for a variable name."""
         return getattr(persistent, var, '')
 
-    _tree_choice_vars = [
-        'choice_ch1_1', 'choice_ch1_2',
-        'choice_ch2_1', 'choice_ch2_2',
-        'choice_ch3_0', 'choice_ch3_1', 'choice_ch3_2',
-        'choice_ch4_1', 'choice_ch4_2',
-        'choice_ch5_1',
-    ]
+    def _uv(var):
+        return list(getattr(persistent, var + "_unlocked", []) or [])
+
+    def _is_active(var, val):
+        return _cv(var) == val
+
+    def _is_unlocked(var, val):
+        return tree_choice_is_unlocked(var, val)
 
     def picked_count():
-        return sum(1 for _name in _tree_choice_vars if _cv(_name))
+        return tree_unlocked_choice_count()
 
     def progress_pct():
-        return int((float(picked_count()) / len(_tree_choice_vars)) * 100) if _tree_choice_vars else 0
+        total = tree_total_choice_count()
+        return int((float(picked_count()) / total) * 100) if total else 0
 
     # Node background color
     def nbg(var, val, ch):
         if _ch() < ch:
             return "#131421"
-        if _cv(var) == val:
+        if _is_active(var, val):
             return "#002922"
-        return "#191C31"
+        if _is_unlocked(var, val):
+            return "#191C31"
+        return "#131421"
 
     # Node text color
     def ntc(var, val, ch):
         if _ch() < ch:
             return "#40466D"
-        if _cv(var) == val:
+        if _is_active(var, val):
             return "#F2FFFC"
+        if _is_unlocked(var, val):
+            return "#C9D0F3"
         return "#AAB0D6"
 
     # Node bold
     def nbd(var, val, ch):
-        return _ch() >= ch and _cv(var) == val
+        return _ch() >= ch and _is_active(var, val)
 
     # Line / connector color
     def lnc(var, val, ch):
         if _ch() < ch:
             return "#20253D"
-        if _cv(var) == val:
+        if _is_active(var, val):
             return "#008069"
-        return "#4D5186"
+        if _is_unlocked(var, val):
+            return "#4D5186"
+        return "#20253D"
 
     # Chapter-wide stem color (becomes teal once chapter is reached)
     def stc(ch):
@@ -99,6 +91,15 @@ init python:
             return "#8B8FCC"
         return "#D86C8A"
 
+    def ending_panel_bg(code):
+        if _ch() < 5:
+            return "#131421"
+        if getattr(persistent, 'tree_ending', '') == code:
+            return "#002922"
+        if tree_ending_is_unlocked(code):
+            return "#191C31"
+        return "#131421"
+
 
 ################################################################################
 ## STORY TREE SCREEN
@@ -111,29 +112,6 @@ screen story_tree():
 
     ## ── Background ──────────────────────────────────────────────────────────
     add "#131421"
-
-    frame:
-        xpos 42
-        ypos 0
-        xsize 2
-        yfill True
-        background "#006654"
-
-    frame:
-        xalign 1.0
-        xoffset -42
-        ypos 0
-        xsize 2
-        yfill True
-        background "#4D5186"
-
-    # Faint binary rain
-    for i in range(24):
-        text "01001101":
-            color "#00806908"
-            size 13
-            xpos (i * 100 + 8)
-            ypos ((i * 67 + 15) % 1080)
 
     ## ── Top header bar ──────────────────────────────────────────────────────
     frame:
@@ -203,11 +181,11 @@ screen story_tree():
 
                     vbox:
                         spacing 3
-                        text "DECISIONS":
+                        text "BRANCHES":
                             style "tree_hud_kicker"
-                        text "[picked_count()]/10":
+                        text "[picked_count()]/[tree_total_choice_count()]":
                             style "tree_hud_value"
-                        text "Mapped across the case":
+                        text "Discovered across all runs":
                             style "tree_hud_meta"
 
     ## ── Legend ──────────────────────────────────────────────────────────────
@@ -255,7 +233,7 @@ screen story_tree():
                         ysize 14
                         background "#006654"
                         yalign 0.5
-                    text "ACTIVE PATH":
+                    text "CURRENT RUN":
                         color "#EAF4F1"
                         size 13
                         yalign 0.5
@@ -267,7 +245,7 @@ screen story_tree():
                         ysize 14
                         background "#191C31"
                         yalign 0.5
-                    text "UNLOCKED BRANCH":
+                    text "DISCOVERED BRANCH":
                         color "#AAB0D6"
                         size 13
                         yalign 0.5
@@ -287,8 +265,8 @@ screen story_tree():
     frame:
         xalign 1.0
         ypos 120
-        xoffset -72
-        xsize 420
+        xoffset -92
+        xsize 360
         background "#0D1322D8"
         padding (18, 16)
 
@@ -311,9 +289,9 @@ screen story_tree():
     ## ── Scrollable tree canvas ──────────────────────────────────────────────
     viewport:
         id "story_tree_vp"
-        xpos 52
+        xpos 72
         ypos 214
-        xsize 1816
+        xsize 1756
         ysize 760
         scrollbars "vertical"
         mousewheel True
@@ -395,13 +373,16 @@ screen story_tree():
                 xsize 1800
                 ysize 72
 
-                frame:
+                button:
                     xpos 340
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch1_1', 'protocol', 1)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch1_1', 'protocol'), Jump("chapter_1"), NullAction())
 
                     text "Follow Protocol":
                         color ntc('choice_ch1_1', 'protocol', 1)
@@ -410,13 +391,16 @@ screen story_tree():
                         xalign 0.5
                         yalign 0.5
 
-                frame:
+                button:
                     xpos 1140
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch1_1', 'explore', 1)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch1_1', 'explore'), Jump("chapter_1"), NullAction())
 
                     text "Explore Restricted Files":
                         color ntc('choice_ch1_1', 'explore', 1)
@@ -490,13 +474,16 @@ screen story_tree():
                 xsize 1800
                 ysize 72
 
-                frame:
+                button:
                     xpos 340
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch1_2', 'report', 1)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch1_2', 'report'), Jump("chapter_1"), NullAction())
 
                     text "Report to Inspector General":
                         color ntc('choice_ch1_2', 'report', 1)
@@ -505,13 +492,16 @@ screen story_tree():
                         xalign 0.5
                         yalign 0.5
 
-                frame:
+                button:
                     xpos 1140
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch1_2', 'silent', 1)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch1_2', 'silent'), Jump("chapter_1"), NullAction())
 
                     text "Stay Silent":
                         color ntc('choice_ch1_2', 'silent', 1)
@@ -621,13 +611,16 @@ screen story_tree():
                 xsize 1800
                 ysize 72
 
-                frame:
+                button:
                     xpos 340
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch2_1', 'trust', 2)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch2_1', 'trust'), Jump("chapter_2"), NullAction())
 
                     text "Trust the Colleague":
                         color ntc('choice_ch2_1', 'trust', 2)
@@ -636,13 +629,16 @@ screen story_tree():
                         xalign 0.5
                         yalign 0.5
 
-                frame:
+                button:
                     xpos 1140
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch2_1', 'alone', 2)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch2_1', 'alone'), Jump("chapter_2"), NullAction())
 
                     text "Work Alone":
                         color ntc('choice_ch2_1', 'alone', 2)
@@ -713,13 +709,16 @@ screen story_tree():
                 xsize 1800
                 ysize 72
 
-                frame:
+                button:
                     xpos 340
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch2_2', 'copy', 2)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch2_2', 'copy'), Jump("chapter_2"), NullAction())
 
                     text "Copy Files to Drive":
                         color ntc('choice_ch2_2', 'copy', 2)
@@ -728,13 +727,16 @@ screen story_tree():
                         xalign 0.5
                         yalign 0.5
 
-                frame:
+                button:
                     xpos 1140
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch2_2', 'notes', 2)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch2_2', 'notes'), Jump("chapter_2"), NullAction())
 
                     text "Take Notes Only":
                         color ntc('choice_ch2_2', 'notes', 2)
@@ -851,13 +853,16 @@ screen story_tree():
                 xsize 1800
                 ysize 78
 
-                frame:
+                button:
                     xpos 130
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch3_1', 'pgp', 3)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch3_1', 'pgp'), Jump("chapter_3"), NullAction())
 
                     text "PGP + Tor\nSecure Channel":
                         color ntc('choice_ch3_1', 'pgp', 3)
@@ -867,13 +872,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 750
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch3_1', 'email', 3)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch3_1', 'email'), Jump("chapter_3"), NullAction())
 
                     text "Public Email\n(Greenwald)":
                         color ntc('choice_ch3_1', 'email', 3)
@@ -883,13 +891,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 1370
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch3_1', 'wait', 3)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch3_1', 'wait'), Jump("chapter_3"), NullAction())
 
                     text "Wait for\nSafer Moment":
                         color ntc('choice_ch3_1', 'wait', 3)
@@ -973,13 +984,16 @@ screen story_tree():
                 xsize 1800
                 ysize 78
 
-                frame:
+                button:
                     xpos 130
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch3_2', 'full', 3)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch3_2', 'full'), Jump("chapter_3"), NullAction())
 
                     text "Tell Everything":
                         color ntc('choice_ch3_2', 'full', 3)
@@ -988,13 +1002,16 @@ screen story_tree():
                         xalign 0.5
                         yalign 0.5
 
-                frame:
+                button:
                     xpos 750
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch3_2', 'partial', 3)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch3_2', 'partial'), Jump("chapter_3"), NullAction())
 
                     text "Share Partially":
                         color ntc('choice_ch3_2', 'partial', 3)
@@ -1003,13 +1020,16 @@ screen story_tree():
                         xalign 0.5
                         yalign 0.5
 
-                frame:
+                button:
                     xpos 1370
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch3_2', 'vague', 3)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch3_2', 'vague'), Jump("chapter_3"), NullAction())
 
                     text "Be Vague":
                         color ntc('choice_ch3_2', 'vague', 3)
@@ -1125,13 +1145,16 @@ screen story_tree():
                 xsize 1800
                 ysize 72
 
-                frame:
+                button:
                     xpos 340
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch4_1', 'hotel', 4)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch4_1', 'hotel'), Jump("chapter_4"), NullAction())
 
                     text "Hotel Wi-Fi\nFast but exposed":
                         color ntc('choice_ch4_1', 'hotel', 4)
@@ -1141,13 +1164,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 1140
                     ypos 5
                     xsize 320
                     ysize 55
                     background nbg('choice_ch4_1', 'mobile', 4)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (10, 5)
+                    action If(_is_unlocked('choice_ch4_1', 'mobile'), Jump("chapter_4"), NullAction())
 
                     text "Mobile hotspot\nSlower but safer":
                         color ntc('choice_ch4_1', 'mobile', 4)
@@ -1265,13 +1291,16 @@ screen story_tree():
                 xsize 1800
                 ysize 82
 
-                frame:
+                button:
                     xpos 100
                     ypos 5
                     xsize 260
                     ysize 60
                     background nbg('choice_ch4_2', 'airport', 4)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch4_2', 'airport'), Jump("chapter_4"), NullAction())
 
                     text "Airport dash\nFast but messy":
                         color ntc('choice_ch4_2', 'airport', 4)
@@ -1281,13 +1310,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 370
                     ypos 5
                     xsize 260
                     ysize 60
                     background nbg('choice_ch4_2', 'russia', 4)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch4_2', 'russia'), Jump("chapter_4"), NullAction())
 
                     text "Russian consulate\nShelter with strings":
                         color ntc('choice_ch4_2', 'russia', 4)
@@ -1297,13 +1329,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 750
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch4_2', 'ecuador', 4)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch4_2', 'ecuador'), Jump("chapter_4"), NullAction())
 
                     text "Ecuador via Moscow\nStrong asylum play":
                         color ntc('choice_ch4_2', 'ecuador', 4)
@@ -1313,13 +1348,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 1170
                     ypos 5
                     xsize 260
                     ysize 60
                     background nbg('choice_ch4_2', 'embassy', 4)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch4_2', 'embassy'), Jump("chapter_4"), NullAction())
 
                     text "European embassy\nLegal, but unlikely":
                         color ntc('choice_ch4_2', 'embassy', 4)
@@ -1329,13 +1367,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 1440
                     ypos 5
                     xsize 260
                     ysize 60
                     background nbg('choice_ch4_2', 'stay', 4)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch4_2', 'stay'), Jump("chapter_4"), NullAction())
 
                     text "Stay in Hong Kong\nPrincipled, but risky":
                         color ntc('choice_ch4_2', 'stay', 4)
@@ -1435,13 +1476,16 @@ screen story_tree():
                 xsize 1800
                 ysize 78
 
-                frame:
+                button:
                     xpos 130
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch5_1', 'encourage', 5)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch5_1', 'encourage'), Jump("chapter_5"), NullAction())
 
                     text "Encourage\nNew Leak":
                         color ntc('choice_ch5_1', 'encourage', 5)
@@ -1451,13 +1495,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 750
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch5_1', 'caution', 5)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch5_1', 'caution'), Jump("chapter_5"), NullAction())
 
                     text "Advise Caution\n(Official Channels)":
                         color ntc('choice_ch5_1', 'caution', 5)
@@ -1467,13 +1514,16 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                frame:
+                button:
                     xpos 1370
                     ypos 5
                     xsize 300
                     ysize 60
                     background nbg('choice_ch5_1', 'refuse', 5)
+                    hover_background "#1F2A48"
+                    insensitive_background "#131421"
                     padding (8, 5)
+                    action If(_is_unlocked('choice_ch5_1', 'refuse'), Jump("chapter_5"), NullAction())
 
                     text "Refuse —\nToo High a Price":
                         color ntc('choice_ch5_1', 'refuse', 5)
@@ -1537,7 +1587,7 @@ screen story_tree():
                     ypos 0
                     xsize 700
                     ysize 64
-                    background ("#002922" if _ch() >= 5 else "#131421")
+                    background ending_panel_bg(getattr(persistent, 'tree_ending', ''))
                     padding (20, 5)
 
                     hbox:
@@ -1564,7 +1614,7 @@ screen story_tree():
                             yalign 0.5
 
             # Footer padding
-            null height 60
+            null height 20
 
     ## ── Return button ───────────────────────────────────────────────────────
     hbox:
@@ -1582,7 +1632,8 @@ screen story_tree():
             text_bold True
             xsize 220
             ysize 54
-            action Return()
+            text_xalign 0.5
+            action If(main_menu, true=ShowMenu("main_menu"), false=ShowMenu("pause_hub"))
 
         textbutton "OPEN ESC MENU":
             background "#171B31"
@@ -1593,6 +1644,7 @@ screen story_tree():
             text_bold True
             xsize 300
             ysize 54
+            text_xalign 0.5
             action ShowMenu("pause_hub")
 
-    key "game_menu" action Return()
+    key "game_menu" action If(main_menu, true=ShowMenu("main_menu"), false=ShowMenu("pause_hub"))
