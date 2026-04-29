@@ -194,6 +194,14 @@ image editor neutral:
 image russian_official neutral:
     "sprites/russian official neutral.png"
     zoom 1.0
+# === Logo Watermark ===
+image logo_watermark:
+    "images/logo.png"
+    xalign 0.5
+    yalign 0.5
+    zoom 1.15
+    alpha 0.15
+
 # === Backgrounds ===
 image bg_1:
     "backgrounds/chapter_1/bg_1.png"

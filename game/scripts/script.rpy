@@ -21,6 +21,8 @@ label intro:
     scene black
     with fade
 
+    show logo_watermark
+
     $ renpy.pause(0.5)
 
     centered "{i}\"The greatest fear I have regarding the outcome of these disclosures\nis that nothing will change.\"{/i}\n\n— Edward Snowden"
@@ -28,6 +30,7 @@ label intro:
     $ renpy.pause(3.0)
 
     scene black with dissolve
+    show logo_watermark
 
     narrator_voice "The year is 2013."
 
@@ -188,10 +191,15 @@ label chapter_1:
 
     # --- Minigame 1: Firewall Breach ---
 
+    window hide
     $ mg_intro = renpy.call_screen("minigame_intro", title="FIREWALL BREACH", description="You must analyze incoming network packets and decide which to ALLOW through the firewall and which to BLOCK. Look for suspicious ports, unknown source IPs, and insecure protocols.")
 
     if mg_intro:
+        $ quick_menu = False
+        $ show_hud = False
         $ mg_firewall_score = renpy.call_screen("minigame_firewall")
+        $ quick_menu = True
+        $ show_hud = True
         if mg_firewall_score >= 6:
             $ knowledge_score += 2
             $ renpy.notify("Knowledge +2")
@@ -672,14 +680,20 @@ label ch3_continue:
 
     # --- Putting It Together ---
 
-    im "The challenge is simple: review a series of actions by a fictional 'Agent X' and decide whether each one is a SAFE practice or a MISTAKE. Everything I've just explained will tell you the answer."
+    im "Now it's time to put that knowledge into practice. I've drafted an email to Glenn Greenwald — but before I can send it, I need to strip every trace of my identity from the message. One mistake, and the NSA finds me."
 
-    sys "// SYSTEM NOTE: OpSec protects critical information by identifying what intelligence an adversary could gather from your actions, then taking steps to prevent that exposure. //"
+    sys "// SYSTEM NOTE: Every digital message carries metadata — sender address, device info, routing headers, file authorship — that can expose your identity even if the content is encrypted. //"
 
-    $ mg_intro3 = renpy.call_screen("minigame_intro", title="OPSEC CHALLENGE", description="You are Agent X on the clock. Tag each move as SAFE or MISTAKE before your cover gets blown.")
+    window hide
+    $ mg_intro3 = renpy.call_screen("minigame_intro", title="CLEAN THE MESSAGE", description="Snowden has drafted an email to journalist Glenn Greenwald. Find and remove all 8 dangerous metadata elements before sending. Click on suspicious items to inspect and clean them.")
 
     if mg_intro3:
-        $ mg_opsec_score = renpy.call_screen("minigame_opsec")
+        $ quick_menu = False
+        $ show_hud = False
+        $ mg_opsec_score = renpy.call_screen("minigame_clean_message")
+        $ quick_menu = True
+        $ show_hud = True
+        
         if mg_opsec_score >= 4:
             $ contacts_secured += 1
             $ knowledge_score += 1
@@ -897,10 +911,15 @@ label chapter_4:
 
     sys "// ROUTE STRATEGY: VPN → Tor nodes → Secure relay → Destination. Avoid GOV MONITOR. Fewer hops = less exposure time. //"
 
+    window hide
     $ mg_intro4 = renpy.call_screen("minigame_intro", title="TRACE THE ROUTE", description="Build a safe route hop by hop. Green nodes help you stay hidden, while the red monitor exposes the whole mission.")
 
     if mg_intro4:
+        $ quick_menu = False
+        $ show_hud = False
         $ mg_trace_solved = renpy.call_screen("minigame_trace")
+        $ quick_menu = True
+        $ show_hud = True
         if mg_trace_solved:
             $ escape_successful = True
             $ knowledge_score += 2

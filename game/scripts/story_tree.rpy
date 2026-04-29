@@ -32,7 +32,7 @@ init python:
     # Node background color
     def nbg(var, val, ch):
         if _ch() < ch:
-            return "#131421"
+            return "#1A1D2D"
         if _is_active(var, val):
             return "#002922"
         if _is_unlocked(var, val):
@@ -112,6 +112,7 @@ screen story_tree():
 
     ## ── Background ──────────────────────────────────────────────────────────
     add "#131421"
+    add "logo_watermark"
 
     ## ── Top header bar ──────────────────────────────────────────────────────
     frame:
@@ -382,7 +383,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch1_1', 'protocol'), Jump("chapter_1"), NullAction())
+                    action If(_ch() > 1, Start("chapter_1"), NullAction())
 
                     text "Follow Protocol":
                         color ntc('choice_ch1_1', 'protocol', 1)
@@ -400,7 +401,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch1_1', 'explore'), Jump("chapter_1"), NullAction())
+                    action If(_ch() > 1, Start("chapter_1"), NullAction())
 
                     text "Explore Restricted Files":
                         color ntc('choice_ch1_1', 'explore', 1)
@@ -483,7 +484,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch1_2', 'report'), Jump("chapter_1"), NullAction())
+                    action If(_ch() > 1, Start("chapter_1"), NullAction())
 
                     text "Report to Inspector General":
                         color ntc('choice_ch1_2', 'report', 1)
@@ -501,7 +502,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch1_2', 'silent'), Jump("chapter_1"), NullAction())
+                    action If(_ch() > 1, Start("chapter_1"), NullAction())
 
                     text "Stay Silent":
                         color ntc('choice_ch1_2', 'silent', 1)
@@ -620,7 +621,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch2_1', 'trust'), Jump("chapter_2"), NullAction())
+                    action If(_ch() > 2, Start("chapter_2"), NullAction())
 
                     text "Trust the Colleague":
                         color ntc('choice_ch2_1', 'trust', 2)
@@ -638,7 +639,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch2_1', 'alone'), Jump("chapter_2"), NullAction())
+                    action If(_ch() > 2, Start("chapter_2"), NullAction())
 
                     text "Work Alone":
                         color ntc('choice_ch2_1', 'alone', 2)
@@ -718,7 +719,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch2_2', 'copy'), Jump("chapter_2"), NullAction())
+                    action If(_ch() > 2, Start("chapter_2"), NullAction())
 
                     text "Copy Files to Drive":
                         color ntc('choice_ch2_2', 'copy', 2)
@@ -736,7 +737,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch2_2', 'notes'), Jump("chapter_2"), NullAction())
+                    action If(_ch() > 2, Start("chapter_2"), NullAction())
 
                     text "Take Notes Only":
                         color ntc('choice_ch2_2', 'notes', 2)
@@ -862,7 +863,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch3_1', 'pgp'), Jump("chapter_3"), NullAction())
+                    action If(_ch() > 3, Start("chapter_3"), NullAction())
 
                     text "PGP + Tor\nSecure Channel":
                         color ntc('choice_ch3_1', 'pgp', 3)
@@ -881,7 +882,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch3_1', 'email'), Jump("chapter_3"), NullAction())
+                    action If(_ch() > 3, Start("chapter_3"), NullAction())
 
                     text "Public Email\n(Greenwald)":
                         color ntc('choice_ch3_1', 'email', 3)
@@ -900,7 +901,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch3_1', 'wait'), Jump("chapter_3"), NullAction())
+                    action If(_ch() > 3, Start("chapter_3"), NullAction())
 
                     text "Wait for\nSafer Moment":
                         color ntc('choice_ch3_1', 'wait', 3)
@@ -993,7 +994,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch3_2', 'full'), Jump("chapter_3"), NullAction())
+                    action If(_ch() > 3, Start("chapter_3"), NullAction())
 
                     text "Tell Everything":
                         color ntc('choice_ch3_2', 'full', 3)
@@ -1011,7 +1012,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch3_2', 'partial'), Jump("chapter_3"), NullAction())
+                    action If(_ch() > 3, Start("chapter_3"), NullAction())
 
                     text "Share Partially":
                         color ntc('choice_ch3_2', 'partial', 3)
@@ -1029,7 +1030,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch3_2', 'vague'), Jump("chapter_3"), NullAction())
+                    action If(_ch() > 3, Start("chapter_3"), NullAction())
 
                     text "Be Vague":
                         color ntc('choice_ch3_2', 'vague', 3)
@@ -1154,7 +1155,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch4_1', 'hotel'), Jump("chapter_4"), NullAction())
+                    action If(_ch() > 4, Start("chapter_4"), NullAction())
 
                     text "Hotel Wi-Fi\nFast but exposed":
                         color ntc('choice_ch4_1', 'hotel', 4)
@@ -1173,7 +1174,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (10, 5)
-                    action If(_is_unlocked('choice_ch4_1', 'mobile'), Jump("chapter_4"), NullAction())
+                    action If(_ch() > 4, Start("chapter_4"), NullAction())
 
                     text "Mobile hotspot\nSlower but safer":
                         color ntc('choice_ch4_1', 'mobile', 4)
@@ -1300,7 +1301,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch4_2', 'airport'), Jump("chapter_4"), NullAction())
+                    action If(_ch() > 4, Start("chapter_4"), NullAction())
 
                     text "Airport dash\nFast but messy":
                         color ntc('choice_ch4_2', 'airport', 4)
@@ -1319,7 +1320,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch4_2', 'russia'), Jump("chapter_4"), NullAction())
+                    action If(_ch() > 4, Start("chapter_4"), NullAction())
 
                     text "Russian consulate\nShelter with strings":
                         color ntc('choice_ch4_2', 'russia', 4)
@@ -1338,7 +1339,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch4_2', 'ecuador'), Jump("chapter_4"), NullAction())
+                    action If(_ch() > 4, Start("chapter_4"), NullAction())
 
                     text "Ecuador via Moscow\nStrong asylum play":
                         color ntc('choice_ch4_2', 'ecuador', 4)
@@ -1357,7 +1358,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch4_2', 'embassy'), Jump("chapter_4"), NullAction())
+                    action If(_ch() > 4, Start("chapter_4"), NullAction())
 
                     text "European embassy\nLegal, but unlikely":
                         color ntc('choice_ch4_2', 'embassy', 4)
@@ -1376,7 +1377,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch4_2', 'stay'), Jump("chapter_4"), NullAction())
+                    action If(_ch() > 4, Start("chapter_4"), NullAction())
 
                     text "Stay in Hong Kong\nPrincipled, but risky":
                         color ntc('choice_ch4_2', 'stay', 4)
@@ -1485,7 +1486,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch5_1', 'encourage'), Jump("chapter_5"), NullAction())
+                    action If(_ch() > 5 or (_ch() == 5 and getattr(persistent, "tree_ending", "")), Start("chapter_5"), NullAction())
 
                     text "Encourage\nNew Leak":
                         color ntc('choice_ch5_1', 'encourage', 5)
@@ -1504,7 +1505,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch5_1', 'caution'), Jump("chapter_5"), NullAction())
+                    action If(_ch() > 5 or (_ch() == 5 and getattr(persistent, "tree_ending", "")), Start("chapter_5"), NullAction())
 
                     text "Advise Caution\n(Official Channels)":
                         color ntc('choice_ch5_1', 'caution', 5)
@@ -1523,7 +1524,7 @@ screen story_tree():
                     hover_background "#1F2A48"
                     insensitive_background "#131421"
                     padding (8, 5)
-                    action If(_is_unlocked('choice_ch5_1', 'refuse'), Jump("chapter_5"), NullAction())
+                    action If(_ch() > 5 or (_ch() == 5 and getattr(persistent, "tree_ending", "")), Start("chapter_5"), NullAction())
 
                     text "Refuse —\nToo High a Price":
                         color ntc('choice_ch5_1', 'refuse', 5)
