@@ -9,7 +9,11 @@
 
 label start:
     $ show_hud = False
+    $ notebook_entries = []
+    $ notebook_draft = ""
+    $ suspicion_lockdown_triggered = False
     $ tree_reset_current_run()
+    call screen intro_controls_screen
     jump intro
 
 
