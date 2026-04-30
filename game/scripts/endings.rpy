@@ -7,6 +7,14 @@
 ## ENDING DETERMINATION LOGIC
 ################################################################################
 
+label max_suspicion_game_over:
+    $ show_hud = False
+    $ quick_menu = True
+    $ ending_type = "silenced"
+    $ tree_record_ending("silenced")
+    jump ending_silenced
+
+
 label determine_ending:
     # Calculate the ending based on accumulated flags
     if knowledge_score >= 8 and escape_successful and contacts_secured >= 2 and not identity_exposed:

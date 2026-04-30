@@ -17,6 +17,8 @@ init python:
     config.overlay_screens.append("quick_menu")
     config.overlay_screens.append("game_hud")
     config.overlay_screens.append("scene_stage_line")
+    config.overlay_screens.append("notebook_toggle")
+    config.overlay_screens.append("suspicion_lockdown_watch")
 
     def menu_return_screen():
         return "main_menu" if main_menu else "pause_hub"
@@ -190,13 +192,25 @@ screen ui_backdrop():
 
 
 screen shell_header(kicker, title, body=None):
+    $ compact = is_compact_layout()
+    $ header_xpos = 24 if compact else 72
+    $ header_ypos = 24 if compact else 54
+    $ header_xsize = 1872 if compact else 1776
+    $ header_ysize = 142 if compact else 116
+    $ header_padding_x = 24 if compact else 34
+    $ header_padding_y = 20 if compact else 24
+    $ kicker_size = 17 if compact else 15
+    $ title_size = 30 if compact else 34
+    $ body_size = 18 if compact else 16
+    $ body_max = 1120 if compact else 860
+
     frame:
-        xpos 72
-        ypos 54
-        xsize 1776
-        ysize 116
+        xpos header_xpos
+        ypos header_ypos
+        xsize header_xsize
+        ysize header_ysize
         background Solid("#0E1220EE")
-        padding (34, 24)
+        padding (header_padding_x, header_padding_y)
 
         hbox:
             xfill True
@@ -208,19 +222,19 @@ screen shell_header(kicker, title, body=None):
 
                 text kicker:
                     color "#8B8FCC"
-                    size 15
+                    size kicker_size
                     bold True
 
                 text title:
                     color "#EAF4F1"
-                    size 34
+                    size title_size
                     bold True
 
                 if body:
                     text body:
                         color "#AAB0D6"
-                        size 16
-                        xmaximum 860
+                        size body_size
+                        xmaximum body_max
 
             if body:
                 null width 80
@@ -245,7 +259,9 @@ screen say(who, what):
         text what id "what"
 
     if not renpy.variant("small"):
-        add SideImage() xalign 0.0 yalign 1.0
+        $ edward_pov_bgs = ["bg_nsa_terminal", "bg_prism", "bg_prism1", "bg_hong_kong_terminal"]
+        if not (renpy.get_say_image_tag() == "edward" and any(bg in renpy.get_showing_tags("master") for bg in edward_pov_bgs)):
+            add SideImage() xalign 0.0 yalign 1.0
 
 
 style window is default
@@ -334,16 +350,21 @@ screen quick_menu():
     zorder 100
 
     if quick_menu and not main_menu:
+        $ medium_layout = is_medium_layout()
+        $ quick_xalign = 0.5 if medium_layout else 1.0
+        $ quick_xoffset = 0 if medium_layout else -30
+        $ quick_yoffset = 18 if medium_layout else 24
         hbox:
-            xalign 1.0
+            xalign quick_xalign
             yalign 0.0
-            xoffset -30
-            yoffset 24
+            xoffset quick_xoffset
+            yoffset quick_yoffset
             spacing 8
             style_prefix "quick"
 
             textbutton _("Back") action Rollback()
             textbutton _("History") action ShowMenu("history")
+            textbutton _("Notes") action Show("notebook_panel")
             textbutton _("Save") action ShowMenu("save")
             textbutton _("Prefs") action ShowMenu("preferences")
 
@@ -352,36 +373,48 @@ screen game_hud():
     zorder 90
 
     if show_hud:
+        $ compact = is_medium_layout()
+        $ status_title_size = 16 if compact else 14
+        $ chapter_size = 22 if compact else 19
+        $ stat_size = 17 if compact else 16
+        $ suspicion_bar_xsize = 280 if compact else 210
+
         frame:
-            xalign 1.0
-            yalign 0.0
-            xoffset -30
-            yoffset 76
-            xsize 260
+            if compact:
+                xalign 0.98
+                yalign 0.02
+                xsize 330
+                padding (16, 14)
+            else:
+                xalign 1.0
+                yalign 0.0
+                xoffset -30
+                yoffset 76
+                xsize 260
+                padding (18, 16)
             background Solid("#0F1423E6")
-            padding (18, 16)
 
             vbox:
                 spacing 10
 
                 text "FIELD STATUS":
                     color "#8B8FCC"
-                    size 14
+                    size status_title_size
                     bold True
 
                 text "CHAPTER [current_chapter]/5":
                     color "#EAF4F1"
-                    size 19
+                    size chapter_size
                     bold True
 
                 hbox:
                     xfill True
                     text "Knowledge":
                         color "#AAB0D6"
-                        size 16
+                        size stat_size
                     text "[knowledge_score]":
                         color "#8B8FCC"
-                        size 16
+                        size stat_size
                         bold True
                         xalign 1.0
 
@@ -389,24 +422,246 @@ screen game_hud():
                     xfill True
                     text "Trust":
                         color "#AAB0D6"
-                        size 16
+                        size stat_size
                     text "[trust_score]":
                         color "#EAF4F1"
-                        size 16
+                        size stat_size
+                        bold True
+                        xalign 1.0
+
+                hbox:
+                    xfill True
+                    text "Notes":
+                        color "#AAB0D6"
+                        size stat_size
+                    text "[notebook_entry_count()]":
+                        color "#EAF4F1"
+                        size stat_size
                         bold True
                         xalign 1.0
 
                 text "Suspicion":
                     color "#AAB0D6"
-                    size 16
+                    size stat_size
 
                 bar:
                     value suspicion_level
                     range 5
-                    xsize 210
+                    xsize suspicion_bar_xsize
                     ysize 10
                     left_bar Solid("#8B8FCC")
                     right_bar Solid("#232843")
+
+screen notebook_panel():
+    modal True
+    zorder 210
+
+    $ compact = is_compact_layout()
+    $ notebook_xsize = 1820 if compact else 1160
+    $ notebook_ysize = 920 if compact else 820
+    $ notebook_title_size = 30 if compact else 26
+    $ notebook_body_size = 20 if compact else 18
+    $ notebook_body_max = 1700 if compact else 1020
+    $ notebook_input_size = 26 if compact else 24
+    $ notebook_entry_size = 21 if compact else 19
+    $ notebook_empty_size = 28 if compact else 24
+    $ notebook_hint_max = 1260 if compact else 820
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize notebook_xsize
+        ysize notebook_ysize
+        background Solid("#0E1321F2")
+        padding (0, 0)
+
+        vbox:
+            spacing 0
+
+            frame:
+                xfill True
+                ysize 84
+                background Solid("#002922")
+                padding (28, 0)
+
+                hbox:
+                    xfill True
+                    yalign 0.5
+
+                    text "FIELD NOTEBOOK":
+                        color "#EAF4F1"
+                        size notebook_title_size
+                        bold True
+                        yalign 0.5
+
+                    text "[notebook_entry_count()] entries":
+                        color "#8B8FCC"
+                        size 18
+                        bold True
+                        xalign 1.0
+                        yalign 0.5
+
+            frame:
+                xfill True
+                yfill True
+                background Solid("#101523")
+                padding (28, 24)
+
+                vbox:
+                    spacing 18
+                    xfill True
+                    yfill True
+
+                    text "Write short reminders for yourself while you play. Important clues, terms, and decisions can live here.":
+                        color "#AAB0D6"
+                        size notebook_body_size
+                        xmaximum notebook_body_max
+
+                    frame:
+                        xfill True
+                        background Solid("#171C30")
+                        padding (18, 16)
+
+                        vbox:
+                            spacing 12
+
+                            text "New note":
+                                color "#8B8FCC"
+                                size 18
+                                bold True
+
+                            input:
+                                value VariableInputValue("notebook_draft")
+                                length 180
+                                color "#F7FFFC"
+                                size notebook_input_size
+                                xfill True
+
+                    frame:
+                        xfill True
+                        yfill True
+                        background Solid("#171C30")
+                        padding (18, 16)
+
+                        if notebook_entries:
+                            viewport:
+                                xfill True
+                                yfill True
+                                mousewheel True
+                                draggable True
+                                scrollbars "vertical"
+
+                                vbox:
+                                    spacing 10
+                                    xfill True
+
+                                    for index, entry in enumerate(notebook_entries, 1):
+                                        frame:
+                                            xfill True
+                                            background Solid("#101523")
+                                            padding (16, 14)
+
+                                            hbox:
+                                                spacing 12
+                                                xfill True
+
+                                                text "[index].":
+                                                    color "#8B8FCC"
+                                                    size 20
+                                                    bold True
+
+                                                text entry:
+                                                    color "#EAF4F1"
+                                                    size notebook_entry_size
+                                                    xfill True
+                        else:
+                            vbox:
+                                xalign 0.5
+                                yalign 0.5
+                                spacing 10
+
+                                text "No notes yet.":
+                                    color "#EAF4F1"
+                                    size notebook_empty_size
+                                    bold True
+                                    xalign 0.5
+
+                                text "Use the field notebook to capture names, tools, and decisions that matter.":
+                                    color "#AAB0D6"
+                                    size notebook_body_size
+                                    text_align 0.5
+                                    xalign 0.5
+                                    xmaximum notebook_hint_max
+
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (24, 22)
+
+                hbox:
+                    spacing 12
+                    xalign 0.5
+
+                    textbutton "SAVE NOTE":
+                        style "modal_action_button"
+                        xsize 280
+                        action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
+
+                    textbutton "CLEAR":
+                        style "modal_action_button"
+                        xsize 220
+                        background Solid("#241926")
+                        hover_background Solid("#4D5186")
+                        action Function(clear_notebook_entries)
+
+                    textbutton "CLOSE":
+                        style "modal_action_button"
+                        xsize 220
+                        background Solid("#171C30")
+                        hover_background Solid("#4D5186")
+                        action Hide("notebook_panel")
+
+    key "game_menu" action Hide("notebook_panel")
+    key "n" action Hide("notebook_panel")
+    key "N" action Hide("notebook_panel")
+
+
+screen notebook_toggle():
+    zorder 95
+
+    if show_hud and not main_menu and not renpy.get_screen("pause_hub"):
+        imagebutton:
+            idle "images/ui/notebook_closed.png"
+            hover "images/ui/notebook_open.png"
+            selected_idle "images/ui/notebook_open.png"
+            selected_hover "images/ui/notebook_open.png"
+            selected renpy.get_screen("notebook_panel") is not None
+            focus_mask True
+            xalign 1.0
+            xoffset 48
+            yalign 1.0
+            yoffset 54
+            action ToggleScreen("notebook_panel")
+            at Transform(zoom=0.5, alpha=0.85)
+            tooltip "Notebook (N)"
+
+        key "n" action ToggleScreen("notebook_panel")
+        key "N" action ToggleScreen("notebook_panel")
+
+
+screen suspicion_lockdown_watch():
+    zorder 300
+
+    if (
+        show_hud
+        and suspicion_level >= 5
+        and not suspicion_lockdown_triggered
+        and not main_menu
+    ):
+        timer 0.01 action [SetVariable("suspicion_lockdown_triggered", True), Jump("max_suspicion_game_over")]
 
 
 screen scene_stage_line():
@@ -433,21 +688,34 @@ screen scene_stage_line():
 screen main_menu():
     tag menu
 
+    $ compact = is_medium_layout()
+    $ menu_frame_xsize = 1840 if compact else 1020
+    $ menu_frame_ysize = 980 if compact else 900
+    $ menu_padding_x = 32 if compact else 44
+    $ menu_padding_y = 32 if compact else 40
+    $ menu_content_max = 1660 if compact else 860
+    $ menu_spacing = 14 if compact else 16
+    $ title_fixed_xsize = 1500 if compact else 820
+    $ menu_title_size = 60 if compact else 66
+    $ menu_desc_size = 22 if compact else 18
+    $ menu_desc_max = 1200 if compact else 720
+    $ menu_quote_size = 24 if compact else 20
+
     use ui_backdrop
 
     frame:
         xalign 0.5
         yalign 0.5
-        xsize 1020
-        ysize 900
+        xsize menu_frame_xsize
+        ysize menu_frame_ysize
         background Solid("#0E1321EE")
-        padding (44, 40)
+        padding (menu_padding_x, menu_padding_y)
 
         vbox:
             xalign 0.5
             yalign 0.5
-            xmaximum 860
-            spacing 16
+            xmaximum menu_content_max
+            spacing menu_spacing
 
             text "CLASSIFIED INTERFACE":
                 color "#8B8FCC"
@@ -463,7 +731,7 @@ screen main_menu():
                 fit "contain"
 
             fixed:
-                xsize 820
+                xsize title_fixed_xsize
                 ysize 96
                 xalign 0.5
 
@@ -472,7 +740,7 @@ screen main_menu():
                     yalign 0.5
                     text_align 0.5
                     color "#0C5D52"
-                    size 66
+                    size menu_title_size
                     bold True
                     outlines [(6, "#00665414", 0, 0), (3, "#00806916", 0, 0)]
 
@@ -481,7 +749,7 @@ screen main_menu():
                     yalign 0.5
                     text_align 0.5
                     color "#EFFFFA"
-                    size 66
+                    size menu_title_size
                     bold True
                     outlines [(2, "#00806955", 0, 0), (6, "#0080690E", 0, 0)]
 
@@ -492,19 +760,19 @@ screen main_menu():
                     xoffset 2
                     yoffset -2
                     color "#8B8FCC24"
-                    size 66
+                    size menu_title_size
                     bold True
 
             text "A visual novel about surveillance, trust, and digital security under pressure.":
                 color "#AAB0D6"
-                size 18
+                size menu_desc_size
                 xalign 0.5
                 text_align 0.5
-                xmaximum 720
+                xmaximum menu_desc_max
 
             text "\"The truth will always find a way out.\"":
                 color "#8B8FCC"
-                size 20
+                size menu_quote_size
                 italic True
                 xalign 0.5
                 text_align 0.5
@@ -562,6 +830,8 @@ screen pause_hub():
     tag menu
     modal True
 
+    $ compact = is_compact_layout()
+
     use ui_backdrop
     use shell_header(
         "ESC MENU",
@@ -569,133 +839,239 @@ screen pause_hub():
         "Resume, save, adjust settings, or inspect the branch map without dropping into the default Ren'Py interface."
     )
 
-    frame:
-        xpos 72
-        ypos 214
-        xsize 620
-        ysize 770
-        background Solid("#101523EE")
-        padding (34, 30)
+    if compact:
+        frame:
+            xpos 24
+            ypos 188
+            xsize 1872
+            ysize 844
+            background Solid("#0E1321EE")
+            padding (24, 24)
 
-        vbox:
-            spacing 14
+            viewport:
+                xfill True
+                yfill True
+                mousewheel True
+                draggable True
+                scrollbars "vertical"
 
-            textbutton "RESUME":
-                style "modal_action_button"
-                action Return()
+                vbox:
+                    spacing 18
+                    xfill True
 
-            textbutton "START":
-                style "modal_action_button"
-                action Start()
+                    frame:
+                        xfill True
+                        background Solid("#101523EE")
+                        padding (22, 20)
 
-            textbutton "SAVE":
-                style "modal_action_button"
-                action ShowMenu("save")
+                        vbox:
+                            spacing 12
 
-            textbutton "SETTINGS":
-                style "modal_action_button"
-                action ShowMenu("preferences")
+                            text "MISSION ACTIONS":
+                                color "#8B8FCC"
+                                size 18
+                                bold True
 
-            textbutton "STORY TREE":
-                style "modal_action_button"
-                action ShowMenu("story_tree")
+                            textbutton "RESUME":
+                                style "modal_action_button"
+                                xfill True
+                                action Return()
 
-            if renpy.variant("pc"):
-                textbutton "EXIT":
+                            textbutton "OPEN NOTEBOOK":
+                                style "modal_action_button"
+                                xfill True
+                                action Show("notebook_panel")
+
+                            textbutton "SAVE":
+                                style "modal_action_button"
+                                xfill True
+                                action ShowMenu("save")
+
+                            textbutton "SETTINGS":
+                                style "modal_action_button"
+                                xfill True
+                                action ShowMenu("preferences")
+
+                            textbutton "STORY TREE":
+                                style "modal_action_button"
+                                xfill True
+                                action ShowMenu("story_tree")
+
+                            textbutton "START OVER":
+                                style "modal_action_button"
+                                xfill True
+                                action Start()
+
+                            if renpy.variant("pc"):
+                                textbutton "EXIT":
+                                    style "modal_action_button"
+                                    xfill True
+                                    background Solid("#241926")
+                                    hover_background Solid("#4D5186")
+                                    action Quit(confirm=True)
+
+                    text "TACTICAL STATUS":
+                        color "#8B8FCC"
+                        size 18
+                        bold True
+
+                    for title, value, body, accent in [
+                        ("Current chapter", "[current_chapter]/5", "Operation branch currently in progress.", "#002922"),
+                        ("Knowledge", "[knowledge_score]", "Educational progress accumulated so far.", "#171C30"),
+                        ("Trust", "[trust_score]", "Relationship capital built during the mission.", "#171C30"),
+                        ("Suspicion", "[suspicion_level]/5", "Operational pressure currently on the player.", "#171C30"),
+                        ("Notebook", "[notebook_entry_count()]", "Personal notes saved for quick review.", "#171C30"),
+                    ]:
+                        frame:
+                            xfill True
+                            background Solid(accent)
+                            padding (22, 18)
+
+                            vbox:
+                                spacing 8
+                                text title:
+                                    color "#8B8FCC"
+                                    size 16
+                                    bold True
+                                text value:
+                                    color "#EAF4F1"
+                                    size 34
+                                    bold True
+                                text body:
+                                    color "#AAB0D6"
+                                    size 17
+    else:
+        frame:
+            xpos 72
+            ypos 214
+            xsize 620
+            ysize 770
+            background Solid("#101523EE")
+            padding (34, 30)
+
+            vbox:
+                spacing 14
+
+                textbutton "RESUME":
                     style "modal_action_button"
-                    background Solid("#241926")
-                    hover_background Solid("#4D5186")
-                    action Quit(confirm=True)
+                    action Return()
 
-    frame:
-        xalign 1.0
-        xoffset -72
-        ypos 214
-        xsize 1080
-        ysize 770
-        background Solid("#0E1321E6")
-        padding (36, 32)
+                textbutton "OPEN NOTEBOOK":
+                    style "modal_action_button"
+                    action Show("notebook_panel")
 
-        vbox:
-            spacing 18
+                textbutton "START":
+                    style "modal_action_button"
+                    action Start()
 
-            text "TACTICAL STATUS":
-                color "#8B8FCC"
-                size 17
-                bold True
+                textbutton "SAVE":
+                    style "modal_action_button"
+                    action ShowMenu("save")
 
-            hbox:
+                textbutton "SETTINGS":
+                    style "modal_action_button"
+                    action ShowMenu("preferences")
+
+                textbutton "STORY TREE":
+                    style "modal_action_button"
+                    action ShowMenu("story_tree")
+
+                if renpy.variant("pc"):
+                    textbutton "EXIT":
+                        style "modal_action_button"
+                        background Solid("#241926")
+                        hover_background Solid("#4D5186")
+                        action Quit(confirm=True)
+
+        frame:
+            xalign 1.0
+            xoffset -72
+            ypos 214
+            xsize 1080
+            ysize 770
+            background Solid("#0E1321E6")
+            padding (36, 32)
+
+            vbox:
                 spacing 18
 
+                text "TACTICAL STATUS":
+                    color "#8B8FCC"
+                    size 17
+                    bold True
+
+                hbox:
+                    spacing 18
+
+                    frame:
+                        xsize 320
+                        ysize 150
+                        background Solid("#002922")
+                        padding (22, 18)
+
+                        vbox:
+                            spacing 8
+                            text "Current chapter":
+                                color "#8B8FCC"
+                                size 15
+                                bold True
+                            text "[current_chapter]/5":
+                                color "#EAF4F1"
+                                size 34
+                                bold True
+                            text "Operation branch currently in progress.":
+                                color "#AAB0D6"
+                                size 16
+
+                    frame:
+                        xsize 320
+                        ysize 150
+                        background Solid("#171C30")
+                        padding (22, 18)
+
+                        vbox:
+                            spacing 8
+                            text "Knowledge":
+                                color "#8B8FCC"
+                                size 15
+                                bold True
+                            text "[knowledge_score]":
+                                color "#EAF4F1"
+                                size 34
+                                bold True
+                            text "Educational progress accumulated so far.":
+                                color "#AAB0D6"
+                                size 16
+
+                    frame:
+                        xsize 320
+                        ysize 150
+                        background Solid("#171C30")
+                        padding (22, 18)
+
+                        vbox:
+                            spacing 8
+                            text "Suspicion":
+                                color "#8B8FCC"
+                                size 15
+                                bold True
+                            text "[suspicion_level]/5":
+                                color "#EAF4F1"
+                                size 34
+                                bold True
+                            text "Operational pressure currently on the player.":
+                                color "#AAB0D6"
+                                size 16
+
                 frame:
-                    xsize 320
-                    ysize 150
-                    background Solid("#002922")
-                    padding (22, 18)
+                    xfill True
+                    ysize 1
+                    background Solid("#232843")
 
-                    vbox:
-                        spacing 8
-                        text "Current chapter":
-                            color "#8B8FCC"
-                            size 15
-                            bold True
-                        text "[current_chapter]/5":
-                            color "#EAF4F1"
-                            size 34
-                            bold True
-                        text "Operation branch currently in progress.":
-                            color "#AAB0D6"
-                            size 16
-
-                frame:
-                    xsize 320
-                    ysize 150
-                    background Solid("#171C30")
-                    padding (22, 18)
-
-                    vbox:
-                        spacing 8
-                        text "Knowledge":
-                            color "#8B8FCC"
-                            size 15
-                            bold True
-                        text "[knowledge_score]":
-                            color "#EAF4F1"
-                            size 34
-                            bold True
-                        text "Educational progress accumulated so far.":
-                            color "#AAB0D6"
-                            size 16
-
-                frame:
-                    xsize 320
-                    ysize 150
-                    background Solid("#171C30")
-                    padding (22, 18)
-
-                    vbox:
-                        spacing 8
-                        text "Suspicion":
-                            color "#8B8FCC"
-                            size 15
-                            bold True
-                        text "[suspicion_level]/5":
-                            color "#EAF4F1"
-                            size 34
-                            bold True
-                        text "Operational pressure currently on the player.":
-                            color "#AAB0D6"
-                            size 16
-
-            frame:
-                xfill True
-                ysize 1
-                background Solid("#232843")
-
-            text "This pause menu now uses the same spacing system as the rest of the UI, so buttons, cards, and text blocks stay aligned on different screens.":
-                color "#AAB0D6"
-                size 18
-                xmaximum 960
+                text "This pause menu now uses the same spacing system as the rest of the UI, so buttons, cards, and text blocks stay aligned on different screens.":
+                    color "#AAB0D6"
+                    size 18
+                    xmaximum 960
 
     key "game_menu" action Return()
 
@@ -707,6 +1083,16 @@ screen pause_hub():
 screen dossier():
     tag menu
 
+    $ compact = is_compact_layout()
+    $ dossier_xpos = 24 if compact else 72
+    $ dossier_ypos = 188 if compact else 214
+    $ dossier_xsize = 1872 if compact else 1776
+    $ dossier_ysize = 844 if compact else 770
+    $ dossier_viewport_ysize = 694 if compact else 640
+    $ dossier_term_size = 26 if compact else 24
+    $ dossier_definition_size = 20 if compact else 18
+    $ dossier_footer_size = 19 if compact else 17
+
     use ui_backdrop
     add "logo_watermark"
     use shell_header(
@@ -716,10 +1102,10 @@ screen dossier():
     )
 
     frame:
-        xpos 72
-        ypos 214
-        xsize 1776
-        ysize 770
+        xpos dossier_xpos
+        ypos dossier_ypos
+        xsize dossier_xsize
+        ysize dossier_ysize
         background Solid("#0E1321E6")
         padding (26, 26)
 
@@ -730,7 +1116,7 @@ screen dossier():
 
             viewport:
                 xfill True
-                ysize 640
+                ysize dossier_viewport_ysize
                 scrollbars "vertical"
                 mousewheel True
                 draggable True
@@ -780,13 +1166,13 @@ screen dossier():
 
                                     text term:
                                         color "#EAF4F1"
-                                        size 24
+                                        size dossier_term_size
                                         bold True
                                         xfill True
 
                                     text definition:
                                         color "#AAB0D6"
-                                        size 18
+                                        size dossier_definition_size
                                         xfill True
                                         xmaximum 1540
 
@@ -800,7 +1186,7 @@ screen dossier():
 
                     text "Use the mouse wheel or drag to browse the archive.":
                         color "#AAB0D6"
-                        size 17
+                        size dossier_footer_size
                         yalign 0.5
 
                     textbutton "RETURN":
@@ -812,8 +1198,17 @@ screen dossier():
     key "game_menu" action Return()
 
 
-screen briefing_screen():
+screen intro_controls_screen():
     modal True
+
+    $ compact = is_compact_layout()
+    $ intro_xsize = 1820 if compact else 1080
+    $ intro_title_size = 30 if compact else 26
+    $ intro_text_size = 22 if compact else 19
+    $ intro_text_max = 1600 if compact else 920
+    $ intro_control_size = 20 if compact else 18
+    $ intro_control_label_xsize = 520 if compact else 330
+    $ intro_hint_size = 19 if compact else 17
 
     use ui_backdrop
     add "logo_watermark"
@@ -821,7 +1216,118 @@ screen briefing_screen():
     frame:
         xalign 0.5
         yalign 0.5
-        xsize 980
+        xsize intro_xsize
+        background Solid("#0E1321F2")
+        padding (0, 0)
+
+        vbox:
+            spacing 0
+
+            frame:
+                xfill True
+                ysize 66
+                background Solid("#241926")
+                padding (28, 0)
+
+                text "CLASSIFIED BRIEFING":
+                    color "#EAF4F1"
+                    size 26
+                    bold True
+                    xalign 0.5
+                    yalign 0.5
+
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (36, 30)
+
+                vbox:
+                    spacing 18
+
+                    text "Before you start":
+                        color "#EAF4F1"
+                        size intro_title_size
+                        bold True
+
+                    text "For the best experience, play in fullscreen mode. This helps dialogue, menus, and minigames fit better on itch.io embeds and mobile browsers.":
+                        color "#AAB0D6"
+                        size intro_text_size
+                        xmaximum intro_text_max
+
+                    frame:
+                        xfill True
+                        background Solid("#171C30")
+                        padding (24, 20)
+
+                        vbox:
+                            spacing 10
+
+                            text "Controls":
+                                color "#8B8FCC"
+                                size 22
+                                bold True
+
+                            for control, description in [
+                                ("Click / Enter / Space", "Advance dialogue and confirm UI actions."),
+                                ("Esc / Right Click / MENU", "Open mission control and game settings."),
+                                ("Back / Page Up", "Review previous dialogue."),
+                                ("Notebook", "Save your own reminders while playing."),
+                            ]:
+                                hbox:
+                                    spacing 14
+                                    xfill True
+
+                                    text control:
+                                        color "#EAF4F1"
+                                        size intro_control_size
+                                        bold True
+                                        xsize intro_control_label_xsize
+
+                                    text description:
+                                        color "#AAB0D6"
+                                        size intro_control_size
+                                        xfill True
+
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (24, 22)
+
+                hbox:
+                    spacing 14
+                    xalign 0.5
+
+                    if renpy.variant("pc") or renpy.variant("web"):
+                        textbutton "GO FULLSCREEN":
+                            style "modal_action_button"
+                            xsize 320
+                            action Preference("display", "fullscreen")
+
+                    textbutton "CONTINUE":
+                        style "modal_action_button"
+                        xsize 260
+                        xalign 0.5
+                        action Return()
+
+
+screen briefing_screen():
+    modal True
+
+    $ compact = is_compact_layout()
+    $ briefing_xsize = 1820 if compact else 980
+    $ briefing_title_size = 26 if compact else 24
+    $ briefing_meta_size = 22 if compact else 20
+    $ briefing_body_size = 24 if compact else 22
+    $ briefing_body2_size = 20 if compact else 18
+    $ briefing_body_max = 1600 if compact else 860
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize briefing_xsize
         background Solid("#0E1321F2")
         padding (0, 0)
 
@@ -851,16 +1357,16 @@ screen briefing_screen():
 
                     text "OPERATIVE: Edward Snowden":
                         color "#EAF4F1"
-                        size 24
+                        size briefing_title_size
                         bold True
 
                     text "ASSIGNMENT: NSA Systems Administrator":
                         color "#AAB0D6"
-                        size 20
+                        size briefing_meta_size
 
                     text "CLEARANCE: TS/SCI":
                         color "#8B8FCC"
-                        size 20
+                        size briefing_meta_size
                         bold True
 
                     frame:
@@ -870,13 +1376,13 @@ screen briefing_screen():
 
                     text "Navigate the moral and technical challenges of one of the most significant intelligence leaks in modern history.":
                         color "#EAF4F1"
-                        size 22
-                        xmaximum 860
+                        size briefing_body_size
+                        xmaximum briefing_body_max
 
                     text "Your decisions affect trust, suspicion, and what information can survive the operation.":
                         color "#AAB0D6"
-                        size 18
-                        xmaximum 860
+                        size briefing_body2_size
+                        xmaximum briefing_body_max
 
             frame:
                 xfill True
@@ -1466,6 +1972,8 @@ screen navigation():
 screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
     tag menu
 
+    $ compact = is_compact_layout()
+
     use ui_backdrop
     use shell_header(
         "ARCHIVE INTERFACE",
@@ -1473,66 +1981,148 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
         "A single menu grid now drives save, load, settings, history, help, and reference screens."
     )
 
-    hbox:
-        xpos 72
-        ypos 214
-        spacing 20
-
+    if compact:
         frame:
-            xsize 360
-            ysize 770
+            xpos 24
+            ypos 188
+            xsize 1872
+            ysize 844
             background Solid("#0E1321EE")
             padding (20, 20)
 
-            vbox:
-                spacing 18
+            viewport:
+                xfill True
+                yfill True
+                mousewheel True
+                draggable True
+                scrollbars "vertical"
 
-                use navigation
-
-                null height 6
-
-                textbutton _("Return"):
-                    style "shell_nav_button"
-                    action ShowMenu(menu_return_screen())
-
-        frame:
-            xsize 1396
-            ysize 770
-            background Solid("#0E1321EE")
-            padding (24, 24)
-
-            if scroll == "viewport":
-                viewport:
-                    style "game_menu_viewport"
-                    yinitial yinitial
+                vbox:
+                    spacing 18
                     xfill True
-                    yfill True
-                    scrollbars "vertical"
-                    mousewheel True
-                    draggable True
-                    pagekeys True
 
-                    vbox:
-                        spacing spacing
+                    frame:
                         xfill True
+                        background Solid("#101523")
+                        padding (18, 18)
+
+                        vbox:
+                            spacing 14
+
+                            use navigation
+
+                            textbutton _("Notes"):
+                                style "shell_nav_button"
+                                xfill True
+                                action Show("notebook_panel")
+
+                            textbutton _("Return"):
+                                style "shell_nav_button"
+                                xfill True
+                                action ShowMenu(menu_return_screen())
+
+                    frame:
+                        xfill True
+                        background Solid("#101523")
+                        padding (24, 24)
+
+                        if scroll == "viewport":
+                            viewport:
+                                style "game_menu_viewport"
+                                yinitial yinitial
+                                xfill True
+                                yfill True
+                                scrollbars "vertical"
+                                mousewheel True
+                                draggable True
+                                pagekeys True
+
+                                vbox:
+                                    spacing spacing
+                                    xfill True
+                                    transclude
+
+                        elif scroll == "vpgrid":
+                            vpgrid:
+                                cols 1
+                                yinitial yinitial
+                                xfill True
+                                yfill True
+                                scrollbars "vertical"
+                                mousewheel True
+                                draggable True
+                                pagekeys True
+                                spacing spacing
+
+                                transclude
+
+                        else:
+                            transclude
+    else:
+        hbox:
+            xpos 72
+            ypos 214
+            spacing 20
+
+            frame:
+                xsize 360
+                ysize 770
+                background Solid("#0E1321EE")
+                padding (20, 20)
+
+                vbox:
+                    spacing 18
+
+                    use navigation
+
+                    null height 6
+
+                    textbutton _("Notes"):
+                        style "shell_nav_button"
+                        action Show("notebook_panel")
+
+                    textbutton _("Return"):
+                        style "shell_nav_button"
+                        action ShowMenu(menu_return_screen())
+
+            frame:
+                xsize 1396
+                ysize 770
+                background Solid("#0E1321EE")
+                padding (24, 24)
+
+                if scroll == "viewport":
+                    viewport:
+                        style "game_menu_viewport"
+                        yinitial yinitial
+                        xfill True
+                        yfill True
+                        scrollbars "vertical"
+                        mousewheel True
+                        draggable True
+                        pagekeys True
+
+                        vbox:
+                            spacing spacing
+                            xfill True
+                            transclude
+
+                elif scroll == "vpgrid":
+                    vpgrid:
+                        cols 1
+                        yinitial yinitial
+                        xfill True
+                        yfill True
+                        scrollbars "vertical"
+                        mousewheel True
+                        draggable True
+                        pagekeys True
+                        spacing spacing
+
                         transclude
 
-            elif scroll == "vpgrid":
-                vpgrid:
-                    cols 1
-                    yinitial yinitial
-                    xfill True
-                    yfill True
-                    scrollbars "vertical"
-                    mousewheel True
-                    draggable True
-                    pagekeys True
-                    spacing spacing
-
+                else:
                     transclude
-
-            else:
-                transclude
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -1801,7 +2391,7 @@ screen history():
                                     substitute False
 
                         $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
-                        text what:
+                        text highlighted_dialogue(what):
                             color "#EAF4F1"
                             size 19
                             substitute False
@@ -2074,7 +2664,7 @@ screen nvl_dialogue(dialogue):
                     text d.who:
                         id d.who_id
 
-                text d.what:
+                text highlighted_dialogue(d.what):
                     id d.what_id
 
 
@@ -2151,7 +2741,7 @@ screen bubble(who, what):
                 text who:
                     id "who"
 
-        text what:
+        text highlighted_dialogue(what):
             id "what"
 
         default ctc = None
@@ -2234,5 +2824,6 @@ screen quick_menu():
             style_prefix "quick"
 
             textbutton _("Back") action Rollback()
+            textbutton _("Notes") action Show("notebook_panel")
             textbutton _("Save") action ShowMenu("save")
             textbutton _("Menu") action ShowMenu("pause_hub")
