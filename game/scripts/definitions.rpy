@@ -135,6 +135,8 @@ default text_input_attempts = 0
 
 init python:
     import re
+    import os
+    from datetime import datetime
     import store
 
     IMPORTANT_TERMS = [
@@ -219,6 +221,47 @@ init python:
         store.notebook_draft = ""
         renpy.notify("Notebook cleared.")
         renpy.restart_interaction()
+
+    def get_notebook_export_text():
+        header = "FIELD NOTEBOOK\nClassified: The Snowden Files\n\n"
+        body = "\n".join(f"{index}. {entry}" for index, entry in enumerate(store.notebook_entries, 1))
+        return header + body
+
+    def get_notebook_export_dir():
+        paths = [
+            os.path.join(config.basedir, "exports"),
+            os.path.join(os.path.expanduser("~"), "RenPyNotebookExports"),
+        ]
+
+        for path in paths:
+            try:
+                os.makedirs(path, exist_ok=True)
+                return path
+            except Exception:
+                pass
+
+        return None
+
+    def export_notebook_txt():
+        if not store.notebook_entries:
+            renpy.notify("No notes to export.")
+            return
+
+        export_dir = get_notebook_export_dir()
+        if not export_dir:
+            renpy.notify("Could not determine a writable export location.")
+            return
+
+        filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
+        path = os.path.join(export_dir, filename)
+
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(get_notebook_export_text())
+
+            renpy.notify("Your notebook has been exported")
+        except Exception as exc:
+            renpy.notify(f"Failed to export notebook: {exc}")
 
     def highlighted_dialogue(text):
         if not text:
