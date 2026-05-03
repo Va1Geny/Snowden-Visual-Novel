@@ -457,15 +457,15 @@ screen notebook_panel():
     zorder 210
 
     $ compact = is_compact_layout()
-    $ notebook_xsize = 1820 if compact else 1160
-    $ notebook_ysize = 920 if compact else 820
-    $ notebook_title_size = 30 if compact else 26
-    $ notebook_body_size = 20 if compact else 18
-    $ notebook_body_max = 1700 if compact else 1020
-    $ notebook_input_size = 26 if compact else 24
-    $ notebook_entry_size = 21 if compact else 19
-    $ notebook_empty_size = 28 if compact else 24
-    $ notebook_hint_max = 1260 if compact else 820
+    $ notebook_xsize = 1160 if compact else 1820
+    $ notebook_ysize = 820 if compact else 920
+    $ notebook_title_size = 26 if compact else 30
+    $ notebook_body_size = 18 if compact else 20
+    $ notebook_body_max = 1020 if compact else 1700
+    $ notebook_input_size = 24 if compact else 26
+    $ notebook_entry_size = 19 if compact else 21
+    $ notebook_empty_size = 24 if compact else 28
+    $ notebook_hint_max = 820 if compact else 1260
 
     use ui_backdrop
     add "logo_watermark"
@@ -601,28 +601,45 @@ screen notebook_panel():
                 background Solid("#171C30")
                 padding (24, 22)
 
-                hbox:
+                vbox:
                     spacing 12
-                    xalign 0.5
+                    xfill True
 
-                    textbutton "SAVE NOTE":
-                        style "modal_action_button"
-                        xsize 280
-                        action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
+                    text "Exports are saved as plain .txt files to an exports folder or to your user profile if needed.":
+                        color "#AAB0D6"
+                        size 16
+                        xalign 0.5
+                        xmaximum 1100
 
-                    textbutton "CLEAR":
-                        style "modal_action_button"
-                        xsize 220
-                        background Solid("#241926")
-                        hover_background Solid("#4D5186")
-                        action Function(clear_notebook_entries)
+                    hbox:
+                        spacing 12
+                        xalign 0.5
 
-                    textbutton "CLOSE":
-                        style "modal_action_button"
-                        xsize 220
-                        background Solid("#171C30")
-                        hover_background Solid("#4D5186")
-                        action Hide("notebook_panel")
+                        textbutton "EXPORT TXT":
+                            style "modal_action_button"
+                            xsize 220
+                            background Solid("#244C2F")
+                            hover_background Solid("#3A7A58")
+                            action Function(export_notebook_txt)
+
+                        textbutton "SAVE NOTE":
+                            style "modal_action_button"
+                            xsize 280
+                            action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
+
+                        textbutton "CLEAR":
+                            style "modal_action_button"
+                            xsize 220
+                            background Solid("#241926")
+                            hover_background Solid("#4D5186")
+                            action Function(clear_notebook_entries)
+
+                        textbutton "CLOSE":
+                            style "modal_action_button"
+                            xsize 220
+                            background Solid("#171C30")
+                            hover_background Solid("#4D5186")
+                            action Hide("notebook_panel")
 
     key "game_menu" action Hide("notebook_panel")
     key "n" action Hide("notebook_panel")
@@ -2608,7 +2625,7 @@ screen skip_indicator():
 
 
 screen notify(message):
-    zorder 100
+    zorder 300
 
     frame:
         xalign 1.0
