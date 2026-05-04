@@ -133,6 +133,14 @@ default preferences.text_cps = 0
 default preferences.afm_time = 15
 
 
+## Keymap ######################################################################
+##
+## Add Backspace as a rollback key to go back to the previous dialogue line.
+
+init python:
+    config.keymap['rollback'].append('K_BACKSPACE')
+
+
 ## Save directory ##############################################################
 ##
 ## Controls the platform-specific place Ren'Py will place the save files for
