@@ -295,6 +295,15 @@ init python:
 
     config.character_callback = speaker_dimmer
 
+    def autosave_chapter(chapter_num):
+        """Autosave after a chapter completes and show a notification."""
+        try:
+            # Save to a dedicated 'chapter' page so it gets its own tab in the Load screen
+            renpy.save("chapter-%d" % chapter_num, extra_info="Chapter %d" % chapter_num)
+            renpy.notify("Chapter %d autosave complete." % chapter_num)
+        except Exception:
+            renpy.notify("Autosave failed.")
+
     def mouse_parallax(trans, st, at):
         # Provide a subtle parallax based on mouse
         # Ren'Py get_mouse_pos() might return a tuple

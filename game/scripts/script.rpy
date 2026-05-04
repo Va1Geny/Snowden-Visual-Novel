@@ -24,6 +24,7 @@ label start:
 label intro:
     scene black
     with fade
+    $ renpy.pause(1.0, hard=True)
 
     show logo_watermark
 
@@ -34,6 +35,7 @@ label intro:
     $ renpy.pause(3.0)
 
     scene black with dissolve
+    $ renpy.pause(1.0, hard=True)
     show logo_watermark
 
     narrator_voice "The year is 2013."
@@ -279,6 +281,7 @@ label chapter_1:
         $ ch1_outcome = "bad"
 
     call screen chapter_summary(1, "INSIDE THE MACHINE")
+    $ autosave_chapter(1)
 
     jump chapter_2
 
@@ -461,6 +464,7 @@ label chapter_2:
         $ ch2_outcome = "bad"
 
     call screen chapter_summary(2, "THE PRISM REVELATION")
+    $ autosave_chapter(2)
 
     jump chapter_3
 
@@ -755,6 +759,7 @@ label ch3_continue:
         $ ch3_outcome = "bad"
 
     call screen chapter_summary(3, "THE CONTACT")
+    $ autosave_chapter(3)
 
     jump chapter_4
 
@@ -1013,6 +1018,7 @@ label chapter_4:
         $ ch4_outcome = "bad"
 
     call screen chapter_summary(4, "THE ESCAPE")
+    $ autosave_chapter(4)
 
     jump chapter_5
 

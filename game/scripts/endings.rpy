@@ -49,6 +49,7 @@ label determine_ending:
 
 label ending_hero:
     scene black with chapter_transition
+    $ renpy.pause(1.0, hard=True)
     $ show_hud = False
 
     show logo_watermark
@@ -88,6 +89,7 @@ label ending_hero:
 
 label ending_fugitive:
     scene black with chapter_transition
+    $ renpy.pause(1.0, hard=True)
     $ show_hud = False
 
     show logo_watermark
@@ -127,6 +129,7 @@ label ending_fugitive:
 
 label ending_imprisoned:
     scene black with chapter_transition
+    $ renpy.pause(1.0, hard=True)
     $ show_hud = False
 
     show logo_watermark
@@ -166,6 +169,7 @@ label ending_imprisoned:
 
 label ending_silenced:
     scene black with chapter_transition
+    $ renpy.pause(1.0, hard=True)
     $ show_hud = False
 
     show logo_watermark
@@ -205,6 +209,7 @@ label ending_silenced:
 
 label ending_betrayed:
     scene black with chapter_transition
+    $ renpy.pause(1.0, hard=True)
     $ show_hud = False
 
     show logo_watermark
