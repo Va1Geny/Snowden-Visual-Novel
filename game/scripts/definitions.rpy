@@ -115,6 +115,9 @@ default ending_type = ""
 # === UI State ===
 default current_chapter = 1
 default show_hud = True
+default notebook_entries = []
+default notebook_draft = ""
+default suspicion_lockdown_triggered = False
 
 # === Minigame State ===
 default mg_firewall_score = 0
@@ -131,6 +134,148 @@ default text_input_attempts = 0
 ################################################################################
 
 init python:
+    import re
+    import os
+    from datetime import datetime
+    import store
+
+    IMPORTANT_TERMS = [
+        "USA FREEDOM Act",
+        "Virtual Private Network",
+        "The Onion Router",
+        "man-in-the-middle",
+        "Inspector General",
+        "reverse shell",
+        "traffic correlation attack",
+        "Domain Name System",
+        "Boundless Informant",
+        "SecureDrop",
+        "Edward Snowden",
+        "national security",
+        "private IP ranges",
+        "public Wi-Fi",
+        "foreign intelligence",
+        "domestic surveillance",
+        "encryption fingerprints",
+        "network security",
+        "mass surveillance",
+        "XKeyscore",
+        "metadata",
+        "firewall",
+        "VPN",
+        "PGP",
+        "PRISM",
+        "Tor",
+        "TLS",
+        "SSH",
+        "RDP",
+        "DNS",
+        "HTTP",
+        "HTTPS",
+        "Telnet",
+        "AES-256",
+        "OpSec",
+        "zero-day",
+        "FISA",
+        "NSA",
+        "CIA",
+    ]
+
+    def current_viewport_size():
+        width = config.screen_width
+        height = config.screen_height
+
+        try:
+            physical_size = renpy.get_physical_size()
+            if physical_size:
+                width, height = physical_size
+        except Exception:
+            pass
+
+        return width, height
+
+    def is_compact_layout():
+        width, height = current_viewport_size()
+        return renpy.variant("small") or width <= 1280 or height <= 760
+
+    def is_medium_layout():
+        width, height = current_viewport_size()
+        return renpy.variant("touch") or width <= 1600 or height <= 900
+
+    def notebook_entry_count():
+        return len(store.notebook_entries)
+
+    def add_notebook_entry(text):
+        entry = (text or "").strip()
+        if not entry:
+            renpy.notify("Write a note first.")
+            return
+
+        store.notebook_entries = list(store.notebook_entries) + [entry]
+        store.notebook_draft = ""
+        renpy.notify("Saved to notebook.")
+        renpy.restart_interaction()
+
+    def clear_notebook_entries():
+        store.notebook_entries = []
+        store.notebook_draft = ""
+        renpy.notify("Notebook cleared.")
+        renpy.restart_interaction()
+
+    def get_notebook_export_text():
+        header = "FIELD NOTEBOOK\nClassified: The Snowden Files\n\n"
+        body = "\n".join(f"{index}. {entry}" for index, entry in enumerate(store.notebook_entries, 1))
+        return header + body
+
+    def get_notebook_export_dir():
+        paths = [
+            os.path.join(config.basedir, "exports"),
+            os.path.join(os.path.expanduser("~"), "RenPyNotebookExports"),
+        ]
+
+        for path in paths:
+            try:
+                os.makedirs(path, exist_ok=True)
+                return path
+            except Exception:
+                pass
+
+        return None
+
+    def export_notebook_txt():
+        if not store.notebook_entries:
+            renpy.notify("No notes to export.")
+            return
+
+        export_dir = get_notebook_export_dir()
+        if not export_dir:
+            renpy.notify("Could not determine a writable export location.")
+            return
+
+        filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
+        path = os.path.join(export_dir, filename)
+
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(get_notebook_export_text())
+
+            renpy.notify("Your notebook has been exported")
+        except Exception as exc:
+            renpy.notify(f"Failed to export notebook: {exc}")
+
+    def highlighted_dialogue(text):
+        if not text:
+            return text
+
+        result = text
+        for term in sorted(IMPORTANT_TERMS, key=len, reverse=True):
+            pattern = re.compile(r"(?<!\{b\})(%s)(?!\{/b\})" % re.escape(term), re.IGNORECASE)
+            result = pattern.sub(lambda match: "{b}%s{/b}" % match.group(1), result)
+
+        return result
+
+    config.say_menu_text_filter = highlighted_dialogue
+
     def speaker_dimmer(event, interact=True, **kwargs):
         if not interact:
             return
@@ -149,6 +294,15 @@ init python:
                         renpy.show(tag, at_list=[inactive_char])
 
     config.character_callback = speaker_dimmer
+
+    def autosave_chapter(chapter_num):
+        """Autosave after a chapter completes and show a notification."""
+        try:
+            # Save to a dedicated 'chapter' page so it gets its own tab in the Load screen
+            renpy.save("chapter-%d" % chapter_num, extra_info="Chapter %d" % chapter_num)
+            renpy.notify("Chapter %d autosave complete." % chapter_num)
+        except Exception:
+            renpy.notify("Autosave failed.")
 
     def mouse_parallax(trans, st, at):
         # Provide a subtle parallax based on mouse
@@ -211,9 +365,7 @@ image bg_nsa_main:
     "backgrounds/chapter_1/bg_nsa_main.png"
     xysize (1920, 1080)
 
-image bg_nsa_terminal:
-    "backgrounds/chapter_1/bg_nsa_terminal.png"
-    xysize (1920, 1080)
+image bg_nsa_terminal = Movie(play="images/backgrounds/chapter_1/bg_nsa_terminal.webm", loop=True)
 
 image bg_nsa_servers:
     "backgrounds/chapter_2/bg_nsa_servers.png"
@@ -274,9 +426,11 @@ image bg_sheremetyevo:
 # === ACTIVE / INACTIVE STATES ===
 
 transform active_char:
+    xanchor 0.5 yanchor 1.0
     ease 0.25 matrixcolor SaturationMatrix(1.0) zoom 1.18 alpha 1.0
 
 transform inactive_char:
+    xanchor 0.5 yanchor 1.0
     ease 0.25 matrixcolor SaturationMatrix(0.3) zoom 1.12 alpha 0.9
 
 # === ENTRANCE TRANSFORMS ===
@@ -285,28 +439,28 @@ transform inactive_char:
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
-    xpos -0.20 ypos 1.50 alpha 0.0 zoom 1.0
-    ease 0.6 xpos 0.20 ypos 1.60 alpha 1.0 zoom 1.18
+    xpos -0.20 ypos 1.60 alpha 0.0 zoom 1.0
+    ease 0.6 xpos 0.25 ypos 1.60 alpha 1.0 zoom 1.18
 
 # Slide in from right
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 1.20 ypos 1.50 alpha 0.0 zoom 1.0
-    ease 0.6 xpos 0.80 ypos 1.60 alpha 1.0 zoom 1.18
+    xpos 1.20 ypos 1.60 alpha 0.0 zoom 1.0
+    ease 0.6 xpos 0.75 ypos 1.60 alpha 1.0 zoom 1.18
 
 # Fade in from center
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.5 ypos 1.50 alpha 0.0 zoom 1.0
+    xpos 0.5 ypos 1.60 alpha 0.0 zoom 1.0
     ease 0.5 xpos 0.5 ypos 1.60 alpha 1.0 zoom 1.18
 
 transform stage_center:
     xanchor 0.5
     yanchor 1.0
     xpos 0.5
-    ypos 1.50
+    ypos 1.60
 
 # === IDLE TRANSFORMS ===
 
