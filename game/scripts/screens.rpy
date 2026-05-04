@@ -2213,14 +2213,21 @@ screen file_slots(title):
                     background Solid("#101523")
                     hover_background Solid("#1B2034")
                     padding (18, 10)
-                    action page_name_value.Toggle()
+                    action If(FileCurrentPage() == "chapter", NullAction(), page_name_value.Toggle())
 
-                    input:
-                        value page_name_value
-                        color "#EAF4F1"
-                        size 22
-                        xalign 0.5
-                        text_align 0.5
+                    if FileCurrentPage() == "chapter":
+                        text _("Chapter saves"):
+                            color "#EAF4F1"
+                            size 22
+                            xalign 0.5
+                            text_align 0.5
+                    else:
+                        input:
+                            value page_name_value
+                            color "#EAF4F1"
+                            size 22
+                            xalign 0.5
+                            text_align 0.5
 
                 grid gui.file_slot_cols gui.file_slot_rows:
                     xalign 0.5
@@ -2258,16 +2265,27 @@ screen file_slots(title):
                     xalign 0.5
                     spacing 10
 
-                    textbutton _("<"):
-                        style "shell_nav_button"
-                        xsize 74
-                        action FilePagePrevious()
+                    if FileCurrentPage() == "chapter":
+                        textbutton _("<"):
+                            style "shell_nav_button"
+                            xsize 74
+                            action FilePage("auto")
+                    else:
+                        textbutton _("<"):
+                            style "shell_nav_button"
+                            xsize 74
+                            action FilePagePrevious()
 
                     if config.has_autosave:
                         textbutton _("{#auto_page}A"):
                             style "shell_nav_button"
                             xsize 74
                             action FilePage("auto")
+
+                    textbutton _("{#chapter_page}C"):
+                        style "shell_nav_button"
+                        xsize 74
+                        action FilePage("chapter")
 
                     if config.has_quicksave:
                         textbutton _("{#quick_page}Q"):
@@ -2281,10 +2299,16 @@ screen file_slots(title):
                             xsize 74
                             action FilePage(page)
 
-                    textbutton _(">"):
-                        style "shell_nav_button"
-                        xsize 74
-                        action FilePageNext()
+                    if FileCurrentPage() == "chapter":
+                        textbutton _(">"):
+                            style "shell_nav_button"
+                            xsize 74
+                            action FilePage(1)
+                    else:
+                        textbutton _(">"):
+                            style "shell_nav_button"
+                            xsize 74
+                            action FilePageNext()
 
 
 screen preferences():
