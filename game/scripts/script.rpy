@@ -536,7 +536,7 @@ label chapter_3:
 
     # --- Choice 1: Secure channel or personal email? ---
 
-    im "I've identified two journalists who might have the courage to publish: Laura Poitras, a documentary filmmaker who's been investigating NSA surveillance for years, and Glenn Greenwald, a constitutional lawyer turned journalist at The Guardian."
+    im "I've identified two journalists who might have the courage to publish: Leah Portman, a documentary filmmaker who's been investigating NSA surveillance for years, and Grayson Wardell, a constitutional lawyer turned journalist at The Guardian."
 
     im "The challenge is reaching them securely. PGP encryption with Tor would make my messages virtually untraceable — but it requires technical knowledge to set up correctly. One mistake in the key exchange and the whole channel is compromised."
 
@@ -550,7 +550,7 @@ label chapter_3:
             else:
                 jump ch3_secure_fail
 
-        "Contact Glenn Greenwald directly through his public email.":
+        "Contact Grayson Wardell directly through his public email.":
             $ tree_record_choice("choice_ch3_1", "email")
             $ contacts_secured += 1
             $ renpy.notify("Contacts +1")
@@ -573,7 +573,7 @@ label ch3_secure_success:
 
     scene bg_hong_kong_terminal at parallax with dissolve
 
-    narrator_voice "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Laura Poitras."
+    narrator_voice "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Leah Portman."
 
     show poitras neutral at enter_right
     with dissolve
@@ -585,7 +585,7 @@ label ch3_secure_success:
     show poitras cautious
     poitras "Can you prove it?"
 
-    e "I can prove everything. But we need to meet in person. I'll also reach out to Glenn Greenwald — together, you can publish the full story."
+    e "I can prove everything. But we need to meet in person. I'll also reach out to Grayson Wardell — together, you can publish the full story."
 
     jump ch3_continue
 
@@ -607,9 +607,9 @@ label ch3_greenwald_contact:
     show greenwald neutral at enter_right
     with dissolve
 
-    narrator_voice "You reach out to Glenn Greenwald through his public contact information. It's faster, but less secure."
+    narrator_voice "You reach out to Grayson Wardell through his public contact information. It's faster, but less secure."
 
-    e "Mr. Greenwald, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
+    e "Mr. Wardell, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
 
     show greenwald skeptical
     greenwald "I get messages like this every week. Can you give me more details?"
@@ -702,12 +702,12 @@ label ch3_continue:
 
     # --- Putting It Together ---
 
-    im "Now it's time to put that knowledge into practice. I've drafted an email to Glenn Greenwald — but before I can send it, I need to strip every trace of my identity from the message. One mistake, and the NSA finds me."
+    im "Now it's time to put that knowledge into practice. I've drafted an email to Grayson Wardell — but before I can send it, I need to strip every trace of my identity from the message. One mistake, and the NSA finds me."
 
     sys "// SYSTEM NOTE: Every digital message carries metadata — sender address, device info, routing headers, file authorship — that can expose your identity even if the content is encrypted. //"
 
     window hide
-    $ mg_intro3 = renpy.call_screen("minigame_intro", title="CLEAN THE MESSAGE", description="Snowden has drafted an email to journalist Glenn Greenwald. Find and remove all 8 dangerous metadata elements before sending. Click on suspicious items to inspect and clean them.")
+    $ mg_intro3 = renpy.call_screen("minigame_intro", title="CLEAN THE MESSAGE", description="Snowden has drafted an email to journalist Grayson Wardell. Find and remove all 8 dangerous metadata elements before sending. Click on suspicious items to inspect and clean them.")
 
     if mg_intro3:
         $ quick_menu = False
