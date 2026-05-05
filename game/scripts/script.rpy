@@ -70,6 +70,7 @@ label intro:
 ################################################################################
 
 label chapter_1:
+    call show_loading_screen
     $ current_chapter = 1
     $ show_hud = True
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 1)
@@ -301,6 +302,7 @@ label chapter_1:
 ################################################################################
 
 label chapter_2:
+    call show_loading_screen
     $ current_chapter = 2
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 2)
 
@@ -484,6 +486,7 @@ label chapter_2:
 ################################################################################
 
 label chapter_3:
+    call show_loading_screen
     $ current_chapter = 3
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 3)
 
@@ -788,6 +791,7 @@ label ch3_continue:
 ################################################################################
 
 label chapter_4:
+    call show_loading_screen
     $ current_chapter = 4
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 4)
 
@@ -1052,6 +1056,7 @@ label chapter_4:
 ################################################################################
 
 label chapter_5:
+    call show_loading_screen
     $ current_chapter = 5
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 5)
 
