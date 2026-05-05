@@ -1756,7 +1756,7 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
 
                         if selected == correct_index:
                             text "Correct - Nice catch":
-                                color "#EAF4F1"
+                                color "#00FF88"
                                 size 24
                                 bold True
                                 xalign 0.5
@@ -1942,7 +1942,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                 xalign 0.5
 
                                 text "Correct":
-                                    color "#EAF4F1"
+                                    color "#00FF88"
                                     size 24
                                     bold True
                                     xalign 0.5

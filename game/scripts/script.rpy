@@ -953,7 +953,12 @@ label chapter_4:
 
     $ mg_intro4 = renpy.call_screen("minigame_intro", title="COVER YOUR TRACKS", description="NSA forensic agents are knocking on the hotel door. You have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive. Type commands or select tokens to destroy all 8 forensic traces.")
 
-    call minigame_4_cover_tracks
+    if mg_intro4:
+        call minigame_4_cover_tracks
+    else:
+        $ knowledge_score = max(0, knowledge_score - 1)
+        $ escape_successful = False
+        $ renpy.notify("Challenge skipped. Knowledge -1")
 
     if escape_successful and evidence_secured:
         im "Clean. Not a single trace left on this machine. When they get here, they'll find nothing but a blank hard drive and an empty hotel room."

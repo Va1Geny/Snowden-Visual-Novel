@@ -263,151 +263,210 @@ transform slide_up_delay(d):
 
 screen ending_screen(title, color, description, lessons):
     modal True
-    # Dark terminal background
-    add "#050A0F"
     
-    # Animated subtle logo
-    add "animated_logo":
+    # ── Background Layer ──────────────────────────────────────────────
+    add "#080C10"
+    
+    add Solid("#00FFD105")
+    
+    # Subtle logo watermark
+    add "images/logo.png":
         xalign 0.5 yalign 0.5
-        alpha 0.05
+        alpha 0.03
+        fit "contain"
+        xsize 1000 ysize 1000
 
+    # ── Main Content Viewport ──────────────────────────────────────────
     viewport:
         xfill True yfill True
         scrollbars "vertical"
         mousewheel True
-
-        fixed:
-            xfill True
-            yfit True
-
+        draggable True
+        
+        vbox:
+            xalign 0.5
+            xsize 1200
+            spacing 40
+            
+            null height 80
+            
+            # ── HEADER: ENDING TITLE ──
+            vbox:
+                xalign 0.5
+                spacing 10
+                text "// MISSION COMPLETE //" color "#7A8A99" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
+                text title:
+                    color color
+                    size 72
+                    bold True
+                    xalign 0.5
+                    font "DejaVuSans.ttf"
+                    at terminal_glitch
+                frame:
+                    xalign 0.5 xsize 400 ysize 2
+                    background color
+            
+            # ── DESCRIPTION CARD ──
             frame:
-                xpos 0.5 xanchor 0.5
-                yoffset 60
-                xsize 1100
-                background Solid("#000000CC")
-                padding (40, 40)
+                xalign 0.5 xsize 1000
+                background "#0D1117F0"
+                padding (40, 30)
+                at slide_up_delay(0.4)
                 
-                vbox:
-                    xfill True
-                    spacing 30
+                text description:
+                    color "#E8E8E8"
+                    size 24
+                    text_align 0.5
+                    line_spacing 6
+                    font "DejaVuSans.ttf"
+            
+            # ── METRICS & LOGS ──
+            hbox:
+                xalign 0.5
+                spacing 30
+                
+                # Left Side: Mission Metrics
+                frame:
+                    xsize 580 ysize 420
+                    background "#0D1117F0"
+                    padding (24, 20)
+                    at slide_up_delay(0.8)
                     
-                    # Header
-                    text title:
-                        color color
-                        size 56
-                        bold True
-                        xalign 0.5
-                        at terminal_glitch
-
-                    null height 5
-
-                    # Description Box
-                    frame:
-                        xfill True
-                        background Solid("#0A121A")
-                        padding (30, 25)
-                        at slide_up_delay(0.5)
-
-                        text description:
-                            color "#E8E8E8"
-                            size 22
-                            xalign 0.5
-                            text_align 0.5
-
-                    null height 10
-
-                    # Score Breakdown
-                    frame:
-                        xfill True
-                        background Solid("#0A121A")
-                        padding (30, 25)
-                        at slide_up_delay(1.0)
-
+                    vbox:
+                        spacing 15
+                        hbox:
+                            xfill True
+                            text "MISSION METRICS" color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
+                            text "[config.version]" color "#3A4A55" size 12 font "DejaVuSans.ttf" xalign 1.0
+                        
+                        null height 10
+                        
+                        # Knowledge Bar
                         vbox:
-                            spacing 15
-
-                            text "> root@nsa-surveillance:~# ./mission_debrief.sh" color "#00FF41" size 20
-                            null height 5
-
+                            spacing 4
                             hbox:
                                 xfill True
-                                text "Knowledge Score:" color "#888888" size 20
-                                text "[knowledge_score]/10" color "#00FFD1" size 20 bold True xalign 1.0
-
-                            hbox:
-                                xfill True
-                                text "Trust Score:" color "#888888" size 20
-                                text "[trust_score]" color "#FFD700" size 20 bold True xalign 1.0
-
-                            hbox:
-                                xfill True
-                                text "Suspicion Level:" color "#888888" size 20
-                                text "[suspicion_level]/5" color "#FF2D55" size 20 bold True xalign 1.0
-
-                            hbox:
-                                xfill True
-                                text "Contacts Secured:" color "#888888" size 20
-                                text "[contacts_secured]" color "#00FFD1" size 20 bold True xalign 1.0
-
-                            hbox:
-                                xfill True
-                                text "Evidence Secured:" color "#888888" size 20
-                                if evidence_secured:
-                                    text "YES" color "#00FF00" size 20 bold True xalign 1.0
-                                else:
-                                    text "NO" color "#FF2D55" size 20 bold True xalign 1.0
-
-                            hbox:
-                                xfill True
-                                text "Escape:" color "#888888" size 20
-                                if escape_successful:
-                                    text "SUCCESSFUL" color "#00FF00" size 20 bold True xalign 1.0
-                                else:
-                                    text "FAILED" color "#FF2D55" size 20 bold True xalign 1.0
-
-                    # What did we learn?
-                    frame:
-                        xfill True
-                        background Solid("#0A121A")
-                        padding (30, 25)
-                        at slide_up_delay(1.5)
-
+                                text "OPERATIONAL KNOWLEDGE" color "#7A8A99" size 12 font "DejaVuSans.ttf"
+                                text "[knowledge_score]/10" color "#00FFD1" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
+                            frame:
+                                xfill True ysize 8
+                                background "#1A2530"
+                                frame:
+                                    xsize int(532 * (knowledge_score / 10.0)) ysize 8
+                                    background "#00FFD1"
+                        
+                        # Suspicion Bar (Inverted Color)
                         vbox:
-                            spacing 15
+                            spacing 4
+                            hbox:
+                                xfill True
+                                text "NSA SUSPICION LEVEL" color "#7A8A99" size 12 font "DejaVuSans.ttf"
+                                text "[suspicion_level]/5" color "#FF2D55" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
+                            frame:
+                                xfill True ysize 8
+                                background "#1A2530"
+                                frame:
+                                    xsize int(532 * (suspicion_level / 5.0)) ysize 8
+                                    background "#FF2D55"
 
-                            text "> root@nsa-surveillance:~# cat post_mortem_analysis.log" color "#00FF41" size 20
+                        null height 10
+                        frame:
+                            xfill True ysize 1
+                            background "#2A3540"
+                        null height 5
 
-                            null height 5
+                        # Toggle Stats
+                        hbox:
+                            xfill True
+                            text "IDENTITY STATUS:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            if identity_exposed:
+                                text "EXPOSED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                            else:
+                                text "SECURE" color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                        
+                        hbox:
+                            xfill True
+                            text "EVIDENCE STATUS:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            if evidence_secured:
+                                text "ENCRYPTED & SENT" color "#00FFD1" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                            else:
+                                text "LOST/RECOVERED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
 
-                            for i, lesson in enumerate(lessons):
-                                hbox:
-                                    spacing 15
-                                    text ">>" color color size 18 yalign 0.0 bold True
-                                    text lesson color "#00FF41" size 18
+                        hbox:
+                            xfill True
+                            text "ESCAPE ROUTE:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            if escape_successful:
+                                text "SUCCESSFUL" color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                            else:
+                                text "COMPROMISED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
 
-                    null height 30
+                        hbox:
+                            xfill True
+                            text "CONTACTS SECURED:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text "[contacts_secured]" color "#FFD700" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
 
-                    # Buttons
-                    hbox:
-                        xalign 0.5
-                        spacing 50
-                        at slide_up_delay(2.0)
+                # Right Side: Post-Mortem Analysis
+                frame:
+                    xsize 580 ysize 420
+                    background "#0D1117F0"
+                    padding (24, 20)
+                    at slide_up_delay(1.2)
+                    
+                    vbox:
+                        spacing 15
+                        text "POST-MORTEM ANALYSIS" color "#FFD700" size 14 bold True font "DejaVuSans.ttf"
+                        
+                        null height 5
+                        
+                        viewport:
+                            xfill True yfill True
+                            scrollbars "vertical"
+                            mousewheel True
+                            vbox:
+                                spacing 12
+                                for i, lesson in enumerate(lessons):
+                                    hbox:
+                                        spacing 12
+                                        text str(i+1) color "#FFD700" size 14 bold True font "DejaVuSans.ttf" xsize 20
+                                        text lesson color "#B8C8D8" size 14 font "DejaVuSans.ttf" line_spacing 4
 
-                        textbutton "> [[ EXECUTE: RESTART ]":
-                            text_color "#00FFD1"
-                            text_hover_color "#FFFFFF"
-                            text_size 24
-                            text_bold True
-                            action [Return("restart")]
+            # ── ACTION BUTTONS ──
+            hbox:
+                xalign 0.5
+                spacing 60
+                at slide_up_delay(1.6)
+                
+                textbutton "> REBOOT SYSTEM (RESTART)":
+                    background "#1A2530"
+                    hover_background "#00FFD1"
+                    text_color "#00FFD1"
+                    text_hover_color "#080C10"
+                    text_size 20
+                    text_bold True
+                    text_font "DejaVuSans.ttf"
+                    padding (40, 16)
+                    action [Return("restart")]
 
-                        textbutton "> [[ SYSTEM: EXIT ]":
-                            text_color "#FF2D55"
-                            text_hover_color "#FFFFFF"
-                            text_size 24
-                            text_bold True
-                            action MainMenu()
+                textbutton "> TERMINATE SESSION (EXIT)":
+                    background "#251A20"
+                    hover_background "#FF2D55"
+                    text_color "#FF2D55"
+                    text_hover_color "#FFFFFF"
+                    text_size 20
+                    text_bold True
+                    text_font "DejaVuSans.ttf"
+                    padding (40, 16)
+                    action MainMenu()
 
-                    null height 40
+            null height 100
+
+    # Scanline Overlay
+    add Solid("#00000020")
+    for _y in range(0, 1080, 4):
+        add Solid("#00000040"):
+            xsize 1920 ysize 1
+            xpos 0 ypos _y
+
 
 ################################################################################
 ## DEV SHORTCUT: ENDING SELECTOR
