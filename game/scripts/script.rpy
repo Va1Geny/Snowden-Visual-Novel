@@ -939,24 +939,26 @@ label chapter_4:
     sys "// ROUTE STRATEGY: VPN → Tor nodes → Secure relay → Destination. Avoid GOV MONITOR. Fewer hops = less exposure time. //"
 
     window hide
-    $ mg_intro4 = renpy.call_screen("minigame_intro", title="TRACE THE ROUTE", description="Build a safe route hop by hop. Green nodes help you stay hidden, while the red monitor exposes the whole mission.")
 
-    if mg_intro4:
-        $ quick_menu = False
-        $ show_hud = False
-        $ mg_trace_solved = renpy.call_screen("minigame_trace")
-        $ quick_menu = True
-        $ show_hud = True
-        if mg_trace_solved:
-            $ escape_successful = True
-            $ knowledge_score += 2
-            $ renpy.notify("Knowledge +2 | Escape route secured!")
-        else:
-            $ identity_exposed = True
-            $ renpy.notify("Identity Exposed!")
+    im "But before I can run, I need to wipe everything. Every file, every log, every trace. If I leave even one digital breadcrumb, it's over."
+
+    im "I have 90 seconds before NSA agents reach my room. 8 digital traces that prove I copied the PRISM files. Each one needs a different command to destroy."
+
+    sys "// ALERT: NSA RESPONSE TEAM EN ROUTE. ESTIMATED ARRIVAL: 90 SECONDS. BEGIN DIGITAL EVIDENCE ELIMINATION. //"
+
+    $ mg_intro4 = renpy.call_screen("minigame_intro", title="COVER YOUR TRACKS", description="NSA forensic agents are knocking on the hotel door. You have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive. Type commands or select tokens to destroy all 8 forensic traces.")
+
+    call minigame_4_cover_tracks
+
+    if escape_successful and evidence_secured:
+        im "Clean. Not a single trace left on this machine. When they get here, they'll find nothing but a blank hard drive and an empty hotel room."
+        sys "// ALL DIGITAL EVIDENCE ELIMINATED. DEVICE IS FORENSICALLY CLEAN. //"
+    elif escape_successful:
+        im "Most of it is gone, but I'm not sure I got everything. Some fragments might still be recoverable. I need to move — now."
+        sys "// PARTIAL EVIDENCE REMAINS. FORENSIC RECOVERY POSSIBLE. //"
     else:
-        $ knowledge_score -= 1
-        $ renpy.notify("Knowledge -1 (Skipped)")
+        im "I ran out of time. They'll find everything — the files, the history, the logs. My identity is compromised."
+        sys "// WARNING: FORENSIC EVIDENCE RECOVERED. IDENTITY COMPROMISED. //"
 
     # --- Choice 2: Fly to Russia or seek another country? ---
 

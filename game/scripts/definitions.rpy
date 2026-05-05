@@ -124,6 +124,8 @@ default mg_firewall_score = 0
 default mg_decrypt_solved = False
 default mg_opsec_score = 0
 default mg_trace_solved = False
+default cover_wiped = 0
+default cover_failed = 0
 
 # === Question Tracking ===
 default text_input_attempts = 0

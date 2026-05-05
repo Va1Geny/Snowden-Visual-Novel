@@ -502,3 +502,98 @@ style ctm_scanner_value:
     color "#D8E4F0"
     size 14
 
+# === Cover Your Tracks — Minigame 4 Terminal Styles ===
+
+style ct_panel_title:
+    color "#00FFD1"
+    font "DejaVuSans.ttf"
+    size 14
+    bold True
+
+style ct_text:
+    color "#E8E8E8"
+    font "DejaVuSans.ttf"
+    size 15
+
+style ct_text_dim:
+    color "#7A8A99"
+    font "DejaVuSans.ttf"
+    size 13
+
+style ct_danger:
+    color "#FF2D55"
+    font "DejaVuSans.ttf"
+    size 15
+    bold True
+
+style ct_success:
+    color "#00FF88"
+    font "DejaVuSans.ttf"
+    size 15
+    bold True
+
+style ct_cmd:
+    color "#A8FF78"
+    font "DejaVuSans.ttf"
+    size 16
+
+style ct_prompt:
+    color "#00FFD1"
+    font "DejaVuSans.ttf"
+    size 16
+    bold True
+
+style ct_execute_btn is button:
+    background Solid("#003A2A")
+    hover_background Solid("#005A40")
+    padding (30, 14)
+    xalign 0.5
+
+style ct_execute_btn_text is button_text:
+    color "#00FFD1"
+    font "DejaVuSans.ttf"
+    size 18
+    bold True
+
+style ct_hint_btn is button:
+    background Solid("#2A2000")
+    hover_background Solid("#3A3000")
+    padding (15, 8)
+
+style ct_hint_btn_text is button_text:
+    color "#FFD700"
+    font "DejaVuSans.ttf"
+    size 14
+
+style ct_token_btn is button:
+    background Solid("#1A2A2A")
+    hover_background Solid("#2A3A3A")
+    padding (10, 6)
+
+style ct_token_btn_text is button_text:
+    color "#A8FF78"
+    font "DejaVuSans.ttf"
+    size 15
+
+style ct_breakdown_key:
+    color "#00FFD1"
+    font "DejaVuSans.ttf"
+    size 14
+    bold True
+
+style ct_breakdown_val:
+    color "#7A8A99"
+    font "DejaVuSans.ttf"
+    size 14
+
+style ct_learn_title:
+    color "#FFD700"
+    font "DejaVuSans.ttf"
+    size 14
+    bold True
+
+style ct_learn_body:
+    color "#CCCCCC"
+    font "DejaVuSans.ttf"
+    size 16
+    line_leading 5
