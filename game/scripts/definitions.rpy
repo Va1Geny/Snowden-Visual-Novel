@@ -19,7 +19,7 @@ define e = Character("You",
     who_bold=True)
 
 # === JOURNALISTS ===
-define greenwald = Character("GLENN GREENWALD",
+define greenwald = Character("Grayson Wardell",
     image="greenwald",
     color="#FFD700",
     what_color="#E8E8E8",
@@ -27,7 +27,7 @@ define greenwald = Character("GLENN GREENWALD",
     who_size=22,
     what_size=20)
 
-define poitras = Character("LAURA POITRAS",
+define poitras = Character("Leah Portman",
     image="poitras",
     color="#FF69B4",
     what_color="#E8E8E8",
@@ -36,14 +36,14 @@ define poitras = Character("LAURA POITRAS",
     what_size=20)
 
 # === ANTAGONISTS / AUTHORITY ===
-define nsa_chief = Character("NSA DIRECTOR",
+define nsa_chief = Character("Director Marcus Hale",
     color="#FF2D55",
     what_color="#E8E8E8",
     who_bold=True,
     who_size=22,
     what_size=20)
 
-define supervisor = Character("SUPERVISOR",
+define supervisor = Character("Supervisor Daniel Cross",
     image="supervisor",
     color="#FF6B35",
     what_color="#E8E8E8",
@@ -60,7 +60,7 @@ define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
     who_size=22,
     what_size=20)
 
-define russian_official = Character("RUSSIAN OFFICIAL",
+define russian_official = Character("Agent Viktor Malenkov",
     image="russian_official",
     color="#CC2222",
     what_color="#E8E8E8",

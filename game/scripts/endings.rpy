@@ -244,20 +244,32 @@ label ending_betrayed:
 
 
 ################################################################################
-## ENDING SCREEN (Shared UI)
+## ENDING SCREEN (Shared UI - Hacker/Terminal Aesthetic)
 ################################################################################
+
+transform terminal_glitch:
+    alpha 0.0 yoffset 20
+    easein 0.8 alpha 1.0 yoffset 0
+    block:
+        linear 0.05 alpha 0.9
+        linear 0.05 alpha 1.0
+        pause 3.0
+        repeat
+
+transform slide_up_delay(d):
+    alpha 0.0 yoffset 50
+    pause d
+    easein 1.0 alpha 1.0 yoffset 0
 
 screen ending_screen(title, color, description, lessons):
     modal True
-    add "#0A0E1A"
-
-    add "images/logo.png":
-        xalign 0.5
-        yalign 0.5
-        alpha 0.15
-        fit "contain"
-        xsize 900
-        ysize 900
+    # Dark terminal background
+    add "#050A0F"
+    
+    # Animated subtle logo
+    add "animated_logo":
+        xalign 0.5 yalign 0.5
+        alpha 0.05
 
     viewport:
         xfill True yfill True
@@ -269,47 +281,53 @@ screen ending_screen(title, color, description, lessons):
             yfit True
 
             frame:
-                xpos 0.5
-                xanchor 0.5
+                xpos 0.5 xanchor 0.5
                 yoffset 60
-                xsize 1200
-                background None
-                padding (0, 0)
-
+                xsize 1100
+                background Solid("#000000CC")
+                padding (40, 40)
+                
                 vbox:
                     xfill True
-                    spacing 25
-
-                    # Ending title
+                    spacing 30
+                    
+                    # Header
                     text title:
                         color color
-                        size 48
+                        size 56
                         bold True
                         xalign 0.5
+                        at terminal_glitch
+
+                    null height 5
+
+                    # Description Box
+                    frame:
+                        xfill True
+                        background Solid("#0A121A")
+                        padding (30, 25)
+                        at slide_up_delay(0.5)
+
+                        text description:
+                            color "#E8E8E8"
+                            size 22
+                            xalign 0.5
+                            text_align 0.5
 
                     null height 10
 
-                    # Description
-                    text description:
-                        color "#E8E8E8"
-                        size 22
-                        xalign 0.5
-                        text_align 0.5
-
-                    null height 20
-
-                    # Score breakdown
+                    # Score Breakdown
                     frame:
                         xfill True
-                        background "#111827"
+                        background Solid("#0A121A")
                         padding (30, 25)
+                        at slide_up_delay(1.0)
 
                         vbox:
-                            spacing 12
+                            spacing 15
 
-                            text "// MISSION DEBRIEF //" color "#00FFD1" size 24 bold True xalign 0.5
-
-                            null height 10
+                            text "> root@nsa-surveillance:~# ./mission_debrief.sh" color "#00FF41" size 20
+                            null height 5
 
                             hbox:
                                 xfill True
@@ -350,41 +368,110 @@ screen ending_screen(title, color, description, lessons):
                     # What did we learn?
                     frame:
                         xfill True
-                        background "#111827"
+                        background Solid("#0A121A")
                         padding (30, 25)
+                        at slide_up_delay(1.5)
 
                         vbox:
-                            spacing 12
+                            spacing 15
 
-                            text "// WHAT DID WE LEARN? //" color "#FFD700" size 24 bold True xalign 0.5
+                            text "> root@nsa-surveillance:~# cat post_mortem_analysis.log" color "#00FF41" size 20
 
                             null height 5
 
                             for i, lesson in enumerate(lessons):
                                 hbox:
-                                    spacing 10
-                                    text "▸" color "#00FFD1" size 18 yalign 0.0
-                                    text lesson color "#CCCCCC" size 18
+                                    spacing 15
+                                    text ">>" color color size 18 yalign 0.0 bold True
+                                    text lesson color "#00FF41" size 18
 
-                    null height 20
+                    null height 30
 
                     # Buttons
                     hbox:
                         xalign 0.5
-                        spacing 40
+                        spacing 50
+                        at slide_up_delay(2.0)
 
-                        textbutton "> PLAY AGAIN":
+                        textbutton "> [[ EXECUTE: RESTART ]":
                             text_color "#00FFD1"
                             text_hover_color "#FFFFFF"
                             text_size 24
                             text_bold True
                             action [Return("restart")]
 
-                        textbutton "> MAIN MENU":
-                            text_color "#888888"
+                        textbutton "> [[ SYSTEM: EXIT ]":
+                            text_color "#FF2D55"
                             text_hover_color "#FFFFFF"
                             text_size 24
                             text_bold True
                             action MainMenu()
 
                     null height 40
+
+################################################################################
+## DEV SHORTCUT: ENDING SELECTOR
+################################################################################
+
+label dev_ending_selector:
+    scene black with dissolve
+    
+    menu:
+        "Select Ending to View (Dev Tool):"
+        "Ending 1: The Hero":
+            # Set minimum requirements for the UI breakdown to not look weird
+            $ knowledge_score = 10
+            $ trust_score = 5
+            $ suspicion_level = 0
+            $ contacts_secured = 3
+            $ evidence_secured = True
+            $ escape_successful = True
+            $ identity_exposed = False
+            jump ending_hero
+            
+        "Ending 2: The Fugitive":
+            $ knowledge_score = 6
+            $ trust_score = 3
+            $ suspicion_level = 2
+            $ contacts_secured = 1
+            $ evidence_secured = True
+            $ escape_successful = True
+            $ identity_exposed = True
+            jump ending_fugitive
+            
+        "Ending 3: Imprisoned":
+            $ knowledge_score = 3
+            $ trust_score = 2
+            $ suspicion_level = 4
+            $ contacts_secured = 1
+            $ evidence_secured = False
+            $ escape_successful = False
+            $ identity_exposed = True
+            jump ending_imprisoned
+            
+        "Ending 4: Silenced":
+            $ knowledge_score = 4
+            $ trust_score = 1
+            $ suspicion_level = 5
+            $ contacts_secured = 0
+            $ evidence_secured = False
+            $ escape_successful = False
+            $ identity_exposed = False
+            jump ending_silenced
+            
+        "Ending 5: Betrayed":
+            $ knowledge_score = 2
+            $ trust_score = -2
+            $ suspicion_level = 5
+            $ contacts_secured = 0
+            $ evidence_secured = False
+            $ escape_successful = False
+            $ identity_exposed = True
+            jump ending_betrayed
+            
+        "Cancel":
+            return
+
+screen secret_ending_shortcut():
+    key "shift_K_0" action Jump("dev_ending_selector")
+    key "shift_0" action Jump("dev_ending_selector")
