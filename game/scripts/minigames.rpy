@@ -287,7 +287,7 @@ init python:
             return "#FF2D55"
 
     def fw_current_time_limit():
-        limits = [15.0, 14.0, 13.0, 12.0, 12.0, 11.0, 10.0, 9.0]
+        limits = [20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 14.0]
         idx = max(0, min(fw_state["current_index"], len(limits) - 1))
         return limits[idx]
 
