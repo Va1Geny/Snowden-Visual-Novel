@@ -8,6 +8,7 @@
 ################################################################################
 
 label start:
+    show screen secret_ending_shortcut
     $ show_hud = False
     $ notebook_entries = []
     $ notebook_draft = ""
