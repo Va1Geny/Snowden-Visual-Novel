@@ -250,24 +250,142 @@ init python:
 
         return None
 
+    def choose_notebook_export_path(default_filename="field_notebook.txt"):
+        try:
+            import tkinter as tk
+            from tkinter import filedialog
+
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes("-topmost", True)
+            root.update_idletasks()
+            root.lift()
+            root.focus_force()
+
+            path = filedialog.asksaveasfilename(
+                title="Save notebook as...",
+                initialdir=os.path.expanduser("~"),
+                initialfile=default_filename,
+                defaultextension=".txt",
+                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+            )
+
+            root.destroy()
+            return path
+        except Exception:
+            try:
+                root.destroy()
+            except Exception:
+                pass
+
+        if os.name == "nt":
+            try:
+                import ctypes
+                from ctypes import wintypes
+
+                class OPENFILENAMEW(ctypes.Structure):
+                    _fields_ = [
+                        ("lStructSize", wintypes.DWORD),
+                        ("hwndOwner", wintypes.HWND),
+                        ("hInstance", wintypes.HINSTANCE),
+                        ("lpstrFilter", wintypes.LPCWSTR),
+                        ("lpstrCustomFilter", wintypes.LPWSTR),
+                        ("nMaxCustFilter", wintypes.DWORD),
+                        ("nFilterIndex", wintypes.DWORD),
+                        ("lpstrFile", wintypes.LPWSTR),
+                        ("nMaxFile", wintypes.DWORD),
+                        ("lpstrFileTitle", wintypes.LPWSTR),
+                        ("nMaxFileTitle", wintypes.DWORD),
+                        ("lpstrInitialDir", wintypes.LPCWSTR),
+                        ("lpstrTitle", wintypes.LPCWSTR),
+                        ("Flags", wintypes.DWORD),
+                        ("nFileOffset", wintypes.WORD),
+                        ("nFileExtension", wintypes.WORD),
+                        ("lpstrDefExt", wintypes.LPCWSTR),
+                        ("lCustData", wintypes.LPARAM),
+                        ("lpfnHook", wintypes.LPVOID),
+                        ("lpTemplateName", wintypes.LPCWSTR),
+                        ("pvReserved", ctypes.c_void_p),
+                        ("dwReserved", wintypes.DWORD),
+                        ("FlagsEx", wintypes.DWORD),
+                    ]
+
+                buffer = ctypes.create_unicode_buffer(260)
+                buffer.value = default_filename
+                buffer_title = ctypes.create_unicode_buffer(260)
+                filter_text = "Text files\0*.txt\0All files\0*.*\0\0"
+
+                ofn = OPENFILENAMEW()
+                ofn.lStructSize = ctypes.sizeof(ofn)
+                ofn.hwndOwner = None
+                ofn.lpstrFilter = ctypes.c_wchar_p(filter_text)
+                ofn.lpstrFile = ctypes.cast(buffer, wintypes.LPWSTR)
+                ofn.nMaxFile = 260
+                ofn.lpstrFileTitle = ctypes.cast(buffer_title, wintypes.LPWSTR)
+                ofn.nMaxFileTitle = 260
+                ofn.lpstrInitialDir = os.path.expanduser("~")
+                ofn.lpstrTitle = "Save notebook as..."
+                ofn.Flags = 0x00000800 | 0x00000002
+                ofn.lpstrDefExt = ".txt"
+
+                if ctypes.windll.comdlg32.GetSaveFileNameW(ctypes.byref(ofn)):
+                    path = buffer.value
+                    return path if path else ""
+            except Exception:
+                pass
+
+        if hasattr(renpy, "filepicker"):
+            try:
+                path = renpy.filepicker(
+                    title="Save notebook as...",
+                    save=True,
+                    default=default_filename,
+                )
+                if path is None:
+                    return ""
+                return path
+            except TypeError:
+                try:
+                    path = renpy.filepicker(
+                        title="Save notebook as...",
+                        save=True,
+                    )
+                    if path is None:
+                        return ""
+                    return path
+                except Exception:
+                    pass
+            except Exception:
+                pass
+
+        return None
+
     def export_notebook_txt():
         if not store.notebook_entries:
             renpy.notify("No notes to export.")
             return
 
-        export_dir = get_notebook_export_dir()
-        if not export_dir:
-            renpy.notify("Could not determine a writable export location.")
+        default_filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
+        path = choose_notebook_export_path(default_filename)
+
+        if path == "":
+            renpy.notify("Notebook export canceled.")
             return
 
-        filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
-        path = os.path.join(export_dir, filename)
+        if path is None:
+            export_dir = get_notebook_export_dir()
+            if not export_dir:
+                renpy.notify("Could not determine a writable export location.")
+                return
+
+            path = os.path.join(export_dir, default_filename)
+            renpy.notify("Could not open a save dialog. Exporting to the default exports folder.")
 
         try:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(get_notebook_export_text())
 
-            renpy.notify("Your notebook has been exported")
+            renpy.notify(f"Notebook exported to {path}")
         except Exception as exc:
             renpy.notify(f"Failed to export notebook: {exc}")
 

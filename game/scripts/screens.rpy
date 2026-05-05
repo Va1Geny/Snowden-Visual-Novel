@@ -458,15 +458,15 @@ screen notebook_panel():
 
     $ compact = is_compact_layout()
     $ viewport_width, viewport_height = current_viewport_size()
-    $ notebook_xsize = min(1160 if compact else 1820, max(420, viewport_width - 48))
-    $ notebook_ysize = min(820 if compact else 920, max(520, viewport_height - 48))
+    $ notebook_xsize = min(1460 if compact else 1820, max(520, viewport_width - 48))
+    $ notebook_ysize = min(860 if compact else 920, max(620, viewport_height - 48))
     $ notebook_title_size = 26 if compact else 30
     $ notebook_body_size = 18 if compact else 20
-    $ notebook_body_max = notebook_xsize - 140
+    $ notebook_body_max = notebook_xsize - 100
     $ notebook_input_size = 24 if compact else 26
     $ notebook_entry_size = 19 if compact else 21
     $ notebook_empty_size = 24 if compact else 28
-    $ notebook_hint_max = min(820 if compact else 1260, notebook_xsize - 200)
+    $ notebook_hint_max = min(860 if compact else 1260, notebook_xsize - 180)
 
     $ max_middle_height = notebook_ysize - 84 - 200
 
@@ -606,7 +606,7 @@ screen notebook_panel():
                     spacing 12
                     xfill True
 
-                    text "Exports are saved as plain .txt files to an exports folder or to your user profile if needed.":
+                    text "Exports are saved as plain .txt files. A standard save dialog should let you choose folder and filename.":
                         color "#AAB0D6"
                         size 16
                         xalign 0.5
@@ -621,26 +621,30 @@ screen notebook_panel():
 
                         textbutton "EXPORT TXT":
                             style "modal_action_button"
-                            xsize 220
+                            xfill True
+                            xmaximum 260
                             background Solid("#244C2F")
                             hover_background Solid("#3A7A58")
                             action Function(export_notebook_txt)
 
                         textbutton "SAVE NOTE":
                             style "modal_action_button"
-                            xsize 280
+                            xfill True
+                            xmaximum 300
                             action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
 
                         textbutton "CLEAR":
                             style "modal_action_button"
-                            xsize 220
+                            xfill True
+                            xmaximum 220
                             background Solid("#241926")
                             hover_background Solid("#4D5186")
                             action Function(clear_notebook_entries)
 
                         textbutton "CLOSE":
                             style "modal_action_button"
-                            xsize 220
+                            xfill True
+                            xmaximum 220
                             background Solid("#171C30")
                             hover_background Solid("#4D5186")
                             action Hide("notebook_panel")
