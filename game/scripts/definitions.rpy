@@ -20,7 +20,7 @@ define e = Character("You",
 
 # === JOURNALISTS ===
 define greenwald = Character("GLENN GREENWALD",
-    image="journalist",
+    image="greenwald",
     color="#FFD700",
     what_color="#E8E8E8",
     who_bold=True,
@@ -28,7 +28,7 @@ define greenwald = Character("GLENN GREENWALD",
     what_size=20)
 
 define poitras = Character("LAURA POITRAS",
-    image="journalist",
+    image="poitras",
     color="#FF69B4",
     what_color="#E8E8E8",
     who_bold=True,
@@ -194,6 +194,12 @@ init python:
 
         return width, height
 
+    def fullscreen_prompt_supported():
+        return renpy.variant("pc") or renpy.variant("web")
+
+    def should_prompt_for_fullscreen():
+        return fullscreen_prompt_supported() and not preferences.fullscreen
+
     def is_compact_layout():
         width, height = current_viewport_size()
         return renpy.variant("small") or width <= 1280 or height <= 760
@@ -283,8 +289,18 @@ init python:
         if event == "begin":
             speaker = renpy.get_say_image_tag()
             
-            # List of character tags to monitor
-            char_tags = ["edward", "supervisor", "colleague", "journalist", "editor", "russian_official"]
+            # Keep only the actually visible speaker bright.
+            char_tags = [
+                "edward",
+                "supervisor",
+                "colleague",
+                "greenwald",
+                "poitras",
+                "journalist",
+                "editor",
+                "nsa_chief",
+                "russian_official",
+            ]
             
             for tag in char_tags:
                 if renpy.showing(tag):
@@ -325,28 +341,185 @@ transform parallax:
 ################################################################################
 
 # === Character Sprites ===
+
+# -- Edward --
 image edward neutral:
     "sprites/edward neutral.png"
     zoom 1.02
+image edward thoughtful:
+    "sprites/edward thoughtful.png"
+    zoom 1.02
+image edward concerned:
+    "sprites/edward concerned.png"
+    zoom 1.02
+image edward shocked:
+    "sprites/edward shocked.png"
+    zoom 1.02
+image edward tense:
+    "sprites/edward tense.png"
+    zoom 1.02
+image edward determined:
+    "sprites/edward determined.png"
+    zoom 1.02
+image edward defiant:
+    "sprites/edward defiant.png"
+    zoom 1.02
+image edward sad:
+    "sprites/edward sad.png"
+    zoom 1.02
+image edward tired:
+    "sprites/edward tired.png"
+    zoom 1.02
+image edward relieved:
+    "sprites/edward relieved.png"
+    zoom 1.02
 
+# -- Supervisor --
 image supervisor neutral:
     "sprites/supervisor neutral.png"
     zoom 1.0
+image supervisor stern:
+    "sprites/supervisor stern.png"
+    zoom 1.0
+image supervisor authoritative:
+    "sprites/supervisor authoritative.png"
+    zoom 1.0
+image supervisor suspicious:
+    "sprites/supervisor suspicious.png"
+    zoom 1.0
+image supervisor annoyed:
+    "sprites/supervisor annoyed.png"
+    zoom 1.0
+image supervisor cold:
+    "sprites/supervisor cold.png"
+    zoom 1.0
 
+# -- Colleague --
 image colleague neutral:
     "sprites/colleague neutral.png"
     zoom 0.98
+image colleague casual:
+    "sprites/colleague casual.png"
+    zoom 0.98
+image colleague amused:
+    "sprites/colleague amused.png"
+    zoom 0.98
+image colleague smug:
+    "sprites/colleague smug.png"
+    zoom 0.98
+image colleague uneasy:
+    "sprites/colleague uneasy.png"
+    zoom 0.98
+image colleague cautious:
+    "sprites/colleague cautious.png"
+    zoom 0.98
 
+# -- Greenwald --
+image greenwald neutral:
+    "sprites/greenwald neutral.png"
+    zoom 1.02
+image greenwald skeptical:
+    "sprites/greenwald skeptical.png"
+    zoom 1.02
+image greenwald confused:
+    "sprites/greenwald confused.png"
+    zoom 1.02
+image greenwald curious:
+    "sprites/greenwald curious.png"
+    zoom 1.02
+image greenwald shocked:
+    "sprites/greenwald shocked.png"
+    zoom 1.02
+image greenwald serious:
+    "sprites/greenwald serious.png"
+    zoom 1.02
+image greenwald resolved:
+    "sprites/greenwald resolved.png"
+    zoom 1.02
+image greenwald concerned:
+    "sprites/greenwald concerned.png"
+    zoom 1.02
+
+# -- Poitras --
+image poitras neutral:
+    "sprites/poitras neutral.png"
+    zoom 1.02
+image poitras focused:
+    "sprites/poitras focused.png"
+    zoom 1.02
+image poitras cautious:
+    "sprites/poitras cautious.png"
+    zoom 1.02
+image poitras serious:
+    "sprites/poitras serious.png"
+    zoom 1.02
+image poitras concerned:
+    "sprites/poitras concerned.png"
+    zoom 1.02
+image poitras resolved:
+    "sprites/poitras resolved.png"
+    zoom 1.02
+
+# -- Russian Official --
+image russian_official neutral:
+    "sprites/russian official neutral.png"
+    zoom 1.0
+image russian_official smug:
+    "sprites/russian official smug.png"
+    zoom 1.0
+image russian_official calculating:
+    "sprites/russian official calculating.png"
+    zoom 1.0
+image russian_official cold:
+    "sprites/russian official cold.png"
+    zoom 1.0
+image russian_official pressuring:
+    "sprites/russian official pressuring.png"
+    zoom 1.0
+image russian_official confident:
+    "sprites/russian official confident.png"
+    zoom 1.0
+
+# -- NSA Chief --
+image nsa_chief neutral:
+    "sprites/nsa chief neutral.png"
+    zoom 1.0
+image nsa_chief authoritative:
+    "sprites/nsa chief authoritative.png"
+    zoom 1.0
+image nsa_chief angry:
+    "sprites/nsa chief angry.png"
+    zoom 1.0
+image nsa_chief cold:
+    "sprites/nsa chief cold.png"
+    zoom 1.0
+
+# -- Journalist --
 image journalist neutral:
     "sprites/journalist neutral.png"
     zoom 1.02
+image journalist skeptical:
+    "sprites/journalist skeptical.png"
+    zoom 1.02
+image journalist focused:
+    "sprites/journalist focused.png"
+    zoom 1.02
+image journalist serious:
+    "sprites/journalist serious.png"
+    zoom 1.02
+image journalist shocked:
+    "sprites/journalist shocked.png"
+    zoom 1.02
+image journalist resolved:
+    "sprites/journalist resolved.png"
+    zoom 1.02
+image journalist concerned:
+    "sprites/journalist concerned.png"
+    zoom 1.02
 
+# -- Editor --
 image editor neutral:
     "sprites/editor neutral.png"
-    zoom 1.0
-
-image russian_official neutral:
-    "sprites/russian official neutral.png"
     zoom 1.0
 # === Logo Watermark ===
 image logo_watermark:
