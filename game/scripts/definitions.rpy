@@ -791,6 +791,7 @@ init python:
     def tree_reset_current_run():
         for _name in _tree_choice_map:
             setattr(persistent, _name, "")
+        setattr(persistent, "tree_ch_reached", 0)
         setattr(persistent, "tree_ending", "")
         renpy.save_persistent()
 
