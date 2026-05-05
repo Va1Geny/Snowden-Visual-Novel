@@ -366,8 +366,9 @@ screen minigame_clean_message():
 
                         textbutton "> CLEAN THIS THREAT":
                             style "modal_action_button"
+                            xsize 340
                             text_style "modal_action_button_text"
-                            xalign 0.5
+                            xalign 1.0
                             action Function(ctm_clean)
 
                         textbutton "> DISMISS":

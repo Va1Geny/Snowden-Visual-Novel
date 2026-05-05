@@ -738,18 +738,19 @@ screen main_menu():
             xmaximum menu_content_max
             spacing menu_spacing
 
-            text "CLASSIFIED INTERFACE":
-                color "#8B8FCC"
+            text "// CLASSIFIED SECURE INTERFACE //":
+                color "#00FFD1"
                 size 16
                 bold True
                 xalign 0.5
                 text_align 0.5
-                kerning 3
+                kerning 4
 
             add "images/logo.png":
                 xalign 0.5
                 ysize 132
                 fit "contain"
+                matrixcolor TintMatrix("#00FFD1")
 
             fixed:
                 xsize title_fixed_xsize
@@ -760,19 +761,21 @@ screen main_menu():
                     xalign 0.5
                     yalign 0.5
                     text_align 0.5
-                    color "#0C5D52"
+                    color "#004D40"
                     size menu_title_size
                     bold True
-                    outlines [(6, "#00665414", 0, 0), (3, "#00806916", 0, 0)]
+                    font "DejaVuSans.ttf"
+                    outlines [(6, "#002b2414", 0, 0), (3, "#002b2416", 0, 0)]
 
                 text "ENEMY OF THE STATE" at title_glitch:
                     xalign 0.5
                     yalign 0.5
                     text_align 0.5
-                    color "#EFFFFA"
+                    color "#00FFD1"
                     size menu_title_size
                     bold True
-                    outlines [(2, "#00806955", 0, 0), (6, "#0080690E", 0, 0)]
+                    font "DejaVuSans.ttf"
+                    outlines [(2, "#00ff3355", 0, 0), (6, "#00ff330E", 0, 0)]
 
                 text "ENEMY OF THE STATE":
                     xalign 0.5
@@ -780,23 +783,26 @@ screen main_menu():
                     text_align 0.5
                     xoffset 2
                     yoffset -2
-                    color "#8B8FCC24"
+                    color "#A8FF7824"
                     size menu_title_size
                     bold True
+                    font "DejaVuSans.ttf"
 
-            text "A visual novel about surveillance, trust, and digital security under pressure.":
-                color "#AAB0D6"
+            text "> A visual novel about surveillance, trust, and digital security under pressure.":
+                color "#A8FF78"
                 size menu_desc_size
                 xalign 0.5
                 text_align 0.5
                 xmaximum menu_desc_max
+                font "DejaVuSans.ttf"
 
-            text "\"The truth will always find a way out.\"":
-                color "#8B8FCC"
+            text "root@system:~$ \"The truth will always find a way out.\"":
+                color "#00FFD1"
                 size menu_quote_size
                 italic True
                 xalign 0.5
                 text_align 0.5
+                font "DejaVuSans.ttf"
 
             null height 6
 
@@ -1756,7 +1762,7 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
 
                         if selected == correct_index:
                             text "Correct - Nice catch":
-                                color "#EAF4F1"
+                                color "#00FF00"
                                 size 24
                                 bold True
                                 xalign 0.5
@@ -1942,7 +1948,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                 xalign 0.5
 
                                 text "Correct":
-                                    color "#EAF4F1"
+                                    color "#00FF00"
                                     size 24
                                     bold True
                                     xalign 0.5

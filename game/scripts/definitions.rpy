@@ -602,11 +602,11 @@ image bg_sheremetyevo:
 
 transform active_char:
     xanchor 0.5 yanchor 1.0
-    ease 0.25 matrixcolor SaturationMatrix(1.0) zoom 1.18 alpha 1.0
+    ease 0.25 matrixcolor SaturationMatrix(1.0) zoom 1.15 alpha 1.0
 
 transform inactive_char:
     xanchor 0.5 yanchor 1.0
-    ease 0.25 matrixcolor SaturationMatrix(0.3) zoom 1.12 alpha 0.9
+    ease 0.25 matrixcolor SaturationMatrix(0.3) zoom 1.15 alpha 0.9
 
 # === ENTRANCE TRANSFORMS ===
 
@@ -614,28 +614,28 @@ transform inactive_char:
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
-    xpos -0.20 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.6 xpos 0.25 ypos 1.60 alpha 1.0 zoom 1.18
+    xpos -0.20 ypos 1.0 alpha 0.0 zoom 1.0
+    ease 0.6 xpos 0.25 ypos 1.0 alpha 1.0 zoom 1.15
 
 # Slide in from right
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 1.20 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.6 xpos 0.75 ypos 1.60 alpha 1.0 zoom 1.18
+    xpos 1.20 ypos 1.0 alpha 0.0 zoom 1.0
+    ease 0.6 xpos 0.75 ypos 1.0 alpha 1.0 zoom 1.15
 
 # Fade in from center
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.5 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.5 xpos 0.5 ypos 1.60 alpha 1.0 zoom 1.18
+    xpos 0.5 ypos 1.0 alpha 0.0 zoom 1.0
+    ease 0.5 xpos 0.5 ypos 1.0 alpha 1.0 zoom 1.15
 
 transform stage_center:
     xanchor 0.5
     yanchor 1.0
     xpos 0.5
-    ypos 1.60
+    ypos 1.0
 
 # === IDLE TRANSFORMS ===
 

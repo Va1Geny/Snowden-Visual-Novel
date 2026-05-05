@@ -10,6 +10,8 @@
 # === Minigame Intro Splash ===
 screen minigame_intro(title, description):
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     add "#0A0E1ACC"
 
     frame:
@@ -43,6 +45,8 @@ screen minigame_intro(title, description):
 # === Minigame Result ===
 screen minigame_result(passed, title, explanation):
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     add "#0A0E1ACC"
 
     frame:
@@ -369,6 +373,8 @@ transform fw_btn_enter:
 
 screen minigame_firewall():
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
 
     # Reset state on first show
     on "show" action Function(fw_reset)
@@ -726,6 +732,7 @@ screen minigame_firewall():
 
             vbox:
                 xalign 0.5
+                yalign 0.5
                 spacing 10
 
                 text "// FIREWALL ANALYSIS COMPLETE //" color "#00FFD1" size 28 bold True xalign 0.5
@@ -2385,6 +2392,8 @@ init python:
 
 screen minigame_trace():
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     default nodes = get_trace_nodes()
     default current_node = "home"
     default path = ["home"]
