@@ -13,7 +13,9 @@ label start:
     $ notebook_draft = ""
     $ suspicion_lockdown_triggered = False
     $ tree_reset_current_run()
-    call screen intro_controls_screen
+    if not preferences.fullscreen:
+        call screen intro_fullscreen_prompt
+    call screen intro_shortcuts_screen
     jump intro
 
 
@@ -104,10 +106,12 @@ label chapter_1:
 
     im "Verify the handshake. That's NSA-speak for confirming the network connection is legitimate — checking that the source and destination match the selector criteria. But nobody asks whether the criteria themselves are legitimate."
 
-    show colleague neutral at enter_left
+    show colleague casual at enter_left
     with dissolve
 
     colleague "Hey Ed. Check this out — I can watch this guy's webcam feed in real time. He's just eating cereal. It's wild what we can access without even a targeted request."
+
+    show edward concerned
 
     e "That's... that's a lot of access for an unflagged individual."
 
@@ -116,8 +120,8 @@ label chapter_1:
     im "The scale of it is staggering. This isn't targeted surveillance. This is a vacuum cleaner, sucking up everything. Emails, phone records, browsing histories — all stored, all searchable, all belonging to ordinary people who've done nothing wrong."
 
     # --- Choice 1: Follow protocol or explore restricted files? ---
-    hide colleague neutral with dissolve
-    hide supervisor neutral with dissolve
+    hide colleague with dissolve
+    hide supervisor with dissolve
 
     menu:
         "Follow protocol. Process the flagged selectors as assigned.":
@@ -232,7 +236,7 @@ label chapter_1:
     )
 
     # --- Choice 2: Report anomaly or stay silent? ---
-    show supervisor neutral at enter_right
+    show supervisor stern at enter_right
     with dissolve
 
     narrator_voice "While processing selectors, Edward discovers domestic IP addresses mixed in with foreign intelligence targets."
@@ -323,7 +327,7 @@ label chapter_2:
     im "And there's more. Boundless Informant — a tool that counts and visualises exactly how much data the NSA collects from each country. In one month alone, 97 billion pieces of intelligence were gathered worldwide. The American public has no idea."
 
     # --- Internal conflict with colleague ---
-    show colleague neutral at enter_left
+    show colleague uneasy at enter_left
     with dissolve
 
     colleague "Ed, you look like you've seen a ghost. What's wrong?"
@@ -410,7 +414,7 @@ label chapter_2:
 
     # --- Choice 2: Copy the files or take notes only? ---
     scene bg_nsa_servers at parallax with dissolve
-    show edward neutral at stage_center
+    show edward tense at stage_center
     with dissolve
 
     im "I have access to everything. The question is: what do I do with it?"
@@ -487,7 +491,7 @@ label chapter_3:
 
     scene bg_hong_kong at parallax with chapter_transition
 
-    show edward neutral at enter_left
+    show edward tense at enter_left
     with dissolve
 
     # --- Snowden must contact journalists ---
@@ -568,13 +572,14 @@ label ch3_secure_success:
 
     narrator_voice "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Laura Poitras."
 
-    show journalist neutral at enter_right
+    show poitras neutral at enter_right
     with dissolve
 
     poitras "I received your encrypted message. The fingerprint checks out. Who are you?"
 
     e "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA."
 
+    show poitras cautious
     poitras "Can you prove it?"
 
     e "I can prove everything. But we need to meet in person. I'll also reach out to Glenn Greenwald — together, you can publish the full story."
@@ -593,19 +598,22 @@ label ch3_secure_fail:
 
     jump ch3_continue
 
+
 label ch3_greenwald_contact:
     scene bg_hong_kong_street at parallax with dissolve
-    show journalist neutral at enter_right
+    show greenwald neutral at enter_right
     with dissolve
 
     narrator_voice "You reach out to Glenn Greenwald through his public contact information. It's faster, but less secure."
 
     e "Mr. Greenwald, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
 
+    show greenwald skeptical
     greenwald "I get messages like this every week. Can you give me more details?"
 
     e "Not over this channel. You need to set up PGP encryption. I'll send you instructions."
 
+    show greenwald confused
     greenwald "PGP? I've never used it. Can't we just talk on the phone?"
 
     im "This is the problem. The people who need to publish this information don't know the first thing about security."
@@ -640,8 +648,11 @@ label ch3_contact_unsafe:
 
 label ch3_continue:
     # --- Question Segment 3: MCQ on Encryption ---
-    hide journalist neutral with dissolve
-    hide edward neutral with dissolve
+    hide journalist
+    hide greenwald
+    hide poitras
+    hide edward
+    with dissolve
 
     im "Everything I've done to contact journalists relies on one tool above all others: Tor — The Onion Router. It's an anonymization network that routes your traffic through multiple relay nodes around the world, each encrypting another layer."
 
@@ -715,7 +726,7 @@ label ch3_continue:
 
     # --- Choice 2: How much to reveal? ---
     show edward neutral at stage_center
-    show journalist neutral at enter_right
+    show greenwald serious at enter_right
     with dissolve
 
     narrator_voice "The journalist asks for more details about the scope of the leaks."
@@ -730,6 +741,7 @@ label ch3_continue:
             $ contacts_secured += 1
             $ renpy.notify("Trust +2 | Contacts +1")
 
+            show greenwald shocked
             greenwald "My God. If this is true... this is the biggest intelligence leak in history."
 
         "Share only what's necessary. Protect sources and methods.":
@@ -748,8 +760,9 @@ label ch3_continue:
 
             greenwald "You're asking me to fly halfway around the world on a vague tip?"
 
-    hide journalist neutral with dissolve
-    hide edward neutral with dissolve
+    hide greenwald
+    hide edward
+    with dissolve
 
     # --- Chapter 3 Summary ---
 
@@ -782,7 +795,7 @@ label chapter_4:
 
     scene bg_hong_kong_hotel at parallax with chapter_transition
 
-    show edward neutral at enter_left
+    show edward tired at enter_left
     with dissolve
 
     # --- Snowden in Hong Kong ---
@@ -793,17 +806,20 @@ label chapter_4:
 
     im "I told my employer I needed medical leave for epilepsy treatment. They didn't question it. That bought me a few weeks."
 
+    show edward tense
     im "Now I'm in a hotel room in Hong Kong, waiting for journalists who might not come, hunted by an agency that can find anyone. I've wedged pillows against the door, piled cushions against the window. Even the smoke detector might have a camera."
 
     sys "// LOCATION: MIRA HOTEL, HONG KONG. STATUS: UNDETECTED — FOR NOW. //"
 
     # --- Tense dialogue with pressure ---
 
-    show journalist neutral at enter_right
+    show greenwald neutral at enter_right
     with dissolve
 
+    show greenwald serious
     greenwald "You do realize what you're asking me to do? If we publish this, both our lives change forever."
 
+    show edward determined
     e "My life changed the moment I read those documents. I can't unread them. I can't unknow what the government is doing to its own people."
 
     im "Greenwald flew here from Rio de Janeiro. Poitras from Berlin. They left their lives behind on the strength of encrypted emails from a stranger. That took courage."
@@ -811,13 +827,15 @@ label chapter_4:
     if suspicion_level >= 3:
         sys "// WARNING: NSA INTERNAL AUDIT HAS FLAGGED YOUR ACCESS ANOMALIES. INVESTIGATION IN PROGRESS. //"
 
+        show edward tense
         im "They know something is wrong. I can feel it. The clock is ticking."
 
+    show greenwald resolved
     greenwald "The documents check out. Laura and I have verified them. We're ready to publish."
 
     e "Publish everything. The world needs to see this."
 
-    hide journalist neutral with dissolve
+    hide greenwald with dissolve
 
     im "What scares me most isn't just the surveillance — it's the NSA's offensive capabilities. They stockpile zero-day exploits — vulnerabilities in software that the vendor doesn't even know about. Called 'zero-day' because there are zero days of notice before they're exploited. No patch exists yet."
 
@@ -1004,7 +1022,7 @@ label chapter_4:
                 im "If I stay, Hong Kong will extradite me. The US legal system won't give me a fair trial under the Espionage Act."
                 sys "// ROUTE REVIEW: Good if you want to make a stand, bad if your goal is to stay free long enough to keep the story alive. //"
 
-    hide edward neutral with dissolve
+    hide edward with dissolve
 
     if escape_successful and not identity_exposed:
         scene bg_hk_airport at parallax with dissolve
@@ -1041,7 +1059,7 @@ label chapter_5:
 
     scene bg_sheremetyevo at parallax with chapter_transition
 
-    show edward neutral at enter_left
+    show edward tired at enter_left
     with dissolve
 
     # --- Snowden in Russia ---
@@ -1055,20 +1073,24 @@ label chapter_5:
 
     russian_official "Mr. Snowden. The transit zone is a strange place, yes? You are not in Russia, but you are certainly not in America."
 
+    show russian_official smug
     russian_official "You are... nowhere. We can offer you 'somewhere.' Russia can grant you temporary asylum."
 
+    show edward defiant
     e "I don't want to be a pawn in anyone's geopolitical chess game."
 
+    show russian_official calculating
     russian_official "You became a pawn the moment you took those files, Mr. Snowden. The only question is which board you want to play on."
 
+    show edward sad
     im "He's right. I have no leverage. The US government pressured every ally to refuse me. Bolivia's presidential plane was even forced to land in Austria because they suspected I was on board. That's how far they'll go."
 
     # --- Reflection Dialogue ---
 
-    hide russian_official neutral with dissolve
+    hide russian_official with dissolve
 
     scene bg_moscow_apartment at parallax with dissolve
-    show edward neutral at stage_center
+    show edward thoughtful at stage_center
     with dissolve
 
     im "I'm an exile in the physical world, but I've never been more active in the digital one."
@@ -1142,11 +1164,13 @@ label chapter_5:
 
     narrator_voice "A journalist contacts Snowden with a new trove of classified documents from a different whistleblower. The cycle could begin again."
 
+    show edward thoughtful
     im "Another person on the inside, seeing what I saw, feeling what I felt. They're asking me what to do."
 
     menu:
         "Encourage them to leak. The public deserves to know.":
             $ tree_record_choice("choice_ch5_1", "encourage")
+            show edward determined
             e "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
             $ trust_score += 2
             $ renpy.notify("Trust +2")
@@ -1155,6 +1179,7 @@ label chapter_5:
 
         "Advise caution. Use official channels first.":
             $ tree_record_choice("choice_ch5_1", "caution")
+            show edward concerned
             e "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
             $ trust_score += 1
             $ knowledge_score += 1
@@ -1164,13 +1189,14 @@ label chapter_5:
 
         "Tell them not to do it. The personal cost is too high.":
             $ tree_record_choice("choice_ch5_1", "refuse")
+            show edward sad
             e "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
 
             narrator_voice "Snowden's honesty about the personal cost weighs heavily on the would-be whistleblower."
 
-    hide edward neutral with dissolve
+    hide edward with dissolve
 
     # --- Final scene ---
 

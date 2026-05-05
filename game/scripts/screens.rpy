@@ -457,15 +457,18 @@ screen notebook_panel():
     zorder 210
 
     $ compact = is_compact_layout()
-    $ notebook_xsize = 1160 if compact else 1820
-    $ notebook_ysize = 820 if compact else 920
+    $ viewport_width, viewport_height = current_viewport_size()
+    $ notebook_xsize = min(1160 if compact else 1820, max(420, viewport_width - 48))
+    $ notebook_ysize = min(820 if compact else 920, max(520, viewport_height - 48))
     $ notebook_title_size = 26 if compact else 30
     $ notebook_body_size = 18 if compact else 20
-    $ notebook_body_max = 1020 if compact else 1700
+    $ notebook_body_max = notebook_xsize - 140
     $ notebook_input_size = 24 if compact else 26
     $ notebook_entry_size = 19 if compact else 21
     $ notebook_empty_size = 24 if compact else 28
-    $ notebook_hint_max = 820 if compact else 1260
+    $ notebook_hint_max = min(820 if compact else 1260, notebook_xsize - 200)
+
+    $ max_middle_height = notebook_ysize - 84 - 200
 
     use ui_backdrop
     add "logo_watermark"
@@ -474,7 +477,6 @@ screen notebook_panel():
         xalign 0.5
         yalign 0.5
         xsize notebook_xsize
-        ysize notebook_ysize
         background Solid("#0E1321F2")
         padding (0, 0)
 
@@ -506,14 +508,13 @@ screen notebook_panel():
 
             frame:
                 xfill True
-                yfill True
+                ymaximum max_middle_height
                 background Solid("#101523")
                 padding (28, 24)
 
                 vbox:
                     spacing 18
                     xfill True
-                    yfill True
 
                     text "Write short reminders for yourself while you play. Important clues, terms, and decisions can live here.":
                         color "#AAB0D6"
@@ -599,7 +600,7 @@ screen notebook_panel():
             frame:
                 xfill True
                 background Solid("#171C30")
-                padding (24, 22)
+                padding (24, 22, 24, 40)
 
                 vbox:
                     spacing 12
@@ -609,10 +610,13 @@ screen notebook_panel():
                         color "#AAB0D6"
                         size 16
                         xalign 0.5
+                        text_align 0.5
                         xmaximum 1100
 
                     hbox:
                         spacing 12
+                        box_wrap True
+                        box_wrap_spacing 12
                         xalign 0.5
 
                         textbutton "EXPORT TXT":
@@ -644,8 +648,8 @@ screen notebook_panel():
     key "game_menu" action Hide("notebook_panel")
     key "n" action Hide("notebook_panel")
     key "N" action Hide("notebook_panel")
-
-
+    key "K_RETURN" action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
+    key "K_KP_ENTER" action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
 screen notebook_toggle():
     zorder 95
 
@@ -1215,7 +1219,7 @@ screen dossier():
     key "game_menu" action Return()
 
 
-screen intro_controls_screen():
+screen intro_fullscreen_prompt():
     modal True
 
     $ compact = is_compact_layout()
@@ -1223,9 +1227,6 @@ screen intro_controls_screen():
     $ intro_title_size = 30 if compact else 26
     $ intro_text_size = 22 if compact else 19
     $ intro_text_max = 1600 if compact else 920
-    $ intro_control_size = 20 if compact else 18
-    $ intro_control_label_xsize = 520 if compact else 330
-    $ intro_hint_size = 19 if compact else 17
 
     use ui_backdrop
     add "logo_watermark"
@@ -1246,6 +1247,81 @@ screen intro_controls_screen():
                 background Solid("#241926")
                 padding (28, 0)
 
+                text "DISPLAY MODE":
+                    color "#EAF4F1"
+                    size 26
+                    bold True
+                    xalign 0.5
+                    yalign 0.5
+
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (36, 30)
+
+                vbox:
+                    spacing 18
+
+                    text "Fullscreen recommended":
+                        color "#EAF4F1"
+                        size intro_title_size
+                        bold True
+
+                    text "For the best experience, play in fullscreen mode. This helps dialogue, menus, and minigames fit better on itch.io embeds and mobile browsers.":
+                        color "#AAB0D6"
+                        size intro_text_size
+                        xmaximum intro_text_max
+
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (24, 22)
+
+                hbox:
+                    spacing 14
+                    xalign 0.5
+
+                    textbutton "GO FULLSCREEN":
+                        style "modal_action_button"
+                        xsize 320
+                        action [Preference("display", "fullscreen"), Return()]
+
+                    textbutton "SKIP":
+                        style "modal_action_button"
+                        xsize 260
+                        background Solid("#171C30")
+                        hover_background Solid("#4D5186")
+                        action Return()
+
+
+screen intro_shortcuts_screen():
+    modal True
+
+    $ compact = is_compact_layout()
+    $ intro_xsize = 1820 if compact else 1080
+    $ intro_title_size = 30 if compact else 26
+    $ intro_control_size = 20 if compact else 18
+    $ intro_control_label_xsize = 520 if compact else 330
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize intro_xsize
+        background Solid("#0E1321F2")
+        padding (0, 0)
+
+        vbox:
+            spacing 0
+
+            frame:
+                xfill True
+                ysize 66
+                background Solid("#002922")
+                padding (28, 0)
+
                 text "CLASSIFIED BRIEFING":
                     color "#EAF4F1"
                     size 26
@@ -1261,15 +1337,10 @@ screen intro_controls_screen():
                 vbox:
                     spacing 18
 
-                    text "Before you start":
+                    text "Controls & shortcuts":
                         color "#EAF4F1"
                         size intro_title_size
                         bold True
-
-                    text "For the best experience, play in fullscreen mode. This helps dialogue, menus, and minigames fit better on itch.io embeds and mobile browsers.":
-                        color "#AAB0D6"
-                        size intro_text_size
-                        xmaximum intro_text_max
 
                     frame:
                         xfill True
@@ -1288,6 +1359,7 @@ screen intro_controls_screen():
                                 ("Click / Enter / Space", "Advance dialogue and confirm UI actions."),
                                 ("Esc / Right Click / MENU", "Open mission control and game settings."),
                                 ("Back / Page Up", "Review previous dialogue."),
+                                ("N", "Open / close the field notebook."),
                                 ("Notebook", "Save your own reminders while playing."),
                             ]:
                                 hbox:
@@ -1314,16 +1386,9 @@ screen intro_controls_screen():
                     spacing 14
                     xalign 0.5
 
-                    if renpy.variant("pc") or renpy.variant("web"):
-                        textbutton "GO FULLSCREEN":
-                            style "modal_action_button"
-                            xsize 320
-                            action Preference("display", "fullscreen")
-
-                    textbutton "CONTINUE":
+                    textbutton "BEGIN MISSION":
                         style "modal_action_button"
-                        xsize 260
-                        xalign 0.5
+                        xsize 320
                         action Return()
 
 
