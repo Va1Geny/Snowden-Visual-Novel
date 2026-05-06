@@ -60,9 +60,9 @@ label ending_hero:
 
     narrator_voice "Governments scramble to explain. Citizens demand answers. The conversation about privacy changes forever."
 
-    narrator_voice "Edward Snowden sits in a modest apartment in Moscow, watching the world he set in motion."
+    narrator_voice "You sit in a modest apartment in Moscow, watching the world you set in motion."
 
-    narrator_voice "He is wanted by the most powerful nation on Earth. He may never go home again."
+    narrator_voice "You are wanted by the most powerful nation on Earth. You may never go home again."
 
     narrator_voice "But the truth is out. And it can never be taken back."
 
@@ -71,7 +71,7 @@ label ending_hero:
     call screen ending_screen(
         title="// ENDING 1: THE HERO //",
         color="#00FFD1",
-        description="Snowden successfully leaked all documents, escaped to safety, and his disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed.",
+        description="You successfully leaked all documents, escaped to safety, and your disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed.",
         lessons=[
             "Strong encryption (AES-256, PGP) is the foundation of digital privacy. Without it, no communication is truly private.",
             "Operational Security (OpSec) is not optional — every step in the chain must be secured, from encrypted channels to physical device security.",
@@ -98,20 +98,20 @@ label ending_fugitive:
 
     narrator_voice "But the coverage is incomplete. Some of the most damning evidence never makes it to print."
 
-    narrator_voice "Snowden escapes, barely. His passport is revoked mid-flight. He is stranded in a Moscow airport for 40 days."
+    narrator_voice "You escape, barely. Your passport is revoked mid-flight. You are stranded in a Moscow airport for 40 days."
 
-    narrator_voice "Russia grants him asylum — not out of kindness, but politics."
+    narrator_voice "Russia grants you asylum — not out of kindness, but politics."
 
-    narrator_voice "He becomes a symbol, but an incomplete one. A man trapped between two superpowers."
+    narrator_voice "You become a symbol, but an incomplete one. A person trapped between two superpowers."
 
     narrator_voice "The truth is out there, some of it. But the cost is measured in a life lived in exile."
 
-    narrator_voice "He will never eat at his favorite diner again. Never see his family without a screen between them. The price of partial truth."
+    narrator_voice "You will never eat at your favorite diner again. Never see your family without a screen between you. The price of partial truth."
 
     call screen ending_screen(
         title="// ENDING 2: THE FUGITIVE //",
         color="#FFD700",
-        description="Snowden leaked crucial files and escaped, but lives in permanent exile. The truth reached the public, but gaps in his operational security meant some evidence was lost. The surveillance debate continues, but reform is slow.",
+        description="You leaked crucial files and escaped, but live in permanent exile. The truth reached the public, but gaps in your operational security meant some evidence was lost. The surveillance debate continues, but reform is slow.",
         lessons=[
             "VPNs encrypt your traffic, but they don't make you invisible. Your VPN provider can still see your activity — trust matters.",
             "Metadata (who you contacted, when, from where) can be as revealing as message content. Stripping metadata from files before sharing is essential.",
@@ -136,7 +136,7 @@ label ending_imprisoned:
 
     narrator_voice "They were waiting for him at the airport."
 
-    narrator_voice "The moment Snowden's passport was scanned, the system flagged him. Every camera, every sensor, every algorithm turned its eye toward Gate 14."
+    narrator_voice "The moment your passport was scanned, the system flagged you. Every camera, every sensor, every algorithm turned its eye toward Gate 14."
 
     narrator_voice "Men in dark suits. No badges. No names. Just a quiet walk to a windowless room."
 
@@ -144,14 +144,14 @@ label ending_imprisoned:
 
     narrator_voice "The trial is closed to the public. The evidence is classified. The verdict is predetermined."
 
-    narrator_voice "In a federal supermax facility, Edward Snowden watches the news through a 4-inch window of reinforced glass. The surveillance programs continue unchanged."
+    narrator_voice "In a federal supermax facility, you watch the news through a 4-inch window of reinforced glass. The surveillance programs continue unchanged."
 
     narrator_voice "The truth dies in a cell. And the machine keeps running."
 
     call screen ending_screen(
         title="// ENDING 3: IMPRISONED //",
         color="#FF2D55",
-        description="Snowden's identity was exposed before he could escape. He was arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed.",
+        description="Your identity was exposed before you could escape. You were arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed.",
         lessons=[
             "IP tracking and digital forensics can identify you in minutes if you leave traces. Always use Tor and VPNs together on untrusted networks.",
             "The Espionage Act of 1917 doesn't distinguish between whistleblowers and spies — legal protections for digital whistleblowers remain weak.",
@@ -174,15 +174,15 @@ label ending_silenced:
 
     show logo_watermark
 
-    narrator_voice "The internal monitoring system flagged Edward Snowden's access patterns three weeks before he planned to act."
+    narrator_voice "The internal monitoring system flagged your access patterns three weeks before you planned to act."
 
-    narrator_voice "Unusual file access. After-hours logins. Queries that didn't match his assigned projects."
+    narrator_voice "Unusual file access. After-hours logins. Queries that didn't match your assigned projects."
 
-    narrator_voice "A quiet reassignment. His clearance revoked overnight. His workstation wiped."
+    narrator_voice "A quiet reassignment. Your clearance revoked overnight. Your workstation wiped."
 
     narrator_voice "No arrest. No trial. No headlines. Just silence."
 
-    narrator_voice "Snowden finds himself working IT support in a suburban Virginia office park. No access. No power. No story."
+    narrator_voice "You find yourself working IT support in a suburban Virginia office park. No access. No power. No story."
 
     narrator_voice "The journalists wait for a contact that never comes. The documents remain locked in NSA servers."
 
@@ -191,7 +191,7 @@ label ending_silenced:
     call screen ending_screen(
         title="// ENDING 4: SILENCED //",
         color="#FF2D55",
-        description="NSA internal monitors detected Snowden's suspicious behavior before he could act. His clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret.",
+        description="NSA internal monitors detected your suspicious behavior before you could act. Your clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret.",
         lessons=[
             "Network monitoring tools like intrusion detection systems (IDS) track access patterns. Unusual behavior triggers automated alerts.",
             "Insider threat programs use behavioral analytics to detect anomalies — accessing files outside your clearance level is immediately flagged.",
@@ -216,22 +216,22 @@ label ending_betrayed:
 
     narrator_voice "The journalist's email was compromised from the start."
 
-    narrator_voice "What Snowden thought was a secure PGP channel was actually a honeypot — a man-in-the-middle operation run by the very agency he was trying to expose."
+    narrator_voice "What you thought was a secure PGP channel was actually a honeypot — a man-in-the-middle operation run by the very agency you were trying to expose."
 
-    narrator_voice "Every document he shared was intercepted. Every plan he made was monitored. Every ally he trusted was catalogued."
+    narrator_voice "Every document you shared was intercepted. Every plan you made was monitored. Every ally you trusted was catalogued."
 
     narrator_voice "The co-worker who offered to help? An informant. The encrypted channel? Broken by a zero-day exploit."
 
-    narrator_voice "Edward Snowden disappeared on a Tuesday morning. No announcement. No media coverage."
+    narrator_voice "You disappeared on a Tuesday morning. No announcement. No media coverage."
 
-    narrator_voice "His apartment was cleaned out within 24 hours. His digital footprint scrubbed from every server."
+    narrator_voice "Your apartment was cleaned out within 24 hours. Your digital footprint scrubbed from every server."
 
-    narrator_voice "It was as if he never existed at all."
+    narrator_voice "It was as if you never existed at all."
 
     call screen ending_screen(
         title="// ENDING 5: BETRAYED //",
         color="#FF2D55",
-        description="Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. Snowden vanished without a trace.",
+        description="Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. You vanished without a trace.",
         lessons=[
             "Man-in-the-middle attacks can compromise even encrypted channels if you don't verify the other party's identity through key fingerprints.",
             "Trust verification is critical — in cryptography, you must independently verify public keys through a separate channel, not just accept them.",
