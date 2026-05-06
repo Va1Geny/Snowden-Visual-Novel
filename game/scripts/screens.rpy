@@ -1718,7 +1718,7 @@ screen briefing_screen():
                 vbox:
                     spacing 18
 
-                    text "OPERATIVE: [CLASSIFIED]":
+                    text "OPERATIVE: [[CLASSIFIED]":
                         color "#EAF4F1"
                         size briefing_title_size
                         bold True
