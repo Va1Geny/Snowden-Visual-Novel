@@ -861,9 +861,9 @@ init python:
                 "> PRISM was the codename for the NSA's secret",
                 "  surveillance program that collected data from",
                 "  internet companies including Google, Facebook,",
-                "  and Apple. Snowden revealed it in 2013."
+                "  and Apple. You revealed it in 2013."
             ],
-            "hint": "This is the name of the surveillance program Snowden risked everything to expose."
+            "hint": "This is the name of the surveillance program you risked everything to expose."
         },
         {
             "word": "ENCRYPTED",
@@ -871,7 +871,7 @@ init python:
             "difficulty": "MEDIUM",
             "headline": "PGP CHANNEL ANALYSIS",
             "context": [
-                "> To protect his communications, Snowden used",
+                "> To protect your communications, you used",
                 "  ENCRYPTION — the process of scrambling data",
                 "  so only the intended recipient can read it.",
                 "  PGP encryption was his primary tool."
@@ -2261,7 +2261,7 @@ screen decrypt_result():
                 color "#E8E8E8"
                 size 22
 
-            text "Snowden used PGP encryption to contact journalists. Without encryption, his communications could have been intercepted long before the files reached the public.":
+            text "You used PGP encryption to contact journalists. Without encryption, your communications could have been intercepted long before the files reached the public.":
                 color "#E8E8E8"
                 size 22
 

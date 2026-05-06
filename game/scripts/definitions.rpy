@@ -339,7 +339,7 @@ init python:
 
         result = text
         for term in sorted(IMPORTANT_TERMS, key=len, reverse=True):
-            pattern = re.compile(r"(?<!\{b\})(%s)(?!\{/b\})" % re.escape(term), re.IGNORECASE)
+            pattern = re.compile(r"(?<!\{b\})\b(%s)\b(?!\{/b\})" % re.escape(term), re.IGNORECASE)
             result = pattern.sub(lambda match: "{b}%s{/b}" % match.group(1), result)
 
         return result

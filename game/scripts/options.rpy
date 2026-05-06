@@ -30,7 +30,7 @@ define config.version = "1.0"
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
-An educational visual novel about Edward Snowden and network security.
+An educational visual novel where you step into the shoes of Edward Snowden to uncover the truth about network security.
 Designed to teach students aged 16-18 the fundamentals of network security through interactive storytelling.
 
 Fictional dramatization for educational purposes.
