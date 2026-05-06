@@ -956,9 +956,9 @@ label chapter_4:
     if mg_intro4:
         call minigame_4_cover_tracks
     else:
-        $ knowledge_score -= 1
+        $ knowledge_score = max(0, knowledge_score - 1)
         $ escape_successful = False
-        $ renpy.notify("Knowledge -1 (Skipped)")
+        $ renpy.notify("Challenge skipped. Knowledge -1")
 
     if escape_successful and evidence_secured:
         im "Clean. Not a single trace left on this machine. When they get here, they'll find nothing but a blank hard drive and an empty hotel room."

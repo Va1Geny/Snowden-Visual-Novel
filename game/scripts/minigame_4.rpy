@@ -40,7 +40,103 @@ init python:
             r = int(self.get_remaining())
             return "{:02d}:{:02d}".format(r // 60, r % 60)
 
+    import math as _math
+    import random as _random
+
+    class WaveformGraph(renpy.Displayable):
+        def __init__(self, w, h, color_hex, speed=1.5, amp=0.35, **kw):
+            super(WaveformGraph, self).__init__(**kw)
+            self.w = w
+            self.h = h
+            self.col = color_hex
+            self.speed = speed
+            self.amp = amp
+            self._n = [_random.uniform(-1, 1) for _ in range(w)]
+        def _rgb(self, hx):
+            hx = hx.lstrip('#')
+            return (int(hx[0:2],16), int(hx[2:4],16), int(hx[4:6],16))
+        def render(self, width, height, st, at):
+            r = renpy.Render(self.w, self.h)
+            c = r.canvas()
+            rgb = self._rgb(self.col)
+            mid = self.h * 0.5
+            a = self.h * self.amp
+            for gy in range(0, self.h, max(1, self.h // 4)):
+                c.line((26, 36, 46, 180), (0, gy), (self.w, gy))
+            pts = []
+            for x in range(0, self.w, 2):
+                ph = (x / float(self.w)) * _math.pi * 6.0
+                wv = _math.sin(ph - st * self.speed)
+                ns = self._n[x % len(self._n)] * 0.15
+                y = int(max(2, min(self.h - 2, mid + (wv + ns) * a)))
+                pts.append((x, y))
+            for i in range(len(pts) - 1):
+                c.line(rgb + (220,), pts[i], pts[i+1])
+            renpy.redraw(self, 0.033)
+            return r
+        def event(self, ev, x, y, st):
+            pass
+        def visit(self):
+            return []
+
+    class NSAThreatBar(renpy.Displayable):
+        def __init__(self, w, h, **kw):
+            super(NSAThreatBar, self).__init__(**kw)
+            self.w = w
+            self.h = h
+        def render(self, width, height, st, at):
+            r = renpy.Render(self.w, self.h)
+            c = r.canvas()
+            p = cover_timer.get_progress()
+            fh = int(self.h * p)
+            sy = self.h - fh
+            if p < 0.25:
+                col = (0, 255, 136, 220)
+            elif p < 0.50:
+                col = (255, 215, 0, 220)
+            elif p < 0.75:
+                col = (255, 140, 0, 220)
+            else:
+                col = (255, 45, 85, 255) if int(_math.sin(st * 8) > 0) else (180, 20, 50, 200)
+            c.rect((13, 17, 23, 255), (0, 0, self.w, self.h))
+            if fh > 0:
+                c.rect(col, (0, sy, self.w, fh))
+            sh = max(1, self.h // 10)
+            for i in range(10):
+                c.line((8, 12, 18, 255), (0, i * sh), (self.w, i * sh))
+            bc = (0, 255, 209, 120)
+            c.rect(bc, (0, 0, self.w, 2))
+            c.rect(bc, (0, self.h - 2, self.w, 2))
+            c.rect(bc, (0, 0, 2, self.h))
+            c.rect(bc, (self.w - 2, 0, 2, self.h))
+            renpy.redraw(self, 0.05)
+            return r
+        def event(self, ev, x, y, st):
+            pass
+        def visit(self):
+            return []
+
+    class ScanlineOverlay(renpy.Displayable):
+        def __init__(self, **kw):
+            super(ScanlineOverlay, self).__init__(**kw)
+        def render(self, width, height, st, at):
+            r = renpy.Render(1920, 1080)
+            c = r.canvas()
+            for y in range(0, 1080, 3):
+                c.line((0, 0, 0, 10), (0, y), (1920, y))
+            return r
+        def event(self, ev, x, y, st):
+            pass
+        def visit(self):
+            return []
+
     cover_timer = CoverTracksTimer(total=90)
+    ct_wave_cpu = WaveformGraph(280, 40, "#00FFD1", speed=1.5)
+    ct_wave_net = WaveformGraph(280, 40, "#00FF88", speed=2.0)
+    ct_wave_up = WaveformGraph(280, 35, "#FF2D55", speed=1.8, amp=0.25)
+    ct_wave_dn = WaveformGraph(280, 35, "#00FFD1", speed=1.2)
+    ct_threat_bar = NSAThreatBar(260, 200)
+    ct_scanlines = ScanlineOverlay()
 
     ct_traces = [
         {
@@ -486,17 +582,15 @@ transform ct_panel_enter:
 
 
 ################################################################################
-## MAIN GAME SCREEN
+## MAIN GAME SCREEN — eDEX-UI TERMINAL LAYOUT
 ################################################################################
 
 screen screen_cover_tracks():
     modal True
     on "show" action Function(ct_reset)
-
     timer 0.1 repeat True action Function(renpy.restart_interaction)
 
     if cover_timer.is_expired() and not ct_state["show_result"] and not ct_state["show_breakdown"] and not ct_state["show_learn"]:
-        on "show" action NullAction()
         timer 0.01 action [SetDict(ct_state, "show_result", True), Function(renpy.restart_interaction)]
 
     $ _ct = ct_current()
@@ -508,237 +602,331 @@ screen screen_cover_tracks():
     $ _ct_wiped = ct_state["wiped"]
     $ _ct_rem = cover_timer.get_remaining()
 
+    # BG
     add "#080C10"
-
     add "images/logo.png":
-        xalign 0.5 yalign 0.5 alpha 0.05
-        fit "contain" xsize 1000 ysize 1000
+        xalign 0.5 yalign 0.5 alpha 0.04
+        fit "contain" xsize 900 ysize 900
 
-    # ── EDEX-UI STYLE LEFT PANEL ──
+    # ── TOP BAR 1920×52 ──
     frame:
-        xpos 0 ypos 0 xsize 450 ysize 920
-        background "#05080A"
-        padding (20, 20)
-
-        vbox:
-            spacing 15
-
-            # CLOCK / COUNTDOWN AREA
-            text "[_ct_eta]" color (_ct_tcol if _ct_rem > 0 else "#FF2D55") size 72 bold True font "DejaVuSans.ttf"
-
-            # SYSTEM INFO / THREAT LEVEL
+        xpos 0 ypos 0 xsize 1920 ysize 52
+        background "#0D1117F0"
+        padding (20, 0)
+        hbox:
+            xfill True yalign 0.5
             hbox:
-                spacing 40
-                vbox:
-                    text "NETWORK STATUS" color "#7A8A99" size 12 bold True font "DejaVuSans.ttf"
-                    text "STATE: CLASSIFIED" color "#E8E8E8" size 11 font "DejaVuSans.ttf"
-                    hbox:
-                        spacing 10
-                        text "THREAT" color "#E8E8E8" size 14 bold True font "DejaVuSans.ttf" yalign 0.5
-                        text "[_ct_tlvl]" color _ct_tcol size 14 bold True font "DejaVuSans.ttf" yalign 0.5:
-                            if _ct_tlvl == "CRITICAL":
-                                at ct_threat_flash
-                vbox:
-                    text "PING" color "#7A8A99" size 12 bold True font "DejaVuSans.ttf" xalign 1.0
-                    text "185ms" color "#E8E8E8" size 12 font "DejaVuSans.ttf" xalign 1.0
+                spacing 20 yalign 0.5
+                text "CLASSIFIED" color "#FF2D55" size 11 bold True font "DejaVuSans.ttf"
+                text "CH.4: THE ESCAPE" color "#7A8A99" size 11 font "DejaVuSans.ttf"
+                text "// COVER YOUR TRACKS //" color "#00FFD1" size 16 bold True font "DejaVuSans.ttf"
+            hbox:
+                spacing 24 xalign 1.0 yalign 0.5
+                text "TRACES: [_ct_wiped]/8" color "#E8E8E8" size 14 bold True font "DejaVuSans.ttf"
+                text "[_ct_eta]" color (_ct_tcol if _ct_rem > 0 else "#FF2D55") size 22 bold True font "DejaVuSans.ttf"
+                text "THREAT: [_ct_tlvl]" color _ct_tcol size 14 bold True font "DejaVuSans.ttf"
 
-            null height 10
+    # ── LEFT PANEL 330×924 ──
+    frame:
+        xpos 0 ypos 52 xsize 330 ysize 924
+        background "#0D1117"
+        padding (10, 10)
+        vbox:
+            spacing 6
 
-            # TOP PROCESSES / DIGITAL TRACES
-            text "TOP TRACES     PID | NAME | RISK | STATUS" color "#7A8A99" size 11 bold True font "DejaVuSans.ttf"
-            frame:
-                xfill True ysize 2
-                background "#3A4A55"
-
-            vbox:
-                spacing 6
-                for _i in range(8):
-                    $ _tr = ct_traces[_i]
-                    $ _st = ct_state["statuses"][_i] if _i < len(ct_state["statuses"]) else "PENDING"
-                    $ _stcol = ct_status_color(_st)
-                    $ _is_cur = (_i == _ct_idx and not ct_state["show_result"])
-                    hbox:
-                        xfill True
-                        text "0[str(3120 + _i)]" color "#7A8A99" size 11 font "DejaVuSans.ttf" xsize 40
-                        text _tr["icon"] + " " + _tr["name"][:18] color ("#E8E8E8" if _is_cur else "#7A8A99") size 12 font "DejaVuSans.ttf" xsize 180
-                        text _tr["risk_level"][:4] color "#FF8C00" size 11 font "DejaVuSans.ttf" xsize 50
-                        text _st color _stcol size 11 bold True font "DejaVuSans.ttf" xalign 1.0
-
-            null height 20
-
-            # NSA TRACKER (Replacing WORLD VIEW / NETWORK TRAFFIC)
-            text "NSA TRACKING MAP   ENDPOINT LAT/LON" color "#7A8A99" size 11 bold True font "DejaVuSans.ttf"
-            frame:
-                xfill True ysize 2
-                background "#3A4A55"
-            null height 10
-            
-            # Simulated map grid and progress
-            frame:
-                xfill True ysize 180
-                background "#0D1117"
-                padding (10, 10)
-                vbox:
-                    spacing 10
-                    text "AGENTS DISPATCHED" color "#FF2D55" size 13 bold True font "DejaVuSans.ttf" xalign 0.5
-                    frame:
-                        xalign 0.5 xsize 300 ysize 20
-                        background "#111720"
-                        frame:
-                            xsize max(4, int(300 * _ct_prog)) ysize 20
-                            background _ct_tcol
-                    $ _pct_text = "{:.1f}% PROXIMITY".format(_ct_prog * 100)
-                    text _pct_text color _ct_tcol size 16 bold True font "DejaVuSans.ttf" xalign 0.5
-
-            if _ct is not None:
-                null height 10
-                text "TARGET METADATA    ANALYSIS ENGINE" color "#7A8A99" size 11 bold True font "DejaVuSans.ttf"
+            # SYS MONITOR
+            text "--- SYS MONITOR ---" color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            null height 4
+            hbox:
+                xfill True
+                text "CPU" color "#7A8A99" size 11 bold True font "DejaVuSans.ttf" yalign 0.5 xsize 30
+                add ct_wave_cpu
+            hbox:
+                xfill True
+                text "RAM" color "#7A8A99" size 11 bold True font "DejaVuSans.ttf" yalign 0.5 xsize 30
                 frame:
-                    xfill True ysize 2
-                    background "#3A4A55"
-                null height 5
-                text _ct["danger_title"] color "#FF2D55" size 12 bold True font "DejaVuSans.ttf"
-                text "TYPE: " + _ct["file_type"] color "#00FFD1" size 11 font "DejaVuSans.ttf"
-                text "SIZE: " + _ct["file_size"] color "#E8E8E8" size 11 font "DejaVuSans.ttf"
+                    xsize 280 ysize 14 yalign 0.5
+                    background "#111720"
+                    frame:
+                        xsize max(4, int(280 * 61 / 100)) ysize 14
+                        background "#FFD700"
+            hbox:
+                xfill True
+                text "NET" color "#7A8A99" size 11 bold True font "DejaVuSans.ttf" yalign 0.5 xsize 30
+                add ct_wave_net
 
-    # ── EDEX-UI STYLE MAIN TERMINAL ──
+            null height 6
+            frame:
+                xfill True ysize 1
+                background "#3A4A55"
+
+            # PROCESSES
+            text "--- PROCESSES ---" color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            null height 2
+            text "PID   NAME              CPU   MEM" color "#3A4A55" size 10 font "DejaVuSans.ttf"
+            text "1024  snowden-os        2.1%%  4.8%%" color "#7A8A99" size 10 font "DejaVuSans.ttf"
+            text "3847  dropbox-daemon   12.4%%  8.2%%" color "#7A8A99" size 10 font "DejaVuSans.ttf"
+            text "4401  ssh-agent         0.3%%  0.1%%" color "#7A8A99" size 10 font "DejaVuSans.ttf"
+            text "5102  chrome-render    43.8%% 19.6%%" color "#7A8A99" size 10 font "DejaVuSans.ttf"
+            text "7788  wpa_supplicant    1.1%%  0.3%%" color "#7A8A99" size 10 font "DejaVuSans.ttf"
+
+            null height 6
+            frame:
+                xfill True ysize 1
+                background "#3A4A55"
+
+            # TRACES DETECTED
+            text "--- TRACES DETECTED ---" color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            null height 4
+            for _i in range(8):
+                $ _tr = ct_traces[_i]
+                $ _st = ct_state["statuses"][_i] if _i < len(ct_state["statuses"]) else "PENDING"
+                $ _stcol = ct_status_color(_st)
+                $ _is_cur = (_i == _ct_idx and not ct_state["show_result"])
+                frame:
+                    xfill True ysize 38
+                    background ("#111720" if _is_cur else "#0D1117")
+                    left_padding 6
+                    right_padding 6
+                    top_padding 2
+                    bottom_padding 2
+                    if _is_cur:
+                        left_padding 4
+                    hbox:
+                        xfill True yalign 0.5
+                        hbox:
+                            spacing 6 yalign 0.5
+                            text _tr["icon"] size 14 font "DejaVuSans.ttf" yalign 0.5
+                            text _tr["name"] color ("#E8E8E8" if _is_cur else "#7A8A99") size 12 font "DejaVuSans.ttf" yalign 0.5
+                        text _st color _stcol size 10 bold True font "DejaVuSans.ttf" xalign 1.0 yalign 0.5
+
+    # ── RIGHT PANEL 330×924 ──
+    frame:
+        xpos 1590 ypos 52 xsize 330 ysize 924
+        background "#0D1117"
+        padding (10, 10)
+        vbox:
+            spacing 8
+
+            # NSA THREAT MONITOR
+            text "--- NSA MONITOR ---" color "#FF2D55" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            null height 4
+            add ct_threat_bar xalign 0.5
+            $ _pct_text = "{:.0f}%%".format(_ct_prog * 100)
+            text _pct_text color _ct_tcol size 24 bold True font "DejaVuSans.ttf" xalign 0.5
+            text "NSA CLOSING IN" color "#7A8A99" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            text "AGENT ETA: [_ct_eta]" color _ct_tcol size 18 bold True font "DejaVuSans.ttf" xalign 0.5
+
+            null height 6
+            frame:
+                xfill True ysize 1
+                background "#3A4A55"
+
+            # NET TRAFFIC
+            text "--- NET TRAFFIC ---" color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            null height 2
+            add ct_wave_up xalign 0.5
+            add ct_wave_dn xalign 0.5
+            text "UP: 2.4 KB/s   DOWN: 14.8 KB/s" color "#7A8A99" size 10 font "DejaVuSans.ttf" xalign 0.5
+
+            null height 6
+            frame:
+                xfill True ysize 1
+                background "#3A4A55"
+
+            # EVIDENCE ANALYSIS
+            if _ct is not None:
+                text "--- EVIDENCE SCAN ---" color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+                null height 4
+                $ _rl = _ct["risk_level"]
+                $ _rlcol = "#FF2D55" if _rl == "CRITICAL" else "#FF8C00" if _rl == "HIGH" else "#FFD700"
+                hbox:
+                    xfill True
+                    text "FILE TYPE:" color "#7A8A99" size 11 font "DejaVuSans.ttf"
+                    text _ct["file_type"] color "#E8E8E8" size 11 font "DejaVuSans.ttf" xalign 1.0
+                hbox:
+                    xfill True
+                    text "SIZE:" color "#7A8A99" size 11 font "DejaVuSans.ttf"
+                    text _ct["file_size"] color "#E8E8E8" size 11 font "DejaVuSans.ttf" xalign 1.0
+                hbox:
+                    xfill True
+                    text "RISK:" color "#7A8A99" size 11 font "DejaVuSans.ttf"
+                    text "[_rl]" color _rlcol size 11 bold True font "DejaVuSans.ttf" xalign 1.0
+                text _ct["forensic_note"] color "#3A4A55" size 10 font "DejaVuSans.ttf"
+
+            null height 6
+            frame:
+                xfill True ysize 1
+                background "#3A4A55"
+
+            # LOCATION DATA
+            text "--- LOCATION ---" color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            null height 4
+            text "IP:     172.16.4.22" color "#7A8A99" size 10 font "DejaVuSans.ttf"
+            text "VPN:    ACTIVE (ProtonVPN)" color "#00FF88" size 10 font "DejaVuSans.ttf"
+            text "LOC:    Hong Kong, CN" color "#7A8A99" size 10 font "DejaVuSans.ttf"
+            text "UPTIME: 00:01:23" color "#7A8A99" size 10 font "DejaVuSans.ttf"
+            text "CRYPTO: AES-256-GCM" color "#00FFD1" size 10 font "DejaVuSans.ttf"
+
+    # ── CENTER TERMINAL 1260×924 ──
     if _ct is not None and not ct_state["show_result"]:
         frame:
-            xpos 450 ypos 0 xsize 1470 ysize 920
+            xpos 330 ypos 52 xsize 1260 ysize 924
             background "#0A0E14"
-
+            padding (20, 14)
             vbox:
-                # Terminal Tabs Header
-                hbox:
-                    xfill True ysize 30
-                    frame:
-                        background "#A8DFE6" # edex-ui cyan color
-                        xsize 300 yfill True
-                        text "MAIN-" color "#000000" size 14 bold True font "DejaVuSans.ttf" xalign 0.5 yalign 0.5
-                    frame:
-                        background "#080C10"
-                        xsize 300 yfill True
-                        text "EMPTY" color "#7A8A99" size 12 font "DejaVuSans.ttf" xalign 0.5 yalign 0.5
-                    frame:
-                        background "#080C10"
-                        xsize 300 yfill True
-                        text "EMPTY" color "#7A8A99" size 12 font "DejaVuSans.ttf" xalign 0.5 yalign 0.5
-                    frame:
-                        background "#0D1117"
-                        xfill True yfill True
+                spacing 8
 
-                # Terminal Body
+                # Mission objective
                 frame:
-                    xfill True yfill True
-                    background None
-                    padding (30, 20)
-
+                    xfill True ysize 90
+                    background "#0D1117"
+                    padding (16, 10)
                     vbox:
-                        spacing 15
-
-                        text "Snowden OS Terminal\nCopyright (C) 2013 Open Source Foundation. All rights reserved.\n\nEstablishing secure tunnel... OK." color "#7A8A99" size 13 font "DejaVuSans.ttf"
-
-                        $ _phase_label = "GUIDED" if _ct["phase"] == 1 else "ASSEMBLY" if _ct["phase"] == 2 else "INPUT"
+                        spacing 4
+                        $ _phase_label = "GUIDED" if _ct["phase"] == 1 else "ASSEMBLY" if _ct["phase"] == 2 else "SELECT"
                         $ _trace_id = _ct["id"]
                         $ _trace_name = _ct["name"]
-                        text ">> TARGET: TRACE [_trace_id]/8: [_trace_name] (MODE: [_phase_label])" color "#FFD700" size 14 bold True font "DejaVuSans.ttf"
+                        hbox:
+                            spacing 12
+                            text "TARGET: TRACE [_trace_id]/8 — [_trace_name]" color "#00FFD1" size 15 bold True font "DejaVuSans.ttf" yalign 0.5
+                            text "MODE: [_phase_label]" color "#7A8A99" size 12 font "DejaVuSans.ttf" yalign 0.5
+                        text _ct["danger_title"] color "#FF2D55" size 13 bold True font "DejaVuSans.ttf"
+                        text _ct["danger_text"] color "#7A8A99" size 11 font "DejaVuSans.ttf"
 
-                        # Log Output
-                        frame:
-                            xfill True ysize 600
-                            background None
-
-                            viewport:
-                                xfill True yfill True
-                                scrollbars "vertical"
-                                mousewheel True
-                                yinitial 1.0
-
-                                vbox:
-                                    spacing 2
-                                    for _line in ct_state["terminal_log"][-30:]:
-                                        $ _lcol = "#00FF88" if "[[  OK  ]" in _line else "#FF2D55" if "FAILED" in _line or "PENALTY" in _line else "#FFD700" if "WARN" in _line or "HINT" in _line else "#E8E8E8"
-                                        text _line color _lcol size 14 font "DejaVuSans.ttf"
-
-                                    # Current prompt
-                                    null height 10
-                                    hbox:
-                                        spacing 8
-                                        text "root@snowden:~$" color "#00FFD1" size 16 bold True font "DejaVuSans.ttf"
-                                        $ _cmd_display = ct_get_input_command()
-                                        text "[_cmd_display]" color "#A8FF78" size 16 font "DejaVuSans.ttf"
-                                        text "_" color "#00FFD1" size 16 font "DejaVuSans.ttf" at ct_cursor_blink
-
-    # ── EDEX-UI STYLE BOTTOM KEYBOARD / FOLDERS ──
-    if not ct_state["show_result"] and not ct_state["show_breakdown"] and not ct_state["show_learn"] and _ct is not None:
-        frame:
-            xpos 0 ypos 920 xsize 1920 ysize 160
-            background "#080C10"
-            padding (20, 10)
-
-            hbox:
-                xfill True yalign 0.5 spacing 50
-
-                # Left side: Phase specific interactions (Tokens / Options) styled as folders
+                # Terminal console log
                 frame:
-                    background None xsize 1200 yfill True
-                    vbox:
-                        spacing 10 yalign 0.5
-                        text "INTERACTION INTERFACE //" color "#7A8A99" size 11 bold True font "DejaVuSans.ttf"
+                    xfill True ysize 380
+                    background "#080C10"
+                    left_padding 2
+                    right_padding 12
+                    top_padding 8
+                    bottom_padding 8
 
-                        if _ct["phase"] == 1:
-                            text "Review the command above, then press EXECUTE on the right." color "#A8DFE6" size 14 font "DejaVuSans.ttf"
-                        elif _ct["phase"] == 2:
+                    hbox:
+                        # Cyan left border
+                        frame:
+                            xsize 2 yfill True
+                            background "#00FFD1"
+                        null width 10
+                        viewport:
+                            xfill True yfill True
+                            scrollbars "vertical"
+                            mousewheel True
+                            yinitial 1.0
+                            vbox:
+                                spacing 2
+                                for _line in ct_state["terminal_log"][-25:]:
+                                    $ _lcol = "#00FF88" if "[[  OK  ]" in _line else "#FF2D55" if "FAILED" in _line or "PENALTY" in _line else "#FFD700" if "WARN" in _line or "HINT" in _line else "#C8E6C9"
+                                    text _line color _lcol size 13 font "DejaVuSans.ttf"
+                                # Prompt with cursor
+                                hbox:
+                                    spacing 4
+                                    text "root@snowden-laptop:~$" color "#00FFD1" size 13 bold True font "DejaVuSans.ttf"
+                                    text "_" color "#00FFD1" size 13 font "DejaVuSans.ttf" at ct_cursor_blink
+
+                # Command display
+                frame:
+                    xfill True ysize 40
+                    background "#0D1117"
+                    padding (12, 8)
+                    hbox:
+                        spacing 6 yalign 0.5
+                        text "root@snowden-laptop:~$" color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
+                        $ _cmd_display = ct_get_input_command()
+                        text "[_cmd_display]" color "#A8FF78" size 14 font "DejaVuSans.ttf"
+
+                null height 4
+
+                # Phase interaction area
+                if _ct["phase"] == 1:
+                    frame:
+                        xfill True
+                        background "#111720"
+                        padding (14, 10)
+                        vbox:
+                            spacing 6
+                            text "GUIDED MODE — Review the command, then press EXECUTE" color "#FFD700" size 12 bold True font "DejaVuSans.ttf"
+                            text "The correct command is pre-filled above. Study each part before executing." color "#7A8A99" size 11 font "DejaVuSans.ttf"
+
+                elif _ct["phase"] == 2:
+                    frame:
+                        xfill True
+                        background "#111720"
+                        padding (14, 10)
+                        vbox:
+                            spacing 8
+                            text "ASSEMBLY MODE — Click tokens in the correct order" color "#FFD700" size 12 bold True font "DejaVuSans.ttf"
                             hbox:
-                                spacing 15 box_wrap True
+                                spacing 8
+                                box_wrap True
                                 $ _avail = ct_get_shuffled_tokens(_ct["id"])
                                 for _tok in _avail:
                                     if _tok not in ct_state["assembled_tokens"]:
                                         textbutton "[_tok]":
-                                            background "#111720" hover_background "#A8DFE6"
-                                            text_color "#A8FF78" text_hover_color "#000000"
-                                            text_size 16 text_font "DejaVuSans.ttf" padding (15, 10)
+                                            background "#1A2A2A"
+                                            hover_background "#00FFD1"
+                                            text_color "#A8FF78"
+                                            text_hover_color "#000000"
+                                            text_size 14
+                                            text_font "DejaVuSans.ttf"
+                                            padding (12, 8)
                                             action Function(ct_add_token, _tok)
-                                if ct_state["assembled_tokens"]:
+                            if ct_state["assembled_tokens"]:
+                                hbox:
+                                    spacing 6
+                                    text "Built:" color "#7A8A99" size 12 font "DejaVuSans.ttf" yalign 0.5
+                                    for _atok in ct_state["assembled_tokens"]:
+                                        text "[_atok]" color "#00FFD1" size 13 font "DejaVuSans.ttf" yalign 0.5
                                     textbutton "UNDO":
-                                        background "#2A1117" hover_background "#FF2D55"
-                                        text_color "#FF2D55" text_hover_color "#FFFFFF"
-                                        text_size 16 text_font "DejaVuSans.ttf" padding (15, 10)
+                                        text_color "#FF2D55" text_size 12 text_font "DejaVuSans.ttf"
                                         action Function(ct_remove_last_token)
-                        elif _ct["phase"] == 3:
-                            vbox:
-                                spacing 10
-                                for _opt in _ct["options"]:
-                                    $ _is_sel = (ct_state["typed_input"] == _opt)
-                                    textbutton "[_opt]":
-                                        xfill True
-                                        background ("#1A2A2A" if _is_sel else "#111720")
-                                        hover_background "#A8DFE6"
-                                        text_color ("#00FFD1" if _is_sel else "#A8FF78")
-                                        text_hover_color "#000000"
-                                        text_size 14 text_font "DejaVuSans.ttf" padding (12, 10)
-                                        action Function(ct_select_option, _opt)
 
-                # Right side: Simulated Keyboard Actions
-                frame:
-                    background None xsize 500 yfill True
-                    hbox:
-                        spacing 20 xalign 1.0 yalign 0.5
-                        
-                        if not ct_state["hint_used"]:
-                            textbutton "HINT":
-                                background "#2A2000" hover_background "#FFD700"
-                                text_color "#FFD700" text_hover_color "#000000"
-                                text_size 20 text_bold True text_font "DejaVuSans.ttf"
-                                padding (30, 20)
-                                action Function(ct_use_hint)
-                        
-                        textbutton "EXECUTE":
-                            background "#003A2A" hover_background "#00FFD1"
-                            text_color "#00FFD1" text_hover_color "#000000"
-                            text_size 20 text_bold True text_font "DejaVuSans.ttf"
-                            padding (40, 20)
-                            action Function(ct_execute)
+                elif _ct["phase"] == 3:
+                    frame:
+                        xfill True
+                        background "#111720"
+                        padding (14, 10)
+                        vbox:
+                            spacing 8
+                            text "SELECT MODE — Choose the correct command" color "#FFD700" size 12 bold True font "DejaVuSans.ttf"
+                            for _opt in _ct["options"]:
+                                $ _is_sel = (ct_state["typed_input"] == _opt)
+                                textbutton "[_opt]":
+                                    xfill True
+                                    background ("#1A2A2A" if _is_sel else "#111720")
+                                    hover_background "#00FFD1"
+                                    text_color ("#00FFD1" if _is_sel else "#A8FF78")
+                                    text_hover_color "#000000"
+                                    text_size 13
+                                    text_font "DejaVuSans.ttf"
+                                    padding (12, 8)
+                                    action Function(ct_select_option, _opt)
+
+                # Execute + Hint
+                null height 6
+                hbox:
+                    xalign 0.5 spacing 20
+                    textbutton "> EXECUTE COMMAND":
+                        background "#003A2A"
+                        hover_background "#00FFD1"
+                        text_color "#00FFD1"
+                        text_hover_color "#000000"
+                        text_size 18
+                        text_bold True
+                        text_font "DejaVuSans.ttf"
+                        padding (40, 12)
+                        action Function(ct_execute)
+                    if not ct_state["hint_used"]:
+                        textbutton "? HINT -5s":
+                            background "#2A2000"
+                            hover_background "#FFD700"
+                            text_color "#FFD700"
+                            text_hover_color "#000000"
+                            text_size 14
+                            text_font "DejaVuSans.ttf"
+                            padding (15, 8)
+                            action Function(ct_use_hint)
 
     # ── COMMAND BREAKDOWN OVERLAY ──
     if ct_state["show_breakdown"] and _ct is not None:
@@ -747,47 +935,34 @@ screen screen_cover_tracks():
             xalign 0.5 yalign 0.5 xsize 1000
             background "#0D1117F8"
             padding (30, 24)
-
             vbox:
                 spacing 12
-
                 if ct_state["feedback_ok"]:
                     text "// TRACE WIPED //" color "#00FF88" size 24 bold True font "DejaVuSans.ttf" xalign 0.5
                 else:
                     text "// TRACE FAILED //" color "#FF2D55" size 24 bold True font "DejaVuSans.ttf" xalign 0.5
-
                 $ _fb = ct_state["feedback_text"]
                 text "[_fb]" color "#E8E8E8" size 14 font "DejaVuSans.ttf"
-
                 null height 6
-                text "── COMMAND BREAKDOWN ──" color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
-
+                text "--- COMMAND BREAKDOWN ---" color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
                 for _bk, _bv in _ct["command_breakdown"]:
                     hbox:
                         spacing 12
-                        text "[_bk]" color "#00FFD1" size 13 bold True font "DejaVuSans.ttf" xsize 200
+                        text "[_bk]" color "#00FFD1" size 13 bold True font "DejaVuSans.ttf" xsize 220
                         text "[_bv]" color "#7A8A99" size 13 font "DejaVuSans.ttf"
-
                 null height 10
                 hbox:
                     xalign 0.5 spacing 16
                     textbutton "> WHAT I LEARNED":
-                        background "#2A2000"
-                        hover_background "#3A3000"
-                        text_color "#FFD700"
-                        text_size 15
-                        text_bold True
-                        text_font "DejaVuSans.ttf"
+                        background "#2A2000" hover_background "#FFD700"
+                        text_color "#FFD700" text_hover_color "#000000"
+                        text_size 15 text_bold True text_font "DejaVuSans.ttf"
                         padding (20, 10)
                         action Function(ct_show_learn)
-
                     textbutton "> NEXT TRACE":
-                        background "#003A2A"
-                        hover_background "#005A40"
-                        text_color "#00FFD1"
-                        text_size 15
-                        text_bold True
-                        text_font "DejaVuSans.ttf"
+                        background "#003A2A" hover_background "#00FFD1"
+                        text_color "#00FFD1" text_hover_color "#000000"
+                        text_size 15 text_bold True text_font "DejaVuSans.ttf"
                         padding (20, 10)
                         action Function(ct_advance)
 
@@ -798,23 +973,16 @@ screen screen_cover_tracks():
             xalign 0.5 yalign 0.5 xsize 900
             background "#0D1117F8"
             padding (30, 24)
-
             vbox:
                 spacing 14
-
-                text "── WHAT YOU LEARNED ──" color "#FFD700" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
-
+                text "--- WHAT YOU LEARNED ---" color "#FFD700" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
                 $ _lt = _ct["learn_text"]
                 text "[_lt]" color "#CCCCCC" size 15 font "DejaVuSans.ttf" line_spacing 4
-
                 null height 10
                 textbutton "> NEXT TRACE":
-                    background "#003A2A"
-                    hover_background "#005A40"
-                    text_color "#00FFD1"
-                    text_size 16
-                    text_bold True
-                    text_font "DejaVuSans.ttf"
+                    background "#003A2A" hover_background "#00FFD1"
+                    text_color "#00FFD1" text_hover_color "#000000"
+                    text_size 16 text_bold True text_font "DejaVuSans.ttf"
                     padding (30, 12)
                     xalign 0.5
                     action Function(ct_advance)
@@ -826,34 +994,26 @@ screen screen_cover_tracks():
             xalign 0.5 yalign 0.5 xsize 1100
             background "#0D1117F8"
             padding (36, 30)
-
             viewport:
-                xfill True
-                ysize 900
+                xfill True ysize 900
                 scrollbars "vertical"
                 mousewheel True
-
                 vbox:
                     spacing 14 xalign 0.5
-
                     if _ct_wiped >= 8:
                         text "// MISSION ACCOMPLISHED //" color "#00FF88" size 28 bold True font "DejaVuSans.ttf" xalign 0.5
                         text "All 8 digital traces destroyed. NSA agents found nothing." color "#E8E8E8" size 18 font "DejaVuSans.ttf" xalign 0.5 text_align 0.5
                         text "DIGITAL FORENSICS EXPERT" color "#00FFD1" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
                     elif _ct_wiped >= 6:
                         text "// MISSION PARTIAL //" color "#FFD700" size 28 bold True font "DejaVuSans.ttf" xalign 0.5
-                        text "Most traces destroyed. NSA forensics may find partial evidence." color "#E8E8E8" size 18 font "DejaVuSans.ttf" xalign 0.5 text_align 0.5
+                        text "Most traces destroyed. Some evidence may be recoverable." color "#E8E8E8" size 18 font "DejaVuSans.ttf" xalign 0.5 text_align 0.5
                     else:
                         text "// MISSION FAILED //" color "#FF2D55" size 28 bold True font "DejaVuSans.ttf" xalign 0.5
                         text "NSA agents reached the room. Forensic evidence recovered." color "#E8E8E8" size 18 font "DejaVuSans.ttf" xalign 0.5 text_align 0.5
-
                     null height 6
                     text "WIPED: [_ct_wiped] / 8" color "#00FFD1" size 22 bold True font "DejaVuSans.ttf" xalign 0.5
-
                     null height 10
-                    text "── 8 THINGS YOU LEARNED TODAY ──" color "#FFD700" size 15 bold True font "DejaVuSans.ttf" xalign 0.5
-
-                    # Summary list
+                    text "--- 8 THINGS YOU LEARNED TODAY ---" color "#FFD700" size 15 bold True font "DejaVuSans.ttf" xalign 0.5
                     for _si in range(8):
                         $ _str = ct_traces[_si]
                         $ _sst = ct_state["statuses"][_si]
@@ -872,20 +1032,37 @@ screen screen_cover_tracks():
                                         text _str["name"] color "#E8E8E8" size 14 bold True font "DejaVuSans.ttf"
                                         text "[_sst]" color _ssc size 12 bold True font "DejaVuSans.ttf"
                                     text _str["learn_text"][:80] + "..." color "#7A8A99" size 12 font "DejaVuSans.ttf"
-
                     null height 16
                     textbutton "> CONTINUE MISSION":
-                        background "#003A2A"
-                        hover_background "#005A40"
-                        text_color "#00FFD1"
-                        text_size 20
-                        text_bold True
-                        text_font "DejaVuSans.ttf"
-                        padding (40, 14)
-                        xalign 0.5
+                        background "#003A2A" hover_background "#00FFD1"
+                        text_color "#00FFD1" text_hover_color "#000000"
+                        text_size 20 text_bold True text_font "DejaVuSans.ttf"
+                        padding (40, 14) xalign 0.5
                         action Return(_ct_wiped)
 
+    # ── BOTTOM BAR 1920×104 ──
+    if not ct_state["show_result"] and not ct_state["show_breakdown"] and not ct_state["show_learn"]:
+        frame:
+            xpos 0 ypos 976 xsize 1920 ysize 104
+            background "#0D1117F0"
+            padding (24, 0)
+            hbox:
+                xfill True yalign 0.5
+                hbox:
+                    spacing 30
+                    text "ESC: ABORT" color "#3A4A55" size 12 font "DejaVuSans.ttf"
+                    text "ENTER: EXECUTE" color "#3A4A55" size 12 font "DejaVuSans.ttf"
+                    text "HINT: -5 SEC" color "#3A4A55" size 12 font "DejaVuSans.ttf"
+                text "Leave no trace. Destroy all evidence." color "#7A8A99" size 14 font "DejaVuSans.ttf" xalign 0.5
+                text "AGENT ETA: [_ct_eta]" color _ct_tcol size 16 bold True font "DejaVuSans.ttf" xalign 1.0
+
+    # Scanline overlay
+    add ct_scanlines
+
     key "K_RETURN" action Function(ct_execute)
+    key "K_BACKSPACE" action NullAction()
+    key "mouseup_3" action NullAction()
+
 
 
 ################################################################################
@@ -896,7 +1073,6 @@ label minigame_4_cover_tracks:
     $ cover_wiped = 0
     $ cover_failed = 0
     $ ct_reset_token_cache()
-    $ cover_timer = CoverTracksTimer(total=90)
     $ cover_timer.start()
 
     $ quick_menu = False

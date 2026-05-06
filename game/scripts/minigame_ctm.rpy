@@ -368,7 +368,8 @@ screen minigame_clean_message():
                             style "modal_action_button"
                             xsize 340
                             text_style "modal_action_button_text"
-                            xalign 1.0
+                            xalign 0.5
+                            right_margin 30
                             action Function(ctm_clean)
 
                         textbutton "> DISMISS":
@@ -426,3 +427,6 @@ screen minigame_clean_message():
                     text_style "modal_action_button_text"
                     xalign 0.5
                     action Return(_ctm_score)
+
+    key "K_BACKSPACE" action NullAction()
+    key "mouseup_3" action NullAction()

@@ -735,7 +735,7 @@ screen minigame_firewall():
                 yalign 0.5
                 spacing 10
 
-                text "// FIREWALL ANALYSIS COMPLETE //" color "#00FFD1" size 28 bold True xalign 0.5
+                text "// FIREWALL ANALYSIS COMPLETE //" color "#00FFD1" size 28 bold True xalign 0.5 text_align 0.5
 
                 # Mission outcome panel (compact)
                 frame:
@@ -836,6 +836,8 @@ screen minigame_firewall():
                     text_size 22
                     text_bold True
                     action Return(_r_score)
+    key "K_BACKSPACE" action NullAction()
+    key "mouseup_3" action NullAction()
 
 
 ################################################################################
@@ -2114,6 +2116,8 @@ screen decrypt_game():
                     text_style "modal_action_button_text"
                     xalign 0.5
                     action Return("next")
+    key "K_BACKSPACE" action NullAction()
+    key "mouseup_3" action NullAction()
 
 
 screen decrypt_stage_transition(word, score, stars):
