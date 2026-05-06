@@ -309,6 +309,30 @@ init python:
         except Exception as exc:
             renpy.notify(f"Failed to export notebook: {exc}")
 
+    def get_dossier_export_text():
+        header = "NETWORK SECURITY DOSSIER\nClassified: The Snowden Files\n\n"
+        lines = []
+        for term, definition in DOSSIER_ENTRIES:
+            lines.append(f"{term}\n  {definition}")
+        return header + "\n\n".join(lines)
+
+    def export_dossier_txt():
+        export_dir = get_notebook_export_dir()
+        if not export_dir:
+            renpy.notify("Could not determine a writable export location.")
+            return
+
+        filename = datetime.now().strftime("dossier_%Y%m%d_%H%M%S.txt")
+        path = os.path.join(export_dir, filename)
+
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(get_dossier_export_text())
+
+            renpy.notify("Dossier exported to " + export_dir)
+        except Exception as exc:
+            renpy.notify(f"Failed to export dossier: {exc}")
+
     def highlighted_dialogue(text):
         if not text:
             return text

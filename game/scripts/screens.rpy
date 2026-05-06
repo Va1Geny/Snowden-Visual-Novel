@@ -1232,19 +1232,34 @@ screen dossier():
                 background Solid("#171C30")
                 padding (20, 18)
 
-                hbox:
+                vbox:
+                    spacing 10
                     xfill True
 
-                    text "Use the mouse wheel or drag to browse the archive.":
+                    text "Exports are saved as plain .txt files to an exports folder or to your user profile if needed.":
                         color "#AAB0D6"
                         size dossier_footer_size
-                        yalign 0.5
+                        xalign 0.5
+                        text_align 0.5
+                        xmaximum 1400
 
-                    textbutton "RETURN":
-                        style "modal_action_button"
-                        xsize 240
-                        xalign 1.0
-                        action Return()
+                    hbox:
+                        spacing 12
+                        xfill True
+
+                        textbutton "EXPORT TXT":
+                            style "modal_action_button"
+                            xsize 220
+                            background Solid("#244C2F")
+                            hover_background Solid("#3A7A58")
+                            action Function(export_dossier_txt)
+
+                        null xfill True
+
+                        textbutton "RETURN":
+                            style "modal_action_button"
+                            xsize 240
+                            action Return()
 
     key "game_menu" action Return()
 
