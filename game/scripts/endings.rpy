@@ -277,17 +277,23 @@ screen ending_screen(title, color, description, lessons):
         xsize 1000 ysize 1000
 
     # ── Main Content Viewport ──────────────────────────────────────────
+    # NOTE: scrollbars on a viewport steal width from the inner content area,
+    # which shifts xalign 0.5 off-center on a 1920px stage. We pin the column
+    # at xpos 360 (= (1920 - 1200) / 2) so it sits at true visual center.
     viewport:
         xfill True yfill True
         scrollbars "vertical"
         mousewheel True
         draggable True
-        
+
         vbox:
-            xalign 0.5
-            xsize 1200
-            spacing 40
+            xfill True
             
+            vbox:
+                xalign 0.5
+                xsize 1200
+                spacing 40
+
             null height 80
             
             # ── HEADER: ENDING TITLE ──
