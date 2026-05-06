@@ -1002,14 +1002,14 @@ screen main_menu():
                         ysize 1
                         yalign 0.5
 
-                text "A visual novel about surveillance, trust, and digital security under pressure.":
+                text _("A visual novel about surveillance, trust, and digital security under pressure."):
                     color "#AAB0D6"
                     size menu_desc_size
                     xalign 0.5
                     text_align 0.5
                     xmaximum menu_desc_max
 
-                text "\"The truth will always find a way out.\"":
+                text _("\"The truth will always find a way out.\""):
                     color "#8B8FCC"
                     size menu_quote_size
                     italic True
@@ -1022,34 +1022,34 @@ screen main_menu():
                     xalign 0.5
                     spacing 8
 
-                    textbutton "▸ START":
+                    textbutton _("▸ START"):
                         style "modal_action_button"
                         xalign 0.5
                         action Start()
 
                     if renpy.newest_slot():
-                        textbutton "▸ CONTINUE":
+                        textbutton _("▸ CONTINUE"):
                             style "modal_action_button"
                             xalign 0.5
                             action FileLoad(renpy.newest_slot(), confirm=False)
 
-                    textbutton "▸ DOSSIER":
+                    textbutton _("▸ DOSSIER"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("dossier")
 
-                    textbutton "▸ STORY TREE":
+                    textbutton _("▸ STORY TREE"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("story_tree")
 
-                    textbutton "▸ SETTINGS":
+                    textbutton _("▸ SETTINGS"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("preferences")
 
                     if renpy.variant("pc"):
-                        textbutton "× EXIT":
+                        textbutton _("× EXIT"):
                             style "modal_action_button"
                             xalign 0.5
                             background Solid("#241926")
@@ -2627,7 +2627,7 @@ screen preferences():
                 vbox:
                     spacing 18
 
-                    text "DISPLAY AND FLOW":
+                    text _("DISPLAY AND FLOW"):
                         color "#8B8FCC"
                         size 18
                         bold True
@@ -2663,35 +2663,35 @@ screen preferences():
                 vbox:
                     spacing 18
 
-                    text "TEXT AND AUDIO":
+                    text _("TEXT AND AUDIO"):
                         color "#8B8FCC"
                         size 18
                         bold True
 
-                    text "Text Speed":
+                    text _("Text Speed"):
                         color "#EAF4F1"
                         size 18
                     bar value Preference("text speed")
 
-                    text "Auto-Forward Time":
+                    text _("Auto-Forward Time"):
                         color "#EAF4F1"
                         size 18
                     bar value Preference("auto-forward time")
 
                     if config.has_music:
-                        text "Music Volume":
+                        text _("Music Volume"):
                             color "#EAF4F1"
                             size 18
                         bar value Preference("music volume")
 
                     if config.has_sound:
-                        text "Sound Volume":
+                        text _("Sound Volume"):
                             color "#EAF4F1"
                             size 18
                         bar value Preference("sound volume")
 
                     if config.has_voice:
-                        text "Voice Volume":
+                        text _("Voice Volume"):
                             color "#EAF4F1"
                             size 18
                         bar value Preference("voice volume")
@@ -2700,6 +2700,56 @@ screen preferences():
                         style "shell_nav_button"
                         selected all_audio_muted()
                         action Function(toggle_all_audio)
+
+        ## ── LANGUAGE ────────────────────────────────────────────────────
+        ## English is the default (language=None). Dutch/French/Ukrainian
+        ## switch to the matching translation under game/tl/<name>/. If a
+        ## translation folder is missing, Ren'Py falls back to the original
+        ## English text — the picker is safe to use either way.
+        frame:
+            xfill True
+            background Solid("#171C30")
+            padding (24, 22)
+
+            vbox:
+                spacing 18
+
+                text _("LANGUAGES"):
+                    color "#8B8FCC"
+                    size 18
+                    bold True
+
+                text _("Choose the language used across menus and dialogue."):
+                    color "#AAB0D6"
+                    size 15
+
+                hbox:
+                    spacing 14
+                    xfill True
+
+                    textbutton _("English"):
+                        style "shell_nav_button"
+                        xsize 312
+                        selected _preferences.language is None
+                        action Language(None)
+
+                    textbutton _("Nederlands"):
+                        style "shell_nav_button"
+                        xsize 312
+                        selected _preferences.language == "dutch"
+                        action Language("dutch")
+
+                    textbutton _("Français"):
+                        style "shell_nav_button"
+                        xsize 312
+                        selected _preferences.language == "french"
+                        action Language("french")
+
+                    textbutton _("Українська"):
+                        style "shell_nav_button"
+                        xsize 312
+                        selected _preferences.language == "ukrainian"
+                        action Language("ukrainian")
 
 
 screen history():

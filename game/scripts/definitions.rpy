@@ -390,11 +390,63 @@ init python:
         except Exception as exc:
             renpy.notify(f"Failed to export notebook: {exc}")
 
+    # ─── RUNTIME DIALOGUE TRANSLATION ────────────────────────────────────
+    # Ren'Py's built-in `translate <lang> strings:` only fires for strings
+    # wrapped in `_(...)`. Wrapping every dialogue line is impractical here,
+    # so instead we hook into config.say_menu_text_filter (the same pipeline
+    # that adds {b} tags to important terms) and substitute the dialogue
+    # text from a per-language JSON dictionary BEFORE highlighting runs.
+    #
+    # Translation files live at game/tl/<lang>/dialogue.json with the
+    # shape { "english string": "translated string", ... }. Missing entries
+    # silently fall back to the English original — the game never breaks
+    # because of a partial translation.
+
+    _DIALOGUE_TRANSLATIONS = {}
+
+    def _load_dialogue_translation(lang):
+        if lang in _DIALOGUE_TRANSLATIONS:
+            return _DIALOGUE_TRANSLATIONS[lang]
+        data = {}
+        try:
+            import json, os
+            path = os.path.join(config.gamedir, "tl", lang, "dialogue.json")
+            if os.path.exists(path):
+                with open(path, "r", encoding="utf-8") as fp:
+                    raw = json.load(fp)
+                # Accept either {en: tr} or list[{src, text, tr_<lang>}].
+                if isinstance(raw, dict):
+                    data = raw
+                elif isinstance(raw, list):
+                    for entry in raw:
+                        if isinstance(entry, dict) and "text" in entry and "tr" in entry:
+                            data[entry["text"]] = entry["tr"]
+        except Exception:
+            data = {}
+        _DIALOGUE_TRANSLATIONS[lang] = data
+        return data
+
+    def translated_dialogue(text):
+        """Map English source to current-language translation, if any."""
+        if not text:
+            return text
+        try:
+            lang = _preferences.language
+        except Exception:
+            lang = None
+        if not lang:
+            return text
+        catalog = _load_dialogue_translation(lang)
+        return catalog.get(text, text)
+
     def highlighted_dialogue(text):
         if not text:
             return text
 
-        result = text
+        # Translate FIRST — highlighting runs on the localized text so
+        # important terms still get bolded in any language.
+        result = translated_dialogue(text)
+
         for term in sorted(IMPORTANT_TERMS, key=len, reverse=True):
             pattern = re.compile(r"(?<!\{b\})(%s)(?!\{/b\})" % re.escape(term), re.IGNORECASE)
             result = pattern.sub(lambda match: "{b}%s{/b}" % match.group(1), result)

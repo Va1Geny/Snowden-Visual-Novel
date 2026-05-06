@@ -1,0 +1,1542 @@
+[
+  {
+    "src": "scripts/script.rpy",
+    "line": 36,
+    "kind": "say",
+    "speaker": "centered",
+    "text": "{i}\\\"The greatest fear I have regarding the outcome of these disclosures\\nis that nothing will change.\\\"{/i}\\n\\n— Edward Snowden"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 94,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Another day inside the machine. Rows of monitors tracking billions of data points. Every packet, every connection, every digital breath."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 96,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I'm a systems administrator — I keep this infrastructure running. The irony is, the more access I have to maintain the system, the more I see what the system actually does."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 101,
+    "kind": "say",
+    "speaker": "supervisor",
+    "text": "Morning, Snowden. We've got a batch of flagged selectors to process. XKeyscore caught some interesting traffic overnight."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 103,
+    "kind": "say",
+    "speaker": "im",
+    "text": "XKeyscore — the NSA's most powerful search tool. It can search virtually anything a person does on the internet: emails, browsing history, chat sessions, even webcam feeds. All in near real time, all without a warrant."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 107,
+    "kind": "say",
+    "speaker": "supervisor",
+    "text": "And don't overthink the 'why.' If the system flags a packet, it's because the math says they're a threat. Your job is to verify the handshake, not question the person."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 109,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Verify the handshake. That's NSA-speak for confirming the network connection is legitimate — checking that the source and destination match the selector criteria. But nobody asks whether the criteria themselves are legitimate."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 114,
+    "kind": "say",
+    "speaker": "colleague",
+    "text": "Hey Ed. Check this out — I can watch this guy's webcam feed in real time. He's just eating cereal. It's wild what we can access without even a targeted request."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 122,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The scale of it is staggering. This isn't targeted surveillance. This is a vacuum cleaner, sucking up everything. Emails, phone records, browsing histories — all stored, all searchable, all belonging to ordinary people who've done nothing wrong."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 131,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Alright, let's focus on the assignment. Processing the flagged selectors now."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 138,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Stay in your lane, Snowden. Do your job. Don't attract attention."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 140,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "Edward processes the assigned selectors. Standard targets. Foreign IP addresses. But among the flagged traffic, domestic addresses keep appearing."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 144,
+    "kind": "say",
+    "speaker": "e",
+    "text": "I need to check something first..."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 151,
+    "kind": "say",
+    "speaker": "im",
+    "text": "These directories shouldn't be this easy to access. Why does a systems administrator have read access to raw intelligence feeds?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 153,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "Edward navigates deeper into the classified file system. Folders upon folders of surveillance programs he's never been briefed on. The scope is enormous."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 158,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "On his screen, Edward sees the tools of the trade: network monitoring dashboards tracking millions of connections in real time."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 160,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Every network has a firewall — a security system that monitors all incoming and outgoing traffic and decides what gets through based on predefined rules. Think of it as a barrier between trusted and untrusted networks."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 162,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The firewall inspects each packet for three things: the source IP address, the destination port number, and the protocol. Get those right and you can tell the difference between normal traffic and an intrusion attempt."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 166,
+    "kind": "say",
+    "speaker": "im",
+    "text": "First, IP addresses. Every device on a network has one — it's like a street address for computers. But not all addresses are equal."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 168,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Private IP ranges — 192.168.x.x, 10.0.x.x, and 172.16.x.x — belong to your own internal network. Traffic from these addresses is usually safe because it's coming from inside the building."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 170,
+    "kind": "say",
+    "speaker": "im",
+    "text": "But an IP like 45.33.32.1 or 89.248.174.5? That's an external address — someone on the internet reaching into our network. External IPs demand much more scrutiny."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 172,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// SYSTEM NOTE: Private IPs (192.168.x.x, 10.0.x.x, 172.16.x.x) = internal/trusted. Public IPs = external/unknown — verify before allowing. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 176,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Next, ports. If an IP address is the building's street address, a port is a specific door. Every network service listens on a numbered port, and knowing which port does what is fundamental."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 178,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Port 80 is HTTP — standard, unencrypted web traffic. Port 443 is HTTPS — the same thing but encrypted with TLS. These are the two most common ports on the internet, and traffic on them is usually legitimate."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 180,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Port 53 is DNS — the Domain Name System. It's how computers translate website names like 'google.com' into IP addresses. Without DNS, nothing works. It's the phone book of the internet."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 182,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Port 22 is SSH — Secure Shell. It's used for remote administration, letting an authorised user log into a server from another location. From an internal IP, it's normal. From an external IP, it needs careful review."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 184,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Port 3389 is RDP — Remote Desktop Protocol. It lets someone control a computer's desktop remotely. Like SSH, it's fine from a trusted internal source, but dangerous if exposed to the outside."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 190,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Then there are the ports that should set off alarm bells. Port 23 is Telnet — an ancient protocol that sends everything in plain text, including passwords. It has no encryption at all. Telnet should never be used; SSH replaced it decades ago."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 192,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Port 31337 — pronounced 'elite' in hacker culture — is historically associated with the Back Orifice trojan. If you see traffic on port 31337 from an unknown external IP, it's almost certainly malicious."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 194,
+    "kind": "say",
+    "speaker": "im",
+    "text": "And port 4444 — the default listener for Metasploit, one of the most widely used hacking frameworks. An external IP connecting on port 4444 usually means someone is trying to establish a reverse shell — giving themselves remote control of the target machine."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 200,
+    "kind": "say",
+    "speaker": "im",
+    "text": "So the logic is straightforward: check the IP, check the port, check the protocol. Internal IP on a standard port? Probably safe. External IP on a suspicious port with no encryption? Block it immediately."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 202,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// FIREWALL RULE: ALLOW = internal IPs on standard ports | BLOCK = external IPs on suspicious ports or unencrypted protocols. When in doubt, block. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 229,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Working here, I've learned how critical a VPN is. A VPN — Virtual Private Network — creates an encrypted tunnel between your device and a remote server. Anyone watching the local network sees only scrambled data, not what you're actually doing."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 231,
+    "kind": "say",
+    "speaker": "im",
+    "text": "On untrusted networks like public Wi-Fi, a VPN is essential. Without one, your browsing history, login credentials, and private messages are all visible to anyone sniffing the network."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 244,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "While processing selectors, Edward discovers domestic IP addresses mixed in with foreign intelligence targets."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 246,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Sir, I'm seeing domestic addresses in the foreign intelligence queue. These are American citizens."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 249,
+    "kind": "say",
+    "speaker": "supervisor",
+    "text": "Snowden. I've noticed you've been poking around where you shouldn't. Are you having second thoughts about your oath?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 255,
+    "kind": "say",
+    "speaker": "supervisor",
+    "text": "Those addresses were flagged by the FISA court authorization. Everything is legal, Snowden. Don't make waves."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 273,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Not yet. I need to understand the full scope before I act. If I report one anomaly, they'll lock me out. I need to see the whole picture."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 277,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "You continue working in silence, but your eyes are open. Every day reveals more."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 318,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I found it. Hidden in the classified briefing materials — a program so vast it makes everything else look like a hobby project."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 320,
+    "kind": "say",
+    "speaker": "im",
+    "text": "They call it PRISM — a direct pipeline into the servers of every major tech company. Google. Facebook. Apple. Microsoft. Yahoo. All of them. Nine companies in total, handing over user data on demand."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 322,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// CLASSIFIED: PRISM — Planning Tool for Resource Integration, Synchronization, and Management. Direct server access to 9 major internet service providers. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 324,
+    "kind": "say",
+    "speaker": "im",
+    "text": "We aren't looking for needles in haystacks. We're just stealing the whole field. Every email, every photo, every chat message — all vacuumed up and stored in data centres the size of small cities."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 326,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "The PRISM program gave the NSA direct access to user data from the world's largest tech companies. Emails, chat logs, file transfers, photos — all accessible without individual warrants. The legal basis? A secret interpretation of the FISA Amendments Act that no court had publicly reviewed."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 328,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// SYSTEM NOTE: PRISM worked by collecting data 'upstream' — directly from fiber-optic cables and company servers, bypassing traditional warrant requirements through the FISA Amendments Act. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 330,
+    "kind": "say",
+    "speaker": "im",
+    "text": "And there's more. Boundless Informant — a tool that counts and visualises exactly how much data the NSA collects from each country. In one month alone, 97 billion pieces of intelligence were gathered worldwide. The American public has no idea."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 336,
+    "kind": "say",
+    "speaker": "colleague",
+    "text": "Ed, you look like you've seen a ghost. What's wrong?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 338,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Have you ever looked at what we're actually collecting? Not the reports. The raw feeds."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 340,
+    "kind": "say",
+    "speaker": "colleague",
+    "text": "I try not to think about it too much. We've got clearance, we've got authorization. That's enough for me."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 342,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Is it? Because what I'm seeing goes way beyond foreign intelligence. This is domestic surveillance on a massive scale."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 344,
+    "kind": "say",
+    "speaker": "colleague",
+    "text": "Ed... be very careful what you say next. The walls have ears. Literally."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 353,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Look, I need someone I can trust. What I've found... it's bigger than both of us."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 357,
+    "kind": "say",
+    "speaker": "colleague",
+    "text": "I... I've had my own doubts. But Ed, if you're thinking what I think you're thinking, you need to be incredibly careful."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 359,
+    "kind": "say",
+    "speaker": "colleague",
+    "text": "Whatever you do, don't use the internal network. They monitor everything. Every keystroke."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 361,
+    "kind": "say",
+    "speaker": "im",
+    "text": "At least I'm not completely alone in this."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 365,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Never mind. Forget I said anything. Just tired."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 370,
+    "kind": "say",
+    "speaker": "colleague",
+    "text": "Sure, man. Get some rest."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 372,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I can't trust anyone here. One wrong word and I'm done. I need to do this alone."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 390,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Some of these classified filenames are encoded with a Caesar cipher — one of the oldest encryption methods in history. It's a simple substitution cipher where each letter is shifted by a fixed number of positions in the alphabet."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 394,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Here's how it works. The alphabet is a loop: A B C D E F... all the way to Z, and then it wraps back to A. A Caesar cipher shifts every letter forward by a fixed number — the key."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 396,
+    "kind": "say",
+    "speaker": "im",
+    "text": "With ROT-3 — a rotation of 3 — the letter A becomes D, B becomes E, C becomes F. The word 'CAT' encrypts to 'FDW'. Every letter moves exactly three places forward."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 402,
+    "kind": "say",
+    "speaker": "im",
+    "text": "To decrypt, you do the reverse — shift each letter back by the same number. So D becomes A, E becomes B, F becomes C. Decryption undoes the encryption."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 404,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Let me work through an example. If I see the letter 'S', I count back 3: S... R... Q... P. So S decrypts to P. If I see 'U', count back 3: U... T... S... R. So U becomes R."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 406,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// DECRYPTION RULE: Take each letter → count backwards by the key number → that's your plaintext letter. ROT-3 decryption: D→A, E→B, F→C, G→D ... //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 410,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The Caesar cipher is trivially easy to break — there are only 25 possible shifts, so you can try them all in seconds. But it teaches the fundamental principle behind all encryption: transform readable data into unreadable data using a key, and reverse the process with the same key."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 412,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Modern encryption like AES-256 uses the same concept — just with keys that are billions of times more complex, making brute-force attacks effectively impossible."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 414,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// CHALLENGE PREP: You'll see an encrypted word. Shift each letter back by 3 to reveal the name of a classified NSA program. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 423,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I have access to everything. The question is: what do I do with it?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 425,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "You stare at your screen. The classified documents are right there. Proof of mass surveillance. Proof of constitutional violations. But taking them means crossing a line there's no coming back from."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 427,
+    "kind": "say",
+    "speaker": "im",
+    "text": "If I copy these files, I'm committing espionage under the law. If I don't, no one will ever know this is happening. The proper channels have already failed me — my report to the Inspector General disappeared into a black hole."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 432,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I need the original documents. Notes won't be enough. Journalists need primary sources — verifiable proof that can't be denied or dismissed."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 437,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "You carefully copy selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk — the NSA logs all data movement, and an unusual transfer could trigger an automated alert."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 439,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The files are protected with AES-256 encryption — the Advanced Encryption Standard with a 256-bit key. It's the same encryption the US government uses to protect its own top-secret data. Effectively impossible to brute-force with any existing hardware."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 445,
+    "kind": "say",
+    "speaker": "im",
+    "text": "If they catch me with files, it's espionage. Notes are deniable."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 449,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "You write down key details from memory. It's safer, but journalists may question the credibility without primary documents."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 455,
+    "kind": "say",
+    "speaker": "im",
+    "text": "When transferring these documents, the protocol matters. Standard HTTP sends everything in plain text — anyone on the network can read it. But HTTPS adds a layer of TLS/SSL encryption, securing the data between your browser and the web server."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 457,
+    "kind": "say",
+    "speaker": "im",
+    "text": "That padlock icon in your browser's address bar? That's HTTPS at work. It's the difference between shouting your secrets across a room and whispering them through a sealed envelope."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 503,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I have the evidence. Now I need someone to publish it. But one wrong email, one unencrypted message, and the NSA will know before the ink is dry."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 505,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "You need to contact journalists who can responsibly publish the classified documents. But the NSA monitors virtually all electronic communication — the very programs you plan to expose are the ones hunting for people like you."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 507,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The NSA doesn't just collect data in bulk. They have tools that flag specific patterns: a new email address contacting a known journalist, an encrypted connection from a government network, a Tor exit node accessing a news site. Any of these could trigger an alert."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 509,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// SYSTEM NOTE: OpSec (Operational Security) is the practice of protecting critical information from adversaries. Every digital action leaves traces. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 511,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I can't use my work email. I can't use my personal email. I need a completely new identity, on a completely separate network. And I need to make contact without anyone inside the NSA knowing I've reached out."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 515,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "Your unusual access patterns have already triggered internal alerts. Your options are narrowing."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 525,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I told them I was running diagnostic tests on the archival system. They seemed to buy it... for now."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 527,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "The security team notes the explanation but doesn't close the file. The clock is ticking."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 540,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I've identified two journalists who might have the courage to publish: Leah Portman, a documentary filmmaker who's been investigating NSA surveillance for years, and Grayson Wardell, a constitutional lawyer turned journalist at The Guardian."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 542,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The challenge is reaching them securely. PGP encryption with Tor would make my messages virtually untraceable — but it requires technical knowledge to set up correctly. One mistake in the key exchange and the whole channel is compromised."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 567,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I know how PGP works. Public key, private key. I generate a key pair, publish my public key, and any message encrypted with it can only be read by me."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 584,
+    "kind": "say",
+    "speaker": "e",
+    "text": "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 589,
+    "kind": "say",
+    "speaker": "e",
+    "text": "I can prove everything. But we need to meet in person. I'll also reach out to Grayson Wardell — together, you can publish the full story."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 594,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I know I need to use PGP, but I'm not confident in the setup. If I make a mistake with the key exchange..."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 596,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// WARNING: INSUFFICIENT KNOWLEDGE TO ESTABLISH SECURE CHANNEL. PROCEEDING WITH PARTIAL ENCRYPTION. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 601,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "You attempt to set up encrypted communications, but make errors in the key exchange process. The channel may not be fully secure."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 611,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "You reach out to Grayson Wardell through his public contact information. It's faster, but less secure."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 613,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Mr. Wardell, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 616,
+    "kind": "say",
+    "speaker": "greenwald",
+    "text": "I get messages like this every week. Can you give me more details?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 618,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Not over this channel. You need to set up PGP encryption. I'll send you instructions."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 621,
+    "kind": "say",
+    "speaker": "greenwald",
+    "text": "PGP? I've never used it. Can't we just talk on the phone?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 623,
+    "kind": "say",
+    "speaker": "im",
+    "text": "This is the problem. The people who need to publish this information don't know the first thing about security."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 661,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Everything I've done to contact journalists relies on one tool above all others: Tor — The Onion Router. It's an anonymization network that routes your traffic through multiple relay nodes around the world, each encrypting another layer."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 663,
+    "kind": "say",
+    "speaker": "im",
+    "text": "By the time your traffic reaches its destination, tracing it back to the source is nearly impossible. That's what makes Tor the tool of choice for anyone who needs to communicate without being tracked."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 676,
+    "kind": "say",
+    "speaker": "im",
+    "text": "But technology alone isn't enough. OpSec — Operational Security — is the practice of thinking like your adversary. What can they learn from your actions? Every digital footprint, every unguarded conversation, every pattern of behaviour is a piece of the puzzle they're assembling."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 678,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Good OpSec means denying the adversary those pieces. It means asking yourself before every action: could this reveal my identity, my location, or my intent?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 682,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The most basic OpSec failure is IP exposure. Your home IP address is assigned by your Internet Service Provider and tied directly to your name and physical address. If you log into a secure service from your home IP without a VPN, you've just stamped your real identity on the connection."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 684,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// OPSEC RULE #1: Never access sensitive services from a traceable IP address. Use a VPN or Tor to mask your connection. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 688,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The right tools make anonymity possible. Tor anonymizes your connection through multiple relay nodes. SecureDrop — an open-source platform used by major newsrooms — lets whistleblowers submit documents anonymously. Burner email accounts, created from public locations like libraries, add another layer of separation between your real identity and your actions."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 690,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// SAFE PRACTICE: Tor + SecureDrop + burner accounts from public locations = maximum anonymity //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 694,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The biggest mistake an insider can make is using work infrastructure for anything sensitive. Work email, work Wi-Fi, work devices — all of these are monitored, logged, and directly tied to your employee identity. Sending classified documents via work email is essentially confessing."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 696,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// OPSEC RULE #2: Work infrastructure is monitored. Never use work email, devices, or networks for sensitive communication. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 700,
+    "kind": "say",
+    "speaker": "im",
+    "text": "And then there's password reuse — the silent killer. If you use your personal Facebook password for an encrypted file container, you've created a bridge between your public identity and your secret activity. When one account is compromised, every account sharing that password falls."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 702,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// OPSEC RULE #3: Never reuse passwords. Every service gets a unique, strong password. Use a password manager. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 706,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Now it's time to put that knowledge into practice. I've drafted an email to Grayson Wardell — but before I can send it, I need to strip every trace of my identity from the message. One mistake, and the NSA finds me."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 708,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// SYSTEM NOTE: Every digital message carries metadata — sender address, device info, routing headers, file authorship — that can expose your identity even if the content is encrypted. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 736,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "The journalist asks for more details about the scope of the leaks."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 738,
+    "kind": "say",
+    "speaker": "greenwald",
+    "text": "I need to know what we're dealing with. How big is this?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 743,
+    "kind": "say",
+    "speaker": "e",
+    "text": "It's everything. PRISM, XKeyscore, Boundless Informant, upstream collection — the NSA is collecting data on hundreds of millions of people. American citizens included."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 749,
+    "kind": "say",
+    "speaker": "greenwald",
+    "text": "My God. If this is true... this is the biggest intelligence leak in history."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 753,
+    "kind": "say",
+    "speaker": "e",
+    "text": "I can confirm the NSA is conducting mass domestic surveillance. I'll share the details when we meet in person."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 757,
+    "kind": "say",
+    "speaker": "greenwald",
+    "text": "Fair enough. Where do we meet?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 761,
+    "kind": "say",
+    "speaker": "e",
+    "text": "It's significant. That's all I can say right now."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 765,
+    "kind": "say",
+    "speaker": "greenwald",
+    "text": "You're asking me to fly halfway around the world on a vague tip?"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 810,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I chose Hong Kong deliberately. It has its own legal system, independent from mainland China. Extradition would take time — time I need to get the story published before the government can suppress it."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 812,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I told my employer I needed medical leave for epilepsy treatment. They didn't question it. That bought me a few weeks."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 815,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Now I'm in a hotel room in Hong Kong, waiting for journalists who might not come, hunted by an agency that can find anyone. I've wedged pillows against the door, piled cushions against the window. Even the smoke detector might have a camera."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 828,
+    "kind": "say",
+    "speaker": "e",
+    "text": "My life changed the moment I read those documents. I can't unread them. I can't unknow what the government is doing to its own people."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 830,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Greenwald flew here from Rio de Janeiro. Poitras from Berlin. They left their lives behind on the strength of encrypted emails from a stranger. That took courage."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 845,
+    "kind": "say",
+    "speaker": "im",
+    "text": "What scares me most isn't just the surveillance — it's the NSA's offensive capabilities. They stockpile zero-day exploits — vulnerabilities in software that the vendor doesn't even know about. Called 'zero-day' because there are zero days of notice before they're exploited. No patch exists yet."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 847,
+    "kind": "say",
+    "speaker": "im",
+    "text": "If the NSA wants into your laptop, they don't need your password. They use a zero-day to bypass everything — your firewall, your encryption, your operating system. And the vendor can't fix what they don't know is broken."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 849,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// SYSTEM NOTE: A zero-day exploit targets an unknown software vulnerability. Because no patch exists, even fully updated systems are at risk. Intelligence agencies hoard zero-days as offensive weapons. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 853,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "Edward needs to send final instructions to the publication team, but the hotel network is compromised. Every network connection is a potential leak."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 855,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The hotel Wi-Fi is managed by the hotel — they can see every device that connects, every connection made. Intelligence agencies routinely request hotel network logs. I need to decide how to send this last message."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 863,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The VPN encrypts my traffic, but the hotel's network logs will show my room connected to a VPN. That alone is a red flag for anyone watching."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 865,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// WARNING: VPN CONNECTION DETECTED ON LOCAL NETWORK. COMMERCIAL VPN IPs ARE CATALOGUED BY INTELLIGENCE AGENCIES. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 866,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// CHOICE REVIEW: Fast and convenient, but the hotel can still log that a protected tunnel came from your room. Good for speed, bad for stealth. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 873,
+    "kind": "say",
+    "speaker": "im",
+    "text": "A mobile hotspot bypasses the hotel network entirely. With Tor on top of it, my traffic is encrypted and anonymized through multiple relay nodes."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 875,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// SECURE CONNECTION ESTABLISHED. TRAFFIC ROUTED THROUGH 3 TOR RELAY NODES. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 876,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// CHOICE REVIEW: Slower, but it avoids hotel logs and adds extra privacy layers. Good for stealth, bad for speed. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 892,
+    "kind": "say",
+    "speaker": "im",
+    "text": "When you route traffic through Tor, you're building a chain of relay nodes. Each node only knows the hop before it and the hop after it — never the full path. Pick the right nodes and your trail goes cold."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 894,
+    "kind": "say",
+    "speaker": "im",
+    "text": "But if even one node in the chain is compromised — a monitored relay, a hostile exit point — the entire route is exposed and your identity with it. So understanding what each type of node does is critical."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 898,
+    "kind": "say",
+    "speaker": "im",
+    "text": "It all starts at your device — your laptop, your phone. This is where traffic originates. Right now, it carries your real IP address and your real identity. The goal is to strip that identity away before the traffic reaches its destination."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 902,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The first hop is usually your ISP router — the Internet Service Provider that connects you to the internet. Your ISP can see every website you visit, every connection you make. They log this data and, in many countries, hand it over to law enforcement on request."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 904,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Going through the ISP is unavoidable — it's your on-ramp to the internet. But it's a chokepoint. If someone is watching at this level, they see everything unless you've already encrypted your traffic."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 906,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// NODE TYPE: ISP ROUTER — Your gateway to the internet. Sees all unencrypted traffic. A surveillance chokepoint. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 910,
+    "kind": "say",
+    "speaker": "im",
+    "text": "A VPN server is your first line of defence. It creates an encrypted tunnel between your device and the VPN server. Your ISP can see that you've connected to a VPN, but they can't see what you're doing through it."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 912,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Starting your route through a VPN before entering the Tor network is called 'VPN over Tor' — it hides the fact that you're using Tor from your ISP, adding an extra layer of protection."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 914,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// NODE TYPE: VPN SERVER — Encrypts your traffic before it hits the internet. Hides your activity from your ISP. Safe opening move. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 918,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Tor nodes are the backbone of anonymous routing. Each Tor relay adds a layer of encryption — like nesting your message inside multiple sealed envelopes. The first relay knows who you are but not where you're going. The last relay knows where you're going but not who you are."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 920,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The more Tor nodes you route through, the harder it is to trace the connection back to you. But each hop adds latency — there's a trade-off between anonymity and speed."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 922,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// NODE TYPE: TOR NODE — Adds encryption layers and anonymity. Multiple Tor hops = harder to trace. Safe nodes. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 926,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The one node you must avoid at all costs is the government monitoring point. Intelligence agencies like the NSA operate surveillance nodes that intercept and log all traffic passing through them. If your route goes through a government monitor, the entire chain is compromised."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 928,
+    "kind": "say",
+    "speaker": "im",
+    "text": "It doesn't matter how many Tor nodes you've used — if even one hop routes through a known surveillance point, the adversary can correlate timing data to identify you. This is called a 'traffic correlation attack'."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 930,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// NODE TYPE: GOV MONITOR — Intercepts all traffic. If your route hits this node, your identity is exposed. AVOID AT ALL COSTS. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 934,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Near the end of the route, you'll see two types of final relay. A CDN — Content Delivery Network — is standard internet infrastructure. It's fast but not designed for privacy. Your traffic is delivered efficiently, but CDN logs can be subpoenaed."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 936,
+    "kind": "say",
+    "speaker": "im",
+    "text": "A secure relay, on the other hand, is specifically designed for private communication. It doesn't log traffic, strips metadata, and forwards your message with minimal exposure. When anonymity matters, always prefer the secure relay."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 938,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// NODE TYPE: CDN SERVER — Fast but logs traffic. SECURE RELAY — Private, no logs. Choose secure relay for maximum anonymity. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 942,
+    "kind": "say",
+    "speaker": "im",
+    "text": "So the optimal route is: start with a VPN to hide your Tor usage, chain through Tor nodes for anonymity, avoid the government monitor completely, and exit through a secure relay to reach the destination without leaving a trail."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 944,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// ROUTE STRATEGY: VPN → Tor nodes → Secure relay → Destination. Avoid GOV MONITOR. Fewer hops = less exposure time. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 948,
+    "kind": "say",
+    "speaker": "im",
+    "text": "But before I can run, I need to wipe everything. Every file, every log, every trace. If I leave even one digital breadcrumb, it's over."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 950,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I have 90 seconds before NSA agents reach my room. 8 digital traces that prove I copied the PRISM files. Each one needs a different command to destroy."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 952,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// ALERT: NSA RESPONSE TEAM EN ROUTE. ESTIMATED ARRIVAL: 90 SECONDS. BEGIN DIGITAL EVIDENCE ELIMINATION. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 964,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Clean. Not a single trace left on this machine. When they get here, they'll find nothing but a blank hard drive and an empty hotel room."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 965,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// ALL DIGITAL EVIDENCE ELIMINATED. DEVICE IS FORENSICALLY CLEAN. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 967,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Most of it is gone, but I'm not sure I got everything. Some fragments might still be recoverable. I need to move — now."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 968,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// PARTIAL EVIDENCE REMAINS. FORENSIC RECOVERY POSSIBLE. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 970,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I ran out of time. They'll find everything — the files, the history, the logs. My identity is compromised."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 971,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// WARNING: FORENSIC EVIDENCE RECOVERED. IDENTITY COMPROMISED. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 990,
+    "kind": "say",
+    "speaker": "im",
+    "text": "No time to plan. The passport might still work for a few hours before the revocation hits every system."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 991,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// ROUTE REVIEW: Best for immediate movement, worst for preparation. Good if you need speed more than certainty. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 999,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Russia isn't ideal, but beggars can't be choosers. They have their own reasons for helping me."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1000,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// ROUTE REVIEW: Good for immediate shelter, bad for independence. Help comes with political strings attached. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1009,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Ecuador has a history of granting asylum to people the US wants. WikiLeaks arranged the route through Moscow."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1011,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "But Edward will never make it past Moscow. His passport will be revoked mid-flight."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1012,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// ROUTE REVIEW: Strong asylum logic, but the travel chain is fragile. Good long-term idea, risky short-term execution. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1020,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "With his identity already exposed, no embassy will risk the diplomatic fallout of harboring him."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1023,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "The European embassies politely decline. No one wants to challenge the United States."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1026,
+    "kind": "say",
+    "speaker": "im",
+    "text": "No one will help. Not officially. Moscow may be my only option."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1027,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// ROUTE REVIEW: Good legal optics, but embassies rarely want the diplomatic fallout. Good principle, poor odds. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1034,
+    "kind": "say",
+    "speaker": "im",
+    "text": "If I stay, Hong Kong will extradite me. The US legal system won't give me a fair trial under the Espionage Act."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1035,
+    "kind": "say",
+    "speaker": "sys",
+    "text": "// ROUTE REVIEW: Good if you want to make a stand, bad if your goal is to stay free long enough to keep the story alive. //"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1080,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "The Sheremetyevo International Airport transit zone. Edward Snowden has been trapped here for 40 days. Sleeping on chairs, eating airport food, living in legal limbo."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1082,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "His passport is cancelled. No country will grant him asylum without risking the wrath of the United States. Twenty-one countries rejected his application. Russia is his last option."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1099,
+    "kind": "say",
+    "speaker": "im",
+    "text": "He's right. I have no leverage. The US government pressured every ally to refuse me. Bolivia's presidential plane was even forced to land in Austria because they suspected I was on board. That's how far they'll go."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1111,
+    "kind": "say",
+    "speaker": "im",
+    "text": "From this small apartment in Moscow, I can still connect to the world. I use encrypted video calls to speak at conferences, secure messaging to coordinate with press freedom organisations. The irony of a surveillance whistleblower living in the surveillance capital of the East is not lost on me."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1113,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "From Moscow, Snowden continues to advocate for digital privacy. He develops tools to help journalists protect their sources, speaks to millions through encrypted channels, and becomes the face of the global privacy debate."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1115,
+    "kind": "say",
+    "speaker": "im",
+    "text": "SecureDrop — an open-source whistleblowing platform — was adopted by dozens of major news organizations after the leaks. It allows anonymous document submission, protecting sources the way I wish I had been protected. The tools I helped popularise are now standard practice in investigative journalism."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1120,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I trusted the right people. Greenwald, Poitras, the editors — they did what journalists are supposed to do. They told the truth."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1122,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Trust is a calculation, not a feeling. I chose carefully, but not perfectly. Some bridges burned that didn't need to."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1124,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I trusted no one fully, and it cost me. Some stories never got published. Some evidence was lost. Half-measures half-worked."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1127,
+    "kind": "say",
+    "speaker": "im",
+    "text": "My technical knowledge kept me alive. Every encryption key, every secure channel, every OpSec decision mattered."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1129,
+    "kind": "say",
+    "speaker": "im",
+    "text": "I knew enough to be dangerous, but not enough to be safe. There were gaps in my knowledge that almost got me caught."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1131,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Looking back, there's so much I didn't know. So many security mistakes I made. I survived on luck as much as skill."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1135,
+    "kind": "say",
+    "speaker": "im",
+    "text": "People think metadata is harmless — it's just 'data about data.' Who you called, when, for how long, from where. Not the content of the message itself."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1137,
+    "kind": "say",
+    "speaker": "im",
+    "text": "But metadata reveals patterns of life. Call a doctor at midnight, a divorce lawyer the next morning, and a locksmith that afternoon — the content doesn't matter. The pattern tells the whole story. Intelligence agencies consider metadata even more valuable than content in many cases."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1147,
+    "kind": "say",
+    "speaker": "im",
+    "text": "PGP — Pretty Good Privacy. It's the asymmetric encryption system that made the whole operation possible. I publish a public key that anyone can use to encrypt a message to me, but only my private key can decrypt it. Without PGP, every email to the journalists would have been an open letter to the NSA."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1159,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The scariest attack is one you never see — a man-in-the-middle. An attacker secretly positions themselves between you and the person you're talking to, intercepting every message. Both sides think they're communicating directly, but the attacker sees everything."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1161,
+    "kind": "say",
+    "speaker": "im",
+    "text": "The only defence is key verification — confirming encryption fingerprints through a separate, trusted channel. If you skip that step, you could be handing your secrets directly to the adversary."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1178,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "A journalist contacts Snowden with a new trove of classified documents from a different whistleblower. The cycle could begin again."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1181,
+    "kind": "say",
+    "speaker": "im",
+    "text": "Another person on the inside, seeing what I saw, feeling what I felt. They're asking me what to do."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1187,
+    "kind": "say",
+    "speaker": "e",
+    "text": "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1191,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "Snowden helps the new whistleblower establish secure communications, passing on the hard lessons of his own experience."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1196,
+    "kind": "say",
+    "speaker": "e",
+    "text": "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1201,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "Snowden advises a measured approach, hoping the system has improved since his time. Knowing it probably hasn't."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1206,
+    "kind": "say",
+    "speaker": "e",
+    "text": "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 1210,
+    "kind": "say",
+    "speaker": "narrator_voice",
+    "text": "Snowden's honesty about the personal cost weighs heavily on the would-be whistleblower."
+  },
+  {
+    "src": "scripts/endings.rpy",
+    "line": 78,
+    "kind": "say",
+    "speaker": "",
+    "text": "Whistleblowing platforms like SecureDrop exist to protect sources. Technology can be a shield for truth."
+  },
+  {
+    "src": "scripts/endings.rpy",
+    "line": 118,
+    "kind": "say",
+    "speaker": "",
+    "text": "Digital security requires constant vigilance — one mistake can compromise months of careful planning."
+  },
+  {
+    "src": "scripts/endings.rpy",
+    "line": 158,
+    "kind": "say",
+    "speaker": "",
+    "text": "Physical security is as important as digital security. Cameras, keyloggers, and 'evil maid' attacks can bypass the strongest encryption."
+  },
+  {
+    "src": "scripts/endings.rpy",
+    "line": 198,
+    "kind": "say",
+    "speaker": "",
+    "text": "Firewalls work both ways: they keep threats out, but they also monitor what goes out. Data Loss Prevention (DLP) systems watch for unauthorized transfers."
+  },
+  {
+    "src": "scripts/endings.rpy",
+    "line": 238,
+    "kind": "say",
+    "speaker": "",
+    "text": "Zero-day exploits can break any system. Defense in depth (multiple layers of security) is the only way to mitigate unknown vulnerabilities."
+  },
+  {
+    "src": "scripts/minigames.rpy",
+    "line": 866,
+    "kind": "say",
+    "speaker": "",
+    "text": "  and Apple. Snowden revealed it in 2013."
+  },
+  {
+    "src": "scripts/minigames.rpy",
+    "line": 879,
+    "kind": "say",
+    "speaker": "",
+    "text": "  PGP encryption was his primary tool."
+  },
+  {
+    "src": "scripts/minigames.rpy",
+    "line": 892,
+    "kind": "say",
+    "speaker": "",
+    "text": "  never suspected of any crime."
+  },
+  {
+    "src": "scripts/minigames.rpy",
+    "line": 937,
+    "kind": "say",
+    "speaker": "return",
+    "text": "LEVEL 3 — MASTER CRYPTOGRAPHER"
+  },
+  {
+    "src": "scripts/minigames.rpy",
+    "line": 939,
+    "kind": "say",
+    "speaker": "return",
+    "text": "LEVEL 2 — CRYPTOGRAPHER"
+  },
+  {
+    "src": "scripts/minigames.rpy",
+    "line": 941,
+    "kind": "say",
+    "speaker": "return",
+    "text": "LEVEL 1 — CIPHER ANALYST"
+  },
+  {
+    "src": "scripts/minigames.rpy",
+    "line": 942,
+    "kind": "say",
+    "speaker": "return",
+    "text": "UNCLEARED — Further training required"
+  },
+  {
+    "src": "scripts/minigame_ctm.rpy",
+    "line": 81,
+    "kind": "say",
+    "speaker": "return",
+    "text": "SECURE"
+  },
+  {
+    "src": "scripts/minigame_ctm.rpy",
+    "line": 89,
+    "kind": "say",
+    "speaker": "return",
+    "text": "EXPOSED"
+  },
+  {
+    "src": "scripts/minigame_ctm.rpy",
+    "line": 90,
+    "kind": "say",
+    "speaker": "return",
+    "text": "SECURED"
+  }
+]
