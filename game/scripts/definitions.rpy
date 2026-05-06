@@ -37,6 +37,7 @@ define poitras = Character("Leah Portman",
 
 # === ANTAGONISTS / AUTHORITY ===
 define nsa_chief = Character("Director Marcus Hale",
+    image="nsa_chief",
     color="#FF2D55",
     what_color="#E8E8E8",
     who_bold=True,
@@ -124,6 +125,8 @@ default mg_firewall_score = 0
 default mg_decrypt_solved = False
 default mg_opsec_score = 0
 default mg_trace_solved = False
+default cover_wiped = 0
+default cover_failed = 0
 
 # === Question Tracking ===
 default text_input_attempts = 0
@@ -248,24 +251,142 @@ init python:
 
         return None
 
+    def choose_notebook_export_path(default_filename="field_notebook.txt"):
+        try:
+            import tkinter as tk
+            from tkinter import filedialog
+
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes("-topmost", True)
+            root.update_idletasks()
+            root.lift()
+            root.focus_force()
+
+            path = filedialog.asksaveasfilename(
+                title="Save notebook as...",
+                initialdir=os.path.expanduser("~"),
+                initialfile=default_filename,
+                defaultextension=".txt",
+                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+            )
+
+            root.destroy()
+            return path
+        except Exception:
+            try:
+                root.destroy()
+            except Exception:
+                pass
+
+        if os.name == "nt":
+            try:
+                import ctypes
+                from ctypes import wintypes
+
+                class OPENFILENAMEW(ctypes.Structure):
+                    _fields_ = [
+                        ("lStructSize", wintypes.DWORD),
+                        ("hwndOwner", wintypes.HWND),
+                        ("hInstance", wintypes.HINSTANCE),
+                        ("lpstrFilter", wintypes.LPCWSTR),
+                        ("lpstrCustomFilter", wintypes.LPWSTR),
+                        ("nMaxCustFilter", wintypes.DWORD),
+                        ("nFilterIndex", wintypes.DWORD),
+                        ("lpstrFile", wintypes.LPWSTR),
+                        ("nMaxFile", wintypes.DWORD),
+                        ("lpstrFileTitle", wintypes.LPWSTR),
+                        ("nMaxFileTitle", wintypes.DWORD),
+                        ("lpstrInitialDir", wintypes.LPCWSTR),
+                        ("lpstrTitle", wintypes.LPCWSTR),
+                        ("Flags", wintypes.DWORD),
+                        ("nFileOffset", wintypes.WORD),
+                        ("nFileExtension", wintypes.WORD),
+                        ("lpstrDefExt", wintypes.LPCWSTR),
+                        ("lCustData", wintypes.LPARAM),
+                        ("lpfnHook", wintypes.LPVOID),
+                        ("lpTemplateName", wintypes.LPCWSTR),
+                        ("pvReserved", ctypes.c_void_p),
+                        ("dwReserved", wintypes.DWORD),
+                        ("FlagsEx", wintypes.DWORD),
+                    ]
+
+                buffer = ctypes.create_unicode_buffer(260)
+                buffer.value = default_filename
+                buffer_title = ctypes.create_unicode_buffer(260)
+                filter_text = "Text files\0*.txt\0All files\0*.*\0\0"
+
+                ofn = OPENFILENAMEW()
+                ofn.lStructSize = ctypes.sizeof(ofn)
+                ofn.hwndOwner = None
+                ofn.lpstrFilter = ctypes.c_wchar_p(filter_text)
+                ofn.lpstrFile = ctypes.cast(buffer, wintypes.LPWSTR)
+                ofn.nMaxFile = 260
+                ofn.lpstrFileTitle = ctypes.cast(buffer_title, wintypes.LPWSTR)
+                ofn.nMaxFileTitle = 260
+                ofn.lpstrInitialDir = os.path.expanduser("~")
+                ofn.lpstrTitle = "Save notebook as..."
+                ofn.Flags = 0x00000800 | 0x00000002
+                ofn.lpstrDefExt = ".txt"
+
+                if ctypes.windll.comdlg32.GetSaveFileNameW(ctypes.byref(ofn)):
+                    path = buffer.value
+                    return path if path else ""
+            except Exception:
+                pass
+
+        if hasattr(renpy, "filepicker"):
+            try:
+                path = renpy.filepicker(
+                    title="Save notebook as...",
+                    save=True,
+                    default=default_filename,
+                )
+                if path is None:
+                    return ""
+                return path
+            except TypeError:
+                try:
+                    path = renpy.filepicker(
+                        title="Save notebook as...",
+                        save=True,
+                    )
+                    if path is None:
+                        return ""
+                    return path
+                except Exception:
+                    pass
+            except Exception:
+                pass
+
+        return None
+
     def export_notebook_txt():
         if not store.notebook_entries:
             renpy.notify("No notes to export.")
             return
 
-        export_dir = get_notebook_export_dir()
-        if not export_dir:
-            renpy.notify("Could not determine a writable export location.")
+        default_filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
+        path = choose_notebook_export_path(default_filename)
+
+        if path == "":
+            renpy.notify("Notebook export canceled.")
             return
 
-        filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
-        path = os.path.join(export_dir, filename)
+        if path is None:
+            export_dir = get_notebook_export_dir()
+            if not export_dir:
+                renpy.notify("Could not determine a writable export location.")
+                return
+
+            path = os.path.join(export_dir, default_filename)
+            renpy.notify("Could not open a save dialog. Exporting to the default exports folder.")
 
         try:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(get_notebook_export_text())
 
-            renpy.notify("Your notebook has been exported")
+            renpy.notify(f"Notebook exported to {path}")
         except Exception as exc:
             renpy.notify(f"Failed to export notebook: {exc}")
 
@@ -282,34 +403,61 @@ init python:
 
     config.say_menu_text_filter = highlighted_dialogue
 
+    # ─── ACTIVE SPEAKER HIGHLIGHTING ──────────────────────────────────────
+    # Brighten the current speaker, dim everyone else. The earlier version
+    # was disabled because `renpy.show(tag, at_list=[active_char])` REPLACED
+    # the at_list — the entry transform (enter_left/stage_center/...) was
+    # discarded and characters snapped to (0, 0).
+    #
+    # This version preserves position by reading the live at_list with
+    # `renpy.get_at_list`, stripping any prior state transform, and re-
+    # applying `[position_transform, state_transform]`. Because Ren'Py
+    # treats the same transform reference as state-preserving, the entry
+    # animation isn't restarted — only the state layer is swapped.
+    SPEAKER_HIGHLIGHT_TAGS = (
+        "edward",
+        "supervisor",
+        "colleague",
+        "greenwald",
+        "poitras",
+        "journalist",
+        "editor",
+        "nsa_chief",
+        "russian_official",
+    )
+
+    def _strip_speaker_state(at_list):
+        # We assume the first transform is the position/entry transform
+        # Everything else is previous state transforms which we strip
+        return at_list[:1] if at_list else []
+
     def speaker_dimmer(event, interact=True, **kwargs):
-        if not interact:
+        if not interact or event != "begin":
             return
 
-        if event == "begin":
-            speaker = renpy.get_say_image_tag()
-            
-            # Keep only the actually visible speaker bright.
-            char_tags = [
-                "edward",
-                "supervisor",
-                "colleague",
-                "greenwald",
-                "poitras",
-                "journalist",
-                "editor",
-                "nsa_chief",
-                "russian_official",
-            ]
-            
-            for tag in char_tags:
-                if renpy.showing(tag):
-                    if tag == speaker:
-                        renpy.show(tag, at_list=[active_char])
-                    else:
-                        renpy.show(tag, at_list=[inactive_char])
+        speaker_tag = renpy.get_say_image_tag()
+
+        for tag in SPEAKER_HIGHLIGHT_TAGS:
+            if not renpy.showing(tag):
+                continue
+
+            try:
+                current = renpy.get_at_list(tag, "master")
+            except Exception:
+                current = None
+
+            position_transforms = _strip_speaker_state(list(current or ()))
+
+            # If we have no position context, skip — re-applying with an
+            # empty position list would default the character to (0, 0).
+            if not position_transforms:
+                continue
+
+            new_state = active_char if tag == speaker_tag else inactive_char
+            renpy.show(tag, at_list=position_transforms + [new_state])
 
     config.character_callback = speaker_dimmer
+
 
     def autosave_chapter(chapter_num):
         """Autosave after a chapter completes and show a notification."""
@@ -343,9 +491,15 @@ transform parallax:
 # === Character Sprites ===
 
 # -- Edward --
+# NOTE: "neutral" sprites are 630x1394 (character fills the canvas), while every
+# other expression is 1024x1024 (character occupies a central ~980px strip).
+# Without compensation, neutral renders ~35% taller — that's the visible "jump"
+# when changing emotions. We lower the neutral zoom so the on-screen character
+# height matches the square expressions, and add yoffset so the feet line up.
 image edward neutral:
     "sprites/edward neutral.png"
-    zoom 1.02
+    zoom 0.76
+    yoffset 9
 image edward thoughtful:
     "sprites/edward thoughtful.png"
     zoom 1.02
@@ -377,7 +531,8 @@ image edward relieved:
 # -- Supervisor --
 image supervisor neutral:
     "sprites/supervisor neutral.png"
-    zoom 1.0
+    zoom 0.75
+    yoffset 21
 image supervisor stern:
     "sprites/supervisor stern.png"
     zoom 1.0
@@ -397,7 +552,8 @@ image supervisor cold:
 # -- Colleague --
 image colleague neutral:
     "sprites/colleague neutral.png"
-    zoom 0.98
+    zoom 0.74
+    yoffset 19
 image colleague casual:
     "sprites/colleague casual.png"
     zoom 0.98
@@ -463,7 +619,8 @@ image poitras resolved:
 # -- Russian Official --
 image russian_official neutral:
     "sprites/russian official neutral.png"
-    zoom 1.0
+    zoom 0.76
+    yoffset 34
 image russian_official smug:
     "sprites/russian official smug.png"
     zoom 1.0
@@ -497,7 +654,8 @@ image nsa_chief cold:
 # -- Journalist --
 image journalist neutral:
     "sprites/journalist neutral.png"
-    zoom 1.02
+    zoom 0.77
+    yoffset 20
 image journalist skeptical:
     "sprites/journalist skeptical.png"
     zoom 1.02
@@ -518,9 +676,12 @@ image journalist concerned:
     zoom 1.02
 
 # -- Editor --
+# Editor only ships with the tall format, so we just normalize its size to
+# match the rest of the cast — there's no other expression to "jump" to.
 image editor neutral:
     "sprites/editor neutral.png"
-    zoom 1.0
+    zoom 0.76
+
 # === Logo Watermark ===
 image logo_watermark:
     "images/logo.png"
@@ -597,14 +758,18 @@ image bg_sheremetyevo:
 ################################################################################
 
 # === ACTIVE / INACTIVE STATES ===
+# PURE state transforms: only saturation, alpha, and a tiny zoom delta for the
+# speaker pop. They do NOT touch position (no xanchor/yanchor/xpos/ypos), so
+# they can be safely chained ON TOP of an entry/stage transform via at_list
+# without overwriting the character's position. The speaker_dimmer callback
+# reads the live at_list and applies [position, state] each time the speaker
+# changes.
 
 transform active_char:
-    xanchor 0.5 yanchor 1.0
-    ease 0.25 matrixcolor SaturationMatrix(1.0) zoom 1.18 alpha 1.0
+    ease 0.3 matrixcolor SaturationMatrix(1.0) alpha 1.0 zoom 1.02
 
 transform inactive_char:
-    xanchor 0.5 yanchor 1.0
-    ease 0.25 matrixcolor SaturationMatrix(0.3) zoom 1.12 alpha 0.9
+    ease 0.3 matrixcolor SaturationMatrix(0.35) alpha 0.8 zoom 0.97
 
 # === ENTRANCE TRANSFORMS ===
 
@@ -612,28 +777,38 @@ transform inactive_char:
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
-    xpos -0.20 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.6 xpos 0.25 ypos 1.60 alpha 1.0 zoom 1.18
+    on show:
+        xpos -0.20 ypos 1.50 alpha 0.0 zoom 1.0
+        ease 0.6 xpos 0.15 ypos 1.50 alpha 1.0 zoom 1.40
+    on replace:
+        xpos 0.15 ypos 1.50 alpha 1.0 zoom 1.40
 
 # Slide in from right
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 1.20 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.6 xpos 0.75 ypos 1.60 alpha 1.0 zoom 1.18
+    on show:
+        xpos 1.40 ypos 1.50 alpha 0.0 zoom 1.0
+        ease 0.6 xpos 0.85 ypos 1.50 alpha 1.0 zoom 1.40
+    on replace:
+        xpos 0.85 ypos 1.50 alpha 1.0 zoom 1.40
 
 # Fade in from center
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.5 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.5 xpos 0.5 ypos 1.60 alpha 1.0 zoom 1.18
+    on show:
+        xpos 0.3 ypos 1.50 alpha 0.0 zoom 1.0
+        ease 0.5 xpos 0.5 ypos 1.50 alpha 1.0 zoom 1.40
+    on replace:
+        xpos 0.5 ypos 1.50 alpha 1.0 zoom 1.40
 
 transform stage_center:
     xanchor 0.5
     yanchor 1.0
     xpos 0.5
-    ypos 1.60
+    ypos 1.15
+
 
 # === IDLE TRANSFORMS ===
 

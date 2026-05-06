@@ -458,15 +458,15 @@ screen notebook_panel():
 
     $ compact = is_compact_layout()
     $ viewport_width, viewport_height = current_viewport_size()
-    $ notebook_xsize = min(1160 if compact else 1820, max(420, viewport_width - 48))
-    $ notebook_ysize = min(820 if compact else 920, max(520, viewport_height - 48))
+    $ notebook_xsize = min(1460 if compact else 1820, max(520, viewport_width - 48))
+    $ notebook_ysize = min(860 if compact else 920, max(620, viewport_height - 48))
     $ notebook_title_size = 26 if compact else 30
     $ notebook_body_size = 18 if compact else 20
-    $ notebook_body_max = notebook_xsize - 140
+    $ notebook_body_max = notebook_xsize - 100
     $ notebook_input_size = 24 if compact else 26
     $ notebook_entry_size = 19 if compact else 21
     $ notebook_empty_size = 24 if compact else 28
-    $ notebook_hint_max = min(820 if compact else 1260, notebook_xsize - 200)
+    $ notebook_hint_max = min(860 if compact else 1260, notebook_xsize - 180)
 
     $ max_middle_height = notebook_ysize - 84 - 200
 
@@ -606,7 +606,7 @@ screen notebook_panel():
                     spacing 12
                     xfill True
 
-                    text "Exports are saved as plain .txt files to an exports folder or to your user profile if needed.":
+                    text "Exports are saved as plain .txt files. A standard save dialog should let you choose folder and filename.":
                         color "#AAB0D6"
                         size 16
                         xalign 0.5
@@ -621,26 +621,30 @@ screen notebook_panel():
 
                         textbutton "EXPORT TXT":
                             style "modal_action_button"
-                            xsize 220
+                            xfill True
+                            xmaximum 260
                             background Solid("#244C2F")
                             hover_background Solid("#3A7A58")
                             action Function(export_notebook_txt)
 
                         textbutton "SAVE NOTE":
                             style "modal_action_button"
-                            xsize 280
+                            xfill True
+                            xmaximum 300
                             action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
 
                         textbutton "CLEAR":
                             style "modal_action_button"
-                            xsize 220
+                            xfill True
+                            xmaximum 220
                             background Solid("#241926")
                             hover_background Solid("#4D5186")
                             action Function(clear_notebook_entries)
 
                         textbutton "CLOSE":
                             style "modal_action_button"
-                            xsize 220
+                            xfill True
+                            xmaximum 220
                             background Solid("#171C30")
                             hover_background Solid("#4D5186")
                             action Hide("notebook_panel")
@@ -706,144 +710,375 @@ screen scene_stage_line():
 ## Primary Menus
 ################################################################################
 
+## Pulsing dot for the "SYSTEM ONLINE" indicator
+transform mm_pulse_dot:
+    alpha 1.0
+    easeout 0.9 alpha 0.35
+    easein 0.9 alpha 1.0
+    repeat
+
+## Subtle drift on the side accent bars
+transform mm_accent_drift:
+    alpha 0.55
+    easeout 1.6 alpha 1.0
+    easein 1.6 alpha 0.55
+    repeat
+
+
 screen main_menu():
     tag menu
 
     $ compact = is_medium_layout()
-    $ menu_frame_xsize = 1840 if compact else 1020
-    $ menu_frame_ysize = 980 if compact else 900
-    $ menu_padding_x = 32 if compact else 44
-    $ menu_padding_y = 32 if compact else 40
-    $ menu_content_max = 1660 if compact else 860
-    $ menu_spacing = 14 if compact else 16
-    $ title_fixed_xsize = 1500 if compact else 820
-    $ menu_title_size = 60 if compact else 66
+    $ menu_frame_xsize = 1840 if compact else 1100
+    $ menu_frame_ysize = 990 if compact else 940
+    $ menu_padding_x = 36 if compact else 56
+    $ menu_padding_y = 30 if compact else 44
+    $ menu_content_max = 1660 if compact else 940
+    $ menu_spacing = 12 if compact else 14
+    $ title_fixed_xsize = 1500 if compact else 880
+    $ menu_title_size = 60 if compact else 72
     $ menu_desc_size = 22 if compact else 18
-    $ menu_desc_max = 1200 if compact else 720
-    $ menu_quote_size = 24 if compact else 20
+    $ menu_desc_max = 1200 if compact else 740
+    $ menu_quote_size = 24 if compact else 18
+    $ corner_size = 22
 
     use ui_backdrop
 
-    frame:
+    ## ── Ambient backdrop accents ────────────────────────────────────
+    add Solid("#0B6E5F0E"):
+        xsize 480
+        ysize 1080
+        xpos 0
+    add Solid("#0B6E5F0E"):
+        xsize 480
+        ysize 1080
+        xalign 1.0
+
+    add Solid("#8B8FCC18"):
+        xsize 1920
+        ysize 2
+        ypos 96
+
+    add Solid("#8B8FCC18"):
+        xsize 1920
+        ysize 2
+        ypos 982
+
+    ## ── Top status bar ──────────────────────────────────────────────
+    fixed:
+        xpos 0
+        ypos 28
+        xsize 1920
+        ysize 36
+
+        hbox:
+            xpos 60
+            yalign 0.5
+            spacing 18
+
+            frame:
+                background Solid("#00FF8826")
+                xsize 12
+                ysize 12
+                yalign 0.5
+                at mm_pulse_dot
+
+            text "SYSTEM ONLINE":
+                color "#00FF88"
+                size 14
+                bold True
+                kerning 3
+                yalign 0.5
+
+            text "·":
+                color "#4D5186"
+                size 16
+                yalign 0.5
+
+            text "SECURE CHANNEL // AES-256":
+                color "#8B8FCC"
+                size 13
+                bold True
+                kerning 2
+                yalign 0.5
+
+        hbox:
+            xalign 1.0
+            xoffset -60
+            yalign 0.5
+            spacing 18
+
+            text "CLEARANCE: TS//SCI":
+                color "#FFD700"
+                size 13
+                bold True
+                kerning 2
+                yalign 0.5
+
+            text "·":
+                color "#4D5186"
+                size 16
+                yalign 0.5
+
+            text "NODE 0451":
+                color "#8B8FCC"
+                size 13
+                bold True
+                kerning 2
+                yalign 0.5
+
+    ## ── Primary panel ───────────────────────────────────────────────
+    fixed:
         xalign 0.5
         yalign 0.5
         xsize menu_frame_xsize
         ysize menu_frame_ysize
-        background Solid("#0E1321EE")
-        padding (menu_padding_x, menu_padding_y)
 
-        vbox:
-            xalign 0.5
-            yalign 0.5
-            xmaximum menu_content_max
-            spacing menu_spacing
+        ## Outer halo — soft tinted edge for depth
+        frame:
+            xfill True
+            yfill True
+            background Solid("#0B6E5F18")
 
-            text "CLASSIFIED INTERFACE":
-                color "#8B8FCC"
-                size 16
-                bold True
-                xalign 0.5
-                text_align 0.5
-                kerning 3
+        ## Main panel surface
+        frame:
+            xpos 4
+            ypos 4
+            xsize (menu_frame_xsize - 8)
+            ysize (menu_frame_ysize - 8)
+            background Solid("#0E1321F2")
+            padding (menu_padding_x, menu_padding_y)
 
-            add "images/logo.png":
-                xalign 0.5
-                ysize 132
-                fit "contain"
+            ## Animated accent rails
+            add Solid("#0B6E5F"):
+                xsize 3
+                ysize (menu_frame_ysize - 160)
+                xpos 0
+                yalign 0.5
+                at mm_accent_drift
+            add Solid("#0B6E5F"):
+                xsize 3
+                ysize (menu_frame_ysize - 160)
+                xalign 1.0
+                yalign 0.5
+                at mm_accent_drift
 
-            fixed:
-                xsize title_fixed_xsize
-                ysize 96
-                xalign 0.5
+            ## Corner brackets — terminal aesthetic
+            add Solid("#0B6E5F"):
+                xsize corner_size
+                ysize 3
+                xpos 12
+                ypos 12
+            add Solid("#0B6E5F"):
+                xsize 3
+                ysize corner_size
+                xpos 12
+                ypos 12
 
-                text "ENEMY OF THE STATE":
-                    xalign 0.5
-                    yalign 0.5
-                    text_align 0.5
-                    color "#0C5D52"
-                    size menu_title_size
-                    bold True
-                    outlines [(6, "#00665414", 0, 0), (3, "#00806916", 0, 0)]
+            add Solid("#0B6E5F"):
+                xsize corner_size
+                ysize 3
+                xalign 1.0
+                xoffset -12
+                ypos 12
+            add Solid("#0B6E5F"):
+                xsize 3
+                ysize corner_size
+                xalign 1.0
+                xoffset -12
+                ypos 12
 
-                text "ENEMY OF THE STATE" at title_glitch:
-                    xalign 0.5
-                    yalign 0.5
-                    text_align 0.5
-                    color "#EFFFFA"
-                    size menu_title_size
-                    bold True
-                    outlines [(2, "#00806955", 0, 0), (6, "#0080690E", 0, 0)]
+            add Solid("#0B6E5F"):
+                xsize corner_size
+                ysize 3
+                xpos 12
+                yalign 1.0
+                yoffset -15
+            add Solid("#0B6E5F"):
+                xsize 3
+                ysize corner_size
+                xpos 12
+                yalign 1.0
+                yoffset -34
 
-                text "ENEMY OF THE STATE":
-                    xalign 0.5
-                    yalign 0.5
-                    text_align 0.5
-                    xoffset 2
-                    yoffset -2
-                    color "#8B8FCC24"
-                    size menu_title_size
-                    bold True
-
-            text "A visual novel about surveillance, trust, and digital security under pressure.":
-                color "#AAB0D6"
-                size menu_desc_size
-                xalign 0.5
-                text_align 0.5
-                xmaximum menu_desc_max
-
-            text "\"The truth will always find a way out.\"":
-                color "#8B8FCC"
-                size menu_quote_size
-                italic True
-                xalign 0.5
-                text_align 0.5
-
-            null height 6
+            add Solid("#0B6E5F"):
+                xsize corner_size
+                ysize 3
+                xalign 1.0
+                xoffset -12
+                yalign 1.0
+                yoffset -15
+            add Solid("#0B6E5F"):
+                xsize 3
+                ysize corner_size
+                xalign 1.0
+                xoffset -12
+                yalign 1.0
+                yoffset -34
 
             vbox:
                 xalign 0.5
-                spacing 10
+                yalign 0.5
+                xmaximum menu_content_max
+                spacing menu_spacing
 
-                textbutton "START":
-                    style "modal_action_button"
+                ## Kicker line: classified label between ticks
+                hbox:
                     xalign 0.5
-                    action Start()
+                    spacing 12
 
-                if renpy.newest_slot():
-                    textbutton "CONTINUE":
+                    add Solid("#0B6E5F"):
+                        xsize 48
+                        ysize 1
+                        yalign 0.5
+
+                    text "// CLASSIFIED INTERFACE //":
+                        color "#8B8FCC"
+                        size 16
+                        bold True
+                        text_align 0.5
+                        kerning 4
+
+                    add Solid("#0B6E5F"):
+                        xsize 48
+                        ysize 1
+                        yalign 0.5
+
+                add "images/logo.png":
+                    xalign 0.5
+                    ysize 128
+                    fit "contain"
+
+                fixed:
+                    xsize title_fixed_xsize
+                    ysize 100
+                    xalign 0.5
+
+                    text "ENEMY OF THE STATE":
+                        xalign 0.5
+                        yalign 0.5
+                        text_align 0.5
+                        color "#0C5D52"
+                        size menu_title_size
+                        bold True
+                        outlines [(6, "#00665414", 0, 0), (3, "#00806916", 0, 0)]
+
+                    text "ENEMY OF THE STATE" at title_glitch:
+                        xalign 0.5
+                        yalign 0.5
+                        text_align 0.5
+                        color "#EFFFFA"
+                        size menu_title_size
+                        bold True
+                        outlines [(2, "#00806955", 0, 0), (6, "#0080690E", 0, 0)]
+
+                    text "ENEMY OF THE STATE":
+                        xalign 0.5
+                        yalign 0.5
+                        text_align 0.5
+                        xoffset 2
+                        yoffset -2
+                        color "#8B8FCC24"
+                        size menu_title_size
+                        bold True
+
+                ## Refined separator under title
+                hbox:
+                    xalign 0.5
+                    spacing 8
+
+                    add Solid("#4D518680"):
+                        xsize 80
+                        ysize 1
+                        yalign 0.5
+
+                    add Solid("#0B6E5F"):
+                        xsize 6
+                        ysize 6
+                        yalign 0.5
+
+                    add Solid("#4D518680"):
+                        xsize 80
+                        ysize 1
+                        yalign 0.5
+
+                text "A visual novel about surveillance, trust, and digital security under pressure.":
+                    color "#AAB0D6"
+                    size menu_desc_size
+                    xalign 0.5
+                    text_align 0.5
+                    xmaximum menu_desc_max
+
+                text "\"The truth will always find a way out.\"":
+                    color "#8B8FCC"
+                    size menu_quote_size
+                    italic True
+                    xalign 0.5
+                    text_align 0.5
+
+                null height 4
+
+                vbox:
+                    xalign 0.5
+                    spacing 8
+
+                    textbutton "▸ START":
                         style "modal_action_button"
                         xalign 0.5
-                        action FileLoad(renpy.newest_slot(), confirm=False)
+                        action Start()
 
-                textbutton "DOSSIER":
-                    style "modal_action_button"
-                    xalign 0.5
-                    action ShowMenu("dossier")
+                    if renpy.newest_slot():
+                        textbutton "▸ CONTINUE":
+                            style "modal_action_button"
+                            xalign 0.5
+                            action FileLoad(renpy.newest_slot(), confirm=False)
 
-                textbutton "STORY TREE":
-                    style "modal_action_button"
-                    xalign 0.5
-                    action ShowMenu("story_tree")
-
-                textbutton "SETTINGS":
-                    style "modal_action_button"
-                    xalign 0.5
-                    action ShowMenu("preferences")
-
-                if renpy.variant("pc"):
-                    textbutton "EXIT":
+                    textbutton "▸ DOSSIER":
                         style "modal_action_button"
                         xalign 0.5
-                        background Solid("#241926")
-                        hover_background Solid("#4D5186")
-                        action Quit(confirm=True)
+                        action ShowMenu("dossier")
 
-            null height 8
+                    textbutton "▸ STORY TREE":
+                        style "modal_action_button"
+                        xalign 0.5
+                        action ShowMenu("story_tree")
 
-            text "v[config.version]":
-                color "#4D5186"
-                size 15
-                xalign 0.5
+                    textbutton "▸ SETTINGS":
+                        style "modal_action_button"
+                        xalign 0.5
+                        action ShowMenu("preferences")
+
+                    if renpy.variant("pc"):
+                        textbutton "× EXIT":
+                            style "modal_action_button"
+                            xalign 0.5
+                            background Solid("#241926")
+                            hover_background Solid("#4D5186")
+                            action Quit(confirm=True)
+
+                null height 6
+
+                ## Footer line: build tag + version
+                hbox:
+                    xalign 0.5
+                    spacing 14
+
+                    text "BUILD STABLE":
+                        color "#4D5186"
+                        size 13
+                        bold True
+                        kerning 2
+                        yalign 0.5
+
+                    text "·":
+                        color "#4D5186"
+                        size 14
+                        yalign 0.5
+
+                    text "v[config.version]":
+                        color "#8B8FCC"
+                        size 14
+                        yalign 0.5
 
 
 
@@ -1756,7 +1991,7 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
 
                         if selected == correct_index:
                             text "Correct - Nice catch":
-                                color "#EAF4F1"
+                                color "#00FF88"
                                 size 24
                                 bold True
                                 xalign 0.5
@@ -1942,7 +2177,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                 xalign 0.5
 
                                 text "Correct":
-                                    color "#EAF4F1"
+                                    color "#00FF88"
                                     size 24
                                     bold True
                                     xalign 0.5
