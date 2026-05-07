@@ -1,28 +1,33 @@
 ################################################################################
-## TRANSLATION_SERVICE.RPY — Single Runtime Translation Layer
+## TRANSLATION_SERVICE.RPY ? Runtime JSON Translation Layer
 ## Classified: The Snowden Files
 ################################################################################
 
 init offset = -2
 
+default translation_language = None
+default translation_language_initialized = False
+default translation_revision = 0
+
 init python:
     import json
     import os
     import re
+    import store
 
     class TranslationService(object):
         LANGUAGES = {
             None: "English",
             "dutch": "Nederlands",
-            "french": "Français",
-            "ukrainian": "Українська",
+            "french": "Fran?ais",
+            "ukrainian": "??????????",
         }
 
         CHANGE_LANGUAGE_MESSAGES = {
             None: "Are you sure you want to change your current language to \"{language}\"?",
             "dutch": "Weet u zeker dat u uw huidige taal wilt wijzigen naar \"{language}\"?",
-            "french": "Voulez-vous vraiment changer votre langue actuelle en « {language} » ?",
-            "ukrainian": "Ви дійсно хочете змінити вашу поточну мову на «{language}»?",
+            "french": "Voulez-vous vraiment changer votre langue actuelle en ? {language} ? ?",
+            "ukrainian": "?? ?????? ?????? ??????? ???? ??????? ???? ?? ?{language}??",
         }
 
         def __init__(self):
@@ -31,16 +36,40 @@ init python:
             self.templates = {}
 
         def current_language(self):
-            try:
-                return _preferences.language
-            except Exception:
-                return None
+            if not store.translation_language_initialized:
+                if not hasattr(persistent, "translation_language"):
+                    persistent.translation_language = None
+                store.translation_language = persistent.translation_language
+                store.translation_language_initialized = True
+            return store.translation_language
+
+        def revision(self):
+            return store.translation_revision
+
+        def set_language(self, lang):
+            store.translation_language = lang
+            store.translation_language_initialized = True
+            store.translation_revision += 1
+            persistent.translation_language = lang
+            renpy.save_persistent()
+            self.preload_language(lang, force=True)
+            renpy.restart_interaction()
+
+        def preload_language(self, lang, force=False):
+            if not lang:
+                return
+
+            if force:
+                self.dialogue.pop(lang, None)
+                self.text.pop(lang, None)
+                self.templates.pop(lang, None)
+
+            self.text_catalog(lang)
+            self.dialogue_catalog(lang)
 
         def language_name(self, lang=None, localized=True):
             name = self.LANGUAGES.get(lang, self.LANGUAGES[None])
-            if localized:
-                return self.ui(name)
-            return name
+            return self.ui(name) if localized else name
 
         def _translation_path(self, lang, filename):
             return os.path.join(config.gamedir, "tl", lang, filename)
@@ -59,7 +88,7 @@ init python:
             except Exception:
                 return {}
 
-            if isinstance(raw, dict):
+            if hasattr(raw, "items"):
                 return {
                     src: tr
                     for src, tr in raw.items()
@@ -67,9 +96,9 @@ init python:
                 }
 
             data = {}
-            if isinstance(raw, list):
+            if hasattr(raw, "__iter__"):
                 for entry in raw:
-                    if isinstance(entry, dict) and isinstance(entry.get("text"), str) and isinstance(entry.get("tr"), str):
+                    if hasattr(entry, "get") and isinstance(entry.get("text"), str) and isinstance(entry.get("tr"), str):
                         data[entry["text"]] = entry["tr"]
             return data
 
@@ -140,6 +169,9 @@ init python:
             if not source:
                 return source
 
+            # Read the revision so Ren'Py screens re-evaluate this function after language changes.
+            self.revision()
+
             if lang is None:
                 lang = self.current_language()
 
@@ -155,6 +187,8 @@ init python:
         def dialogue_line(self, source, lang=None):
             if not source:
                 return source
+
+            self.revision()
 
             if lang is None:
                 lang = self.current_language()
@@ -190,7 +224,11 @@ init python:
         def change_language_action(self, target_lang):
             if self.current_language() == target_lang:
                 return NullAction()
-            return Confirm(self.change_language_message(target_lang), Language(target_lang), NullAction())
+            return Confirm(
+                self.change_language_message(target_lang),
+                Function(self.set_language, target_lang),
+                NullAction()
+            )
 
     translation_service = TranslationService()
 
@@ -203,24 +241,14 @@ init python:
     def trich(source):
         return translation_service.rich_dialogue(source)
 
-    # Backward-compatible names used by existing screens.
-    def _translate_display_text(text, lang=None, depth=0):
-        return translation_service.ui(text, lang, depth)
-
-    def translated_dialogue(text):
-        return translation_service.dialogue_line(text)
-
-    def highlighted_dialogue(text):
-        return translation_service.rich_dialogue(text)
-
     def localized_language_name(lang):
         return translation_service.language_name(lang)
-
-    def language_change_message(target_lang):
-        return translation_service.change_language_message(target_lang)
 
     def language_change_action(target_lang):
         return translation_service.change_language_action(target_lang)
 
-    config.say_menu_text_filter = highlighted_dialogue
-    config.replace_text = _translate_display_text
+    def current_translation_language():
+        return translation_service.current_language()
+
+    def set_translation_language(lang):
+        return translation_service.set_language(lang)

@@ -133,10 +133,10 @@ screen ctm_field(label, threat_id=None, static_value=""):
         if threat_id is not None:
             if ctm_is_cleaned(threat_id):
                 $ _cv = ctm_get_threat(threat_id)["safe"]
-                text "[_cv]" style "ctm_cleaned_text" yalign 0.5
+                text t("[_cv]") style "ctm_cleaned_text" yalign 0.5
             else:
                 $ _dv = ctm_get_threat(threat_id)["dangerous"]
-                textbutton "[_dv]":
+                textbutton t("[_dv]"):
                     style "ctm_threat"
                     text_style "ctm_threat_text"
                     yalign 0.5
@@ -151,10 +151,10 @@ screen ctm_field(label, threat_id=None, static_value=""):
 screen ctm_body_threat(threat_id):
     if ctm_is_cleaned(threat_id):
         $ _cv = ctm_get_threat(threat_id)["safe"]
-        text "[_cv]" style "ctm_cleaned_text"
+        text t("[_cv]") style "ctm_cleaned_text"
     else:
         $ _dv = ctm_get_threat(threat_id)["dangerous"]
-        textbutton "[_dv]":
+        textbutton t("[_dv]"):
             style "ctm_threat"
             text_style "ctm_threat_text"
             action Function(ctm_select, threat_id)
@@ -199,12 +199,12 @@ screen minigame_clean_message():
 
         hbox:
             xfill True
-            text "// CLEAN THE MESSAGE //" color "#00D4FF" size 20 bold True font "DejaVuSans.ttf" yalign 0.5
+            text t("// CLEAN THE MESSAGE //") color "#00D4FF" size 20 bold True font "DejaVuSans.ttf" yalign 0.5
             hbox:
                 spacing 28 xalign 1.0
-                text "Threats: [_ctm_cleaned]/8" color "#D8E4F0" size 17 bold True font "DejaVuSans.ttf" yalign 0.5
-                text "Risk: [_ctm_lvl]" color _ctm_lvl_col size 17 bold True font "DejaVuSans.ttf" yalign 0.5
-                text "[_ctm_mins]:[_ctm_secs:02d]" color ("#FF3355" if time_left <= 30 else "#FFD700" if time_left <= 60 else "#00D4FF") size 17 bold True font "DejaVuSans.ttf" yalign 0.5
+                text t("Threats: [_ctm_cleaned]/8") color "#D8E4F0" size 17 bold True font "DejaVuSans.ttf" yalign 0.5
+                text t("Risk: [_ctm_lvl]") color _ctm_lvl_col size 17 bold True font "DejaVuSans.ttf" yalign 0.5
+                text t("[_ctm_mins]:[_ctm_secs:02d]") color ("#FF3355" if time_left <= 30 else "#FFD700" if time_left <= 60 else "#00D4FF") size 17 bold True font "DejaVuSans.ttf" yalign 0.5
 
     # ── LEFT PANEL: EMAIL CLIENT ──
     frame:
@@ -221,7 +221,7 @@ screen minigame_clean_message():
 
                 vbox:
                     spacing 6
-                    text "✉  COMPOSE: DRAFT" color "#00D4FF" size 16 bold True font "DejaVuSans.ttf"
+                    text t("✉  COMPOSE: DRAFT") color "#00D4FF" size 16 bold True font "DejaVuSans.ttf"
                     add Solid("#00D4FF20") xsize 1110 ysize 1
                     null height 4
                     use ctm_field("FROM:", threat_id="from_email")
@@ -245,13 +245,13 @@ screen minigame_clean_message():
                     vbox:
                         spacing 6
 
-                        text "Glenn," style "ctm_body_text"
+                        text t("Glenn,") style "ctm_body_text"
                         null height 6
-                        text "I am writing to you from" style "ctm_body_text"
+                        text t("I am writing to you from") style "ctm_body_text"
                         use ctm_body_threat("location_body")
-                        text "I have been working at the NSA's Oahu facility for the past eight months as a Booz Allen Hamilton contractor. I have access to a large volume of classified documents." style "ctm_body_text"
+                        text t("I have been working at the NSA's Oahu facility for the past eight months as a Booz Allen Hamilton contractor. I have access to a large volume of classified documents.") style "ctm_body_text"
                         null height 6
-                        text "I want to share something with you — something that the American public has a right to know. Please review the attached file." style "ctm_body_text"
+                        text t("I want to share something with you — something that the American public has a right to know. Please review the attached file.") style "ctm_body_text"
                         null height 6
                         use ctm_body_threat("signature")
 
@@ -259,14 +259,14 @@ screen minigame_clean_message():
                         add Solid("#5A708040") xsize 800 ysize 1
 
                         null height 8
-                        text "📎 ATTACHMENT:" color "#5A7080" size 14 bold True font "DejaVuSans.ttf"
+                        text t("📎 ATTACHMENT:") color "#5A7080" size 14 bold True font "DejaVuSans.ttf"
                         use ctm_body_threat("attachment")
 
                         null height 12
                         add Solid("#5A708040") xsize 800 ysize 1
 
                         null height 8
-                        text "ROUTING INFO:" color "#5A7080" size 14 bold True font "DejaVuSans.ttf"
+                        text t("ROUTING INFO:") color "#5A7080" size 14 bold True font "DejaVuSans.ttf"
                         use ctm_body_threat("routing")
 
     # ── RIGHT PANEL: NSA THREAT SCANNER ──
@@ -278,7 +278,7 @@ screen minigame_clean_message():
         vbox:
             spacing 12
 
-            text "📡  NSA INTERCEPT RISK" color "#FF3355" size 18 bold True font "DejaVuSans.ttf" xalign 0.5 at ctm_scanner_pulse
+            text t("📡  NSA INTERCEPT RISK") color "#FF3355" size 18 bold True font "DejaVuSans.ttf" xalign 0.5 at ctm_scanner_pulse
 
             # Threat level bar
             frame:
@@ -288,7 +288,7 @@ screen minigame_clean_message():
 
                 vbox:
                     spacing 6
-                    text "THREAT LEVEL: [_ctm_lvl]" color _ctm_lvl_col size 20 bold True font "DejaVuSans.ttf" xalign 0.5
+                    text t("THREAT LEVEL: [_ctm_lvl]") color _ctm_lvl_col size 20 bold True font "DejaVuSans.ttf" xalign 0.5
 
                     frame:
                         xfill True ysize 10
@@ -304,21 +304,21 @@ screen minigame_clean_message():
             null height 4
 
             # Category scan results
-            text "SCAN RESULTS:" color "#5A7080" size 14 bold True font "DejaVuSans.ttf"
+            text t("SCAN RESULTS:") color "#5A7080" size 14 bold True font "DejaVuSans.ttf"
 
             for _cat in ctm_categories:
                 $ _cat_st = ctm_cat_status(_cat)
                 $ _cat_col = ctm_cat_color(_cat)
                 hbox:
                     xfill True
-                    text "> [_cat]:" color "#5A7080" size 15 font "DejaVuSans.ttf" yalign 0.5
-                    text "[_cat_st]" color _cat_col size 15 bold True font "DejaVuSans.ttf" xalign 1.0 yalign 0.5
+                    text t("> [_cat]:") color "#5A7080" size 15 font "DejaVuSans.ttf" yalign 0.5
+                    text t("[_cat_st]") color _cat_col size 15 bold True font "DejaVuSans.ttf" xalign 1.0 yalign 0.5
 
             null height 8
             add Solid("#00D4FF20") xsize 606 ysize 1
 
             # Threat log
-            text "⬡  THREAT LOG  ⬡" color "#00D4FF" size 16 bold True font "DejaVuSans.ttf"
+            text t("⬡  THREAT LOG  ⬡") color "#00D4FF" size 16 bold True font "DejaVuSans.ttf"
 
             viewport:
                 xfill True ysize 200
@@ -329,7 +329,7 @@ screen minigame_clean_message():
                     spacing 3
                     $ _log = ctm_state.get("log_lines", [])[-12:]
                     for _line in _log:
-                        text "[_line]" color "#5A7080" size 13 font "DejaVuSans.ttf"
+                        text t("[_line]") color "#5A7080" size 13 font "DejaVuSans.ttf"
 
     # ── EXPLANATION PANEL (when threat selected) ──
     if ctm_state["selected"] is not None and ctm_state["phase"] == "playing":
@@ -352,11 +352,11 @@ screen minigame_clean_message():
                         $ _sel_col = "#FF3355" if _sel_lvl == "CRITICAL" else "#FF8C00"
                         hbox:
                             spacing 12
-                            text "⚠ [_sel['title']]" color _sel_col size 20 bold True font "DejaVuSans.ttf"
-                            text "[_sel_lvl]" color _sel_col size 14 bold True font "DejaVuSans.ttf" yalign 0.5
+                            text t("⚠ [_sel['title']]") color _sel_col size 20 bold True font "DejaVuSans.ttf"
+                            text t("[_sel_lvl]") color _sel_col size 14 bold True font "DejaVuSans.ttf" yalign 0.5
 
                         $ _sel_exp = _sel["explanation"]
-                        text "[_sel_exp]" color "#B8C8D8" size 15 font "DejaVuSans.ttf" line_spacing 3
+                        text t("[_sel_exp]") color "#B8C8D8" size 15 font "DejaVuSans.ttf" line_spacing 3
 
                     # Action buttons
                     vbox:
@@ -364,7 +364,7 @@ screen minigame_clean_message():
                         yalign 0.5
                         spacing 14
 
-                        textbutton "> CLEAN THIS THREAT":
+                        textbutton t("> CLEAN THIS THREAT"):
                             style "modal_action_button"
                             xsize 340
                             text_style "modal_action_button_text"
@@ -372,7 +372,7 @@ screen minigame_clean_message():
                             right_margin 30
                             action Function(ctm_clean)
 
-                        textbutton "> DISMISS":
+                        textbutton t("> DISMISS"):
                             xalign 0.5
                             text_color "#5A7080"
                             text_hover_color "#D8E4F0"
@@ -395,15 +395,15 @@ screen minigame_clean_message():
                 spacing 16
 
                 if ctm_state["phase"] == "complete":
-                    text "// TRANSMISSION SECURE //" color "#00FF88" size 32 bold True xalign 0.5 font "DejaVuSans.ttf"
-                    text "All 8 threats neutralized. The message is safe to send." color "#D8E4F0" size 20 xalign 0.5 text_align 0.5
+                    text t("// TRANSMISSION SECURE //") color "#00FF88" size 32 bold True xalign 0.5 font "DejaVuSans.ttf"
+                    text t("All 8 threats neutralized. The message is safe to send.") color "#D8E4F0" size 20 xalign 0.5 text_align 0.5
                 elif time_left <= 0:
-                    text "// TIME EXPIRED //" color "#FF3355" size 32 bold True xalign 0.5 font "DejaVuSans.ttf"
-                    text "You cleaned [_ctm_score] of 8 threats before time ran out." color "#D8E4F0" size 20 xalign 0.5 text_align 0.5
+                    text t("// TIME EXPIRED //") color "#FF3355" size 32 bold True xalign 0.5 font "DejaVuSans.ttf"
+                    text t("You cleaned [_ctm_score] of 8 threats before time ran out.") color "#D8E4F0" size 20 xalign 0.5 text_align 0.5
 
                 null height 8
 
-                text "THREATS CLEANED: [_ctm_score] / 8" color "#FFD700" size 24 bold True xalign 0.5 font "DejaVuSans.ttf"
+                text t("THREATS CLEANED: [_ctm_score] / 8") color "#FFD700" size 24 bold True xalign 0.5 font "DejaVuSans.ttf"
 
                 null height 4
 
@@ -414,15 +414,15 @@ screen minigame_clean_message():
 
                     vbox:
                         spacing 4
-                        text "⬡  WHAT YOU LEARNED  ⬡" color "#00D4FF" size 18 bold True font "DejaVuSans.ttf"
+                        text t("⬡  WHAT YOU LEARNED  ⬡") color "#00D4FF" size 18 bold True font "DejaVuSans.ttf"
                         null height 4
-                        text "Every digital message carries hidden metadata — sender address, device info, routing headers, file authorship — that can expose your identity even if the content is encrypted." color "#B8C8D8" size 15 font "DejaVuSans.ttf"
+                        text t("Every digital message carries hidden metadata — sender address, device info, routing headers, file authorship — that can expose your identity even if the content is encrypted.") color "#B8C8D8" size 15 font "DejaVuSans.ttf"
                         null height 4
-                        text "Real whistleblowers and journalists strip ALL identifying traces before communicating. Tools like TOR, ProtonMail, and metadata strippers (MAT2, ExifTool) are essential for operational security." color "#B8C8D8" size 15 font "DejaVuSans.ttf"
+                        text t("Real whistleblowers and journalists strip ALL identifying traces before communicating. Tools like TOR, ProtonMail, and metadata strippers (MAT2, ExifTool) are essential for operational security.") color "#B8C8D8" size 15 font "DejaVuSans.ttf"
 
                 null height 8
 
-                textbutton "> CONTINUE MISSION":
+                textbutton t("> CONTINUE MISSION"):
                     style "modal_action_button"
                     text_style "modal_action_button_text"
                     xalign 0.5

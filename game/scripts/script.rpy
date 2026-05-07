@@ -130,7 +130,7 @@ label chapter_1:
             $ tree_record_choice("choice_ch1_1", "protocol")
             e "Alright, let's focus on the assignment. Processing the flagged selectors now."
             $ trust_score += 1
-            $ renpy.notify("Trust +1")
+            $ renpy.notify(t("Trust +1"))
 
             scene bg_nsa_terminal at parallax with dissolve
             with dissolve
@@ -143,7 +143,7 @@ label chapter_1:
             $ tree_record_choice("choice_ch1_1", "explore")
             e "I need to check something first..."
             $ suspicion_level += 1
-            $ renpy.notify("Suspicion +1")
+            $ renpy.notify(t("Suspicion +1"))
 
             scene bg_nsa_terminal at parallax with dissolve
             with dissolve
@@ -204,7 +204,7 @@ label chapter_1:
     # --- Minigame 1: Firewall Breach ---
 
     window hide
-    $ mg_intro = renpy.call_screen("minigame_intro", title="FIREWALL BREACH", description="You must analyze incoming network packets and decide which to ALLOW through the firewall and which to BLOCK. Look for suspicious ports, unknown source IPs, and insecure protocols.")
+    $ mg_intro = renpy.call_screen("minigame_intro", title=t("FIREWALL BREACH"), description=t("You must analyze incoming network packets and decide which to ALLOW through the firewall and which to BLOCK. Look for suspicious ports, unknown source IPs, and insecure protocols."))
 
     if mg_intro:
         $ quick_menu = False
@@ -214,15 +214,15 @@ label chapter_1:
         $ show_hud = True
         if mg_firewall_score >= 6:
             $ knowledge_score += 2
-            $ renpy.notify("Knowledge +2")
+            $ renpy.notify(t("Knowledge +2"))
             sys "// CHALLENGE PASSED. Your firewall analysis was solid. //"
         else:
             $ suspicion_level += 1
-            $ renpy.notify("Suspicion +1")
+            $ renpy.notify(t("Suspicion +1"))
             sys "// CHALLENGE FAILED. Poor packet filtering leaves the network vulnerable. //"
     else:
         $ knowledge_score -= 1
-        $ renpy.notify("Knowledge -1 (Skipped)")
+        $ renpy.notify(t("Knowledge -1 (Skipped)"))
 
     # --- Question Segment 1: MCQ ---
 
@@ -231,10 +231,10 @@ label chapter_1:
     im "On untrusted networks like public Wi-Fi, a VPN is essential. Without one, your browsing history, login credentials, and private messages are all visible to anyone sniffing the network."
 
     call screen mcq_question(
-        question="What does VPN stand for?",
-        answers=["Virtual Private Network", "Verified Protocol Node", "Virtual Program Network", "Variable Packet Node"],
+        question=t("What does VPN stand for?"),
+        answers=[t("Virtual Private Network"), t("Verified Protocol Node"), t("Virtual Program Network"), t("Variable Packet Node")],
         correct_index=0,
-        explanation="A VPN (Virtual Private Network) creates an encrypted tunnel between your device and a VPN server, protecting your traffic from surveillance on the local network."
+        explanation=t("A VPN (Virtual Private Network) creates an encrypted tunnel between your device and a VPN server, protecting your traffic from surveillance on the local network.")
     )
 
     # --- Choice 2: Report anomaly or stay silent? ---
@@ -250,7 +250,7 @@ label chapter_1:
         e "No sir. Just doing my due diligence."
         supervisor "Your 'due diligence' is noted. Logged and noted."
         $ suspicion_level += 1
-        $ renpy.notify("Suspicion +1")
+        $ renpy.notify(t("Suspicion +1"))
     else:
         supervisor "Those addresses were flagged by the FISA court authorization. Everything is legal. Don't make waves."
 
@@ -259,7 +259,7 @@ label chapter_1:
             $ tree_record_choice("choice_ch1_2", "report")
             e "I should file a formal concern with the IG office."
             $ trust_score += 2
-            $ renpy.notify("Trust +2")
+            $ renpy.notify(t("Trust +2"))
 
             supervisor "Do what you have to do. But I'm telling you, this goes nowhere."
 
@@ -272,7 +272,7 @@ label chapter_1:
             scene bg_1 at parallax with dissolve
             im "Not yet. I need to understand the full scope before I act. If I report one anomaly, they'll lock me out. I need to see the whole picture."
             $ trust_score -= 1
-            $ renpy.notify("Trust -1")
+            $ renpy.notify(t("Trust -1"))
 
             narrator_voice "You continue working in silence, but your eyes are open. Every day reveals more."
 
@@ -352,7 +352,7 @@ label chapter_2:
             $ tree_record_choice("choice_ch2_1", "trust")
             e "Look, I need someone I can trust. What I've found... it's bigger than both of us."
             $ trust_score += 1
-            $ renpy.notify("Trust +1")
+            $ renpy.notify(t("Trust +1"))
 
             colleague "I... I've had my own doubts. But Ed, if you're thinking what I think you're thinking, you need to be incredibly careful."
 
@@ -365,7 +365,7 @@ label chapter_2:
             e "Never mind. Forget I said anything. Just tired."
             $ suspicion_level += 0
             $ trust_score -= 1
-            $ renpy.notify("Trust -1")
+            $ renpy.notify(t("Trust -1"))
 
             colleague "Sure, man. Get some rest."
 
@@ -376,12 +376,12 @@ label chapter_2:
     # --- Question Segment 2: Text Input ---
 
     call screen text_input_question_screen(
-        question="Type the codename of the surveillance program you found:",
+        question=t("Type the codename of the surveillance program you found:"),
         correct_answer="PRISM",
-        hint="It's named after a glass object that splits light into a spectrum...",
-        explanation="PRISM was the codename for the NSA program that collected user data from major tech platforms.",
+        hint=t("It's named after a glass object that splits light into a spectrum..."),
+        explanation=t("PRISM was the codename for the NSA program that collected user data from major tech platforms."),
         accepted_answers=["PRISM"],
-        helper_text="You just saw the codename in the scene above, so trust your memory more than your IT knowledge."
+        helper_text=t("You just saw the codename in the scene above, so trust your memory more than your IT knowledge.")
     )
 
     # --- Minigame 2: Decrypt the Message — Learning Section ---
@@ -432,7 +432,7 @@ label chapter_2:
             im "I need the original documents. Notes won't be enough. Journalists need primary sources — verifiable proof that can't be denied or dismissed."
             $ evidence_secured = True
             $ suspicion_level += 1
-            $ renpy.notify("Evidence Secured! | Suspicion +1")
+            $ renpy.notify(t("Evidence Secured! | Suspicion +1"))
 
             narrator_voice "You carefully copy selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk — the NSA logs all data movement, and an unusual transfer could trigger an automated alert."
 
@@ -444,7 +444,7 @@ label chapter_2:
             $ tree_record_choice("choice_ch2_2", "notes")
             im "If they catch me with files, it's espionage. Notes are deniable."
             $ trust_score -= 1
-            $ renpy.notify("Trust -1")
+            $ renpy.notify(t("Trust -1"))
 
             narrator_voice "You write down key details from memory. It's safer, but journalists may question the credibility without primary documents."
 
@@ -457,10 +457,10 @@ label chapter_2:
     im "That padlock icon in your browser's address bar? That's HTTPS at work. It's the difference between shouting your secrets across a room and whispering them through a sealed envelope."
 
     call screen mcq_question(
-        question="Which protocol encrypts web traffic?",
-        answers=["HTTP", "FTP", "HTTPS", "SMTP"],
+        question=t("Which protocol encrypts web traffic?"),
+        answers=[t("HTTP"), t("FTP"), t("HTTPS"), t("SMTP")],
         correct_index=2,
-        explanation="HTTPS (HyperText Transfer Protocol Secure) uses SSL/TLS encryption to secure data transmitted between your browser and a web server. Regular HTTP sends everything in plain text."
+        explanation=t("HTTPS (HyperText Transfer Protocol Secure) uses SSL/TLS encryption to secure data transmitted between your browser and a web server. Regular HTTP sends everything in plain text.")
     )
 
     # --- Chapter 2 Summary ---
@@ -520,7 +520,7 @@ label chapter_3:
             "Try to bluff your way through the security review.":
                 $ tree_record_choice("choice_ch3_0", "bluff")
                 $ suspicion_level += 1
-                $ renpy.notify("Suspicion +1")
+                $ renpy.notify(t("Suspicion +1"))
 
                 im "I told them I was running diagnostic tests on the archival system. They seemed to buy it... for now."
 
@@ -529,7 +529,7 @@ label chapter_3:
             "Accelerate the timeline. Contact journalists immediately.":
                 $ tree_record_choice("choice_ch3_0", "accelerate")
                 $ trust_score -= 1
-                $ renpy.notify("Trust -1")
+                $ renpy.notify(t("Trust -1"))
 
                 im "No more waiting. If I don't move now, I won't get another chance."
 
@@ -554,13 +554,13 @@ label chapter_3:
         "Contact Grayson Wardell directly through his public email.":
             $ tree_record_choice("choice_ch3_1", "email")
             $ contacts_secured += 1
-            $ renpy.notify("Contacts +1")
+            $ renpy.notify(t("Contacts +1"))
             jump ch3_greenwald_contact
 
         "Wait for a safer moment to make contact.":
             $ tree_record_choice("choice_ch3_1", "wait")
             $ trust_score -= 1
-            $ renpy.notify("Trust -1")
+            $ renpy.notify(t("Trust -1"))
             jump ch3_wait
 
 label ch3_secure_success:
@@ -570,7 +570,7 @@ label ch3_secure_success:
 
     $ contacts_secured += 1
     $ knowledge_score += 1
-    $ renpy.notify("Contacts +1 | Knowledge +1")
+    $ renpy.notify(t("Contacts +1 | Knowledge +1"))
 
     scene bg_hong_kong_terminal at parallax with dissolve
 
@@ -596,7 +596,7 @@ label ch3_secure_fail:
     sys "// WARNING: INSUFFICIENT KNOWLEDGE TO ESTABLISH SECURE CHANNEL. PROCEEDING WITH PARTIAL ENCRYPTION. //"
 
     $ suspicion_level += 1
-    $ renpy.notify("Suspicion +1")
+    $ renpy.notify(t("Suspicion +1"))
 
     narrator_voice "You attempt to set up encrypted communications, but make errors in the key exchange process. The channel may not be fully secure."
 
@@ -623,7 +623,7 @@ label ch3_greenwald_contact:
     im "This is the problem. The people who need to publish this information don't know the first thing about security."
 
     $ suspicion_level += 1
-    $ renpy.notify("Suspicion +1")
+    $ renpy.notify(t("Suspicion +1"))
 
     jump ch3_continue
 
@@ -633,7 +633,7 @@ label ch3_wait:
     im "Every day I wait is another day they could catch me. But rushing makes mistakes. Mistakes get you caught."
 
     $ suspicion_level += 1
-    $ renpy.notify("Suspicion +1")
+    $ renpy.notify(t("Suspicion +1"))
 
     narrator_voice "Weeks pass. Your access patterns grow more suspicious. The window is closing."
 
@@ -644,7 +644,7 @@ label ch3_contact_unsafe:
 
     $ suspicion_level += 1
     $ contacts_secured += 1
-    $ renpy.notify("Suspicion +1 | Contacts +1")
+    $ renpy.notify(t("Suspicion +1 | Contacts +1"))
 
     im "No time for perfect OpSec. I just need to get the message out."
 
@@ -663,11 +663,11 @@ label ch3_continue:
     im "By the time your traffic reaches its destination, tracing it back to the source is nearly impossible. That's what makes Tor the tool of choice for anyone who needs to communicate without being tracked."
 
     call screen mcq_question(
-        question="What is Tor mainly used for?",
-        answers=["To hide where your internet traffic is coming from", "To make your laptop charge faster", "To delete files forever", "To boost a Wi-Fi signal"],
+        question=t("What is Tor mainly used for?"),
+        answers=[t("To hide where your internet traffic is coming from"), t("To make your laptop charge faster"), t("To delete files forever"), t("To boost a Wi-Fi signal")],
         correct_index=0,
-        explanation="Tor hides your route by bouncing traffic through several relays, which makes it much harder for observers to trace it back to you.",
-        helper_text="Think about privacy and staying hard to track, not the full acronym."
+        explanation=t("Tor hides your route by bouncing traffic through several relays, which makes it much harder for observers to trace it back to you."),
+        helper_text=t("Think about privacy and staying hard to track, not the full acronym.")
     )
 
     # --- Minigame 3: OpSec Challenge — Learning Section ---
@@ -708,7 +708,7 @@ label ch3_continue:
     sys "// SYSTEM NOTE: Every digital message carries metadata — sender address, device info, routing headers, file authorship — that can expose your identity even if the content is encrypted. //"
 
     window hide
-    $ mg_intro3 = renpy.call_screen("minigame_intro", title="CLEAN THE MESSAGE", description="You have drafted an email to journalist Grayson Wardell. Find and remove all 8 dangerous metadata elements before sending. Click on suspicious items to inspect and clean them.")
+    $ mg_intro3 = renpy.call_screen("minigame_intro", title=t("CLEAN THE MESSAGE"), description=t("You have drafted an email to journalist Grayson Wardell. Find and remove all 8 dangerous metadata elements before sending. Click on suspicious items to inspect and clean them."))
 
     if mg_intro3:
         $ quick_menu = False
@@ -720,13 +720,13 @@ label ch3_continue:
         if mg_opsec_score >= 4:
             $ contacts_secured += 1
             $ knowledge_score += 1
-            $ renpy.notify("Contacts +1 | Knowledge +1")
+            $ renpy.notify(t("Contacts +1 | Knowledge +1"))
         else:
             $ suspicion_level += 1
-            $ renpy.notify("Suspicion +1")
+            $ renpy.notify(t("Suspicion +1"))
     else:
         $ knowledge_score -= 1
-        $ renpy.notify("Knowledge -1 (Skipped)")
+        $ renpy.notify(t("Knowledge -1 (Skipped)"))
 
     # --- Choice 2: How much to reveal? ---
     show edward neutral at stage_center
@@ -743,7 +743,7 @@ label ch3_continue:
             e "It's everything. PRISM, XKeyscore, Boundless Informant, upstream collection — the NSA is collecting data on hundreds of millions of people. American citizens included."
             $ trust_score += 2
             $ contacts_secured += 1
-            $ renpy.notify("Trust +2 | Contacts +1")
+            $ renpy.notify(t("Trust +2 | Contacts +1"))
 
             show greenwald shocked
             greenwald "My God. If this is true... this is the biggest intelligence leak in history."
@@ -752,7 +752,7 @@ label ch3_continue:
             $ tree_record_choice("choice_ch3_2", "partial")
             e "I can confirm the NSA is conducting mass domestic surveillance. I'll share the details when we meet in person."
             $ trust_score += 1
-            $ renpy.notify("Trust +1")
+            $ renpy.notify(t("Trust +1"))
 
             greenwald "Fair enough. Where do we meet?"
 
@@ -760,7 +760,7 @@ label ch3_continue:
             $ tree_record_choice("choice_ch3_2", "vague")
             e "It's significant. That's all I can say right now."
             $ trust_score -= 1
-            $ renpy.notify("Trust -1")
+            $ renpy.notify(t("Trust -1"))
 
             greenwald "You're asking me to fly halfway around the world on a vague tip?"
 
@@ -858,7 +858,7 @@ label chapter_4:
         "Use the hotel Wi-Fi with a VPN.":
             $ tree_record_choice("choice_ch4_1", "hotel")
             $ suspicion_level += 1
-            $ renpy.notify("Suspicion +1")
+            $ renpy.notify(t("Suspicion +1"))
 
             im "The VPN encrypts my traffic, but the hotel's network logs will show my room connected to a VPN. That alone is a red flag for anyone watching."
 
@@ -868,7 +868,7 @@ label chapter_4:
         "Use a personal mobile hotspot with Tor.":
             $ tree_record_choice("choice_ch4_1", "mobile")
             $ trust_score += 1
-            $ renpy.notify("Trust +1")
+            $ renpy.notify(t("Trust +1"))
 
             im "A mobile hotspot bypasses the hotel network entirely. With Tor on top of it, my traffic is encrypted and anonymized through multiple relay nodes."
 
@@ -878,12 +878,12 @@ label chapter_4:
     # --- Question Segment 4: Text Input ---
 
     call screen text_input_question_screen(
-        question="Type the 3-letter privacy tool that hides your route online:",
+        question=t("Type the 3-letter privacy tool that hides your route online:"),
         correct_answer="TOR",
-        hint="It's the same tool mentioned in the safer option above.",
-        explanation="Tor wraps your traffic in several layers and sends it through relays, which helps hide where it started.",
+        hint=t("It's the same tool mentioned in the safer option above."),
+        explanation=t("Tor wraps your traffic in several layers and sends it through relays, which helps hide where it started."),
         accepted_answers=["TOR", "THE ONION ROUTER"],
-        helper_text="Short answer is fine."
+        helper_text=t("Short answer is fine.")
     )
 
     # --- Minigame 4: Trace the Route — Learning Section ---
@@ -951,14 +951,14 @@ label chapter_4:
 
     sys "// ALERT: NSA RESPONSE TEAM EN ROUTE. ESTIMATED ARRIVAL: 90 SECONDS. BEGIN DIGITAL EVIDENCE ELIMINATION. //"
 
-    $ mg_intro4 = renpy.call_screen("minigame_intro", title="COVER YOUR TRACKS", description="NSA forensic agents are knocking on the hotel door. You have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive. Type commands or select tokens to destroy all 8 forensic traces.")
+    $ mg_intro4 = renpy.call_screen("minigame_intro", title=t("COVER YOUR TRACKS"), description=t("NSA forensic agents are knocking on the hotel door. You have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive. Type commands or select tokens to destroy all 8 forensic traces."))
 
     if mg_intro4:
         call minigame_4_cover_tracks
     else:
         $ knowledge_score = max(0, knowledge_score - 1)
         $ escape_successful = False
-        $ renpy.notify("Challenge skipped. Knowledge -1")
+        $ renpy.notify(t("Challenge skipped. Knowledge -1"))
 
     if escape_successful and evidence_secured:
         im "Clean. Not a single trace left on this machine. When they get here, they'll find nothing but a blank hard drive and an empty hotel room."
@@ -985,7 +985,7 @@ label chapter_4:
             "Head to the airport immediately. Every minute counts.":
                 $ tree_record_choice("choice_ch4_2", "airport")
                 $ escape_successful = True
-                $ renpy.notify("Escape initiated!")
+                $ renpy.notify(t("Escape initiated!"))
 
                 im "No time to plan. The passport might still work for a few hours before the revocation hits every system."
                 sys "// ROUTE REVIEW: Best for immediate movement, worst for preparation. Good if you need speed more than certainty. //"
@@ -994,7 +994,7 @@ label chapter_4:
                 $ tree_record_choice("choice_ch4_2", "russia")
                 $ escape_successful = True
                 $ trust_score -= 1
-                $ renpy.notify("Escape to Russia | Trust -1")
+                $ renpy.notify(t("Escape to Russia | Trust -1"))
 
                 im "Russia isn't ideal, but beggars can't be choosers. They have their own reasons for helping me."
                 sys "// ROUTE REVIEW: Good for immediate shelter, bad for independence. Help comes with political strings attached. //"
@@ -1004,7 +1004,7 @@ label chapter_4:
             "Fly to Ecuador via Moscow. Multiple stops make tracking harder.":
                 $ tree_record_choice("choice_ch4_2", "ecuador")
                 $ escape_successful = True
-                $ renpy.notify("Escape route planned!")
+                $ renpy.notify(t("Escape route planned!"))
 
                 im "Ecuador has a history of granting asylum to people the US wants. WikiLeaks arranged the route through Moscow."
 
@@ -1014,7 +1014,7 @@ label chapter_4:
             "Seek asylum at a European embassy in Hong Kong.":
                 $ tree_record_choice("choice_ch4_2", "embassy")
                 $ trust_score += 1
-                $ renpy.notify("Trust +1")
+                $ renpy.notify(t("Trust +1"))
 
                 if identity_exposed:
                     narrator_voice "With his identity already exposed, no embassy will risk the diplomatic fallout of harboring him."
@@ -1029,7 +1029,7 @@ label chapter_4:
             "Stay in Hong Kong and face the legal system.":
                 $ tree_record_choice("choice_ch4_2", "stay")
                 $ escape_successful = False
-                $ renpy.notify("Escape abandoned.")
+                $ renpy.notify(t("Escape abandoned."))
 
                 im "If I stay, Hong Kong will extradite me. The US legal system won't give me a fair trial under the Espionage Act."
                 sys "// ROUTE REVIEW: Good if you want to make a stand, bad if your goal is to stay free long enough to keep the story alive. //"
@@ -1138,22 +1138,22 @@ label chapter_5:
 
     # MCQ
     call screen mcq_question(
-        question="What is metadata in the context of surveillance?",
-        answers=["The content of a message", "Data about data (who, when, where — not what)", "Encrypted file headers", "User passwords"],
+        question=t("What is metadata in the context of surveillance?"),
+        answers=[t("The content of a message"), t("Data about data (who, when, where — not what)"), t("Encrypted file headers"), t("User passwords")],
         correct_index=1,
-        explanation="Metadata is 'data about data.' In surveillance terms, it includes who you communicated with, when, for how long, and from where — but not the content of the communication. The NSA argued metadata collection wasn't as invasive as content collection, but metadata can reveal intimate patterns of life."
+        explanation=t("Metadata is 'data about data.' In surveillance terms, it includes who you communicated with, when, for how long, and from where — but not the content of the communication. The NSA argued metadata collection wasn't as invasive as content collection, but metadata can reveal intimate patterns of life.")
     )
 
     im "PGP — Pretty Good Privacy. It's the asymmetric encryption system that made the whole operation possible. I publish a public key that anyone can use to encrypt a message to me, but only my private key can decrypt it. Without PGP, every email to the journalists would have been an open letter to the NSA."
 
     # Text Input
     call screen text_input_question_screen(
-        question="Type the 3-letter encryption tool you used to message journalists:",
+        question=t("Type the 3-letter encryption tool you used to message journalists:"),
         correct_answer="PGP",
-        hint="It stands for 'Pretty Good' something, and the short version is enough.",
-        explanation="PGP lets one key lock a message and another key unlock it, which is why you pushed journalists to learn it.",
+        hint=t("It stands for 'Pretty Good' something, and the short version is enough."),
+        explanation=t("PGP lets one key lock a message and another key unlock it, which is why you pushed journalists to learn it."),
         accepted_answers=["PGP", "PRETTY GOOD PRIVACY"],
-        helper_text="Just the 3-letter version works."
+        helper_text=t("Just the 3-letter version works.")
     )
 
     im "The scariest attack is one you never see — a man-in-the-middle. An attacker secretly positions themselves between you and the person you're talking to, intercepting every message. Both sides think they're communicating directly, but the attacker sees everything."
@@ -1162,10 +1162,10 @@ label chapter_5:
 
     # MCQ
     call screen mcq_question(
-        question="What is a 'man-in-the-middle' attack?",
-        answers=["Physical server theft", "Intercepting communication between two parties", "Overloading a server", "Guessing a password"],
+        question=t("What is a 'man-in-the-middle' attack?"),
+        answers=[t("Physical server theft"), t("Intercepting communication between two parties"), t("Overloading a server"), t("Guessing a password")],
         correct_index=1,
-        explanation="A man-in-the-middle (MITM) attack occurs when an attacker secretly intercepts and possibly alters communication between two parties who believe they are communicating directly. This is why verifying encryption keys through a separate channel is critical."
+        explanation=t("A man-in-the-middle (MITM) attack occurs when an attacker secretly intercepts and possibly alters communication between two parties who believe they are communicating directly. This is why verifying encryption keys through a separate channel is critical.")
     )
 
     # --- Final Choice: Culminating Moral Decision ---
@@ -1186,7 +1186,7 @@ label chapter_5:
             show edward determined
             e "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
             $ trust_score += 2
-            $ renpy.notify("Trust +2")
+            $ renpy.notify(t("Trust +2"))
 
             narrator_voice "You help the new whistleblower establish secure communications, passing on the hard lessons of your own experience."
 
@@ -1196,7 +1196,7 @@ label chapter_5:
             e "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
             $ trust_score += 1
             $ knowledge_score += 1
-            $ renpy.notify("Trust +1 | Knowledge +1")
+            $ renpy.notify(t("Trust +1 | Knowledge +1"))
 
             narrator_voice "You advise a measured approach, hoping the system has improved since your time. Knowing it probably hasn't."
 
@@ -1205,7 +1205,7 @@ label chapter_5:
             show edward sad
             e "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
             $ trust_score -= 1
-            $ renpy.notify("Trust -1")
+            $ renpy.notify(t("Trust -1"))
 
             narrator_voice "Your honesty about the personal cost weighs heavily on the would-be whistleblower."
 

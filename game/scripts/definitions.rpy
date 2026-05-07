@@ -257,18 +257,18 @@ init python:
     def add_notebook_entry(text):
         entry = (text or "").strip()
         if not entry:
-            renpy.notify("Write a note first.")
+            renpy.notify(t("Write a note first."))
             return
 
         store.notebook_entries = list(store.notebook_entries) + [entry]
         store.notebook_draft = ""
-        renpy.notify("Saved to notebook.")
+        renpy.notify(t("Saved to notebook."))
         renpy.restart_interaction()
 
     def clear_notebook_entries():
         store.notebook_entries = []
         store.notebook_draft = ""
-        renpy.notify("Notebook cleared.")
+        renpy.notify(t("Notebook cleared."))
         renpy.restart_interaction()
 
     def get_notebook_export_text():
@@ -306,7 +306,7 @@ init python:
             root.focus_force()
 
             path = filedialog.asksaveasfilename(
-                title="Save notebook as...",
+                title=t("Save notebook as..."),
                 initialdir=os.path.expanduser("~"),
                 initialfile=default_filename,
                 defaultextension=".txt",
@@ -325,7 +325,7 @@ init python:
         if hasattr(renpy, "filepicker"):
             try:
                 path = renpy.filepicker(
-                    title="Save notebook as...",
+                    title=t("Save notebook as..."),
                     save=True,
                     default=default_filename,
                 )
@@ -335,7 +335,7 @@ init python:
             except TypeError:
                 try:
                     path = renpy.filepicker(
-                        title="Save notebook as...",
+                        title=t("Save notebook as..."),
                         save=True,
                     )
                     if path is None:
@@ -350,24 +350,24 @@ init python:
 
     def export_notebook_txt():
         if not store.notebook_entries:
-            renpy.notify("No notes to export.")
+            renpy.notify(t("No notes to export."))
             return
 
         default_filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
         path = choose_notebook_export_path(default_filename)
 
         if path == "":
-            renpy.notify("Notebook export canceled.")
+            renpy.notify(t("Notebook export canceled."))
             return
 
         if path is None:
             export_dir = get_notebook_export_dir()
             if not export_dir:
-                renpy.notify("Could not determine a writable export location.")
+                renpy.notify(t("Could not determine a writable export location."))
                 return
 
             path = os.path.join(export_dir, default_filename)
-            renpy.notify("Could not open a save dialog. Exporting to the default exports folder.")
+            renpy.notify(t("Could not open a save dialog. Exporting to the default exports folder."))
 
         try:
             with open(path, "w", encoding="utf-8") as f:
@@ -387,7 +387,7 @@ init python:
     def export_dossier_txt():
         export_dir = get_notebook_export_dir()
         if not export_dir:
-            renpy.notify("Could not determine a writable export location.")
+            renpy.notify(t("Could not determine a writable export location."))
             return
 
         filename = datetime.now().strftime("dossier_%Y%m%d_%H%M%S.txt")
@@ -397,7 +397,7 @@ init python:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(get_dossier_export_text())
 
-            renpy.notify("Dossier exported to " + export_dir)
+            renpy.notify(t("Dossier exported to ") + export_dir)
         except Exception as exc:
             renpy.notify(f"Failed to export dossier: {exc}")
 
@@ -462,9 +462,9 @@ init python:
         try:
             # Save to a dedicated 'chapter' page so it gets its own tab in the Load screen
             renpy.save("chapter-%d" % chapter_num, extra_info="Chapter %d" % chapter_num)
-            renpy.notify("Chapter %d autosave complete." % chapter_num)
+            renpy.notify(t("Chapter %d autosave complete.") % chapter_num)
         except Exception:
-            renpy.notify("Autosave failed.")
+            renpy.notify(t("Autosave failed."))
 
     def mouse_parallax(trans, st, at):
         # Provide a subtle parallax based on mouse

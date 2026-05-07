@@ -24,18 +24,18 @@ screen minigame_intro(title, description):
             xalign 0.5 yalign 0.5
             spacing 30
 
-            text "// SYSTEM CHALLENGE INITIATED //" style "sys_text"
+            text t("// SYSTEM CHALLENGE INITIATED //") style "sys_text"
             text title style "minigame_title"
             text description style "minigame_instruction"
 
             null height 20
 
-            textbutton "> BEGIN CHALLENGE":
+            textbutton t("> BEGIN CHALLENGE"):
                 xalign 0.5
                 text_style "menu_btn_text"
                 action Return(True)
 
-            textbutton "> SKIP (Knowledge -1)":
+            textbutton t("> SKIP (Knowledge -1)"):
                 xalign 0.5
                 text_color "#FF2D55"
                 text_size 18
@@ -60,10 +60,10 @@ screen minigame_result(passed, title, explanation):
             spacing 20
 
             if passed:
-                text "// CHALLENGE PASSED //" color "#00FFD1" size 28 bold True xalign 0.5
+                text t("// CHALLENGE PASSED //") color "#00FFD1" size 28 bold True xalign 0.5
                 text title color "#00FFD1" size 36 bold True xalign 0.5
             else:
-                text "// CHALLENGE FAILED //" color "#FF2D55" size 28 bold True xalign 0.5
+                text t("// CHALLENGE FAILED //") color "#FF2D55" size 28 bold True xalign 0.5
                 text title color "#FF2D55" size 36 bold True xalign 0.5
 
             null height 10
@@ -71,7 +71,7 @@ screen minigame_result(passed, title, explanation):
 
             null height 20
 
-            textbutton "> CONTINUE MISSION":
+            textbutton t("> CONTINUE MISSION"):
                 xalign 0.5
                 text_style "menu_btn_text"
                 action Return()
@@ -440,15 +440,15 @@ screen minigame_firewall():
                 # Title row
                 hbox:
                     xfill True
-                    text "// NSA NETWORK MONITOR //" color "#00FFD180" size 14 bold True yalign 0.5
+                    text t("// NSA NETWORK MONITOR //") color "#00FFD180" size 14 bold True yalign 0.5
 
                     hbox:
                         xalign 1.0
                         spacing 20
-                        text "STREAK: [_fw_streak]" color "#FFD700" size 14 bold True yalign 0.5
-                        text "AUTHORIZED: [fw_state['allowed_count']]" color "#00FFD1" size 14 bold True yalign 0.5
-                        text "BLOCKED: [fw_state['blocked_count']]" color "#FF2D55" size 14 bold True yalign 0.5
-                        text "SCORE: [_fw_score]" color "#E8E8E8" size 14 bold True yalign 0.5
+                        text t("STREAK: [_fw_streak]") color "#FFD700" size 14 bold True yalign 0.5
+                        text t("AUTHORIZED: [fw_state['allowed_count']]") color "#00FFD1" size 14 bold True yalign 0.5
+                        text t("BLOCKED: [fw_state['blocked_count']]") color "#FF2D55" size 14 bold True yalign 0.5
+                        text t("SCORE: [_fw_score]") color "#E8E8E8" size 14 bold True yalign 0.5
 
                 # Progress dots
                 hbox:
@@ -458,16 +458,16 @@ screen minigame_firewall():
                             # Completed
                             $ _dot_ans = fw_state["answers"][_dot_i] if _dot_i < len(fw_state["answers"]) else None
                             if _dot_ans and _dot_ans["is_correct"]:
-                                text "●" color "#00FFD1" size 18
+                                text t("●") color "#00FFD1" size 18
                             else:
-                                text "●" color "#FF2D55" size 18
+                                text t("●") color "#FF2D55" size 18
                         elif _dot_i == _fw_idx:
-                            text "◆" color "#FFD700" size 18
+                            text t("◆") color "#FFD700" size 18
                         else:
-                            text "○" color "#555555" size 18
+                            text t("○") color "#555555" size 18
 
                     null width 20
-                    text "PACKET [_fw_num] / 8" color "#888888" size 14 yalign 0.5
+                    text t("PACKET [_fw_num] / 8") color "#888888" size 14 yalign 0.5
 
                 # Timer bar
                 if fw_state["phase"] == "incoming":
@@ -483,7 +483,7 @@ screen minigame_firewall():
                             xpos 0
 
                     $ _fw_secs = int(_fw_remaining)
-                    text "[_fw_secs]s" color _fw_timer_col size 12 xalign 1.0
+                    text t("[_fw_secs]s") color _fw_timer_col size 12 xalign 1.0
                 else:
                     frame:
                         xfill True ysize 6
@@ -511,10 +511,10 @@ screen minigame_firewall():
                         xsize 1 ysize 280 xpos 819 ypos 0
 
                     # Corner brackets
-                    text "◢" color "#00FFD140" size 14 xpos 6 ypos 2
-                    text "◣" color "#00FFD140" size 14 xpos 798 ypos 2
-                    text "◤" color "#00FFD140" size 14 xpos 6 ypos 258
-                    text "◥" color "#00FFD140" size 14 xpos 798 ypos 258
+                    text t("◢") color "#00FFD140" size 14 xpos 6 ypos 2
+                    text t("◣") color "#00FFD140" size 14 xpos 798 ypos 2
+                    text t("◤") color "#00FFD140" size 14 xpos 6 ypos 258
+                    text t("◥") color "#00FFD140" size 14 xpos 798 ypos 258
 
                     vbox:
                         pos(0, 0)
@@ -533,13 +533,13 @@ screen minigame_firewall():
                                 xsize 240 ysize 32
                                 background "#1A2440"
                                 padding(10, 4)
-                                text "SIGNATURE" color "#C9D0F3" size 13 bold True yalign 0.5
+                                text t("SIGNATURE") color "#C9D0F3" size 13 bold True yalign 0.5
 
                             frame:
                                 xfill True ysize 32
                                 background "#0D1220"
                                 padding(15, 4)
-                                text "[_pc_tag]" color "#8B8FCC" size 14 bold True yalign 0.5
+                                text t("[_pc_tag]") color "#8B8FCC" size 14 bold True yalign 0.5
 
                         null height 20
 
@@ -554,34 +554,34 @@ screen minigame_firewall():
                                 xalign 0.0
                                 spacing 4
                                 xoffset 30
-                                text "SOURCE IP" color "#888888" size 12 bold True
+                                text t("SOURCE IP") color "#888888" size 12 bold True
                                 $ _pc_ip = _pc_pkt["source_ip"]
-                                text "[_pc_ip]" color "#00FFD1" size 26 bold True
+                                text t("[_pc_ip]") color "#00FFD1" size 26 bold True
 
                             # Port column
                             vbox:
                                 xsize 200
                                 spacing 4
-                                text "PORT" color "#888888" size 12 bold True
+                                text t("PORT") color "#888888" size 12 bold True
                                 $ _pc_port = str(_pc_pkt["port"])
-                                text "[_pc_port]" color "#FFD700" size 30 bold True
+                                text t("[_pc_port]") color "#FFD700" size 30 bold True
 
                             # Protocol column
                             vbox:
                                 xsize 250
                                 spacing 4
-                                text "PROTOCOL" color "#888888" size 12 bold True
+                                text t("PROTOCOL") color "#888888" size 12 bold True
                                 $ _pc_proto = _pc_pkt["protocol"]
-                                text "[_pc_proto]" color "#E8E8E8" size 26 bold True
+                                text t("[_pc_proto]") color "#E8E8E8" size 26 bold True
 
                         null height 20
 
                         # Description line
                         hbox:
                             xoffset 30
-                            text "CLASSIFICATION: " color "#555555" size 14
+                            text t("CLASSIFICATION: ") color "#555555" size 14
                             $ _pc_desc2 = _pc_pkt["description"]
-                            text "[_pc_desc2]" color "#888888" size 14 italic True
+                            text t("[_pc_desc2]") color "#888888" size 14 italic True
 
                         # Feedback overlay on card
                         if fw_state["phase"] == "feedback" and fw_state["current_index"] == _pc_i:
@@ -589,9 +589,9 @@ screen minigame_firewall():
                             hbox:
                                 xoffset 30
                                 if fw_state["last_correct"]:
-                                    text "✓ CORRECT ANALYSIS" color "#00FF88" size 16 bold True
+                                    text t("✓ CORRECT ANALYSIS") color "#00FF88" size 16 bold True
                                 else:
-                                    text "✗ INCORRECT ANALYSIS" color "#FF2D55" size 16 bold True
+                                    text t("✗ INCORRECT ANALYSIS") color "#FF2D55" size 16 bold True
 
         # ── ACTION BUTTONS ───────────────────────────────────────────────
         if fw_state["phase"] == "incoming":
@@ -615,7 +615,7 @@ screen minigame_firewall():
                     add Solid("#00FFD140"):
                         xsize 1 ysize 70 xpos 219 ypos 0
 
-                    textbutton "✓  ALLOW":
+                    textbutton t("✓  ALLOW"):
                         xalign 0.5 yalign 0.5
                         text_color "#00FFD1"
                         text_hover_color "#FFFFFF"
@@ -638,7 +638,7 @@ screen minigame_firewall():
                     add Solid("#FF2D5540"):
                         xsize 1 ysize 70 xpos 219 ypos 0
 
-                    textbutton "✗  BLOCK":
+                    textbutton t("✗  BLOCK"):
                         xalign 0.5 yalign 0.5
                         text_color "#FF2D55"
                         text_hover_color "#FFFFFF"
@@ -664,30 +664,30 @@ screen minigame_firewall():
                         xalign 0.5
 
                         # Terminal header
-                        text "> ANALYSIS TERMINAL <" color "#00FFD180" size 14 bold True xalign 0.5
+                        text t("> ANALYSIS TERMINAL <") color "#00FFD180" size 14 bold True xalign 0.5
 
                         if fw_state["timed_out"]:
-                            text "{cps=40}⚠ TIME OUT — Packet auto-blocked{/cps}" color "#FFD700" size 16 bold True xalign 0.5
+                            text t("{cps=40}⚠ TIME OUT — Packet auto-blocked{/cps}") color "#FFD700" size 16 bold True xalign 0.5
                         elif fw_state["last_correct"]:
                             $ _fb_choice = fw_state["answers"][-1]["choice"]
                             if _fb_choice == "ALLOW":
-                                text "{cps=40}✓ AUTHORIZATION GRANTED{/cps}" color "#00FF88" size 18 bold True xalign 0.5
+                                text t("{cps=40}✓ AUTHORIZATION GRANTED{/cps}") color "#00FF88" size 18 bold True xalign 0.5
                             else:
-                                text "{cps=40}✗ PACKET REJECTED{/cps}" color "#00FFD1" size 18 bold True xalign 0.5
+                                text t("{cps=40}✗ PACKET REJECTED{/cps}") color "#00FFD1" size 18 bold True xalign 0.5
                         else:
-                            text "{cps=40}⚠ INCORRECT ANALYSIS{/cps}" color "#FF2D55" size 18 bold True xalign 0.5
+                            text t("{cps=40}⚠ INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
 
                         # Explanation
-                        text "{cps=30}[_fw_explanation]{/cps}" color "#AAAAAA" size 15 text_align 0.5 xalign 0.5 justify True
+                        text t("{cps=30}[_fw_explanation]{/cps}") color "#AAAAAA" size 15 text_align 0.5 xalign 0.5 justify True
 
                         if fw_state["last_correct"] and not fw_state["timed_out"]:
-                            text "knowledge_score +1 | streak [_fw_streak]" color "#00FF8880" size 13 xalign 0.5
+                            text t("knowledge_score +1 | streak [_fw_streak]") color "#00FF8880" size 13 xalign 0.5
 
                         null height 5
 
                         # Continue button (delayed)
                         if fw_state["show_continue"]:
-                            textbutton "> CONTINUE →":
+                            textbutton t("> CONTINUE →"):
                                 xalign 0.5
                                 text_color "#00FFD1"
                                 text_hover_color "#FFFFFF"
@@ -697,8 +697,8 @@ screen minigame_firewall():
                         else:
                             hbox:
                                 xalign 0.5
-                                text "> Processing" color "#00FFD180" size 14
-                                text " _" at fw_cursor_blink color "#00FFD1" size 14
+                                text t("> Processing") color "#00FFD180" size 14
+                                text t(" _") at fw_cursor_blink color "#00FFD1" size 14
 
         # ── Waiting prompt (incoming phase) ──────────────────────────────
         if fw_state["phase"] == "incoming":
@@ -712,8 +712,8 @@ screen minigame_firewall():
                     xsize 820 ysize 1 xpos 0 ypos 0
 
                 hbox:
-                    text "> Scanning packet... Awaiting your authorization" color "#00FFD160" size 14
-                    text " _" at fw_cursor_blink color "#00FFD1" size 14
+                    text t("> Scanning packet... Awaiting your authorization") color "#00FFD160" size 14
+                    text t(" _") at fw_cursor_blink color "#00FFD1" size 14
 
     # ══════════════════════════════════════════════════════════════════════
     #  PHASE: COMPLETE (Result / Mission Debrief)
@@ -735,7 +735,7 @@ screen minigame_firewall():
                 yalign 0.5
                 spacing 10
 
-                text "// FIREWALL ANALYSIS COMPLETE //" color "#00FFD1" size 28 bold True xalign 0.5 text_align 0.5
+                text t("// FIREWALL ANALYSIS COMPLETE //") color "#00FFD1" size 28 bold True xalign 0.5 text_align 0.5
 
                 # Mission outcome panel (compact)
                 frame:
@@ -746,33 +746,33 @@ screen minigame_firewall():
                     vbox:
                         spacing 6
 
-                        text "MISSION OUTCOME" color "#E8E8E8" size 18 bold True xalign 0.5
+                        text t("MISSION OUTCOME") color "#E8E8E8" size 18 bold True xalign 0.5
 
                         hbox:
                             xfill True
-                            text "Correctly Handled:" color "#AAAAAA" size 15
-                            text "[_r_score] / 8" color "#00FFD1" size 15 bold True xalign 1.0
+                            text t("Correctly Handled:") color "#AAAAAA" size 15
+                            text t("[_r_score] / 8") color "#00FFD1" size 15 bold True xalign 1.0
 
                         hbox:
                             xfill True
-                            text "Allowed: [_r_allowed]   |   Blocked: [_r_blocked]" color "#888888" size 14
+                            text t("Allowed: [_r_allowed]   |   Blocked: [_r_blocked]") color "#888888" size 14
 
                         hbox:
                             xfill True
-                            text "Knowledge Bonus:" color "#888888" size 15
-                            text "+[_r_bonus]" color "#FFD700" size 15 bold True xalign 1.0
+                            text t("Knowledge Bonus:") color "#888888" size 15
+                            text t("+[_r_bonus]") color "#FFD700" size 15 bold True xalign 1.0
 
                 # Grade display
-                text "GRADE:" color "#888888" size 14 xalign 0.5
+                text t("GRADE:") color "#888888" size 14 xalign 0.5
 
                 if _r_score >= 7:
-                    text "[_r_grade]" color "#00FF88" size 32 bold True xalign 0.5
+                    text t("[_r_grade]") color "#00FF88" size 32 bold True xalign 0.5
                 elif _r_score >= 5:
-                    text "[_r_grade]" color "#00FFD1" size 32 bold True xalign 0.5
+                    text t("[_r_grade]") color "#00FFD1" size 32 bold True xalign 0.5
                 elif _r_score >= 3:
-                    text "[_r_grade]" color "#FFD700" size 32 bold True xalign 0.5
+                    text t("[_r_grade]") color "#FFD700" size 32 bold True xalign 0.5
                 else:
-                    text "[_r_grade]" color "#FF2D55" size 32 bold True xalign 0.5
+                    text t("[_r_grade]") color "#FF2D55" size 32 bold True xalign 0.5
 
                 # Per-packet breakdown (scrollable)
                 frame:
@@ -787,7 +787,7 @@ screen minigame_firewall():
 
                         vbox:
                             spacing 4
-                            text "─── PACKET LOG ───" color "#00FFD160" size 12 bold True
+                            text t("─── PACKET LOG ───") color "#00FFD160" size 12 bold True
 
                             $ _r_pkts = get_fw_packets()
                             for _ri in range(8):
@@ -797,23 +797,23 @@ screen minigame_firewall():
                                 hbox:
                                     spacing 8
                                     if _rans and _rans["is_correct"]:
-                                        text "✓" color "#00FF88" size 13 yalign 0.5
+                                        text t("✓") color "#00FF88" size 13 yalign 0.5
                                     else:
-                                        text "✗" color "#FF2D55" size 13 yalign 0.5
+                                        text t("✗") color "#FF2D55" size 13 yalign 0.5
 
                                     $ _r_ip = _rpkt["source_ip"]
                                     $ _r_pt = str(_rpkt["port"])
                                     $ _r_pr = _rpkt["protocol"]
-                                    text "[_r_ip]:[_r_pt]" color "#00FFD1" size 12 yalign 0.5 xsize 180
-                                    text "[_r_pr]" color "#E8E8E8" size 12 yalign 0.5 xsize 70
+                                    text t("[_r_ip]:[_r_pt]") color "#00FFD1" size 12 yalign 0.5 xsize 180
+                                    text t("[_r_pr]") color "#E8E8E8" size 12 yalign 0.5 xsize 70
 
                                     if _rans:
                                         $ _r_ch = _rans["choice"]
                                         $ _r_co = _rans["correct_answer"]
                                         if _rans["is_correct"]:
-                                            text "[_r_ch]" color "#00FF88" size 12 yalign 0.5
+                                            text t("[_r_ch]") color "#00FF88" size 12 yalign 0.5
                                         else:
-                                            text "[_r_ch] (should: [_r_co])" color "#FF2D55" size 12 yalign 0.5
+                                            text t("[_r_ch] (should: [_r_co])") color "#FF2D55" size 12 yalign 0.5
 
                 # Key takeaway (compact)
                 frame:
@@ -823,13 +823,13 @@ screen minigame_firewall():
 
                     vbox:
                         spacing 4
-                        text "Dangerous ports: 31337, 4444, 23 (Telnet)" color "#FF2D55" size 13
-                        text "Safe: HTTP(80), HTTPS(443), DNS(53), SSH/RDP from internal IPs" color "#00FF88" size 13
+                        text t("Dangerous ports: 31337, 4444, 23 (Telnet)") color "#FF2D55" size 13
+                        text t("Safe: HTTP(80), HTTPS(443), DNS(53), SSH/RDP from internal IPs") color "#00FF88" size 13
 
                 null height 5
 
                 # CONTINUE button — always visible at bottom
-                textbutton "> CONTINUE MISSION":
+                textbutton t("> CONTINUE MISSION"):
                     xalign 0.5
                     text_color "#00FFD1"
                     text_hover_color "#FFFFFF"
@@ -1151,7 +1151,7 @@ init python:
         decrypt_state["wrong_position"] = None
         decrypt_state["last_input_at"] = time.time()
         decrypt_log("> Hint activated — one letter revealed")
-        renpy.notify("Hint activated")
+        renpy.notify(t("Hint activated"))
         renpy.restart_interaction()
         decrypt_check_word()
 
@@ -1197,7 +1197,7 @@ init python:
         decrypt_state["wrong_position"] = None
         decrypt_state["word_complete_serial"] += 1
         decrypt_log("> " + puzzle["word"] + " — DECRYPTION SUCCESSFUL")
-        renpy.notify("Encryption cracked! +1")
+        renpy.notify(t("Encryption cracked! +1"))
         renpy.restart_interaction()
         return True
 
@@ -1286,7 +1286,7 @@ screen decrypt_alphabet_panel():
         vbox:
             spacing 10
 
-            text "⬡  CAESAR CIPHER REFERENCE — SHIFT: 3  ⬡":
+            text t("⬡  CAESAR CIPHER REFERENCE — SHIFT: 3  ⬡"):
                 color "#00FFD1"
                 size 20
                 bold True
@@ -1331,7 +1331,7 @@ screen decrypt_alphabet_panel():
                                 unhovered Function(decrypt_clear_hover_letter)
                                 action Function(decrypt_use_cipher_letter, cipher_letter)
 
-                                text "[cipher_letter]":
+                                text t("[cipher_letter]"):
                                     font "DejaVuSans.ttf"
                                     size 20
                                     bold True
@@ -1339,7 +1339,7 @@ screen decrypt_alphabet_panel():
                                     xalign 0.5
                                     yalign 0.5
 
-                            text "│":
+                            text t("│"):
                                 xalign 0.5
                                 color connector_color
                                 size 16
@@ -1351,7 +1351,7 @@ screen decrypt_alphabet_panel():
                                 background Solid("#003E38" if is_focus else "#111820")
                                 padding(0, 0)
 
-                                text "[plain_letter]":
+                                text t("[plain_letter]"):
                                     font "DejaVuSans.ttf"
                                     size 20
                                     bold True
@@ -1373,7 +1373,7 @@ screen decrypt_word_display():
             spacing 18
             xalign 0.5
 
-            text "⬡  INTERCEPTED TRANSMISSION  ⬡":
+            text t("⬡  INTERCEPTED TRANSMISSION  ⬡"):
                 color "#00FFD1"
                 size 24
                 bold True
@@ -1381,7 +1381,7 @@ screen decrypt_word_display():
                 xalign 0.5
                 text_align 0.5
 
-            text "⚡ ENCRYPTED MESSAGE DETECTED — [puzzle['headline']]":
+            text t("⚡ ENCRYPTED MESSAGE DETECTED — [puzzle['headline']]"):
                 color "#E8E8E8"
                 size 18
                 font "DejaVuSans.ttf"
@@ -1406,7 +1406,7 @@ screen decrypt_word_display():
                                 unhovered Function(decrypt_clear_hover_letter)
                                 action Function(decrypt_select_position, idx)
 
-                                text "[letter]":
+                                text t("[letter]"):
                                     font "DejaVuSans.ttf"
                                     size 38
                                     bold True
@@ -1423,7 +1423,7 @@ screen decrypt_word_display():
                                 style "decoded_tile_correct"
                                 at letter_reveal
 
-                                text "[letter]":
+                                text t("[letter]"):
                                     font "DejaVuSans.ttf"
                                     size 34
                                     bold True
@@ -1444,7 +1444,7 @@ screen decrypt_word_display():
                             unhovered Function(decrypt_clear_hover_letter)
                             action Function(decrypt_select_position, idx)
 
-                            text "[letter]":
+                            text t("[letter]"):
                                 font "DejaVuSans.ttf"
                                 size 38
                                 bold True
@@ -1472,7 +1472,7 @@ screen decrypt_word_display():
                                 at letter_wrong_shake
 
                                 if letter:
-                                    text "[letter]":
+                                    text t("[letter]"):
                                         font "DejaVuSans.ttf"
                                         size 34
                                         bold True
@@ -1494,7 +1494,7 @@ screen decrypt_word_display():
                                 action Function(decrypt_select_position, idx)
 
                                 if letter:
-                                    text "[letter]":
+                                    text t("[letter]"):
                                         font "DejaVuSans.ttf"
                                         size 34
                                         bold True
@@ -1510,14 +1510,14 @@ screen decrypt_word_display():
                                         xalign 0.5
                                         yalign 0.72
 
-            text "Select a tile, inspect the cipher map, then type the decoded letter on your keyboard.":
+            text t("Select a tile, inspect the cipher map, then type the decoded letter on your keyboard."):
                 color "#607080"
                 size 16
                 xalign 0.5
                 text_align 0.5
 
             if decrypt_state["phase"] == "word_complete":
-                text "🔒 WORD LOCKED — READY FOR NEXT TRANSMISSION":
+                text t("🔒 WORD LOCKED — READY FOR NEXT TRANSMISSION"):
                     color "#39FF14"
                     size 18
                     bold True
@@ -1536,13 +1536,13 @@ screen decrypt_keyboard():
         vbox:
             spacing 16
 
-            text "⬡  KEYBOARD INPUT  ⬡":
+            text t("⬡  KEYBOARD INPUT  ⬡"):
                 color "#00FFD1"
                 size 22
                 bold True
                 font "DejaVuSans.ttf"
 
-            text "Type A-Z on your physical keyboard. Use Backspace to clear and Enter to confirm.":
+            text t("Type A-Z on your physical keyboard. Use Backspace to clear and Enter to confirm."):
                 color "#E8E8E8"
                 size 20
                 xalign 0.5
@@ -1552,25 +1552,25 @@ screen decrypt_keyboard():
                 xalign 0.5
                 spacing 20
 
-                text "Selected cell: [selected + 1] / [len(decrypt_state['letters_placed'])]":
+                text t("Selected cell: [selected + 1] / [len(decrypt_state['letters_placed'])]"):
                     color "#607080"
                     size 18
                     font "DejaVuSans.ttf"
                     yalign 0.5
 
-                text "Cipher hint: [decrypt_puzzles[decrypt_state['current_stage']]['encrypted'][selected]] -> [mapped_hint]":
+                text t("Cipher hint: [decrypt_puzzles[decrypt_state['current_stage']]['encrypted'][selected]] -> [mapped_hint]"):
                     color "#FFD700"
                     size 18
                     font "DejaVuSans.ttf"
                     yalign 0.5
 
-                textbutton "⌫ DELETE":
+                textbutton t("⌫ DELETE"):
                     style "keyboard_key"
                     text_style "keyboard_key_text"
                     action Function(decrypt_delete_letter)
 
                 if "" not in decrypt_state["letters_placed"]:
-                    textbutton "✓ CONFIRM":
+                    textbutton t("✓ CONFIRM"):
                         style "keyboard_key"
                         text_style "keyboard_key_text"
                         action Function(decrypt_confirm_word)
@@ -1586,14 +1586,14 @@ screen decrypt_cipher_wheel():
             ysize 190
             xalign 0.5
 
-            text "◌":
+            text t("◌"):
                 xalign 0.5
                 yalign 0.5
                 size 180
                 color "#00FFD140"
                 font "DejaVuSans.ttf"
 
-            text "◌":
+            text t("◌"):
                 xalign 0.5
                 yalign 0.5
                 size 134
@@ -1606,35 +1606,35 @@ screen decrypt_cipher_wheel():
                 xsize 160
                 ysize 160
 
-                text "A B C D E F G":
+                text t("A B C D E F G"):
                     xpos 34
                     ypos 12
                     size 11
                     color "#FFD700"
                     font "DejaVuSans.ttf"
 
-                text "H I J K L M":
+                text t("H I J K L M"):
                     xpos 88
                     ypos 46
                     size 11
                     color "#FFD700"
                     font "DejaVuSans.ttf"
 
-                text "N O P Q R":
+                text t("N O P Q R"):
                     xpos 96
                     ypos 88
                     size 11
                     color "#FFD700"
                     font "DejaVuSans.ttf"
 
-                text "S T U V W":
+                text t("S T U V W"):
                     xpos 18
                     ypos 126
                     size 11
                     color "#FFD700"
                     font "DejaVuSans.ttf"
 
-                text "X Y Z":
+                text t("X Y Z"):
                     xpos 12
                     ypos 66
                     size 11
@@ -1647,35 +1647,35 @@ screen decrypt_cipher_wheel():
                 xsize 126
                 ysize 126
 
-                text "X Y Z A B C":
+                text t("X Y Z A B C"):
                     xpos 22
                     ypos 15
                     size 10
                     color "#00FFD1"
                     font "DejaVuSans.ttf"
 
-                text "D E F G H":
+                text t("D E F G H"):
                     xpos 70
                     ypos 42
                     size 10
                     color "#00FFD1"
                     font "DejaVuSans.ttf"
 
-                text "I J K L M":
+                text t("I J K L M"):
                     xpos 76
                     ypos 78
                     size 10
                     color "#00FFD1"
                     font "DejaVuSans.ttf"
 
-                text "N O P Q R":
+                text t("N O P Q R"):
                     xpos 14
                     ypos 94
                     size 10
                     color "#00FFD1"
                     font "DejaVuSans.ttf"
 
-                text "S T U V W":
+                text t("S T U V W"):
                     xpos 4
                     ypos 58
                     size 10
@@ -1689,7 +1689,7 @@ screen decrypt_cipher_wheel():
                 xalign 0.5
                 yalign 0.5
 
-        text "ROT-3  ◆  SHIFT 3":
+        text t("ROT-3  ◆  SHIFT 3"):
             xalign 0.5
             size 13
             bold True
@@ -1725,7 +1725,7 @@ screen decrypt_game():
 
     fixed:
         for idx, stream in enumerate(decrypt_state.get("bg_streams", [])):
-            text "[stream]":
+            text t("[stream]"):
                 xpos 30 + (idx * 310)
                 ypos - 620 + (idx * 80)
                 color "#2A3A4A10"
@@ -1747,14 +1747,14 @@ screen decrypt_game():
         hbox:
             xfill True
 
-            text "// DECRYPTION TERMINAL //  Stage: [stage_index + 1]/3  [puzzle['difficulty']]":
+            text t("// DECRYPTION TERMINAL //  Stage: [stage_index + 1]/3  [puzzle['difficulty']]"):
                 color "#E8E8E8"
                 size 20
                 bold True
                 font "DejaVuSans.ttf"
                 yalign 0.5
 
-            text "[decrypt_score_stars(decrypt_state['stage_scores'][0])] [decrypt_score_stars(decrypt_state['stage_scores'][1])] [decrypt_score_stars(decrypt_state['stage_scores'][2])]  Score: [decrypt_state['total_score']]/9":
+            text t("[decrypt_score_stars(decrypt_state['stage_scores'][0])] [decrypt_score_stars(decrypt_state['stage_scores'][1])] [decrypt_score_stars(decrypt_state['stage_scores'][2])]  Score: [decrypt_state['total_score']]/9"):
                 color "#00FFD1"
                 size 18
                 bold True
@@ -1774,22 +1774,22 @@ screen decrypt_game():
         fixed:
             xfill True
             yfill True
-            text "⬡":
+            text t("⬡"):
                 xpos 12
                 ypos 8
                 color "#607080"
                 size 18
-            text "⬡":
+            text t("⬡"):
                 xpos 1786
                 ypos 8
                 color "#607080"
                 size 18
-            text "⬡":
+            text t("⬡"):
                 xpos 12
                 ypos 310
                 color "#607080"
                 size 18
-            text "⬡":
+            text t("⬡"):
                 xpos 1786
                 ypos 310
                 color "#607080"
@@ -1810,7 +1810,7 @@ screen decrypt_game():
             spacing 8
             xalign 0.5
 
-            text "⬡  STAGE PROGRESS  ⬡":
+            text t("⬡  STAGE PROGRESS  ⬡"):
                 color "#00FFD1"
                 size 20
                 bold True
@@ -1833,49 +1833,49 @@ screen decrypt_game():
                     xfill True
                     spacing 12
 
-                    text "Stage [_si + 1]":
+                    text t("Stage [_si + 1]"):
                         color("#FFD700" if _active else "#607080")
                         size 16
                         bold _active
                         font "DejaVuSans.ttf"
                         yalign 0.5
 
-                    text "[_sd]":
+                    text t("[_sd]"):
                         color("#8B8FCC" if _active else "#4D5186")
                         size 14
                         font "DejaVuSans.ttf"
                         yalign 0.5
 
                     if _done:
-                        text "[_sw]":
+                        text t("[_sw]"):
                             color "#39FF14"
                             size 16
                             bold True
                             font "DejaVuSans.ttf"
                             yalign 0.5
 
-                        text "[_st]":
+                        text t("[_st]"):
                             color "#FFD700"
                             size 16
                             font "DejaVuSans.ttf"
                             xalign 1.0
                             yalign 0.5
 
-                        text "[_sr]":
+                        text t("[_sr]"):
                             color "#00FFD1"
                             size 14
                             font "DejaVuSans.ttf"
                             xalign 1.0
                             yalign 0.5
                     elif _active:
-                        text "IN PROGRESS...":
+                        text t("IN PROGRESS..."):
                             color "#FFD700"
                             size 14
                             italic True
                             font "DejaVuSans.ttf"
                             yalign 0.5
                     else:
-                        text "LOCKED":
+                        text t("LOCKED"):
                             color "#333840"
                             size 14
                             font "DejaVuSans.ttf"
@@ -1885,12 +1885,12 @@ screen decrypt_game():
 
             hbox:
                 xfill True
-                text "Total Score:":
+                text t("Total Score:"):
                     color "#888888"
                     size 16
                     font "DejaVuSans.ttf"
                     yalign 0.5
-                text "[decrypt_state['total_score']] / 9":
+                text t("[decrypt_state['total_score']] / 9"):
                     color "#00FFD1"
                     size 18
                     bold True
@@ -1912,7 +1912,7 @@ screen decrypt_game():
             xalign 0.5
             $ hint_color = "#FFD700" if decrypt_state["hints_used"][stage_index] else "#607080"
 
-            text "⬡  CIPHER WHEEL  ⬡":
+            text t("⬡  CIPHER WHEEL  ⬡"):
                 color "#00FFD1"
                 size 20
                 bold True
@@ -1925,13 +1925,13 @@ screen decrypt_game():
                 xalign 0.5
                 spacing 18
 
-                text "Elapsed: [decrypt_elapsed()]s":
+                text t("Elapsed: [decrypt_elapsed()]s"):
                     color "#E8E8E8"
                     size 15
                     font "DejaVuSans.ttf"
                     yalign 0.5
 
-                text "Hints: [decrypt_state['hints_used'][stage_index]] / 2":
+                text t("Hints: [decrypt_state['hints_used'][stage_index]] / 2"):
                     color hint_color
                     size 15
                     font "DejaVuSans.ttf"
@@ -1949,20 +1949,20 @@ screen decrypt_game():
         vbox:
             spacing 10
 
-            text "⬡  ANALYSIS LOG  ⬡":
+            text t("⬡  ANALYSIS LOG  ⬡"):
                 color "#00FFD1"
                 size 20
                 bold True
                 font "DejaVuSans.ttf"
 
-            text "[puzzle['hint']]":
+            text t("[puzzle['hint']]"):
                 color "#FFD700"
                 size 15
                 italic True
                 text_align 0.0
 
             $ log_text = "\n".join([line for line in decrypt_state.get("log_lines", [])[-6:] if line])
-            text "[log_text]":
+            text t("[log_text]"):
                 color "#E8E8E8"
                 size 14
                 font "DejaVuSans.ttf"
@@ -1981,12 +1981,12 @@ screen decrypt_game():
         fixed:
             xfill True
             yfill True
-            text "⬡":
+            text t("⬡"):
                 xpos 12
                 ypos 8
                 color "#607080"
                 size 18
-            text "⬡":
+            text t("⬡"):
                 xpos 1400
                 ypos 8
                 color "#607080"
@@ -2005,7 +2005,7 @@ screen decrypt_game():
         vbox:
             spacing 10
 
-            text "⬡  CONTROLS  ⬡":
+            text t("⬡  CONTROLS  ⬡"):
                 color "#00FFD1"
                 size 18
                 bold True
@@ -2016,13 +2016,13 @@ screen decrypt_game():
 
             hbox:
                 spacing 8
-                text "A-Z":
+                text t("A-Z"):
                     color "#FFD700"
                     size 14
                     bold True
                     font "DejaVuSans.ttf"
                     yalign 0.5
-                text "Type decoded letter":
+                text t("Type decoded letter"):
                     color "#AAB0D6"
                     size 13
                     font "DejaVuSans.ttf"
@@ -2030,13 +2030,13 @@ screen decrypt_game():
 
             hbox:
                 spacing 8
-                text "⌫":
+                text t("⌫"):
                     color "#FFD700"
                     size 14
                     bold True
                     font "DejaVuSans.ttf"
                     yalign 0.5
-                text "Clear selected cell":
+                text t("Clear selected cell"):
                     color "#AAB0D6"
                     size 13
                     font "DejaVuSans.ttf"
@@ -2044,13 +2044,13 @@ screen decrypt_game():
 
             hbox:
                 spacing 8
-                text "Enter":
+                text t("Enter"):
                     color "#FFD700"
                     size 14
                     bold True
                     font "DejaVuSans.ttf"
                     yalign 0.5
-                text "Confirm full word":
+                text t("Confirm full word"):
                     color "#AAB0D6"
                     size 13
                     font "DejaVuSans.ttf"
@@ -2058,13 +2058,13 @@ screen decrypt_game():
 
             hbox:
                 spacing 8
-                text "Click":
+                text t("Click"):
                     color "#FFD700"
                     size 14
                     bold True
                     font "DejaVuSans.ttf"
                     yalign 0.5
-                text "Select cipher tile":
+                text t("Select cipher tile"):
                     color "#AAB0D6"
                     size 13
                     font "DejaVuSans.ttf"
@@ -2078,7 +2078,7 @@ screen decrypt_game():
 
             null height 2
 
-            text "💡 Hints auto-reveal after 25s of inactivity":
+            text t("💡 Hints auto-reveal after 25s of inactivity"):
                 color "#607080"
                 size 12
                 font "DejaVuSans.ttf"
@@ -2101,14 +2101,14 @@ screen decrypt_game():
                 yalign 0.5
                 spacing 14
 
-                text "// DECRYPTION SUCCESSFUL //":
+                text t("// DECRYPTION SUCCESSFUL //"):
                     color "#39FF14"
                     size 30
                     bold True
                     xalign 0.5
                     font "DejaVuSans.ttf"
 
-                text "[puzzle['word']]  [decrypt_score_stars(decrypt_state['stage_scores'][stage_index])]":
+                text t("[puzzle['word']]  [decrypt_score_stars(decrypt_state['stage_scores'][stage_index])]"):
                     color "#E8E8E8"
                     size 28
                     bold True
@@ -2116,13 +2116,13 @@ screen decrypt_game():
                     font "DejaVuSans.ttf"
                     at star_earn
 
-                text "Time: [decrypt_state['stage_times'][stage_index]]s   Rating: [decrypt_stage_rating(decrypt_state['stage_scores'][stage_index])]":
+                text t("Time: [decrypt_state['stage_times'][stage_index]]s   Rating: [decrypt_stage_rating(decrypt_state['stage_scores'][stage_index])]"):
                     color "#00FFD1"
                     size 18
                     xalign 0.5
                     font "DejaVuSans.ttf"
 
-                textbutton "[next_cta]":
+                textbutton t("[next_cta]"):
                     style "modal_action_button"
                     text_style "modal_action_button_text"
                     xalign 0.5
@@ -2151,32 +2151,32 @@ screen decrypt_stage_transition(word, score, stars):
             yalign 0.5
             spacing 16
 
-            text "// STAGE [decrypt_state['current_stage'] + 1] COMPLETE //":
+            text t("// STAGE [decrypt_state['current_stage'] + 1] COMPLETE //"):
                 color "#39FF14"
                 size 30
                 bold True
                 xalign 0.5
                 font "DejaVuSans.ttf"
 
-            text "Word: [word]":
+            text t("Word: [word]"):
                 color "#E8E8E8"
                 size 28
                 xalign 0.5
                 font "DejaVuSans.ttf"
 
-            text "Time: [decrypt_state['stage_times'][decrypt_state['current_stage']]]s":
+            text t("Time: [decrypt_state['stage_times'][decrypt_state['current_stage']]]s"):
                 color "#00FFD1"
                 size 20
                 xalign 0.5
                 font "DejaVuSans.ttf"
 
-            text "Stars: [stars]   Rating: [decrypt_stage_rating(score)]":
+            text t("Stars: [stars]   Rating: [decrypt_stage_rating(score)]"):
                 color "#FFD700"
                 size 22
                 xalign 0.5
                 font "DejaVuSans.ttf"
 
-            text "Loading next transmission...":
+            text t("Loading next transmission..."):
                 color "#607080"
                 size 18
                 xalign 0.5
@@ -2201,7 +2201,7 @@ screen decrypt_result():
 
     fixed:
         for idx, stream in enumerate(decrypt_build_bg_streams()):
-            text "[stream]":
+            text t("[stream]"):
                 xpos 24 + (idx * 320)
                 ypos - 580 + (idx * 90)
                 color "#2A3A4A0F"
@@ -2221,7 +2221,7 @@ screen decrypt_result():
         vbox:
             spacing 18
 
-            text "// DECRYPTION MISSION: COMPLETE //":
+            text t("// DECRYPTION MISSION: COMPLETE //"):
                 color "#00FFD1"
                 size 34
                 bold True
@@ -2232,26 +2232,26 @@ screen decrypt_result():
                 hbox:
                     xfill True
 
-                    text "[puzzle['word']] [decrypt_score_stars(decrypt_state['stage_scores'][idx])]":
+                    text t("[puzzle['word']] [decrypt_score_stars(decrypt_state['stage_scores'][idx])]"):
                         color "#E8E8E8"
                         size 25
                         font "DejaVuSans.ttf"
 
-                    text "Decoded in [decrypt_state['stage_times'][idx]]s ([decrypt_stage_rating(decrypt_state['stage_scores'][idx])])":
+                    text t("Decoded in [decrypt_state['stage_times'][idx]]s ([decrypt_stage_rating(decrypt_state['stage_scores'][idx])])"):
                         color "#607080"
                         size 21
                         xalign 1.0
 
             null height 8
 
-            text "TOTAL SCORE: [total] / 9":
+            text t("TOTAL SCORE: [total] / 9"):
                 color "#FFD700"
                 size 30
                 bold True
                 xalign 0.5
                 font "DejaVuSans.ttf"
 
-            text "CLEARANCE: [decrypt_clearance_title(total)]":
+            text t("CLEARANCE: [decrypt_clearance_title(total)]"):
                 color clearance_color
                 size 26
                 bold True
@@ -2269,25 +2269,25 @@ screen decrypt_result():
         vbox:
             spacing 18
 
-            text "⬡  WHAT YOU LEARNED  ⬡":
+            text t("⬡  WHAT YOU LEARNED  ⬡"):
                 color "#00FFD1"
                 size 28
                 bold True
                 font "DejaVuSans.ttf"
 
-            text "A Caesar cipher is one of the oldest encryption methods — used by Julius Caesar in 58 BC.":
+            text t("A Caesar cipher is one of the oldest encryption methods — used by Julius Caesar in 58 BC."):
                 color "#E8E8E8"
                 size 22
 
-            text "Modern encryption like AES-256 or PGP follows the same idea of protecting meaning, but uses mathematics so advanced that the message stays unreadable without the right key.":
+            text t("Modern encryption like AES-256 or PGP follows the same idea of protecting meaning, but uses mathematics so advanced that the message stays unreadable without the right key."):
                 color "#E8E8E8"
                 size 22
 
-            text "You used PGP encryption to contact journalists. Without encryption, your communications could have been intercepted long before the files reached the public.":
+            text t("You used PGP encryption to contact journalists. Without encryption, your communications could have been intercepted long before the files reached the public."):
                 color "#E8E8E8"
                 size 22
 
-    textbutton "> CONTINUE MISSION":
+    textbutton t("> CONTINUE MISSION"):
         style "modal_action_button"
         text_style "modal_action_button_text"
         xalign 0.5
@@ -2297,11 +2297,11 @@ screen decrypt_result():
 
 label minigame_2_decrypt:
     window hide
-    $ mg_intro2 = renpy.call_screen("minigame_intro", title="DECRYPT THE MESSAGE", description="A classified NSA transmission has been encrypted with a Caesar cipher. Crack three intercepted words by shifting each cipher letter back by 3.")
+    $ mg_intro2 = renpy.call_screen("minigame_intro", title=t("DECRYPT THE MESSAGE"), description=t("A classified NSA transmission has been encrypted with a Caesar cipher. Crack three intercepted words by shifting each cipher letter back by 3."))
     if not mg_intro2:
         $ knowledge_score -= 1
         $ mg_decrypt_solved = False
-        $ renpy.notify("Knowledge -1 (Skipped)")
+        $ renpy.notify(t("Knowledge -1 (Skipped)"))
         return
 
     $ decrypt_reset_game()
@@ -2339,7 +2339,7 @@ label decrypt_game_results:
         $ suspicion_level += 1
 
     $ mg_decrypt_solved = total >= 3
-    $ renpy.notify("Decryption score: {}/9".format(total))
+    $ renpy.notify(t("Decryption score: {}/9").format(total))
 
     $ quick_menu = True
     $ show_hud = True
@@ -2440,8 +2440,8 @@ screen minigame_trace():
             vbox:
                 spacing 16
 
-                text "// TRACE THE ROUTE //" style "minigame_title"
-                text "Build a clean route to the journalist server. One bad hop sends everything through government eyes." style "minigame_instruction"
+                text t("// TRACE THE ROUTE //") style "minigame_title"
+                text t("Build a clean route to the journalist server. One bad hop sends everything through government eyes.") style "minigame_instruction"
 
                 hbox:
                     xfill True
@@ -2454,11 +2454,11 @@ screen minigame_trace():
 
                         vbox:
                             spacing 8
-                            text "LIVE STATUS" color "#8B8FCC" size 16 bold True
-                            text "[nodes[current_node]['name']]" color "#EAF4F1" size 28 bold True
-                            text "Moves remaining: [max_moves - moves]/[max_moves]" color "#FFD700" size 18
-                            text "Time left: [time_left]s" color("#FF2D55" if time_left <= 8 else "#00FFD1") size 18 bold True
-                            text "Path: " + " -> ".join([nodes[n]["name"] for n in path]) color "#AAB0D6" size 15
+                            text t("LIVE STATUS") color "#8B8FCC" size 16 bold True
+                            text t("[nodes[current_node]['name']]") color "#EAF4F1" size 28 bold True
+                            text t("Moves remaining: [max_moves - moves]/[max_moves]") color "#FFD700" size 18
+                            text t("Time left: [time_left]s") color("#FF2D55" if time_left <= 8 else "#00FFD1") size 18 bold True
+                            text t("Path: ") + " -> ".join([nodes[n]["name"] for n in path]) color "#AAB0D6" size 15
 
                     frame:
                         xfill True
@@ -2517,7 +2517,7 @@ screen minigame_trace():
 
                     vbox:
                         spacing 12
-                        text "AVAILABLE HOPS" color "#8B8FCC" size 17 bold True
+                        text t("AVAILABLE HOPS") color "#8B8FCC" size 17 bold True
 
                         hbox:
                             spacing 16
@@ -2556,23 +2556,23 @@ screen minigame_trace():
                     xalign 0.5
 
                     if reached_end and not hit_gov:
-                        text "// ROUTE SECURED //" color "#00FF88" size 38 bold True xalign 0.5
-                        text "Path: " + " -> ".join([nodes[n]["name"] for n in path]) color "#00FFD1" size 18 xalign 0.5 text_align 0.5
-                        text "You chained together the safer hops and kept the instructions away from the monitor." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
+                        text t("// ROUTE SECURED //") color "#00FF88" size 38 bold True xalign 0.5
+                        text t("Path: ") + " -> ".join([nodes[n]["name"] for n in path]) color "#00FFD1" size 18 xalign 0.5 text_align 0.5
+                        text t("You chained together the safer hops and kept the instructions away from the monitor.") color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
                     elif hit_gov:
-                        text "// ROUTE COMPROMISED //" color "#FF2D55" size 38 bold True xalign 0.5
-                        text "The route hit the Government Monitor node, so the mission is blown." color "#FF2D55" size 20 xalign 0.5 text_align 0.5
-                        text "Even strong tools fail if one hop routes through a known surveillance point." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
+                        text t("// ROUTE COMPROMISED //") color "#FF2D55" size 38 bold True xalign 0.5
+                        text t("The route hit the Government Monitor node, so the mission is blown.") color "#FF2D55" size 20 xalign 0.5 text_align 0.5
+                        text t("Even strong tools fail if one hop routes through a known surveillance point.") color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
                     elif time_left <= 0:
-                        text "// TIME EXPIRED //" color "#FF2D55" size 38 bold True xalign 0.5
-                        text "You ran out of time before finishing the route." color "#FF2D55" size 20 xalign 0.5 text_align 0.5
-                        text "Good opsec also depends on moving quickly before the surveillance window closes." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
+                        text t("// TIME EXPIRED //") color "#FF2D55" size 38 bold True xalign 0.5
+                        text t("You ran out of time before finishing the route.") color "#FF2D55" size 20 xalign 0.5 text_align 0.5
+                        text t("Good opsec also depends on moving quickly before the surveillance window closes.") color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
                     else:
-                        text "// OUT OF MOVES //" color "#FF2D55" size 38 bold True xalign 0.5
-                        text "You ran out of time before reaching the journalist server." color "#FF2D55" size 20 xalign 0.5 text_align 0.5
-                        text "Tight, efficient routing matters. Extra hops create delay and more chances to get exposed." color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
+                        text t("// OUT OF MOVES //") color "#FF2D55" size 38 bold True xalign 0.5
+                        text t("You ran out of time before reaching the journalist server.") color "#FF2D55" size 20 xalign 0.5 text_align 0.5
+                        text t("Tight, efficient routing matters. Extra hops create delay and more chances to get exposed.") color "#C8D8D0" size 19 xalign 0.5 text_align 0.5
 
-                    textbutton "> CONTINUE MISSION":
+                    textbutton t("> CONTINUE MISSION"):
                         xalign 0.5
                         text_style "menu_btn_text"
                         action Return(reached_end and not hit_gov)

@@ -368,11 +368,11 @@ screen quick_menu():
             spacing 8
             style_prefix "quick"
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu("history")
-            textbutton _("Notes") action Show("notebook_panel")
-            textbutton _("Save") action ShowMenu("save")
-            textbutton _("Prefs") action ShowMenu("preferences")
+            textbutton t("Back") action Rollback()
+            textbutton t("History") action ShowMenu("history")
+            textbutton t("Notes") action Show("notebook_panel")
+            textbutton t("Save") action ShowMenu("save")
+            textbutton t("Prefs") action ShowMenu("preferences")
 
     key "i" action ShowMenu("dossier")
     key "I" action ShowMenu("dossier")
@@ -406,22 +406,22 @@ screen game_hud():
             vbox:
                 spacing 10
 
-                text "FIELD STATUS":
+                text t("FIELD STATUS"):
                     color "#8B8FCC"
                     size status_title_size
                     bold True
 
-                text "CHAPTER [current_chapter]/5":
+                text t("CHAPTER [current_chapter]/5"):
                     color "#EAF4F1"
                     size chapter_size
                     bold True
 
                 hbox:
                     xfill True
-                    text "Knowledge":
+                    text t("Knowledge"):
                         color "#AAB0D6"
                         size stat_size
-                    text "[knowledge_score]":
+                    text t("[knowledge_score]"):
                         color "#8B8FCC"
                         size stat_size
                         bold True
@@ -429,10 +429,10 @@ screen game_hud():
 
                 hbox:
                     xfill True
-                    text "Trust":
+                    text t("Trust"):
                         color "#AAB0D6"
                         size stat_size
-                    text "[trust_score]":
+                    text t("[trust_score]"):
                         color "#EAF4F1"
                         size stat_size
                         bold True
@@ -440,16 +440,16 @@ screen game_hud():
 
                 hbox:
                     xfill True
-                    text "Notes":
+                    text t("Notes"):
                         color "#AAB0D6"
                         size stat_size
-                    text "[notebook_entry_count()]":
+                    text t("[notebook_entry_count()]"):
                         color "#EAF4F1"
                         size stat_size
                         bold True
                         xalign 1.0
 
-                text "Suspicion":
+                text t("Suspicion"):
                     color "#AAB0D6"
                     size stat_size
 
@@ -502,13 +502,13 @@ screen notebook_panel():
                     xfill True
                     yalign 0.5
 
-                    text "FIELD NOTEBOOK":
+                    text t("FIELD NOTEBOOK"):
                         color "#EAF4F1"
                         size notebook_title_size
                         bold True
                         yalign 0.5
 
-                    text "[notebook_entry_count()] entries":
+                    text t("[notebook_entry_count()] entries"):
                         color "#8B8FCC"
                         size 18
                         bold True
@@ -525,7 +525,7 @@ screen notebook_panel():
                     spacing 18
                     xfill True
 
-                    text "Write short reminders for yourself while you play. Important clues, terms, and decisions can live here.":
+                    text t("Write short reminders for yourself while you play. Important clues, terms, and decisions can live here."):
                         color "#AAB0D6"
                         size notebook_body_size
                         xmaximum notebook_body_max
@@ -538,7 +538,7 @@ screen notebook_panel():
                         vbox:
                             spacing 12
 
-                            text "New note":
+                            text t("New note"):
                                 color "#8B8FCC"
                                 size 18
                                 bold True
@@ -578,7 +578,7 @@ screen notebook_panel():
                                                 spacing 12
                                                 xfill True
 
-                                                text "[index].":
+                                                text t("[index]."):
                                                     color "#8B8FCC"
                                                     size 20
                                                     bold True
@@ -593,13 +593,13 @@ screen notebook_panel():
                                 yalign 0.5
                                 spacing 10
 
-                                text "No notes yet.":
+                                text t("No notes yet."):
                                     color "#EAF4F1"
                                     size notebook_empty_size
                                     bold True
                                     xalign 0.5
 
-                                text "Use the field notebook to capture names, tools, and decisions that matter.":
+                                text t("Use the field notebook to capture names, tools, and decisions that matter."):
                                     color "#AAB0D6"
                                     size notebook_body_size
                                     text_align 0.5
@@ -615,7 +615,7 @@ screen notebook_panel():
                     spacing 12
                     xfill True
 
-                    text "Exports are saved as plain .txt files. A standard save dialog should let you choose folder and filename.":
+                    text t("Exports are saved as plain .txt files. A standard save dialog should let you choose folder and filename."):
                         color "#AAB0D6"
                         size 16
                         xalign 0.5
@@ -628,7 +628,7 @@ screen notebook_panel():
                         box_wrap_spacing 12
                         xalign 0.5
 
-                        textbutton "EXPORT TXT":
+                        textbutton t("EXPORT TXT"):
                             style "modal_action_button"
                             xfill True
                             xmaximum 260
@@ -636,13 +636,13 @@ screen notebook_panel():
                             hover_background Solid("#3A7A58")
                             action Function(export_notebook_txt)
 
-                        textbutton "SAVE NOTE":
+                        textbutton t("SAVE NOTE"):
                             style "modal_action_button"
                             xfill True
                             xmaximum 300
                             action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
 
-                        textbutton "CLEAR":
+                        textbutton t("CLEAR"):
                             style "modal_action_button"
                             xfill True
                             xmaximum 220
@@ -650,7 +650,7 @@ screen notebook_panel():
                             hover_background Solid("#4D5186")
                             action Function(clear_notebook_entries)
 
-                        textbutton "CLOSE":
+                        textbutton t("CLOSE"):
                             style "modal_action_button"
                             xfill True
                             xmaximum 220
@@ -686,9 +686,9 @@ screen notebook_toggle():
                     selected renpy.get_screen("dossier") is not None
                     focus_mask True
                     action ShowMenu("dossier")
-                    tooltip "Dossier (I)"
+                    tooltip t("Dossier (I)")
 
-                text "DOSSIER":
+                text t("DOSSIER"):
                     align (0.5, 0.45)
                     color "#F7FFFC"
                     size 28
@@ -706,9 +706,9 @@ screen notebook_toggle():
                     selected renpy.get_screen("notebook_panel") is not None
                     focus_mask True
                     action ToggleScreen("notebook_panel")
-                    tooltip "Notebook (N)"
+                    tooltip t("Notebook (N)")
 
-                text "NOTEBOOK":
+                text t("NOTEBOOK"):
                     align (0.5, 0.45)
                     color "#AAB0D6"
                     size 28
@@ -825,19 +825,19 @@ screen main_menu():
                 yalign 0.5
                 at mm_pulse_dot
 
-            text "SYSTEM ONLINE":
+            text t("SYSTEM ONLINE"):
                 color "#00FF88"
                 size 14
                 bold True
                 kerning 3
                 yalign 0.5
 
-            text "·":
+            text t("·"):
                 color "#4D5186"
                 size 16
                 yalign 0.5
 
-            text "SECURE CHANNEL // AES-256":
+            text t("SECURE CHANNEL // AES-256"):
                 color "#8B8FCC"
                 size 13
                 bold True
@@ -850,19 +850,19 @@ screen main_menu():
             yalign 0.5
             spacing 18
 
-            text "CLEARANCE: TS//SCI":
+            text t("CLEARANCE: TS//SCI"):
                 color "#FFD700"
                 size 13
                 bold True
                 kerning 2
                 yalign 0.5
 
-            text "·":
+            text t("·"):
                 color "#4D5186"
                 size 16
                 yalign 0.5
 
-            text "NODE 0451":
+            text t("NODE 0451"):
                 color "#8B8FCC"
                 size 13
                 bold True
@@ -974,7 +974,7 @@ screen main_menu():
                         ysize 1
                         yalign 0.5
 
-                    text "// CLASSIFIED INTERFACE //":
+                    text t("// CLASSIFIED INTERFACE //"):
                         color "#8B8FCC"
                         size 16
                         bold True
@@ -996,7 +996,7 @@ screen main_menu():
                     ysize 100
                     xalign 0.5
 
-                    text "ENEMY OF THE STATE":
+                    text t("ENEMY OF THE STATE"):
                         xalign 0.5
                         yalign 0.5
                         text_align 0.5
@@ -1005,7 +1005,7 @@ screen main_menu():
                         bold True
                         outlines [(6, "#00665414", 0, 0), (3, "#00806916", 0, 0)]
 
-                    text "ENEMY OF THE STATE" at title_glitch:
+                    text t("ENEMY OF THE STATE") at title_glitch:
                         xalign 0.5
                         yalign 0.5
                         text_align 0.5
@@ -1014,7 +1014,7 @@ screen main_menu():
                         bold True
                         outlines [(2, "#00806955", 0, 0), (6, "#0080690E", 0, 0)]
 
-                    text "ENEMY OF THE STATE":
+                    text t("ENEMY OF THE STATE"):
                         xalign 0.5
                         yalign 0.5
                         text_align 0.5
@@ -1044,14 +1044,14 @@ screen main_menu():
                         ysize 1
                         yalign 0.5
 
-                text _("A visual novel about surveillance, trust, and digital security under pressure."):
+                text t("A visual novel about surveillance, trust, and digital security under pressure."):
                     color "#AAB0D6"
                     size menu_desc_size
                     xalign 0.5
                     text_align 0.5
                     xmaximum menu_desc_max
 
-                text _("\"The truth will always find a way out.\""):
+                text t("\"The truth will always find a way out.\""):
                     color "#8B8FCC"
                     size menu_quote_size
                     italic True
@@ -1064,34 +1064,34 @@ screen main_menu():
                     xalign 0.5
                     spacing 8
 
-                    textbutton _("▸ START"):
+                    textbutton t("▸ START"):
                         style "modal_action_button"
                         xalign 0.5
                         action Start()
 
                     if renpy.newest_slot():
-                        textbutton _("▸ CONTINUE"):
+                        textbutton t("▸ CONTINUE"):
                             style "modal_action_button"
                             xalign 0.5
                             action FileLoad(renpy.newest_slot(), confirm=False)
 
-                    textbutton _("▸ DOSSIER"):
+                    textbutton t("▸ DOSSIER"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("dossier")
 
-                    textbutton _("▸ STORY TREE"):
+                    textbutton t("▸ STORY TREE"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("story_tree")
 
-                    textbutton _("▸ SETTINGS"):
+                    textbutton t("▸ SETTINGS"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("preferences")
 
                     if renpy.variant("pc"):
-                        textbutton _("× EXIT"):
+                        textbutton t("× EXIT"):
                             style "modal_action_button"
                             xalign 0.5
                             background Solid("#241926")
@@ -1105,19 +1105,19 @@ screen main_menu():
                     xalign 0.5
                     spacing 14
 
-                    text "BUILD STABLE":
+                    text t("BUILD STABLE"):
                         color "#4D5186"
                         size 13
                         bold True
                         kerning 2
                         yalign 0.5
 
-                    text "·":
+                    text t("·"):
                         color "#4D5186"
                         size 14
                         yalign 0.5
 
-                    text "v[config.version]":
+                    text t("v[config.version]"):
                         color "#8B8FCC"
                         size 14
                         yalign 0.5
@@ -1165,55 +1165,55 @@ screen pause_hub():
                         vbox:
                             spacing 12
 
-                            text "MISSION ACTIONS":
+                            text t("MISSION ACTIONS"):
                                 color "#8B8FCC"
                                 size 18
                                 bold True
 
-                            textbutton "RESUME":
+                            textbutton t("RESUME"):
                                 style "modal_action_button"
                                 xfill True
                                 action Return()
 
-                            textbutton "OPEN NOTEBOOK":
+                            textbutton t("OPEN NOTEBOOK"):
                                 style "modal_action_button"
                                 xfill True
                                 action Show("notebook_panel")
 
-                            textbutton "DOSSIER":
+                            textbutton t("DOSSIER"):
                                 style "modal_action_button"
                                 xfill True
                                 action ShowMenu("dossier")
 
-                            textbutton "SAVE":
+                            textbutton t("SAVE"):
                                 style "modal_action_button"
                                 xfill True
                                 action ShowMenu("save")
 
-                            textbutton "SETTINGS":
+                            textbutton t("SETTINGS"):
                                 style "modal_action_button"
                                 xfill True
                                 action ShowMenu("preferences")
 
-                            textbutton "STORY TREE":
+                            textbutton t("STORY TREE"):
                                 style "modal_action_button"
                                 xfill True
                                 action ShowMenu("story_tree")
 
-                            textbutton "START OVER":
+                            textbutton t("START OVER"):
                                 style "modal_action_button"
                                 xfill True
                                 action Start()
 
                             if renpy.variant("pc"):
-                                textbutton "EXIT":
+                                textbutton t("EXIT"):
                                     style "modal_action_button"
                                     xfill True
                                     background Solid("#241926")
                                     hover_background Solid("#4D5186")
                                     action Quit(confirm=True)
 
-                    text "TACTICAL STATUS":
+                    text t("TACTICAL STATUS"):
                         color "#8B8FCC"
                         size 18
                         bold True
@@ -1255,36 +1255,36 @@ screen pause_hub():
             vbox:
                 spacing 14
 
-                textbutton "RESUME":
+                textbutton t("RESUME"):
                     style "modal_action_button"
                     action Return()
 
-                textbutton "OPEN NOTEBOOK":
+                textbutton t("OPEN NOTEBOOK"):
                     style "modal_action_button"
                     action Show("notebook_panel")
 
-                textbutton "DOSSIER":
+                textbutton t("DOSSIER"):
                     style "modal_action_button"
                     action ShowMenu("dossier")
 
-                textbutton "START":
+                textbutton t("START"):
                     style "modal_action_button"
                     action Start()
 
-                textbutton "SAVE":
+                textbutton t("SAVE"):
                     style "modal_action_button"
                     action ShowMenu("save")
 
-                textbutton "SETTINGS":
+                textbutton t("SETTINGS"):
                     style "modal_action_button"
                     action ShowMenu("preferences")
 
-                textbutton "STORY TREE":
+                textbutton t("STORY TREE"):
                     style "modal_action_button"
                     action ShowMenu("story_tree")
 
                 if renpy.variant("pc"):
-                    textbutton "EXIT":
+                    textbutton t("EXIT"):
                         style "modal_action_button"
                         background Solid("#241926")
                         hover_background Solid("#4D5186")
@@ -1302,7 +1302,7 @@ screen pause_hub():
             vbox:
                 spacing 18
 
-                text "TACTICAL STATUS":
+                text t("TACTICAL STATUS"):
                     color "#8B8FCC"
                     size 17
                     bold True
@@ -1318,15 +1318,15 @@ screen pause_hub():
 
                         vbox:
                             spacing 8
-                            text "Current chapter":
+                            text t("Current chapter"):
                                 color "#8B8FCC"
                                 size 15
                                 bold True
-                            text "[current_chapter]/5":
+                            text t("[current_chapter]/5"):
                                 color "#EAF4F1"
                                 size 34
                                 bold True
-                            text "Operation branch currently in progress.":
+                            text t("Operation branch currently in progress."):
                                 color "#AAB0D6"
                                 size 16
 
@@ -1338,15 +1338,15 @@ screen pause_hub():
 
                         vbox:
                             spacing 8
-                            text "Knowledge":
+                            text t("Knowledge"):
                                 color "#8B8FCC"
                                 size 15
                                 bold True
-                            text "[knowledge_score]":
+                            text t("[knowledge_score]"):
                                 color "#EAF4F1"
                                 size 34
                                 bold True
-                            text "Educational progress accumulated so far.":
+                            text t("Educational progress accumulated so far."):
                                 color "#AAB0D6"
                                 size 16
 
@@ -1358,15 +1358,15 @@ screen pause_hub():
 
                         vbox:
                             spacing 8
-                            text "Suspicion":
+                            text t("Suspicion"):
                                 color "#8B8FCC"
                                 size 15
                                 bold True
-                            text "[suspicion_level]/5":
+                            text t("[suspicion_level]/5"):
                                 color "#EAF4F1"
                                 size 34
                                 bold True
-                            text "Operational pressure currently on the player.":
+                            text t("Operational pressure currently on the player."):
                                 color "#AAB0D6"
                                 size 16
 
@@ -1375,7 +1375,7 @@ screen pause_hub():
                     ysize 1
                     background Solid("#232843")
 
-                text "This pause menu now uses the same spacing system as the rest of the UI, so buttons, cards, and text blocks stay aligned on different screens.":
+                text t("This pause menu now uses the same spacing system as the rest of the UI, so buttons, cards, and text blocks stay aligned on different screens."):
                     color "#AAB0D6"
                     size 18
                     xmaximum 960
@@ -1536,7 +1536,7 @@ screen intro_fullscreen_prompt():
                 background Solid("#241926")
                 padding (28, 0)
 
-                text "DISPLAY MODE":
+                text t("DISPLAY MODE"):
                     color "#EAF4F1"
                     size 26
                     bold True
@@ -1551,12 +1551,12 @@ screen intro_fullscreen_prompt():
                 vbox:
                     spacing 18
 
-                    text "Fullscreen recommended":
+                    text t("Fullscreen recommended"):
                         color "#EAF4F1"
                         size intro_title_size
                         bold True
 
-                    text "For the best experience, play in fullscreen mode. This helps dialogue, menus, and minigames fit better on itch.io embeds and mobile browsers.":
+                    text t("For the best experience, play in fullscreen mode. This helps dialogue, menus, and minigames fit better on itch.io embeds and mobile browsers."):
                         color "#AAB0D6"
                         size intro_text_size
                         xmaximum intro_text_max
@@ -1570,12 +1570,12 @@ screen intro_fullscreen_prompt():
                     spacing 14
                     xalign 0.5
 
-                    textbutton "GO FULLSCREEN":
+                    textbutton t("GO FULLSCREEN"):
                         style "modal_action_button"
                         xsize 320
                         action [Preference("display", "fullscreen"), Return()]
 
-                    textbutton "SKIP":
+                    textbutton t("SKIP"):
                         style "modal_action_button"
                         xsize 260
                         background Solid("#171C30")
@@ -1611,7 +1611,7 @@ screen intro_shortcuts_screen():
                 background Solid("#002922")
                 padding (28, 0)
 
-                text "CLASSIFIED BRIEFING":
+                text t("CLASSIFIED BRIEFING"):
                     color "#EAF4F1"
                     size 26
                     bold True
@@ -1626,7 +1626,7 @@ screen intro_shortcuts_screen():
                 vbox:
                     spacing 18
 
-                    text "Controls & shortcuts":
+                    text t("Controls & shortcuts"):
                         color "#EAF4F1"
                         size intro_title_size
                         bold True
@@ -1639,7 +1639,7 @@ screen intro_shortcuts_screen():
                         vbox:
                             spacing 10
 
-                            text "Controls":
+                            text t("Controls"):
                                 color "#8B8FCC"
                                 size 22
                                 bold True
@@ -1676,7 +1676,7 @@ screen intro_shortcuts_screen():
                     spacing 14
                     xalign 0.5
 
-                    textbutton "BEGIN MISSION":
+                    textbutton t("BEGIN MISSION"):
                         style "modal_action_button"
                         xsize 320
                         action Return()
@@ -1712,7 +1712,7 @@ screen briefing_screen():
                 background Solid("#241926")
                 padding (28, 0)
 
-                text "CLASSIFIED BRIEFING":
+                text t("CLASSIFIED BRIEFING"):
                     color "#EAF4F1"
                     size 26
                     bold True
@@ -1727,16 +1727,16 @@ screen briefing_screen():
                 vbox:
                     spacing 18
 
-                    text "OPERATIVE: [[CLASSIFIED]":
+                    text t("OPERATIVE: [[CLASSIFIED]"):
                         color "#EAF4F1"
                         size briefing_title_size
                         bold True
 
-                    text "ASSIGNMENT: NSA Systems Administrator":
+                    text t("ASSIGNMENT: NSA Systems Administrator"):
                         color "#AAB0D6"
                         size briefing_meta_size
 
-                    text "CLEARANCE: TS/SCI":
+                    text t("CLEARANCE: TS/SCI"):
                         color "#8B8FCC"
                         size briefing_meta_size
                         bold True
@@ -1746,12 +1746,12 @@ screen briefing_screen():
                         ysize 1
                         background Solid("#232843")
 
-                    text "Navigate the moral and technical challenges of one of the most significant intelligence leaks in modern history.":
+                    text t("Navigate the moral and technical challenges of one of the most significant intelligence leaks in modern history."):
                         color "#EAF4F1"
                         size briefing_body_size
                         xmaximum briefing_body_max
 
-                    text "Your decisions affect trust, suspicion, and what information can survive the operation.":
+                    text t("Your decisions affect trust, suspicion, and what information can survive the operation."):
                         color "#AAB0D6"
                         size briefing_body2_size
                         xmaximum briefing_body_max
@@ -1761,7 +1761,7 @@ screen briefing_screen():
                 background Solid("#171C30")
                 padding (24, 22)
 
-                textbutton "ACCEPT MISSION":
+                textbutton t("ACCEPT MISSION"):
                     style "modal_action_button"
                     xalign 0.5
                     action Return()
@@ -1784,7 +1784,7 @@ screen chapter_title_screen(number, title, subtitle):
             xalign 0.5
             spacing 12
 
-            text "CHAPTER [number]":
+            text t("CHAPTER [number]"):
                 color "#8B8FCC"
                 size 18
                 bold True
@@ -1833,7 +1833,7 @@ screen chapter_summary(chapter_num, chapter_name):
                     yalign 0.5
                     spacing 4
 
-                    text "CHAPTER [chapter_num] COMPLETE":
+                    text t("CHAPTER [chapter_num] COMPLETE"):
                         color "#8B8FCC"
                         size 16
                         bold True
@@ -1855,10 +1855,10 @@ screen chapter_summary(chapter_num, chapter_name):
 
                     hbox:
                         xfill True
-                        text "Knowledge Score":
+                        text t("Knowledge Score"):
                             color "#AAB0D6"
                             size 21
-                        text "[knowledge_score]":
+                        text t("[knowledge_score]"):
                             color "#EAF4F1"
                             size 21
                             bold True
@@ -1866,10 +1866,10 @@ screen chapter_summary(chapter_num, chapter_name):
 
                     hbox:
                         xfill True
-                        text "Trust Score":
+                        text t("Trust Score"):
                             color "#AAB0D6"
                             size 21
-                        text "[trust_score]":
+                        text t("[trust_score]"):
                             color "#EAF4F1"
                             size 21
                             bold True
@@ -1877,10 +1877,10 @@ screen chapter_summary(chapter_num, chapter_name):
 
                     hbox:
                         xfill True
-                        text "Suspicion Level":
+                        text t("Suspicion Level"):
                             color "#AAB0D6"
                             size 21
-                        text "[suspicion_level]/5":
+                        text t("[suspicion_level]/5"):
                             color "#EAF4F1"
                             size 21
                             bold True
@@ -1888,10 +1888,10 @@ screen chapter_summary(chapter_num, chapter_name):
 
                     hbox:
                         xfill True
-                        text "Contacts Secured":
+                        text t("Contacts Secured"):
                             color "#AAB0D6"
                             size 21
-                        text "[contacts_secured]":
+                        text t("[contacts_secured]"):
                             color "#EAF4F1"
                             size 21
                             bold True
@@ -1899,17 +1899,17 @@ screen chapter_summary(chapter_num, chapter_name):
 
                     hbox:
                         xfill True
-                        text "Evidence":
+                        text t("Evidence"):
                             color "#AAB0D6"
                             size 21
                         if evidence_secured:
-                            text "SECURED":
+                            text t("SECURED"):
                                 color "#EAF4F1"
                                 size 21
                                 bold True
                                 xalign 1.0
                         else:
-                            text "NOT YET":
+                            text t("NOT YET"):
                                 color "#EAF4F1"
                                 size 21
                                 bold True
@@ -1921,12 +1921,12 @@ screen chapter_summary(chapter_num, chapter_name):
                 padding (24, 22)
 
                 if chapter_num < 5:
-                    textbutton "CONTINUE TO CHAPTER [chapter_num + 1]":
+                    textbutton t("CONTINUE TO CHAPTER [chapter_num + 1]"):
                         style "modal_action_button"
                         xalign 0.5
                         action Return()
                 else:
-                    textbutton "PROCEED TO FINAL ASSESSMENT":
+                    textbutton t("PROCEED TO FINAL ASSESSMENT"):
                         style "modal_action_button"
                         xalign 0.5
                         action Return()
@@ -1961,13 +1961,13 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                     yalign 0.5
                     spacing 2
 
-                    text "KNOWLEDGE CHECK":
+                    text t("KNOWLEDGE CHECK"):
                         color "#EAF4F1"
                         size 24
                         bold True
                         xalign 0.5
 
-                    text "Pick the best answer. Every right call boosts your field knowledge.":
+                    text t("Pick the best answer. Every right call boosts your field knowledge."):
                         color "#8B8FCC"
                         size 15
                         xalign 0.5
@@ -2005,7 +2005,7 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                         $ letter = ["A", "B", "C", "D"][i]
 
                         if not answered:
-                            textbutton "[letter].  [answer]":
+                            textbutton t("[letter].  [answer]"):
                                 style "choice_button"
                                 xalign 0.5
                                 action [
@@ -2013,21 +2013,21 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                                     SetScreenVariable("answered", True)
                                 ]
                         elif i == correct_index:
-                            textbutton "[letter].  [answer]":
+                            textbutton t("[letter].  [answer]"):
                                 style "choice_button"
                                 xalign 0.5
                                 background Solid("#002922")
                                 hover_background Solid("#002922")
                                 action NullAction()
                         elif i == selected:
-                            textbutton "[letter].  [answer]":
+                            textbutton t("[letter].  [answer]"):
                                 style "choice_button"
                                 xalign 0.5
                                 background Solid("#241926")
                                 hover_background Solid("#241926")
                                 action NullAction()
                         else:
-                            textbutton "[letter].  [answer]":
+                            textbutton t("[letter].  [answer]"):
                                 style "choice_button"
                                 xalign 0.5
                                 background Solid("#1A2034")
@@ -2045,14 +2045,14 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                         xalign 0.5
 
                         if selected == correct_index:
-                            text "Correct - Nice catch":
+                            text t("Correct - Nice catch"):
                                 color "#00FF88"
                                 size 24
                                 bold True
                                 xalign 0.5
                         else:
                             $ correct_letter = ["A", "B", "C", "D"][correct_index]
-                            text "Not quite - Correct answer: [correct_letter]":
+                            text t("Not quite - Correct answer: [correct_letter]"):
                                 color "#EAF4F1"
                                 size 24
                                 bold True
@@ -2065,7 +2065,7 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                             text_align 0.5
                             xmaximum 920
 
-                        textbutton "CONTINUE":
+                        textbutton t("CONTINUE"):
                             style "modal_action_button"
                             xalign 0.5
                             if selected == correct_index:
@@ -2121,13 +2121,13 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                     yalign 0.5
                     spacing 2
 
-                    text "TEXT INPUT CHECK":
+                    text t("TEXT INPUT CHECK"):
                         color "#EAF4F1"
                         size 24
                         bold True
                         xalign 0.5
 
-                    text "Short answers work. Hints unlock quickly if you need them.":
+                    text t("Short answers work. Hints unlock quickly if you need them."):
                         color "#8B8FCC"
                         size 15
                         xalign 0.5
@@ -2167,7 +2167,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                             background Solid("#171C30")
                             padding (18, 14)
 
-                            text "Hint: [hint]":
+                            text t("Hint: [hint]"):
                                 color "#8B8FCC"
                                 size 18
                                 italic True
@@ -2192,7 +2192,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                         xfill True
                                         spacing 12
 
-                                        text ">":
+                                        text t(">"):
                                             color "#8B8FCC"
                                             size 25
                                             yalign 0.5
@@ -2205,18 +2205,18 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                             xfill True
                                             yalign 0.5
 
-                                text "Press Enter ↵ to submit quickly":
+                                text t("Press Enter ↵ to submit quickly"):
                                     color "#8B8FCC"
                                     size 16
                                     xalign 0.5
 
                                 if submitted and user_answer.strip().upper() not in valid_answers:
-                                    text "Not quite. Try again.":
+                                    text t("Not quite. Try again."):
                                         color "#AAB0D6"
                                         size 18
                                         xalign 0.5
 
-                        textbutton "SUBMIT":
+                        textbutton t("SUBMIT"):
                             style "modal_action_button"
                             xalign 0.5
                             action submit_answer_action
@@ -2231,7 +2231,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                 spacing 10
                                 xalign 0.5
 
-                                text "Correct":
+                                text t("Correct"):
                                     color "#00FF88"
                                     size 24
                                     bold True
@@ -2244,7 +2244,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                     text_align 0.5
                                     xmaximum 920
 
-                                textbutton "CONTINUE":
+                                textbutton t("CONTINUE"):
                                     style "modal_action_button"
                                     xalign 0.5
                                     action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
@@ -2259,7 +2259,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                 spacing 10
                                 xalign 0.5
 
-                                text "Answer: [correct_answer]":
+                                text t("Answer: [correct_answer]"):
                                     color "#EAF4F1"
                                     size 24
                                     bold True
@@ -2272,7 +2272,7 @@ screen text_input_question_screen(question, correct_answer, hint, explanation, a
                                     text_align 0.5
                                     xmaximum 920
 
-                                textbutton "CONTINUE":
+                                textbutton t("CONTINUE"):
                                     style "modal_action_button"
                                     xalign 0.5
                                     action Return()
@@ -2287,54 +2287,54 @@ screen navigation():
         spacing 12
 
         if main_menu:
-            textbutton _("Start"):
+            textbutton t("Start"):
                 style "shell_nav_button"
                 action Start()
         else:
-            textbutton _("History"):
+            textbutton t("History"):
                 style "shell_nav_button"
                 action ShowMenu("history")
 
-            textbutton _("Save"):
+            textbutton t("Save"):
                 style "shell_nav_button"
                 action ShowMenu("save")
 
-        textbutton _("Load"):
+        textbutton t("Load"):
             style "shell_nav_button"
             action ShowMenu("load")
 
-        textbutton _("Preferences"):
+        textbutton t("Preferences"):
             style "shell_nav_button"
             action ShowMenu("preferences")
 
-        textbutton _("Dossier"):
+        textbutton t("Dossier"):
             style "shell_nav_button"
             action ShowMenu("dossier")
 
-        textbutton _("Story Tree"):
+        textbutton t("Story Tree"):
             style "shell_nav_button"
             action ShowMenu("story_tree")
 
         if _in_replay:
-            textbutton _("End Replay"):
+            textbutton t("End Replay"):
                 style "shell_nav_button"
                 action EndReplay(confirm=True)
         elif not main_menu:
-            textbutton _("Main Menu"):
+            textbutton t("Main Menu"):
                 style "shell_nav_button"
                 action MainMenu()
 
-        textbutton _("About"):
+        textbutton t("About"):
             style "shell_nav_button"
             action ShowMenu("about")
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
-            textbutton _("Help"):
+            textbutton t("Help"):
                 style "shell_nav_button"
                 action ShowMenu("help")
 
         if renpy.variant("pc"):
-            textbutton _("Quit"):
+            textbutton t("Quit"):
                 style "shell_nav_button"
                 background Solid("#241926")
                 hover_background Solid("#4D5186")
@@ -2383,12 +2383,12 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
                             use navigation
 
-                            textbutton _("Notes"):
+                            textbutton t("Notes"):
                                 style "shell_nav_button"
                                 xfill True
                                 action Show("notebook_panel")
 
-                            textbutton _("Return"):
+                            textbutton t("Return"):
                                 style "shell_nav_button"
                                 xfill True
                                 action ShowMenu(menu_return_screen())
@@ -2449,11 +2449,11 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
                     null height 6
 
-                    textbutton _("Notes"):
+                    textbutton t("Notes"):
                         style "shell_nav_button"
                         action Show("notebook_panel")
 
-                    textbutton _("Return"):
+                    textbutton t("Return"):
                         style "shell_nav_button"
                         action ShowMenu(menu_return_screen())
 
@@ -2509,7 +2509,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 screen about():
     tag menu
 
-    use game_menu(_("About"), scroll="viewport", spacing=18):
+    use game_menu(t("About"), scroll="viewport", spacing=18):
         frame:
             xfill True
             background Solid("#171C30")
@@ -2518,41 +2518,41 @@ screen about():
             vbox:
                 spacing 14
 
-                text "[config.name!t]":
+                text t("[config.name!t]"):
                     color "#EAF4F1"
                     size 32
                     bold True
 
-                text "Version [config.version!t]":
+                text t("Version [config.version!t]"):
                     color "#8B8FCC"
                     size 20
 
                 if gui.about:
-                    text "[gui.about!t]":
+                    text t("[gui.about!t]"):
                         color "#AAB0D6"
                         size 19
 
-                text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."):
+                text t("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."):
                     color "#AAB0D6"
                     size 18
 
-                text "[renpy.license!t]":
+                text t("[renpy.license!t]"):
                     color "#AAB0D6"
                     size 16
 
 
 screen save():
     tag menu
-    use file_slots(_("Save"))
+    use file_slots(t("Save"))
 
 
 screen load():
     tag menu
-    use file_slots(_("Load"))
+    use file_slots(t("Load"))
 
 
 screen file_slots(title):
-    default page_name_value = FilePageNameInputValue(pattern=_("Page {}"), auto=_("Automatic saves"), quick=_("Quick saves"))
+    default page_name_value = FilePageNameInputValue(pattern=t("Page {}"), auto=t("Automatic saves"), quick=t("Quick saves"))
 
     use game_menu(title, scroll="viewport", spacing=18):
         frame:
@@ -2571,7 +2571,7 @@ screen file_slots(title):
                     action If(FileCurrentPage() == "chapter", NullAction(), page_name_value.Toggle())
 
                     if FileCurrentPage() == "chapter":
-                        text _("Chapter saves"):
+                        text t("Chapter saves"):
                             color "#EAF4F1"
                             size 22
                             xalign 0.5
@@ -2604,7 +2604,7 @@ screen file_slots(title):
 
                             add FileScreenshot(slot) xalign 0.5
 
-                            text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("Empty slot")):
+                            text FileTime(slot, format=t("{#file_time}%A, %B %d %Y, %H:%M"), empty=t("Empty slot")):
                                 color "#8B8FCC"
                                 size 15
                                 xalign 0.0
@@ -2621,46 +2621,46 @@ screen file_slots(title):
                     spacing 10
 
                     if FileCurrentPage() == "chapter":
-                        textbutton _("<"):
+                        textbutton t("<"):
                             style "shell_nav_button"
                             xsize 74
                             action FilePage("auto")
                     else:
-                        textbutton _("<"):
+                        textbutton t("<"):
                             style "shell_nav_button"
                             xsize 74
                             action FilePagePrevious()
 
                     if config.has_autosave:
-                        textbutton _("{#auto_page}A"):
+                        textbutton t("{#auto_page}A"):
                             style "shell_nav_button"
                             xsize 74
                             action FilePage("auto")
 
-                    textbutton _("{#chapter_page}C"):
+                    textbutton t("{#chapter_page}C"):
                         style "shell_nav_button"
                         xsize 74
                         action FilePage("chapter")
 
                     if config.has_quicksave:
-                        textbutton _("{#quick_page}Q"):
+                        textbutton t("{#quick_page}Q"):
                             style "shell_nav_button"
                             xsize 74
                             action FilePage("quick")
 
                     for page in range(1, 10):
-                        textbutton "[page]":
+                        textbutton t("[page]"):
                             style "shell_nav_button"
                             xsize 74
                             action FilePage(page)
 
                     if FileCurrentPage() == "chapter":
-                        textbutton _(">"):
+                        textbutton t(">"):
                             style "shell_nav_button"
                             xsize 74
                             action FilePage(1)
                     else:
-                        textbutton _(">"):
+                        textbutton t(">"):
                             style "shell_nav_button"
                             xsize 74
                             action FilePageNext()
@@ -2669,7 +2669,7 @@ screen file_slots(title):
 screen preferences():
     tag menu
 
-    use game_menu(_("Preferences"), scroll="viewport", spacing=18):
+    use game_menu(t("Preferences"), scroll="viewport", spacing=18):
         hbox:
             spacing 18
             xfill True
@@ -2682,31 +2682,31 @@ screen preferences():
                 vbox:
                     spacing 18
 
-                    text _("DISPLAY AND FLOW"):
+                    text t("DISPLAY AND FLOW"):
                         color "#8B8FCC"
                         size 18
                         bold True
 
                     if renpy.variant("pc") or renpy.variant("web"):
-                        textbutton _("Window"):
+                        textbutton t("Window"):
                             style "shell_nav_button"
                             selected display_mode_is_windowed()
                             action Preference("display", "window")
 
-                        textbutton _("Fullscreen"):
+                        textbutton t("Fullscreen"):
                             style "shell_nav_button"
                             selected display_mode_is_fullscreen()
                             action Preference("display", "fullscreen")
 
-                    textbutton _("Skip Unseen Text"):
+                    textbutton t("Skip Unseen Text"):
                         style "shell_nav_button"
                         action Preference("skip", "toggle")
 
-                    textbutton _("Skip After Choices"):
+                    textbutton t("Skip After Choices"):
                         style "shell_nav_button"
                         action Preference("after choices", "toggle")
 
-                    textbutton _("Transitions"):
+                    textbutton t("Transitions"):
                         style "shell_nav_button"
                         action InvertSelected(Preference("transitions", "toggle"))
 
@@ -2718,40 +2718,40 @@ screen preferences():
                 vbox:
                     spacing 18
 
-                    text _("TEXT AND AUDIO"):
+                    text t("TEXT AND AUDIO"):
                         color "#8B8FCC"
                         size 18
                         bold True
 
-                    text _("Text Speed"):
+                    text t("Text Speed"):
                         color "#EAF4F1"
                         size 18
                     bar value Preference("text speed")
 
-                    text _("Auto-Forward Time"):
+                    text t("Auto-Forward Time"):
                         color "#EAF4F1"
                         size 18
                     bar value Preference("auto-forward time")
 
                     if config.has_music:
-                        text _("Music Volume"):
+                        text t("Music Volume"):
                             color "#EAF4F1"
                             size 18
                         bar value Preference("music volume")
 
                     if config.has_sound:
-                        text _("Sound Volume"):
+                        text t("Sound Volume"):
                             color "#EAF4F1"
                             size 18
                         bar value Preference("sound volume")
 
                     if config.has_voice:
-                        text _("Voice Volume"):
+                        text t("Voice Volume"):
                             color "#EAF4F1"
                             size 18
                         bar value Preference("voice volume")
 
-                    textbutton _("Mute All"):
+                    textbutton t("Mute All"):
                         style "shell_nav_button"
                         selected all_audio_muted()
                         action Function(toggle_all_audio)
@@ -2769,12 +2769,12 @@ screen preferences():
             vbox:
                 spacing 18
 
-                text _("LANGUAGES"):
+                text t("LANGUAGES"):
                     color "#8B8FCC"
                     size 18
                     bold True
 
-                text _("Choose the language used across menus and dialogue."):
+                text t("Choose the language used across menus and dialogue."):
                     color "#AAB0D6"
                     size 15
 
@@ -2782,28 +2782,28 @@ screen preferences():
                     spacing 14
                     xfill True
 
-                    textbutton _("English"):
+                    textbutton t("English"):
                         style "shell_nav_button"
                         xsize 312
-                        selected _preferences.language is None
+                        selected current_translation_language() is None
                         action language_change_action(None)
 
-                    textbutton _("Nederlands"):
+                    textbutton t("Nederlands"):
                         style "shell_nav_button"
                         xsize 312
-                        selected _preferences.language == "dutch"
+                        selected current_translation_language() == "dutch"
                         action language_change_action("dutch")
 
-                    textbutton _("Français"):
+                    textbutton t("Français"):
                         style "shell_nav_button"
                         xsize 312
-                        selected _preferences.language == "french"
+                        selected current_translation_language() == "french"
                         action language_change_action("french")
 
-                    textbutton _("Українська"):
+                    textbutton t("Українська"):
                         style "shell_nav_button"
                         xsize 312
-                        selected _preferences.language == "ukrainian"
+                        selected current_translation_language() == "ukrainian"
                         action language_change_action("ukrainian")
 
 
@@ -2811,7 +2811,7 @@ screen history():
     tag menu
     predict False
 
-    use game_menu(_("History"), scroll="viewport", spacing=14):
+    use game_menu(t("History"), scroll="viewport", spacing=14):
         if _history_list:
             for h in _history_list:
                 frame:
@@ -2846,7 +2846,7 @@ screen history():
                 xfill True
                 background Solid("#171C30")
                 padding (28, 22)
-                text _("The dialogue history is empty."):
+                text t("The dialogue history is empty."):
                     color "#AAB0D6"
                     size 20
 
@@ -2858,22 +2858,22 @@ screen help():
     tag menu
     default device = "keyboard"
 
-    use game_menu(_("Help"), scroll="viewport", spacing=18):
+    use game_menu(t("Help"), scroll="viewport", spacing=18):
         hbox:
             spacing 12
 
-            textbutton _("Keyboard"):
+            textbutton t("Keyboard"):
                 style "shell_nav_button"
                 xsize 190
                 action SetScreenVariable("device", "keyboard")
 
-            textbutton _("Mouse"):
+            textbutton t("Mouse"):
                 style "shell_nav_button"
                 xsize 190
                 action SetScreenVariable("device", "mouse")
 
             if GamepadExists():
-                textbutton _("Gamepad"):
+                textbutton t("Gamepad"):
                     style "shell_nav_button"
                     xsize 190
                     action SetScreenVariable("device", "gamepad")
@@ -2896,18 +2896,18 @@ screen keyboard_help():
         spacing 12
 
         for key_name, desc in [
-            (_("Enter"), _("Advances dialogue and activates the interface.")),
-            (_("Space"), _("Advances dialogue without selecting choices.")),
-            (_("Arrow Keys"), _("Navigate the interface.")),
-            (_("Escape"), _("Opens the custom mission control menu.")),
-            (_("Ctrl"), _("Skips dialogue while held down.")),
-            (_("Tab"), _("Toggles dialogue skipping.")),
-            (_("Page Up"), _("Rolls back to earlier dialogue.")),
-            (_("Page Down"), _("Rolls forward to later dialogue.")),
-            ("H", _("Hides the user interface.")),
-            ("S", _("Takes a screenshot.")),
-            ("V", _("Toggles self-voicing.")),
-            (_("Shift+A"), _("Opens the accessibility menu.")),
+            (t("Enter"), t("Advances dialogue and activates the interface.")),
+            (t("Space"), t("Advances dialogue without selecting choices.")),
+            (t("Arrow Keys"), t("Navigate the interface.")),
+            (t("Escape"), t("Opens the custom mission control menu.")),
+            (t("Ctrl"), t("Skips dialogue while held down.")),
+            (t("Tab"), t("Toggles dialogue skipping.")),
+            (t("Page Up"), t("Rolls back to earlier dialogue.")),
+            (t("Page Down"), t("Rolls forward to later dialogue.")),
+            ("H", t("Hides the user interface.")),
+            ("S", t("Takes a screenshot.")),
+            ("V", t("Toggles self-voicing.")),
+            (t("Shift+A"), t("Opens the accessibility menu.")),
         ]:
             hbox:
                 spacing 20
@@ -2930,11 +2930,11 @@ screen mouse_help():
         spacing 12
 
         for key_name, desc in [
-            (_("Left Click"), _("Advances dialogue and activates the interface.")),
-            (_("Middle Click"), _("Hides the user interface.")),
-            (_("Right Click"), _("Opens the custom mission control menu.")),
-            (_("Wheel Up"), _("Rolls back to earlier dialogue.")),
-            (_("Wheel Down"), _("Rolls forward to later dialogue.")),
+            (t("Left Click"), t("Advances dialogue and activates the interface.")),
+            (t("Middle Click"), t("Hides the user interface.")),
+            (t("Right Click"), t("Opens the custom mission control menu.")),
+            (t("Wheel Up"), t("Rolls back to earlier dialogue.")),
+            (t("Wheel Down"), t("Rolls forward to later dialogue.")),
         ]:
             hbox:
                 spacing 20
@@ -2957,12 +2957,12 @@ screen gamepad_help():
         spacing 12
 
         for key_name, desc in [
-            (_("A / Bottom Button"), _("Advances dialogue and activates the interface.")),
-            (_("Left Trigger"), _("Rolls back to earlier dialogue.")),
-            (_("Right Shoulder"), _("Rolls forward to later dialogue.")),
-            (_("D-Pad / Sticks"), _("Navigate the interface.")),
-            (_("Start / B"), _("Opens the custom mission control menu.")),
-            (_("Y / Top Button"), _("Hides the user interface.")),
+            (t("A / Bottom Button"), t("Advances dialogue and activates the interface.")),
+            (t("Left Trigger"), t("Rolls back to earlier dialogue.")),
+            (t("Right Shoulder"), t("Rolls forward to later dialogue.")),
+            (t("D-Pad / Sticks"), t("Navigate the interface.")),
+            (t("Start / B"), t("Opens the custom mission control menu.")),
+            (t("Y / Top Button"), t("Hides the user interface.")),
         ]:
             hbox:
                 spacing 20
@@ -2979,7 +2979,7 @@ screen gamepad_help():
                     size 19
                     xfill True
 
-        textbutton _("Calibrate"):
+        textbutton t("Calibrate"):
             style "shell_nav_button"
             xsize 220
             action GamepadCalibrate()
@@ -3020,12 +3020,12 @@ screen confirm(message, yes_action, no_action):
                 spacing 14
                 xalign 0.5
 
-                textbutton _("Yes"):
+                textbutton t("Yes"):
                     style "modal_action_button"
                     xsize 220
                     action yes_action
 
-                textbutton _("No"):
+                textbutton t("No"):
                     style "modal_action_button"
                     xsize 220
                     background Solid("#171C30")
@@ -3046,10 +3046,10 @@ screen skip_indicator():
 
         hbox:
             spacing 8
-            text _("Skipping"):
+            text t("Skipping"):
                 color "#EAF4F1"
                 size 18
-            text ">>":
+            text t(">>"):
                 color "#8B8FCC"
                 size 18
 
@@ -3065,7 +3065,7 @@ screen notify(message):
         background Solid("#0E1321E6")
         padding (16, 12)
 
-        text "[message!tq]":
+        text t("[message!tq]"):
             color "#EAF4F1"
             size 18
 
@@ -3270,7 +3270,7 @@ screen quick_menu():
             spacing 10
             style_prefix "quick"
 
-            textbutton _("Back") action Rollback()
-            textbutton _("Notes") action Show("notebook_panel")
-            textbutton _("Save") action ShowMenu("save")
-            textbutton _("Menu") action ShowMenu("pause_hub")
+            textbutton t("Back") action Rollback()
+            textbutton t("Notes") action Show("notebook_panel")
+            textbutton t("Save") action ShowMenu("save")
+            textbutton t("Menu") action ShowMenu("pause_hub")
