@@ -252,6 +252,8 @@ init python:
         return None
 
     def choose_notebook_export_path(default_filename="field_notebook.txt"):
+        root = None
+
         try:
             import tkinter as tk
             from tkinter import filedialog
@@ -275,63 +277,8 @@ init python:
             return path
         except Exception:
             try:
-                root.destroy()
-            except Exception:
-                pass
-
-        if os.name == "nt":
-            try:
-                import ctypes
-                from ctypes import wintypes
-
-                class OPENFILENAMEW(ctypes.Structure):
-                    _fields_ = [
-                        ("lStructSize", wintypes.DWORD),
-                        ("hwndOwner", wintypes.HWND),
-                        ("hInstance", wintypes.HINSTANCE),
-                        ("lpstrFilter", wintypes.LPCWSTR),
-                        ("lpstrCustomFilter", wintypes.LPWSTR),
-                        ("nMaxCustFilter", wintypes.DWORD),
-                        ("nFilterIndex", wintypes.DWORD),
-                        ("lpstrFile", wintypes.LPWSTR),
-                        ("nMaxFile", wintypes.DWORD),
-                        ("lpstrFileTitle", wintypes.LPWSTR),
-                        ("nMaxFileTitle", wintypes.DWORD),
-                        ("lpstrInitialDir", wintypes.LPCWSTR),
-                        ("lpstrTitle", wintypes.LPCWSTR),
-                        ("Flags", wintypes.DWORD),
-                        ("nFileOffset", wintypes.WORD),
-                        ("nFileExtension", wintypes.WORD),
-                        ("lpstrDefExt", wintypes.LPCWSTR),
-                        ("lCustData", wintypes.LPARAM),
-                        ("lpfnHook", wintypes.LPVOID),
-                        ("lpTemplateName", wintypes.LPCWSTR),
-                        ("pvReserved", ctypes.c_void_p),
-                        ("dwReserved", wintypes.DWORD),
-                        ("FlagsEx", wintypes.DWORD),
-                    ]
-
-                buffer = ctypes.create_unicode_buffer(260)
-                buffer.value = default_filename
-                buffer_title = ctypes.create_unicode_buffer(260)
-                filter_text = "Text files\0*.txt\0All files\0*.*\0\0"
-
-                ofn = OPENFILENAMEW()
-                ofn.lStructSize = ctypes.sizeof(ofn)
-                ofn.hwndOwner = None
-                ofn.lpstrFilter = ctypes.c_wchar_p(filter_text)
-                ofn.lpstrFile = ctypes.cast(buffer, wintypes.LPWSTR)
-                ofn.nMaxFile = 260
-                ofn.lpstrFileTitle = ctypes.cast(buffer_title, wintypes.LPWSTR)
-                ofn.nMaxFileTitle = 260
-                ofn.lpstrInitialDir = os.path.expanduser("~")
-                ofn.lpstrTitle = "Save notebook as..."
-                ofn.Flags = 0x00000800 | 0x00000002
-                ofn.lpstrDefExt = ".txt"
-
-                if ctypes.windll.comdlg32.GetSaveFileNameW(ctypes.byref(ofn)):
-                    path = buffer.value
-                    return path if path else ""
+                if root is not None:
+                    root.destroy()
             except Exception:
                 pass
 
@@ -403,6 +350,9 @@ init python:
     # because of a partial translation.
 
     _DIALOGUE_TRANSLATIONS = {}
+    _TEXT_TRANSLATIONS = {}
+    _TEXT_TRANSLATION_TEMPLATES = {}
+    _TRANSLATION_DEBUG_SEEN = set()
 
     def _load_dialogue_translation(lang):
         if lang in _DIALOGUE_TRANSLATIONS:
@@ -426,6 +376,106 @@ init python:
         _DIALOGUE_TRANSLATIONS[lang] = data
         return data
 
+    def _load_text_translation(lang):
+        if lang in _TEXT_TRANSLATIONS:
+            return _TEXT_TRANSLATIONS[lang]
+
+        exact = {}
+        templates = []
+
+        try:
+            import json, os
+            path = os.path.join(config.gamedir, "tl", lang, "text.json")
+            if os.path.exists(path):
+                with open(path, "r", encoding="utf-8") as fp:
+                    raw = json.load(fp)
+
+                if isinstance(raw, dict):
+                    for src, tr in raw.items():
+                        if not isinstance(src, str) or not isinstance(tr, str):
+                            continue
+
+                        src = src.strip()
+                        tr = tr.strip()
+
+                        if not src or not tr:
+                            continue
+
+                        if "[" in src and "]" in src:
+                            placeholders = re.findall(r"(\[[^\]]+\])", src)
+                            parts = re.split(r"(\[[^\]]+\])", src)
+                            pattern = "^"
+                            for part in parts:
+                                if not part:
+                                    continue
+                                if re.match(r"\[[^\]]+\]", part):
+                                    pattern += "(.+?)"
+                                else:
+                                    pattern += re.escape(part)
+                            pattern += "$"
+                            templates.append((re.compile(pattern), placeholders, tr))
+                        else:
+                            exact[src] = tr
+        except Exception:
+            exact = {}
+            templates = []
+
+        templates.sort(key=lambda item: len(item[0].pattern), reverse=True)
+        _TEXT_TRANSLATIONS[lang] = exact
+        _TEXT_TRANSLATION_TEMPLATES[lang] = templates
+        return exact
+
+    def _translate_text_template(text, lang, depth=0):
+        if depth > 3:
+            return text
+
+        _load_text_translation(lang)
+        templates = _TEXT_TRANSLATION_TEMPLATES.get(lang, [])
+
+        for pattern, placeholders, translated_template in templates:
+            match = pattern.match(text)
+            if not match:
+                continue
+
+            result = translated_template
+
+            for index, placeholder in enumerate(placeholders, 1):
+                replacement = _translate_display_text(match.group(index), lang, depth + 1)
+                result = result.replace(placeholder, replacement)
+
+            return result
+
+        return text
+
+    def _translate_display_text(text, lang=None, depth=0):
+        if not text:
+            return text
+
+        if lang is None:
+            try:
+                lang = _preferences.language
+            except Exception:
+                lang = None
+
+        if not lang:
+            return text
+
+        try:
+            import os
+            sample = text.strip()
+            if sample and len(_TRANSLATION_DEBUG_SEEN) < 40 and sample not in _TRANSLATION_DEBUG_SEEN:
+                _TRANSLATION_DEBUG_SEEN.add(sample)
+                with open(os.path.join(config.basedir, "translation_debug.log"), "a", encoding="utf-8") as fp:
+                    fp.write("%s\t%s\n" % (lang, sample))
+        except Exception:
+            pass
+
+        exact = _load_text_translation(lang)
+        if text in exact:
+            return exact[text]
+
+        return _translate_text_template(text, lang, depth)
+
     def translated_dialogue(text):
         """Map English source to current-language translation, if any."""
         if not text:
@@ -437,7 +487,20 @@ init python:
         if not lang:
             return text
         catalog = _load_dialogue_translation(lang)
-        return catalog.get(text, text)
+        try:
+            import os
+            if text in (
+                "The year is 2013.",
+                "The United States government operates the most sophisticated surveillance network in human history.",
+            ):
+                with open(os.path.join(config.basedir, "translation_dialogue_debug.log"), "a", encoding="utf-8") as fp:
+                    fp.write("%s\t%s\t%s\n" % (lang, text, text in catalog))
+        except Exception:
+            pass
+        translated = catalog.get(text)
+        if translated is not None:
+            return translated
+        return _translate_display_text(text, lang)
 
     def highlighted_dialogue(text):
         if not text:
@@ -447,6 +510,16 @@ init python:
         # important terms still get bolded in any language.
         result = translated_dialogue(text)
 
+        try:
+            import os
+            sample = text.strip()
+            if sample and len(_TRANSLATION_DEBUG_SEEN) < 80 and sample not in _TRANSLATION_DEBUG_SEEN:
+                _TRANSLATION_DEBUG_SEEN.add(sample)
+                with open(os.path.join(config.basedir, "translation_debug.log"), "a", encoding="utf-8") as fp:
+                    fp.write("FILTER\t%s\t%s\t=>\t%s\n" % (_preferences.language, sample, result.strip()))
+        except Exception:
+            pass
+
         for term in sorted(IMPORTANT_TERMS, key=len, reverse=True):
             pattern = re.compile(r"(?<!\{b\})(%s)(?!\{/b\})" % re.escape(term), re.IGNORECASE)
             result = pattern.sub(lambda match: "{b}%s{/b}" % match.group(1), result)
@@ -454,6 +527,7 @@ init python:
         return result
 
     config.say_menu_text_filter = highlighted_dialogue
+    config.replace_text = _translate_display_text
 
     # ─── ACTIVE SPEAKER HIGHLIGHTING ──────────────────────────────────────
     # Brighten the current speaker, dim everyone else. The earlier version

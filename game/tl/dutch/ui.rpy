@@ -166,3 +166,136 @@ translate dutch strings:
 
     old "The dialogue history is empty."
     new "De dialooggeschiedenis is leeg."
+
+    old "<"
+    new "<"
+
+    old ">"
+    new ">"
+
+    old "A / Bottom Button"
+    new "A / Onderste knop"
+
+    old "Advances dialogue and activates the interface."
+    new "Bevordert de dialoog en activeert de interface."
+
+    old "Advances dialogue without selecting choices."
+    new "Bevordert de dialoog zonder keuzes te selecteren."
+
+    old "Arrow Keys"
+    new "Pijltjestoetsen"
+
+    old "Automatic saves"
+    new "Automatisch opslaan"
+
+    old "Chapter saves"
+    new "Hoofdstuk opgeslagen"
+
+    old "Ctrl"
+    new "Ctrl"
+
+    old "D-Pad / Sticks"
+    new "D-Pad / Sticks"
+
+    old "Empty slot"
+    new "Lege sleuf"
+
+    old "Enter"
+    new "Binnenkomen"
+
+    old "Escape"
+    new "Ontsnappen"
+
+    old "Hides the user interface."
+    new "Verbergt de gebruikersinterface."
+
+    old "Left Click"
+    new "Links klikken"
+
+    old "Left Trigger"
+    new "Linker trekker"
+
+    old "Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."
+    new "Gemaakt met {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."
+
+    old "Middle Click"
+    new "Middelste klik"
+
+    old "Navigate the interface."
+    new "Navigeer door de interface."
+
+    old "Opens the accessibility menu."
+    new "Opent het toegankelijkheidsmenu."
+
+    old "Opens the custom mission control menu."
+    new "Opent het aangepaste missiecontrolemenu."
+
+    old "Page Down"
+    new "Pagina omlaag"
+
+    old "Page Up"
+    new "Pagina omhoog"
+
+    old "Page {}"
+    new "Pagina {}"
+
+    old "Quick saves"
+    new "Snelle reddingen"
+
+    old "Right Click"
+    new "Klik met de rechtermuisknop"
+
+    old "Right Shoulder"
+    new "Rechter schouder"
+
+    old "Rolls back to earlier dialogue."
+    new "Gaat terug naar een eerdere dialoog."
+
+    old "Rolls forward to later dialogue."
+    new "Rolt vooruit naar een latere dialoog."
+
+    old "Shift+A"
+    new "Shift+A"
+
+    old "Skips dialogue while held down."
+    new "Slaat de dialoog over zolang deze ingedrukt wordt gehouden."
+
+    old "Space"
+    new "Ruimte"
+
+    old "Start / B"
+    new "Begin / B"
+
+    old "Tab"
+    new "Tab"
+
+    old "Takes a screenshot."
+    new "Maakt een schermafdruk."
+
+    old "Toggles dialogue skipping."
+    new "Schakelt het overslaan van dialogen in of uit."
+
+    old "Toggles self-voicing."
+    new "Schakelt zelfuiting in."
+
+    old "Wheel Down"
+    new "Wiel naar beneden"
+
+    old "Wheel Up"
+    new "Wiel omhoog"
+
+    old "Y / Top Button"
+    new "Y / Bovenste knop"
+
+    old "{#auto_page}A"
+    new "{#auto_page}A"
+
+    old "{#chapter_page}C"
+    new "{#chapter_page}C"
+
+    old "{#file_time}%A, %B %d %Y, %H:%M"
+    new "{#file_time}%A, %B %d %Y, %H:%M"
+
+    old "{#quick_page}Q"
+    new "{#quick_page}V"
+

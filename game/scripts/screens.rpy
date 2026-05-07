@@ -220,21 +220,24 @@ screen shell_header(kicker, title, body=None):
                 spacing 4
                 yalign 0.5
 
-                text kicker:
+                text _translate_display_text(kicker):
                     color "#8B8FCC"
                     size kicker_size
                     bold True
+                    substitute False
 
-                text title:
+                text _translate_display_text(title):
                     color "#EAF4F1"
                     size title_size
                     bold True
+                    substitute False
 
                 if body:
-                    text body:
+                    text _translate_display_text(body):
                         color "#AAB0D6"
                         size body_size
                         xmaximum body_max
+                        substitute False
 
             if body:
                 null width 80
@@ -254,9 +257,11 @@ screen say(who, what):
             window:
                 id "namebox"
                 style "namebox"
-                text who id "who"
+                text _translate_display_text(who) id "who":
+                    substitute False
 
-        text what id "what"
+        text translated_dialogue(what) id "what":
+            substitute False
 
     if not renpy.variant("small"):
         $ edward_pov_bgs = ["bg_nsa_terminal", "bg_prism", "bg_prism1", "bg_hong_kong_terminal"]
@@ -314,7 +319,8 @@ screen input(prompt):
             xsize 1544
             spacing 14
 
-            text prompt style "input_prompt"
+            text _translate_display_text(prompt) style "input_prompt":
+                substitute False
             input id "input"
 
 
@@ -339,7 +345,7 @@ screen choice(items):
         spacing 14
 
         for i in items:
-            textbutton i.caption action i.action
+            textbutton _translate_display_text(i.caption) action i.action
 
 
 ################################################################################
@@ -1420,17 +1426,19 @@ screen dossier():
                                     xfill True
                                     xmaximum 1600
 
-                                    text term:
+                                    text _translate_display_text(term):
                                         color "#EAF4F1"
                                         size dossier_term_size
                                         bold True
                                         xfill True
+                                        substitute False
 
-                                    text definition:
+                                    text _translate_display_text(definition):
                                         color "#AAB0D6"
                                         size dossier_definition_size
                                         xfill True
                                         xmaximum 1540
+                                        substitute False
 
             frame:
                 xfill True
@@ -1440,12 +1448,13 @@ screen dossier():
                 hbox:
                     xfill True
 
-                    text "Use the mouse wheel or drag to browse the archive.":
+                    text _translate_display_text("Use the mouse wheel or drag to browse the archive."):
                         color "#AAB0D6"
                         size dossier_footer_size
                         yalign 0.5
+                        substitute False
 
-                    textbutton "RETURN":
+                    textbutton _translate_display_text("RETURN"):
                         style "modal_action_button"
                         xsize 240
                         xalign 1.0
@@ -2769,13 +2778,13 @@ screen history():
 
                         if h.who:
                             if "color" in h.who_args:
-                                text h.who:
+                                text _translate_display_text(h.who):
                                     color h.who_args["color"]
                                     size 20
                                     bold True
                                     substitute False
                             else:
-                                text h.who:
+                                text _translate_display_text(h.who):
                                     color "#8B8FCC"
                                     size 20
                                     bold True
@@ -2952,13 +2961,14 @@ screen confirm(message, yes_action, no_action):
             spacing 22
             xalign 0.5
 
-            text _(message):
+            text _translate_display_text(_(message)):
                 color "#EAF4F1"
                 size 28
                 bold True
                 xalign 0.5
                 text_align 0.5
                 xmaximum 720
+                substitute False
 
             hbox:
                 spacing 14

@@ -166,3 +166,136 @@ translate ukrainian strings:
 
     old "The dialogue history is empty."
     new "Історія діалогів порожня."
+
+    old "<"
+    new "<"
+
+    old ">"
+    new ">"
+
+    old "A / Bottom Button"
+    new "Кнопка A / Нижня"
+
+    old "Advances dialogue and activates the interface."
+    new "Розвиває діалог і активує інтерфейс."
+
+    old "Advances dialogue without selecting choices."
+    new "Просуває діалог без вибору варіантів."
+
+    old "Arrow Keys"
+    new "Клавіші зі стрілками"
+
+    old "Automatic saves"
+    new "Автоматичне збереження"
+
+    old "Chapter saves"
+    new "Глава зберігає"
+
+    old "Ctrl"
+    new "Ctrl"
+
+    old "D-Pad / Sticks"
+    new "D-Pad / Палиці"
+
+    old "Empty slot"
+    new "Порожній слот"
+
+    old "Enter"
+    new "Введіть"
+
+    old "Escape"
+    new "Втеча"
+
+    old "Hides the user interface."
+    new "Приховує інтерфейс користувача."
+
+    old "Left Click"
+    new "Клацніть лівою кнопкою миші"
+
+    old "Left Trigger"
+    new "Лівий тригер"
+
+    old "Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."
+    new "Створено за допомогою {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."
+
+    old "Middle Click"
+    new "Середній клік"
+
+    old "Navigate the interface."
+    new "Навігація в інтерфейсі."
+
+    old "Opens the accessibility menu."
+    new "Відкриває меню спеціальних можливостей."
+
+    old "Opens the custom mission control menu."
+    new "Відкриває спеціальне меню керування місією."
+
+    old "Page Down"
+    new "Page Down"
+
+    old "Page Up"
+    new "Page Up"
+
+    old "Page {}"
+    new "Сторінка {}"
+
+    old "Quick saves"
+    new "Швидке збереження"
+
+    old "Right Click"
+    new "Клацніть правою кнопкою миші"
+
+    old "Right Shoulder"
+    new "Праве плече"
+
+    old "Rolls back to earlier dialogue."
+    new "Відкат до попереднього діалогу."
+
+    old "Rolls forward to later dialogue."
+    new "Перехід до наступного діалогу."
+
+    old "Shift+A"
+    new "Shift+A"
+
+    old "Skips dialogue while held down."
+    new "Пропускає діалог при утриманні."
+
+    old "Space"
+    new "Простір"
+
+    old "Start / B"
+    new "Початок / Б"
+
+    old "Tab"
+    new "вкладка"
+
+    old "Takes a screenshot."
+    new "Робить скріншот."
+
+    old "Toggles dialogue skipping."
+    new "Вмикає пропуск діалогу."
+
+    old "Toggles self-voicing."
+    new "Перемикає самоозвучення."
+
+    old "Wheel Down"
+    new "Колесо вниз"
+
+    old "Wheel Up"
+    new "Колесо вгору"
+
+    old "Y / Top Button"
+    new "Y / верхня кнопка"
+
+    old "{#auto_page}A"
+    new "{#auto_page}А"
+
+    old "{#chapter_page}C"
+    new "{#chapter_page}C"
+
+    old "{#file_time}%A, %B %d %Y, %H:%M"
+    new "{#file_time}%A, %B %d %Y, %H:%M"
+
+    old "{#quick_page}Q"
+    new "{#quick_page}З"
+

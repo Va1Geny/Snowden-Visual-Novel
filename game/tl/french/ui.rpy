@@ -166,3 +166,136 @@ translate french strings:
 
     old "The dialogue history is empty."
     new "L'historique des dialogues est vide."
+
+    old "<"
+    new "<"
+
+    old ">"
+    new ">"
+
+    old "A / Bottom Button"
+    new "A / Bouton du bas"
+
+    old "Advances dialogue and activates the interface."
+    new "Avance le dialogue et active l’interface."
+
+    old "Advances dialogue without selecting choices."
+    new "Avance le dialogue sans sélectionner de choix."
+
+    old "Arrow Keys"
+    new "Touches fléchées"
+
+    old "Automatic saves"
+    new "Sauvegardes automatiques"
+
+    old "Chapter saves"
+    new "Sauvegardes de chapitre"
+
+    old "Ctrl"
+    new "Ctrl"
+
+    old "D-Pad / Sticks"
+    new "D-Pad / Bâtons"
+
+    old "Empty slot"
+    new "Emplacement vide"
+
+    old "Enter"
+    new "Entrer"
+
+    old "Escape"
+    new "S'échapper"
+
+    old "Hides the user interface."
+    new "Masque l'interface utilisateur."
+
+    old "Left Click"
+    new "Clic gauche"
+
+    old "Left Trigger"
+    new "Gâchette gauche"
+
+    old "Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."
+    new "Réalisé avec {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."
+
+    old "Middle Click"
+    new "Clic du milieu"
+
+    old "Navigate the interface."
+    new "Naviguez dans l'interface."
+
+    old "Opens the accessibility menu."
+    new "Ouvre le menu d'accessibilité."
+
+    old "Opens the custom mission control menu."
+    new "Ouvre le menu de contrôle de mission personnalisé."
+
+    old "Page Down"
+    new "Page suivante"
+
+    old "Page Up"
+    new "Page précédente"
+
+    old "Page {}"
+    new "Page {}"
+
+    old "Quick saves"
+    new "Sauvegardes rapides"
+
+    old "Right Click"
+    new "Clic droit"
+
+    old "Right Shoulder"
+    new "Épaule droite"
+
+    old "Rolls back to earlier dialogue."
+    new "Revient au dialogue précédent."
+
+    old "Rolls forward to later dialogue."
+    new "Passe au dialogue ultérieur."
+
+    old "Shift+A"
+    new "Maj+A"
+
+    old "Skips dialogue while held down."
+    new "Saute le dialogue lorsque vous maintenez le bouton enfoncé."
+
+    old "Space"
+    new "Espace"
+
+    old "Start / B"
+    new "Début / B"
+
+    old "Tab"
+    new "Languette"
+
+    old "Takes a screenshot."
+    new "Prend une capture d'écran."
+
+    old "Toggles dialogue skipping."
+    new "Active/désactive le saut de dialogue."
+
+    old "Toggles self-voicing."
+    new "Active/désactive l'auto-voix."
+
+    old "Wheel Down"
+    new "Roue vers le bas"
+
+    old "Wheel Up"
+    new "Roue vers le haut"
+
+    old "Y / Top Button"
+    new "Y / Bouton supérieur"
+
+    old "{#auto_page}A"
+    new "{#auto_page}Un"
+
+    old "{#chapter_page}C"
+    new "{#chapter_page}C"
+
+    old "{#file_time}%A, %B %d %Y, %H:%M"
+    new "{#file_time}%A, %B %d %Y, %H:%M"
+
+    old "{#quick_page}Q"
+    new "{#quick_page}Q"
+
