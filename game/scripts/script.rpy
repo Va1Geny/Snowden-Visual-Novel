@@ -8,12 +8,15 @@
 ################################################################################
 
 label start:
+    show screen secret_ending_shortcut
     $ show_hud = False
     $ notebook_entries = []
     $ notebook_draft = ""
     $ suspicion_lockdown_triggered = False
     $ tree_reset_current_run()
-    call screen intro_controls_screen
+    if not preferences.fullscreen:
+        call screen intro_fullscreen_prompt
+    call screen intro_shortcuts_screen
     jump intro
 
 
@@ -44,7 +47,7 @@ label intro:
 
     narrator_voice "Billions of phone calls, emails, and internet sessions are collected, analyzed, and stored — all in the name of national security."
 
-    narrator_voice "You are Edward Snowden — NSA contractor, former CIA employee, and the man who is about to make the most consequential decision of his life."
+    narrator_voice "You are an NSA contractor, a former CIA employee — and the person about to make the most consequential decision of your life."
 
     narrator_voice "Your choices in this story mirror the real dilemmas Snowden faced. Some paths lead to freedom. Others lead to ruin."
 
@@ -68,6 +71,7 @@ label intro:
 ################################################################################
 
 label chapter_1:
+    call show_loading_screen
     $ current_chapter = 1
     $ show_hud = True
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 1)
@@ -81,7 +85,7 @@ label chapter_1:
     narrator_voice "The Tunnel. That's what they call it — the underground NSA facility beneath a pineapple field in Oahu, Hawaii."
 
     scene bg_nsa_checkpoint at parallax with dissolve
-    narrator_voice "Edward Snowden walks through layers of biometric security. Badge. Fingerprint. Retinal scan. The door hisses open."
+    narrator_voice "You walk through layers of biometric security. Badge. Fingerprint. Retinal scan. The door hisses open."
 
     scene bg_nsa_main at parallax with dissolve
     show edward neutral at enter_center
@@ -94,7 +98,7 @@ label chapter_1:
     show supervisor neutral at enter_right
     with dissolve
 
-    supervisor "Morning, Snowden. We've got a batch of flagged selectors to process. XKeyscore caught some interesting traffic overnight."
+    supervisor "Morning. We've got a batch of flagged selectors to process. XKeyscore caught some interesting traffic overnight."
 
     im "XKeyscore — the NSA's most powerful search tool. It can search virtually anything a person does on the internet: emails, browsing history, chat sessions, even webcam feeds. All in near real time, all without a warrant."
 
@@ -104,10 +108,12 @@ label chapter_1:
 
     im "Verify the handshake. That's NSA-speak for confirming the network connection is legitimate — checking that the source and destination match the selector criteria. But nobody asks whether the criteria themselves are legitimate."
 
-    show colleague neutral at enter_left
+    show colleague casual at enter_left
     with dissolve
 
     colleague "Hey Ed. Check this out — I can watch this guy's webcam feed in real time. He's just eating cereal. It's wild what we can access without even a targeted request."
+
+    show edward concerned
 
     e "That's... that's a lot of access for an unflagged individual."
 
@@ -116,8 +122,8 @@ label chapter_1:
     im "The scale of it is staggering. This isn't targeted surveillance. This is a vacuum cleaner, sucking up everything. Emails, phone records, browsing histories — all stored, all searchable, all belonging to ordinary people who've done nothing wrong."
 
     # --- Choice 1: Follow protocol or explore restricted files? ---
-    hide colleague neutral with dissolve
-    hide supervisor neutral with dissolve
+    hide colleague with dissolve
+    hide supervisor with dissolve
 
     menu:
         "Follow protocol. Process the flagged selectors as assigned.":
@@ -129,9 +135,9 @@ label chapter_1:
             scene bg_nsa_terminal at parallax with dissolve
             with dissolve
 
-            im "Stay in your lane, Snowden. Do your job. Don't attract attention."
+            im "Stay in your lane. Do your job. Don't attract attention."
 
-            narrator_voice "Edward processes the assigned selectors. Standard targets. Foreign IP addresses. But among the flagged traffic, domestic addresses keep appearing."
+            narrator_voice "You process the assigned selectors. Standard targets. Foreign IP addresses. But among the flagged traffic, domestic addresses keep appearing."
 
         "Explore the restricted directories. Something doesn't add up.":
             $ tree_record_choice("choice_ch1_1", "explore")
@@ -144,12 +150,12 @@ label chapter_1:
 
             im "These directories shouldn't be this easy to access. Why does a systems administrator have read access to raw intelligence feeds?"
 
-            narrator_voice "Edward navigates deeper into the classified file system. Folders upon folders of surveillance programs he's never been briefed on. The scope is enormous."
+            narrator_voice "You navigate deeper into the classified file system. Folders upon folders of surveillance programs you've never been briefed on. The scope is enormous."
 
     # --- Tutorial Exposition: Firewall Learning Section ---
     # (Structured as a self-contained briefing — can be branched into the story tree later)
 
-    narrator_voice "On his screen, Edward sees the tools of the trade: network monitoring dashboards tracking millions of connections in real time."
+    narrator_voice "On your screen, you see the tools of the trade: network monitoring dashboards tracking millions of connections in real time."
 
     im "Every network has a firewall — a security system that monitors all incoming and outgoing traffic and decides what gets through based on predefined rules. Think of it as a barrier between trusted and untrusted networks."
 
@@ -232,21 +238,21 @@ label chapter_1:
     )
 
     # --- Choice 2: Report anomaly or stay silent? ---
-    show supervisor neutral at enter_right
+    show supervisor stern at enter_right
     with dissolve
 
-    narrator_voice "While processing selectors, Edward discovers domestic IP addresses mixed in with foreign intelligence targets."
+    narrator_voice "While processing selectors, you discover domestic IP addresses mixed in with foreign intelligence targets."
 
     e "Sir, I'm seeing domestic addresses in the foreign intelligence queue. These are American citizens."
 
     if suspicion_level >= 2:
-        supervisor "Snowden. I've noticed you've been poking around where you shouldn't. Are you having second thoughts about your oath?"
+        supervisor "I've noticed you've been poking around where you shouldn't. Are you having second thoughts about your oath?"
         e "No sir. Just doing my due diligence."
         supervisor "Your 'due diligence' is noted. Logged and noted."
         $ suspicion_level += 1
         $ renpy.notify("Suspicion +1")
     else:
-        supervisor "Those addresses were flagged by the FISA court authorization. Everything is legal, Snowden. Don't make waves."
+        supervisor "Those addresses were flagged by the FISA court authorization. Everything is legal. Don't make waves."
 
     menu:
         "Report the anomaly to the Inspector General's office.":
@@ -297,6 +303,7 @@ label chapter_1:
 ################################################################################
 
 label chapter_2:
+    call show_loading_screen
     $ current_chapter = 2
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 2)
 
@@ -323,7 +330,7 @@ label chapter_2:
     im "And there's more. Boundless Informant — a tool that counts and visualises exactly how much data the NSA collects from each country. In one month alone, 97 billion pieces of intelligence were gathered worldwide. The American public has no idea."
 
     # --- Internal conflict with colleague ---
-    show colleague neutral at enter_left
+    show colleague uneasy at enter_left
     with dissolve
 
     colleague "Ed, you look like you've seen a ghost. What's wrong?"
@@ -369,7 +376,7 @@ label chapter_2:
     # --- Question Segment 2: Text Input ---
 
     call screen text_input_question_screen(
-        question="Type the codename of the surveillance program Snowden found:",
+        question="Type the codename of the surveillance program you found:",
         correct_answer="PRISM",
         hint="It's named after a glass object that splits light into a spectrum...",
         explanation="PRISM was the codename for the NSA program that collected user data from major tech platforms.",
@@ -410,7 +417,7 @@ label chapter_2:
 
     # --- Choice 2: Copy the files or take notes only? ---
     scene bg_nsa_servers at parallax with dissolve
-    show edward neutral at stage_center
+    show edward tense at stage_center
     with dissolve
 
     im "I have access to everything. The question is: what do I do with it?"
@@ -480,6 +487,7 @@ label chapter_2:
 ################################################################################
 
 label chapter_3:
+    call show_loading_screen
     $ current_chapter = 3
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 3)
 
@@ -487,7 +495,7 @@ label chapter_3:
 
     scene bg_hong_kong at parallax with chapter_transition
 
-    show edward neutral at enter_left
+    show edward tense at enter_left
     with dissolve
 
     # --- Snowden must contact journalists ---
@@ -529,7 +537,7 @@ label chapter_3:
 
     # --- Choice 1: Secure channel or personal email? ---
 
-    im "I've identified two journalists who might have the courage to publish: Laura Poitras, a documentary filmmaker who's been investigating NSA surveillance for years, and Glenn Greenwald, a constitutional lawyer turned journalist at The Guardian."
+    im "I've identified two journalists who might have the courage to publish: Leah Portman, a documentary filmmaker who's been investigating NSA surveillance for years, and Grayson Wardell, a constitutional lawyer turned journalist at The Guardian."
 
     im "The challenge is reaching them securely. PGP encryption with Tor would make my messages virtually untraceable — but it requires technical knowledge to set up correctly. One mistake in the key exchange and the whole channel is compromised."
 
@@ -543,7 +551,7 @@ label chapter_3:
             else:
                 jump ch3_secure_fail
 
-        "Contact Glenn Greenwald directly through his public email.":
+        "Contact Grayson Wardell directly through his public email.":
             $ tree_record_choice("choice_ch3_1", "email")
             $ contacts_secured += 1
             $ renpy.notify("Contacts +1")
@@ -566,18 +574,19 @@ label ch3_secure_success:
 
     scene bg_hong_kong_terminal at parallax with dissolve
 
-    narrator_voice "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Laura Poitras."
+    narrator_voice "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Leah Portman."
 
-    show journalist neutral at enter_right
+    show poitras neutral at enter_right
     with dissolve
 
     poitras "I received your encrypted message. The fingerprint checks out. Who are you?"
 
     e "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA."
 
+    show poitras cautious
     poitras "Can you prove it?"
 
-    e "I can prove everything. But we need to meet in person. I'll also reach out to Glenn Greenwald — together, you can publish the full story."
+    e "I can prove everything. But we need to meet in person. I'll also reach out to Grayson Wardell — together, you can publish the full story."
 
     jump ch3_continue
 
@@ -593,19 +602,22 @@ label ch3_secure_fail:
 
     jump ch3_continue
 
+
 label ch3_greenwald_contact:
     scene bg_hong_kong_street at parallax with dissolve
-    show journalist neutral at enter_right
+    show greenwald neutral at enter_right
     with dissolve
 
-    narrator_voice "You reach out to Glenn Greenwald through his public contact information. It's faster, but less secure."
+    narrator_voice "You reach out to Grayson Wardell through his public contact information. It's faster, but less secure."
 
-    e "Mr. Greenwald, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
+    e "Mr. Wardell, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
 
+    show greenwald skeptical
     greenwald "I get messages like this every week. Can you give me more details?"
 
     e "Not over this channel. You need to set up PGP encryption. I'll send you instructions."
 
+    show greenwald confused
     greenwald "PGP? I've never used it. Can't we just talk on the phone?"
 
     im "This is the problem. The people who need to publish this information don't know the first thing about security."
@@ -640,8 +652,11 @@ label ch3_contact_unsafe:
 
 label ch3_continue:
     # --- Question Segment 3: MCQ on Encryption ---
-    hide journalist neutral with dissolve
-    hide edward neutral with dissolve
+    hide journalist
+    hide greenwald
+    hide poitras
+    hide edward
+    with dissolve
 
     im "Everything I've done to contact journalists relies on one tool above all others: Tor — The Onion Router. It's an anonymization network that routes your traffic through multiple relay nodes around the world, each encrypting another layer."
 
@@ -688,12 +703,12 @@ label ch3_continue:
 
     # --- Putting It Together ---
 
-    im "Now it's time to put that knowledge into practice. I've drafted an email to Glenn Greenwald — but before I can send it, I need to strip every trace of my identity from the message. One mistake, and the NSA finds me."
+    im "Now it's time to put that knowledge into practice. I've drafted an email to Grayson Wardell — but before I can send it, I need to strip every trace of my identity from the message. One mistake, and the NSA finds me."
 
     sys "// SYSTEM NOTE: Every digital message carries metadata — sender address, device info, routing headers, file authorship — that can expose your identity even if the content is encrypted. //"
 
     window hide
-    $ mg_intro3 = renpy.call_screen("minigame_intro", title="CLEAN THE MESSAGE", description="Snowden has drafted an email to journalist Glenn Greenwald. Find and remove all 8 dangerous metadata elements before sending. Click on suspicious items to inspect and clean them.")
+    $ mg_intro3 = renpy.call_screen("minigame_intro", title="CLEAN THE MESSAGE", description="You have drafted an email to journalist Grayson Wardell. Find and remove all 8 dangerous metadata elements before sending. Click on suspicious items to inspect and clean them.")
 
     if mg_intro3:
         $ quick_menu = False
@@ -715,7 +730,7 @@ label ch3_continue:
 
     # --- Choice 2: How much to reveal? ---
     show edward neutral at stage_center
-    show journalist neutral at enter_right
+    show greenwald serious at enter_right
     with dissolve
 
     narrator_voice "The journalist asks for more details about the scope of the leaks."
@@ -730,6 +745,7 @@ label ch3_continue:
             $ contacts_secured += 1
             $ renpy.notify("Trust +2 | Contacts +1")
 
+            show greenwald shocked
             greenwald "My God. If this is true... this is the biggest intelligence leak in history."
 
         "Share only what's necessary. Protect sources and methods.":
@@ -748,8 +764,9 @@ label ch3_continue:
 
             greenwald "You're asking me to fly halfway around the world on a vague tip?"
 
-    hide journalist neutral with dissolve
-    hide edward neutral with dissolve
+    hide greenwald
+    hide edward
+    with dissolve
 
     # --- Chapter 3 Summary ---
 
@@ -775,6 +792,7 @@ label ch3_continue:
 ################################################################################
 
 label chapter_4:
+    call show_loading_screen
     $ current_chapter = 4
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 4)
 
@@ -782,28 +800,31 @@ label chapter_4:
 
     scene bg_hong_kong_hotel at parallax with chapter_transition
 
-    show edward neutral at enter_left
+    show edward tired at enter_left
     with dissolve
 
     # --- Snowden in Hong Kong ---
 
-    narrator_voice "Edward Snowden arrives in Hong Kong with a laptop full of classified documents and a plan that's already falling apart."
+    narrator_voice "You arrive in Hong Kong with a laptop full of classified documents and a plan that's already falling apart."
 
     im "I chose Hong Kong deliberately. It has its own legal system, independent from mainland China. Extradition would take time — time I need to get the story published before the government can suppress it."
 
     im "I told my employer I needed medical leave for epilepsy treatment. They didn't question it. That bought me a few weeks."
 
+    show edward tense
     im "Now I'm in a hotel room in Hong Kong, waiting for journalists who might not come, hunted by an agency that can find anyone. I've wedged pillows against the door, piled cushions against the window. Even the smoke detector might have a camera."
 
     sys "// LOCATION: MIRA HOTEL, HONG KONG. STATUS: UNDETECTED — FOR NOW. //"
 
     # --- Tense dialogue with pressure ---
 
-    show journalist neutral at enter_right
+    show greenwald neutral at enter_right
     with dissolve
 
+    show greenwald serious
     greenwald "You do realize what you're asking me to do? If we publish this, both our lives change forever."
 
+    show edward determined
     e "My life changed the moment I read those documents. I can't unread them. I can't unknow what the government is doing to its own people."
 
     im "Greenwald flew here from Rio de Janeiro. Poitras from Berlin. They left their lives behind on the strength of encrypted emails from a stranger. That took courage."
@@ -811,13 +832,15 @@ label chapter_4:
     if suspicion_level >= 3:
         sys "// WARNING: NSA INTERNAL AUDIT HAS FLAGGED YOUR ACCESS ANOMALIES. INVESTIGATION IN PROGRESS. //"
 
+        show edward tense
         im "They know something is wrong. I can feel it. The clock is ticking."
 
+    show greenwald resolved
     greenwald "The documents check out. Laura and I have verified them. We're ready to publish."
 
     e "Publish everything. The world needs to see this."
 
-    hide journalist neutral with dissolve
+    hide greenwald with dissolve
 
     im "What scares me most isn't just the surveillance — it's the NSA's offensive capabilities. They stockpile zero-day exploits — vulnerabilities in software that the vendor doesn't even know about. Called 'zero-day' because there are zero days of notice before they're exploited. No patch exists yet."
 
@@ -827,7 +850,7 @@ label chapter_4:
 
     # --- Choice 1: Hotel Wi-Fi or mobile hotspot? ---
 
-    narrator_voice "Edward needs to send final instructions to the publication team, but the hotel network is compromised. Every network connection is a potential leak."
+    narrator_voice "You need to send final instructions to the publication team, but the hotel network is compromised. Every network connection is a potential leak."
 
     im "The hotel Wi-Fi is managed by the hotel — they can see every device that connects, every connection made. Intelligence agencies routinely request hotel network logs. I need to decide how to send this last message."
 
@@ -921,35 +944,42 @@ label chapter_4:
     sys "// ROUTE STRATEGY: VPN → Tor nodes → Secure relay → Destination. Avoid GOV MONITOR. Fewer hops = less exposure time. //"
 
     window hide
-    $ mg_intro4 = renpy.call_screen("minigame_intro", title="TRACE THE ROUTE", description="Build a safe route hop by hop. Green nodes help you stay hidden, while the red monitor exposes the whole mission.")
+
+    im "But before I can run, I need to wipe everything. Every file, every log, every trace. If I leave even one digital breadcrumb, it's over."
+
+    im "I have 90 seconds before NSA agents reach my room. 8 digital traces that prove I copied the PRISM files. Each one needs a different command to destroy."
+
+    sys "// ALERT: NSA RESPONSE TEAM EN ROUTE. ESTIMATED ARRIVAL: 90 SECONDS. BEGIN DIGITAL EVIDENCE ELIMINATION. //"
+
+    $ mg_intro4 = renpy.call_screen("minigame_intro", title="COVER YOUR TRACKS", description="NSA forensic agents are knocking on the hotel door. You have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive. Type commands or select tokens to destroy all 8 forensic traces.")
 
     if mg_intro4:
-        $ quick_menu = False
-        $ show_hud = False
-        $ mg_trace_solved = renpy.call_screen("minigame_trace")
-        $ quick_menu = True
-        $ show_hud = True
-        if mg_trace_solved:
-            $ escape_successful = True
-            $ knowledge_score += 2
-            $ renpy.notify("Knowledge +2 | Escape route secured!")
-        else:
-            $ identity_exposed = True
-            $ renpy.notify("Identity Exposed!")
+        call minigame_4_cover_tracks
     else:
-        $ knowledge_score -= 1
-        $ renpy.notify("Knowledge -1 (Skipped)")
+        $ knowledge_score = max(0, knowledge_score - 1)
+        $ escape_successful = False
+        $ renpy.notify("Challenge skipped. Knowledge -1")
+
+    if escape_successful and evidence_secured:
+        im "Clean. Not a single trace left on this machine. When they get here, they'll find nothing but a blank hard drive and an empty hotel room."
+        sys "// ALL DIGITAL EVIDENCE ELIMINATED. DEVICE IS FORENSICALLY CLEAN. //"
+    elif escape_successful:
+        im "Most of it is gone, but I'm not sure I got everything. Some fragments might still be recoverable. I need to move — now."
+        sys "// PARTIAL EVIDENCE REMAINS. FORENSIC RECOVERY POSSIBLE. //"
+    else:
+        im "I ran out of time. They'll find everything — the files, the history, the logs. My identity is compromised."
+        sys "// WARNING: FORENSIC EVIDENCE RECOVERED. IDENTITY COMPROMISED. //"
 
     # --- Choice 2: Fly to Russia or seek another country? ---
 
     scene bg_leak at parallax with dissolve
 
-    narrator_voice "The first stories are published. The world erupts. And now, Edward Snowden is the most wanted man on Earth."
+    narrator_voice "The first stories are published. The world erupts. And now, you are the most wanted person on Earth."
 
     im "The US government has revoked my passport. I need to move. Now."
 
     if suspicion_level >= 4:
-        narrator_voice "With his cover blown, Snowden's options have narrowed to almost nothing."
+        narrator_voice "With your cover blown, your options have narrowed to almost nothing."
 
         menu:
             "Head to the airport immediately. Every minute counts.":
@@ -978,7 +1008,7 @@ label chapter_4:
 
                 im "Ecuador has a history of granting asylum to people the US wants. WikiLeaks arranged the route through Moscow."
 
-                narrator_voice "But Edward will never make it past Moscow. His passport will be revoked mid-flight."
+                narrator_voice "But you will never make it past Moscow. Your passport will be revoked mid-flight."
                 sys "// ROUTE REVIEW: Strong asylum logic, but the travel chain is fragile. Good long-term idea, risky short-term execution. //"
 
             "Seek asylum at a European embassy in Hong Kong.":
@@ -1004,11 +1034,11 @@ label chapter_4:
                 im "If I stay, Hong Kong will extradite me. The US legal system won't give me a fair trial under the Espionage Act."
                 sys "// ROUTE REVIEW: Good if you want to make a stand, bad if your goal is to stay free long enough to keep the story alive. //"
 
-    hide edward neutral with dissolve
+    hide edward with dissolve
 
     if escape_successful and not identity_exposed:
         scene bg_hk_airport at parallax with dissolve
-        narrator_voice "Edward boards an international flight just hours before his name hits the global no-fly lists."
+        narrator_voice "You board an international flight just hours before your name hits the global no-fly lists."
 
     # --- Chapter 4 Summary ---
 
@@ -1034,6 +1064,7 @@ label chapter_4:
 ################################################################################
 
 label chapter_5:
+    call show_loading_screen
     $ current_chapter = 5
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 5)
 
@@ -1041,41 +1072,45 @@ label chapter_5:
 
     scene bg_sheremetyevo at parallax with chapter_transition
 
-    show edward neutral at enter_left
+    show edward tired at enter_left
     with dissolve
 
     # --- Snowden in Russia ---
 
-    narrator_voice "The Sheremetyevo International Airport transit zone. Edward Snowden has been trapped here for 40 days. Sleeping on chairs, eating airport food, living in legal limbo."
+    narrator_voice "The Sheremetyevo International Airport transit zone. You have been trapped here for 40 days. Sleeping on chairs, eating airport food, living in legal limbo."
 
     narrator_voice "His passport is cancelled. No country will grant him asylum without risking the wrath of the United States. Twenty-one countries rejected his application. Russia is his last option."
 
     show russian_official neutral at enter_right
     with dissolve
 
-    russian_official "Mr. Snowden. The transit zone is a strange place, yes? You are not in Russia, but you are certainly not in America."
+    russian_official "The transit zone is a strange place, yes? You are not in Russia, but you are certainly not in America."
 
+    show russian_official smug
     russian_official "You are... nowhere. We can offer you 'somewhere.' Russia can grant you temporary asylum."
 
+    show edward defiant
     e "I don't want to be a pawn in anyone's geopolitical chess game."
 
-    russian_official "You became a pawn the moment you took those files, Mr. Snowden. The only question is which board you want to play on."
+    show russian_official calculating
+    russian_official "You became a pawn the moment you took those files. The only question is which board you want to play on."
 
+    show edward sad
     im "He's right. I have no leverage. The US government pressured every ally to refuse me. Bolivia's presidential plane was even forced to land in Austria because they suspected I was on board. That's how far they'll go."
 
     # --- Reflection Dialogue ---
 
-    hide russian_official neutral with dissolve
+    hide russian_official with dissolve
 
     scene bg_moscow_apartment at parallax with dissolve
-    show edward neutral at stage_center
+    show edward thoughtful at stage_center
     with dissolve
 
     im "I'm an exile in the physical world, but I've never been more active in the digital one."
 
     im "From this small apartment in Moscow, I can still connect to the world. I use encrypted video calls to speak at conferences, secure messaging to coordinate with press freedom organisations. The irony of a surveillance whistleblower living in the surveillance capital of the East is not lost on me."
 
-    narrator_voice "From Moscow, Snowden continues to advocate for digital privacy. He develops tools to help journalists protect their sources, speaks to millions through encrypted channels, and becomes the face of the global privacy debate."
+    narrator_voice "From Moscow, you continue to advocate for digital privacy. You develop tools to help journalists protect their sources, speak to millions through encrypted channels, and become the face of the global privacy debate."
 
     im "SecureDrop — an open-source whistleblowing platform — was adopted by dozens of major news organizations after the leaks. It allows anonymous document submission, protecting sources the way I wish I had been protected. The tools I helped popularise are now standard practice in investigative journalism."
 
@@ -1113,10 +1148,10 @@ label chapter_5:
 
     # Text Input
     call screen text_input_question_screen(
-        question="Type the 3-letter encryption tool Snowden used to message journalists:",
+        question="Type the 3-letter encryption tool you used to message journalists:",
         correct_answer="PGP",
         hint="It stands for 'Pretty Good' something, and the short version is enough.",
-        explanation="PGP lets one key lock a message and another key unlock it, which is why Snowden pushed journalists to learn it.",
+        explanation="PGP lets one key lock a message and another key unlock it, which is why you pushed journalists to learn it.",
         accepted_answers=["PGP", "PRETTY GOOD PRIVACY"],
         helper_text="Just the 3-letter version works."
     )
@@ -1138,51 +1173,55 @@ label chapter_5:
     show edward neutral at stage_center
     with dissolve
 
-    narrator_voice "Years have passed. The world has changed — partly because of what Edward Snowden did, and partly in spite of it."
+    narrator_voice "Years have passed. The world has changed — partly because of what you did, and partly in spite of it."
 
-    narrator_voice "A journalist contacts Snowden with a new trove of classified documents from a different whistleblower. The cycle could begin again."
+    narrator_voice "A journalist contacts you with a new trove of classified documents from a different whistleblower. The cycle could begin again."
 
+    show edward thoughtful
     im "Another person on the inside, seeing what I saw, feeling what I felt. They're asking me what to do."
 
     menu:
         "Encourage them to leak. The public deserves to know.":
             $ tree_record_choice("choice_ch5_1", "encourage")
+            show edward determined
             e "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
             $ trust_score += 2
             $ renpy.notify("Trust +2")
 
-            narrator_voice "Snowden helps the new whistleblower establish secure communications, passing on the hard lessons of his own experience."
+            narrator_voice "You help the new whistleblower establish secure communications, passing on the hard lessons of your own experience."
 
         "Advise caution. Use official channels first.":
             $ tree_record_choice("choice_ch5_1", "caution")
+            show edward concerned
             e "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
             $ trust_score += 1
             $ knowledge_score += 1
             $ renpy.notify("Trust +1 | Knowledge +1")
 
-            narrator_voice "Snowden advises a measured approach, hoping the system has improved since his time. Knowing it probably hasn't."
+            narrator_voice "You advise a measured approach, hoping the system has improved since your time. Knowing it probably hasn't."
 
         "Tell them not to do it. The personal cost is too high.":
             $ tree_record_choice("choice_ch5_1", "refuse")
+            show edward sad
             e "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
             $ trust_score -= 1
             $ renpy.notify("Trust -1")
 
-            narrator_voice "Snowden's honesty about the personal cost weighs heavily on the would-be whistleblower."
+            narrator_voice "Your honesty about the personal cost weighs heavily on the would-be whistleblower."
 
-    hide edward neutral with dissolve
+    hide edward with dissolve
 
     # --- Final scene ---
 
     scene bg_moscow_winter_epilogue at parallax with fade
 
-    narrator_voice "Edward Snowden remains in Russia. He was granted permanent residency in 2020 and Russian citizenship in 2022."
+    narrator_voice "You remain in Russia. You were granted permanent residency in 2020 and Russian citizenship in 2022."
 
-    narrator_voice "His disclosures led to the USA FREEDOM Act, which reformed some surveillance practices. Major tech companies adopted end-to-end encryption."
+    narrator_voice "Your disclosures led to the USA FREEDOM Act, which reformed some surveillance practices. Major tech companies adopted end-to-end encryption."
 
     narrator_voice "But mass surveillance continues in new forms. The debate between security and privacy is far from over."
 
-    narrator_voice "The tools Snowden used — encryption, Tor, secure communication — are the same tools available to you."
+    narrator_voice "The tools you used — encryption, Tor, secure communication — are the same tools available to everyone."
 
     narrator_voice "The question is: will you use them?"
 

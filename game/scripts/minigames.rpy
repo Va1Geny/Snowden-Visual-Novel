@@ -10,6 +10,8 @@
 # === Minigame Intro Splash ===
 screen minigame_intro(title, description):
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     add "#0A0E1ACC"
 
     frame:
@@ -43,6 +45,8 @@ screen minigame_intro(title, description):
 # === Minigame Result ===
 screen minigame_result(passed, title, explanation):
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     add "#0A0E1ACC"
 
     frame:
@@ -369,6 +373,8 @@ transform fw_btn_enter:
 
 screen minigame_firewall():
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
 
     # Reset state on first show
     on "show" action Function(fw_reset)
@@ -726,9 +732,10 @@ screen minigame_firewall():
 
             vbox:
                 xalign 0.5
+                yalign 0.5
                 spacing 10
 
-                text "// FIREWALL ANALYSIS COMPLETE //" color "#00FFD1" size 28 bold True xalign 0.5
+                text "// FIREWALL ANALYSIS COMPLETE //" color "#00FFD1" size 28 bold True xalign 0.5 text_align 0.5
 
                 # Mission outcome panel (compact)
                 frame:
@@ -829,6 +836,8 @@ screen minigame_firewall():
                     text_size 22
                     text_bold True
                     action Return(_r_score)
+    key "K_BACKSPACE" action NullAction()
+    key "mouseup_3" action NullAction()
 
 
 ################################################################################
@@ -861,9 +870,9 @@ init python:
                 "> PRISM was the codename for the NSA's secret",
                 "  surveillance program that collected data from",
                 "  internet companies including Google, Facebook,",
-                "  and Apple. Snowden revealed it in 2013."
+                "  and Apple. You revealed it in 2013."
             ],
-            "hint": "This is the name of the surveillance program Snowden risked everything to expose."
+            "hint": "This is the name of the surveillance program you risked everything to expose."
         },
         {
             "word": "ENCRYPTED",
@@ -871,7 +880,7 @@ init python:
             "difficulty": "MEDIUM",
             "headline": "PGP CHANNEL ANALYSIS",
             "context": [
-                "> To protect his communications, Snowden used",
+                "> To protect your communications, you used",
                 "  ENCRYPTION — the process of scrambling data",
                 "  so only the intended recipient can read it.",
                 "  PGP encryption was his primary tool."
@@ -2118,6 +2127,8 @@ screen decrypt_game():
                     text_style "modal_action_button_text"
                     xalign 0.5
                     action Return("next")
+    key "K_BACKSPACE" action NullAction()
+    key "mouseup_3" action NullAction()
 
 
 screen decrypt_stage_transition(word, score, stars):
@@ -2272,7 +2283,7 @@ screen decrypt_result():
                 color "#E8E8E8"
                 size 22
 
-            text "Snowden used PGP encryption to contact journalists. Without encryption, his communications could have been intercepted long before the files reached the public.":
+            text "You used PGP encryption to contact journalists. Without encryption, your communications could have been intercepted long before the files reached the public.":
                 color "#E8E8E8"
                 size 22
 
@@ -2396,6 +2407,8 @@ init python:
 
 screen minigame_trace():
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     default nodes = get_trace_nodes()
     default current_node = "home"
     default path = ["home"]

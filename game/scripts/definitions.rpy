@@ -19,16 +19,16 @@ define e = Character("You",
     who_bold=True)
 
 # === JOURNALISTS ===
-define greenwald = Character("GLENN GREENWALD",
-    image="journalist",
+define greenwald = Character("Grayson Wardell",
+    image="greenwald",
     color="#FFD700",
     what_color="#E8E8E8",
     who_bold=True,
     who_size=22,
     what_size=20)
 
-define poitras = Character("LAURA POITRAS",
-    image="journalist",
+define poitras = Character("Leah Portman",
+    image="poitras",
     color="#FF69B4",
     what_color="#E8E8E8",
     who_bold=True,
@@ -36,14 +36,15 @@ define poitras = Character("LAURA POITRAS",
     what_size=20)
 
 # === ANTAGONISTS / AUTHORITY ===
-define nsa_chief = Character("NSA DIRECTOR",
+define nsa_chief = Character("Director Marcus Hale",
+    image="nsa_chief",
     color="#FF2D55",
     what_color="#E8E8E8",
     who_bold=True,
     who_size=22,
     what_size=20)
 
-define supervisor = Character("SUPERVISOR",
+define supervisor = Character("Supervisor Daniel Cross",
     image="supervisor",
     color="#FF6B35",
     what_color="#E8E8E8",
@@ -60,7 +61,7 @@ define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
     who_size=22,
     what_size=20)
 
-define russian_official = Character("RUSSIAN OFFICIAL",
+define russian_official = Character("Agent Viktor Malenkov",
     image="russian_official",
     color="#CC2222",
     what_color="#E8E8E8",
@@ -124,6 +125,8 @@ default mg_firewall_score = 0
 default mg_decrypt_solved = False
 default mg_opsec_score = 0
 default mg_trace_solved = False
+default cover_wiped = 0
+default cover_failed = 0
 
 # === Question Tracking ===
 default text_input_attempts = 0
@@ -181,6 +184,46 @@ init python:
         "CIA",
     ]
 
+    DOSSIER_ENTRIES = [
+        ("AES-256", "Advanced Encryption Standard with a 256-bit key. Strong symmetric encryption that is effectively impossible to brute-force with current consumer hardware."),
+        ("Boundless Informant", "A data analysis tool used by the NSA to summarize and visualize the metadata and communications records they collect globally."),
+        ("Caesar Cipher", "Simple substitution cipher where each letter is shifted by a fixed number. Easy to break but historically significant. Example: ROT-3 shifts A to D, B to E, and so on."),
+        ("CIA (Central Intelligence Agency)", "A civilian foreign intelligence service of the federal government of the United States, tasked with gathering, processing, and analyzing national security information."),
+        ("DNS (Domain Name System)", "The phonebook of the Internet. Translates human-readable domain names (like example.com) into machine-readable IP addresses."),
+        ("Domestic Surveillance", "The monitoring of citizens within a country's borders by its own government, often a point of legal and ethical controversy."),
+        ("Edward Snowden", "An American former computer intelligence consultant who leaked highly classified information from the NSA in 2013, revealing numerous global surveillance programs."),
+        ("Encryption Fingerprints", "Unique patterns or metadata in encrypted traffic that can reveal the type of encryption used, the application generating it, or even the user, without breaking the encryption itself."),
+        ("Firewall", "Network security system that monitors and filters incoming and outgoing traffic based on predefined rules. Acts as a barrier between trusted and untrusted networks."),
+        ("FISA (Foreign Intelligence Surveillance Act)", "A United States federal law that establishes procedures for the physical and electronic surveillance and collection of foreign intelligence information."),
+        ("Foreign Intelligence", "Information relating to the capabilities, intentions, or activities of foreign governments, organizations, or persons."),
+        ("HTTP (Hypertext Transfer Protocol)", "The foundation of data communication for the World Wide Web. It is unencrypted, meaning data sent via HTTP can be intercepted."),
+        ("HTTPS", "HTTP with TLS/SSL encryption. Secures data between your browser and a web server. Look for the padlock icon in your browser's address bar."),
+        ("Inspector General", "An investigative official in a civil or military organization. In the intelligence community, they are responsible for internal audits and investigating whistleblowers' claims."),
+        ("Man-in-the-Middle Attack", "An attacker secretly intercepts communication between two parties. Both parties think they're talking directly to each other. Key verification prevents this."),
+        ("Mass Surveillance", "The intricate surveillance of an entire or a substantial fraction of a population in order to monitor that group of citizens."),
+        ("Metadata", "Data about data — who you communicated with, when, for how long, from where. Does not include the message content but can reveal intimate patterns of life."),
+        ("National Security", "The security and defense of a nation state, including its citizens, economy, and institutions, which is regarded as a duty of government."),
+        ("Network Security", "Policies and practices adopted to prevent and monitor unauthorized access, misuse, modification, or denial of a computer network and network-accessible resources."),
+        ("NSA (National Security Agency)", "A national-level intelligence agency of the United States Department of Defense, under the authority of the Director of National Intelligence."),
+        ("OpSec (Operational Security)", "The practice of protecting critical information by identifying what intelligence the adversary could gather from your actions and taking steps to prevent it."),
+        ("PGP (Pretty Good Privacy)", "Asymmetric encryption system using public/private key pairs. Public key encrypts, only the matching private key can decrypt. Used for secure email communication."),
+        ("PRISM", "NSA surveillance program providing direct access to user data from major tech companies. Exposed by Snowden in 2013."),
+        ("Private IP Ranges", "IP addresses reserved for internal network use (like 192.168.x.x) that are not routable on the public internet."),
+        ("Public Wi-Fi", "Unsecured wireless networks open to the public. Highly vulnerable to interception and man-in-the-middle attacks."),
+        ("RDP (Remote Desktop Protocol)", "A proprietary protocol developed by Microsoft that provides a user with a graphical interface to connect to another computer over a network connection."),
+        ("Reverse Shell", "A type of shell in which the target machine communicates back to the attacking machine. Often used to bypass firewalls that block incoming connections."),
+        ("SecureDrop", "An open-source whistleblowing platform that allows anonymous document submission. Used by major news organizations to protect sources."),
+        ("SSH (Secure Shell)", "A cryptographic network protocol for operating network services securely over an unsecured network, often used for remote command-line login."),
+        ("Telnet", "An application protocol providing a bidirectional interactive text-oriented communication facility. Unencrypted and largely obsolete for secure networks."),
+        ("TLS (Transport Layer Security)", "A cryptographic protocol designed to provide communications security over a computer network, widely used in HTTPS."),
+        ("TOR (The Onion Router)", "Anonymization network that routes traffic through multiple relay nodes, each encrypting a layer. Makes it very difficult to trace traffic to its source."),
+        ("Traffic Correlation Attack", "A method used to de-anonymize Tor users by matching the timing and volume of traffic entering the Tor network with traffic exiting it."),
+        ("USA FREEDOM Act", "A US law enacted in 2015 that restored and modified several provisions of the Patriot Act, imposing some new limits on the bulk collection of telecommunication metadata."),
+        ("VPN (Virtual Private Network)", "Creates an encrypted tunnel between your device and a server, hiding your traffic from local network surveillance. Essential on untrusted networks like public Wi-Fi."),
+        ("XKeyscore", "NSA tool for searching and analyzing internet data. It could search email content, browsing history, and other digital activity in near real time."),
+        ("Zero-Day Exploit", "A vulnerability in software unknown to the vendor. Called zero-day because there are zero days of notice before it is exploited. No patch exists yet.")
+    ]
+
     def current_viewport_size():
         width = config.screen_width
         height = config.screen_height
@@ -193,6 +236,12 @@ init python:
             pass
 
         return width, height
+
+    def fullscreen_prompt_supported():
+        return renpy.variant("pc") or renpy.variant("web")
+
+    def should_prompt_for_fullscreen():
+        return fullscreen_prompt_supported() and not preferences.fullscreen
 
     def is_compact_layout():
         width, height = current_viewport_size()
@@ -242,26 +291,168 @@ init python:
 
         return None
 
+    def choose_notebook_export_path(default_filename="field_notebook.txt"):
+        try:
+            import tkinter as tk
+            from tkinter import filedialog
+
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes("-topmost", True)
+            root.update_idletasks()
+            root.lift()
+            root.focus_force()
+
+            path = filedialog.asksaveasfilename(
+                title="Save notebook as...",
+                initialdir=os.path.expanduser("~"),
+                initialfile=default_filename,
+                defaultextension=".txt",
+                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+            )
+
+            root.destroy()
+            return path
+        except Exception:
+            try:
+                root.destroy()
+            except Exception:
+                pass
+
+        if os.name == "nt":
+            try:
+                import ctypes
+                from ctypes import wintypes
+
+                class OPENFILENAMEW(ctypes.Structure):
+                    _fields_ = [
+                        ("lStructSize", wintypes.DWORD),
+                        ("hwndOwner", wintypes.HWND),
+                        ("hInstance", wintypes.HINSTANCE),
+                        ("lpstrFilter", wintypes.LPCWSTR),
+                        ("lpstrCustomFilter", wintypes.LPWSTR),
+                        ("nMaxCustFilter", wintypes.DWORD),
+                        ("nFilterIndex", wintypes.DWORD),
+                        ("lpstrFile", wintypes.LPWSTR),
+                        ("nMaxFile", wintypes.DWORD),
+                        ("lpstrFileTitle", wintypes.LPWSTR),
+                        ("nMaxFileTitle", wintypes.DWORD),
+                        ("lpstrInitialDir", wintypes.LPCWSTR),
+                        ("lpstrTitle", wintypes.LPCWSTR),
+                        ("Flags", wintypes.DWORD),
+                        ("nFileOffset", wintypes.WORD),
+                        ("nFileExtension", wintypes.WORD),
+                        ("lpstrDefExt", wintypes.LPCWSTR),
+                        ("lCustData", wintypes.LPARAM),
+                        ("lpfnHook", wintypes.LPVOID),
+                        ("lpTemplateName", wintypes.LPCWSTR),
+                        ("pvReserved", ctypes.c_void_p),
+                        ("dwReserved", wintypes.DWORD),
+                        ("FlagsEx", wintypes.DWORD),
+                    ]
+
+                buffer = ctypes.create_unicode_buffer(260)
+                buffer.value = default_filename
+                buffer_title = ctypes.create_unicode_buffer(260)
+                filter_text = "Text files\0*.txt\0All files\0*.*\0\0"
+
+                ofn = OPENFILENAMEW()
+                ofn.lStructSize = ctypes.sizeof(ofn)
+                ofn.hwndOwner = None
+                ofn.lpstrFilter = ctypes.c_wchar_p(filter_text)
+                ofn.lpstrFile = ctypes.cast(buffer, wintypes.LPWSTR)
+                ofn.nMaxFile = 260
+                ofn.lpstrFileTitle = ctypes.cast(buffer_title, wintypes.LPWSTR)
+                ofn.nMaxFileTitle = 260
+                ofn.lpstrInitialDir = os.path.expanduser("~")
+                ofn.lpstrTitle = "Save notebook as..."
+                ofn.Flags = 0x00000800 | 0x00000002
+                ofn.lpstrDefExt = ".txt"
+
+                if ctypes.windll.comdlg32.GetSaveFileNameW(ctypes.byref(ofn)):
+                    path = buffer.value
+                    return path if path else ""
+            except Exception:
+                pass
+
+        if hasattr(renpy, "filepicker"):
+            try:
+                path = renpy.filepicker(
+                    title="Save notebook as...",
+                    save=True,
+                    default=default_filename,
+                )
+                if path is None:
+                    return ""
+                return path
+            except TypeError:
+                try:
+                    path = renpy.filepicker(
+                        title="Save notebook as...",
+                        save=True,
+                    )
+                    if path is None:
+                        return ""
+                    return path
+                except Exception:
+                    pass
+            except Exception:
+                pass
+
+        return None
+
     def export_notebook_txt():
         if not store.notebook_entries:
             renpy.notify("No notes to export.")
             return
 
-        export_dir = get_notebook_export_dir()
-        if not export_dir:
-            renpy.notify("Could not determine a writable export location.")
+        default_filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
+        path = choose_notebook_export_path(default_filename)
+
+        if path == "":
+            renpy.notify("Notebook export canceled.")
             return
 
-        filename = datetime.now().strftime("field_notebook_%Y%m%d_%H%M%S.txt")
-        path = os.path.join(export_dir, filename)
+        if path is None:
+            export_dir = get_notebook_export_dir()
+            if not export_dir:
+                renpy.notify("Could not determine a writable export location.")
+                return
+
+            path = os.path.join(export_dir, default_filename)
+            renpy.notify("Could not open a save dialog. Exporting to the default exports folder.")
 
         try:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(get_notebook_export_text())
 
-            renpy.notify("Your notebook has been exported")
+            renpy.notify(f"Notebook exported to {path}")
         except Exception as exc:
             renpy.notify(f"Failed to export notebook: {exc}")
+
+    def get_dossier_export_text():
+        header = "NETWORK SECURITY DOSSIER\nClassified: The Snowden Files\n\n"
+        lines = []
+        for term, definition in DOSSIER_ENTRIES:
+            lines.append(f"{term}\n  {definition}")
+        return header + "\n\n".join(lines)
+
+    def export_dossier_txt():
+        export_dir = get_notebook_export_dir()
+        if not export_dir:
+            renpy.notify("Could not determine a writable export location.")
+            return
+
+        filename = datetime.now().strftime("dossier_%Y%m%d_%H%M%S.txt")
+        path = os.path.join(export_dir, filename)
+
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(get_dossier_export_text())
+
+            renpy.notify("Dossier exported to " + export_dir)
+        except Exception as exc:
+            renpy.notify(f"Failed to export dossier: {exc}")
 
     def highlighted_dialogue(text):
         if not text:
@@ -269,31 +460,68 @@ init python:
 
         result = text
         for term in sorted(IMPORTANT_TERMS, key=len, reverse=True):
-            pattern = re.compile(r"(?<!\{b\})(%s)(?!\{/b\})" % re.escape(term), re.IGNORECASE)
+            pattern = re.compile(r"(?<!\{b\})\b(%s)\b(?!\{/b\})" % re.escape(term), re.IGNORECASE)
             result = pattern.sub(lambda match: "{b}%s{/b}" % match.group(1), result)
 
         return result
 
     config.say_menu_text_filter = highlighted_dialogue
 
+    # ─── ACTIVE SPEAKER HIGHLIGHTING ──────────────────────────────────────
+    # Brighten the current speaker, dim everyone else. The earlier version
+    # was disabled because `renpy.show(tag, at_list=[active_char])` REPLACED
+    # the at_list — the entry transform (enter_left/stage_center/...) was
+    # discarded and characters snapped to (0, 0).
+    #
+    # This version preserves position by reading the live at_list with
+    # `renpy.get_at_list`, stripping any prior state transform, and re-
+    # applying `[position_transform, state_transform]`. Because Ren'Py
+    # treats the same transform reference as state-preserving, the entry
+    # animation isn't restarted — only the state layer is swapped.
+    SPEAKER_HIGHLIGHT_TAGS = (
+        "edward",
+        "supervisor",
+        "colleague",
+        "greenwald",
+        "poitras",
+        "journalist",
+        "editor",
+        "nsa_chief",
+        "russian_official",
+    )
+
+    def _strip_speaker_state(at_list):
+        # We assume the first transform is the position/entry transform
+        # Everything else is previous state transforms which we strip
+        return at_list[:1] if at_list else []
+
     def speaker_dimmer(event, interact=True, **kwargs):
-        if not interact:
+        if not interact or event != "begin":
             return
 
-        if event == "begin":
-            speaker = renpy.get_say_image_tag()
-            
-            # List of character tags to monitor
-            char_tags = ["edward", "supervisor", "colleague", "journalist", "editor", "russian_official"]
-            
-            for tag in char_tags:
-                if renpy.showing(tag):
-                    if tag == speaker:
-                        renpy.show(tag, at_list=[active_char])
-                    else:
-                        renpy.show(tag, at_list=[inactive_char])
+        speaker_tag = renpy.get_say_image_tag()
+
+        for tag in SPEAKER_HIGHLIGHT_TAGS:
+            if not renpy.showing(tag):
+                continue
+
+            try:
+                current = renpy.get_at_list(tag, "master")
+            except Exception:
+                current = None
+
+            position_transforms = _strip_speaker_state(list(current or ()))
+
+            # If we have no position context, skip — re-applying with an
+            # empty position list would default the character to (0, 0).
+            if not position_transforms:
+                continue
+
+            new_state = active_char if tag == speaker_tag else inactive_char
+            renpy.show(tag, at_list=position_transforms + [new_state])
 
     config.character_callback = speaker_dimmer
+
 
     def autosave_chapter(chapter_num):
         """Autosave after a chapter completes and show a notification."""
@@ -325,29 +553,199 @@ transform parallax:
 ################################################################################
 
 # === Character Sprites ===
+
+# -- Edward --
+# NOTE: "neutral" sprites are 630x1394 (character fills the canvas), while every
+# other expression is 1024x1024 (character occupies a central ~980px strip).
+# Without compensation, neutral renders ~35% taller — that's the visible "jump"
+# when changing emotions. We lower the neutral zoom so the on-screen character
+# height matches the square expressions, and add yoffset so the feet line up.
 image edward neutral:
     "sprites/edward neutral.png"
+    zoom 0.76
+    yoffset 9
+image edward thoughtful:
+    "sprites/edward thoughtful.png"
+    zoom 1.02
+image edward concerned:
+    "sprites/edward concerned.png"
+    zoom 1.02
+image edward shocked:
+    "sprites/edward shocked.png"
+    zoom 1.02
+image edward tense:
+    "sprites/edward tense.png"
+    zoom 1.02
+image edward determined:
+    "sprites/edward determined.png"
+    zoom 1.02
+image edward defiant:
+    "sprites/edward defiant.png"
+    zoom 1.02
+image edward sad:
+    "sprites/edward sad.png"
+    zoom 1.02
+image edward tired:
+    "sprites/edward tired.png"
+    zoom 1.02
+image edward relieved:
+    "sprites/edward relieved.png"
     zoom 1.02
 
+# -- Supervisor --
 image supervisor neutral:
     "sprites/supervisor neutral.png"
+    zoom 0.75
+    yoffset 21
+image supervisor stern:
+    "sprites/supervisor stern.png"
+    zoom 1.0
+image supervisor authoritative:
+    "sprites/supervisor authoritative.png"
+    zoom 1.0
+image supervisor suspicious:
+    "sprites/supervisor suspicious.png"
+    zoom 1.0
+image supervisor annoyed:
+    "sprites/supervisor annoyed.png"
+    zoom 1.0
+image supervisor cold:
+    "sprites/supervisor cold.png"
     zoom 1.0
 
+# -- Colleague --
 image colleague neutral:
     "sprites/colleague neutral.png"
+    zoom 0.74
+    yoffset 19
+image colleague casual:
+    "sprites/colleague casual.png"
+    zoom 0.98
+image colleague amused:
+    "sprites/colleague amused.png"
+    zoom 0.98
+image colleague smug:
+    "sprites/colleague smug.png"
+    zoom 0.98
+image colleague uneasy:
+    "sprites/colleague uneasy.png"
+    zoom 0.98
+image colleague cautious:
+    "sprites/colleague cautious.png"
     zoom 0.98
 
-image journalist neutral:
-    "sprites/journalist neutral.png"
+# -- Greenwald --
+image greenwald neutral:
+    "sprites/greenwald neutral.png"
+    zoom 1.02
+image greenwald skeptical:
+    "sprites/greenwald skeptical.png"
+    zoom 1.02
+image greenwald confused:
+    "sprites/greenwald confused.png"
+    zoom 1.02
+image greenwald curious:
+    "sprites/greenwald curious.png"
+    zoom 1.02
+image greenwald shocked:
+    "sprites/greenwald shocked.png"
+    zoom 1.02
+image greenwald serious:
+    "sprites/greenwald serious.png"
+    zoom 1.02
+image greenwald resolved:
+    "sprites/greenwald resolved.png"
+    zoom 1.02
+image greenwald concerned:
+    "sprites/greenwald concerned.png"
     zoom 1.02
 
-image editor neutral:
-    "sprites/editor neutral.png"
-    zoom 1.0
+# -- Poitras --
+image poitras neutral:
+    "sprites/poitras neutral.png"
+    zoom 1.02
+image poitras focused:
+    "sprites/poitras focused.png"
+    zoom 1.02
+image poitras cautious:
+    "sprites/poitras cautious.png"
+    zoom 1.02
+image poitras serious:
+    "sprites/poitras serious.png"
+    zoom 1.02
+image poitras concerned:
+    "sprites/poitras concerned.png"
+    zoom 1.02
+image poitras resolved:
+    "sprites/poitras resolved.png"
+    zoom 1.02
 
+# -- Russian Official --
 image russian_official neutral:
     "sprites/russian official neutral.png"
+    zoom 0.76
+    yoffset 34
+image russian_official smug:
+    "sprites/russian official smug.png"
     zoom 1.0
+image russian_official calculating:
+    "sprites/russian official calculating.png"
+    zoom 1.0
+image russian_official cold:
+    "sprites/russian official cold.png"
+    zoom 1.0
+image russian_official pressuring:
+    "sprites/russian official pressuring.png"
+    zoom 1.0
+image russian_official confident:
+    "sprites/russian official confident.png"
+    zoom 1.0
+
+# -- NSA Chief --
+image nsa_chief neutral:
+    "sprites/nsa chief neutral.png"
+    zoom 1.0
+image nsa_chief authoritative:
+    "sprites/nsa chief authoritative.png"
+    zoom 1.0
+image nsa_chief angry:
+    "sprites/nsa chief angry.png"
+    zoom 1.0
+image nsa_chief cold:
+    "sprites/nsa chief cold.png"
+    zoom 1.0
+
+# -- Journalist --
+image journalist neutral:
+    "sprites/journalist neutral.png"
+    zoom 0.77
+    yoffset 20
+image journalist skeptical:
+    "sprites/journalist skeptical.png"
+    zoom 1.02
+image journalist focused:
+    "sprites/journalist focused.png"
+    zoom 1.02
+image journalist serious:
+    "sprites/journalist serious.png"
+    zoom 1.02
+image journalist shocked:
+    "sprites/journalist shocked.png"
+    zoom 1.02
+image journalist resolved:
+    "sprites/journalist resolved.png"
+    zoom 1.02
+image journalist concerned:
+    "sprites/journalist concerned.png"
+    zoom 1.02
+
+# -- Editor --
+# Editor only ships with the tall format, so we just normalize its size to
+# match the rest of the cast — there's no other expression to "jump" to.
+image editor neutral:
+    "sprites/editor neutral.png"
+    zoom 0.76
+
 # === Logo Watermark ===
 image logo_watermark:
     "images/logo.png"
@@ -424,14 +822,18 @@ image bg_sheremetyevo:
 ################################################################################
 
 # === ACTIVE / INACTIVE STATES ===
+# PURE state transforms: only saturation, alpha, and a tiny zoom delta for the
+# speaker pop. They do NOT touch position (no xanchor/yanchor/xpos/ypos), so
+# they can be safely chained ON TOP of an entry/stage transform via at_list
+# without overwriting the character's position. The speaker_dimmer callback
+# reads the live at_list and applies [position, state] each time the speaker
+# changes.
 
 transform active_char:
-    xanchor 0.5 yanchor 1.0
-    ease 0.25 matrixcolor SaturationMatrix(1.0) zoom 1.18 alpha 1.0
+    ease 0.3 matrixcolor SaturationMatrix(1.0) alpha 1.0 zoom 1.02
 
 transform inactive_char:
-    xanchor 0.5 yanchor 1.0
-    ease 0.25 matrixcolor SaturationMatrix(0.3) zoom 1.12 alpha 0.9
+    ease 0.3 matrixcolor SaturationMatrix(0.35) alpha 0.8 zoom 0.97
 
 # === ENTRANCE TRANSFORMS ===
 
@@ -439,28 +841,38 @@ transform inactive_char:
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
-    xpos -0.20 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.6 xpos 0.25 ypos 1.60 alpha 1.0 zoom 1.18
+    on show:
+        xpos -0.20 ypos 1.50 alpha 0.0 zoom 1.0
+        ease 0.6 xpos 0.15 ypos 1.50 alpha 1.0 zoom 1.40
+    on replace:
+        xpos 0.15 ypos 1.50 alpha 1.0 zoom 1.40
 
 # Slide in from right
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 1.20 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.6 xpos 0.75 ypos 1.60 alpha 1.0 zoom 1.18
+    on show:
+        xpos 1.40 ypos 1.50 alpha 0.0 zoom 1.0
+        ease 0.6 xpos 0.85 ypos 1.50 alpha 1.0 zoom 1.40
+    on replace:
+        xpos 0.85 ypos 1.50 alpha 1.0 zoom 1.40
 
 # Fade in from center
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.5 ypos 1.60 alpha 0.0 zoom 1.0
-    ease 0.5 xpos 0.5 ypos 1.60 alpha 1.0 zoom 1.18
+    on show:
+        xpos 0.3 ypos 1.50 alpha 0.0 zoom 1.0
+        ease 0.5 xpos 0.5 ypos 1.50 alpha 1.0 zoom 1.40
+    on replace:
+        xpos 0.5 ypos 1.50 alpha 1.0 zoom 1.40
 
 transform stage_center:
     xanchor 0.5
     yanchor 1.0
     xpos 0.5
-    ypos 1.60
+    ypos 1.15
+
 
 # === IDLE TRANSFORMS ===
 
@@ -618,6 +1030,7 @@ init python:
     def tree_reset_current_run():
         for _name in _tree_choice_map:
             setattr(persistent, _name, "")
+        setattr(persistent, "tree_ch_reached", 0)
         setattr(persistent, "tree_ending", "")
         renpy.save_persistent()
 

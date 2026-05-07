@@ -5,7 +5,7 @@
 
 init python:
     ctm_threats = [
-        {"id":"from_email","dangerous":"edward.snowden@nsa.gov","safe":"anon7742@protonmail.com","level":"CRITICAL","label":"Work email reveals identity","category":"Identity",
+        {"id":"from_email","dangerous":"contractor.admin@nsa.gov","safe":"anon7742@protonmail.com","level":"CRITICAL","label":"Work email reveals identity","category":"Identity",
          "title":"IDENTITY EXPOSED — NSA EMAIL ADDRESS","explanation":"Using your work email is like signing the letter with your employee badge number. The NSA can trace any email sent from @nsa.gov instantly.\n\n✓ FIX: Use an anonymous ProtonMail account created through TOR with no personal information attached."},
         {"id":"cc_field","dangerous":"laura.poitras@documentary.org","safe":"[CC removed]","level":"HIGH","label":"CC exposes your other contacts","category":"Network",
          "title":"NETWORK EXPOSED — CC FIELD","explanation":"Adding a CC connects TWO contacts to the same leaked communication. If one is intercepted, the other is immediately compromised.\n\n✓ FIX: Send separate, independent messages to each contact. Never link sources together."},
@@ -17,7 +17,7 @@ init python:
          "title":"LOCATION EXPOSED — MESSAGE BODY","explanation":"Mentioning your physical city and state is one of the most dangerous OpSec mistakes. Combined with employer name, this gives investigators your home address.\n\n✓ FIX: Never mention any physical location in sensitive communications."},
         {"id":"signature","dangerous":"Best, Edward","safe":"— (no signature)","level":"HIGH","label":"First name confirms identity","category":"Identity",
          "title":"IDENTITY CONFIRMED — SIGNATURE","explanation":"Signing with your real first name, combined with NSA email and Honolulu location, creates a complete identity confirmation.\n\n✓ FIX: Never sign anonymous communications with any real name. Use a pre-agreed codename."},
-        {"id":"attachment","dangerous":"PRISM_full_slides_FINAL_v2.pdf | Author: E. Snowden, NSA","safe":"document.pdf [Metadata stripped]","level":"CRITICAL","label":"File contains embedded author metadata","category":"Files",
+        {"id":"attachment","dangerous":"PRISM_full_slides_FINAL_v2.pdf | Author: [[CLASSIFIED], NSA","safe":"document.pdf [Metadata stripped]","level":"CRITICAL","label":"File contains embedded author metadata","category":"Files",
          "title":"METADATA IN FILE — ATTACHMENT","explanation":"Every PDF contains hidden metadata: author name, company, creation date. Your name is literally written INSIDE the file.\n\n✓ FIX: Use a metadata stripping tool (MAT2 / ExifTool) before sending. Rename the file to something generic."},
         {"id":"routing","dangerous":"Sent via NSA internal mail relay. ID: NSA-HIFO-2847","safe":"[Headers stripped / sent via TOR]","level":"HIGH","label":"Server header reveals mail infrastructure","category":"Infra",
          "title":"INFRASTRUCTURE EXPOSED — MAIL RELAY","explanation":"Email routing headers reveal which mail server sent your message. 'NSA internal mail relay' confirms the sender works at the NSA.\n\n✓ FIX: Route emails through TOR and use a provider that strips routing headers (ProtonMail, Tutanota)."},
@@ -366,8 +366,10 @@ screen minigame_clean_message():
 
                         textbutton "> CLEAN THIS THREAT":
                             style "modal_action_button"
+                            xsize 340
                             text_style "modal_action_button_text"
                             xalign 0.5
+                            right_margin 30
                             action Function(ctm_clean)
 
                         textbutton "> DISMISS":
@@ -425,3 +427,6 @@ screen minigame_clean_message():
                     text_style "modal_action_button_text"
                     xalign 0.5
                     action Return(_ctm_score)
+
+    key "K_BACKSPACE" action NullAction()
+    key "mouseup_3" action NullAction()
