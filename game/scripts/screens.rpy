@@ -220,20 +220,20 @@ screen shell_header(kicker, title, body=None):
                 spacing 4
                 yalign 0.5
 
-                text _translate_display_text(kicker):
+                text t(kicker):
                     color "#8B8FCC"
                     size kicker_size
                     bold True
                     substitute False
 
-                text _translate_display_text(title):
+                text t(title):
                     color "#EAF4F1"
                     size title_size
                     bold True
                     substitute False
 
                 if body:
-                    text _translate_display_text(body):
+                    text t(body):
                         color "#AAB0D6"
                         size body_size
                         xmaximum body_max
@@ -257,10 +257,10 @@ screen say(who, what):
             window:
                 id "namebox"
                 style "namebox"
-                text _translate_display_text(who) id "who":
+                text t(who) id "who":
                     substitute False
 
-        text translated_dialogue(what) id "what":
+        text td(what) id "what":
             substitute False
 
     if not renpy.variant("small"):
@@ -319,7 +319,7 @@ screen input(prompt):
             xsize 1544
             spacing 14
 
-            text _translate_display_text(prompt) style "input_prompt":
+            text t(prompt) style "input_prompt":
                 substitute False
             input id "input"
 
@@ -345,7 +345,7 @@ screen choice(items):
         spacing 14
 
         for i in items:
-            textbutton _translate_display_text(i.caption) action i.action
+            textbutton t(i.caption) action i.action
 
 
 ################################################################################
@@ -1456,14 +1456,14 @@ screen dossier():
                                     xfill True
                                     xmaximum 1600
 
-                                    text _translate_display_text(term):
+                                    text t(term):
                                         color "#EAF4F1"
                                         size dossier_term_size
                                         bold True
                                         xfill True
                                         substitute False
 
-                                    text _translate_display_text(definition):
+                                    text t(definition):
                                         color "#AAB0D6"
                                         size dossier_definition_size
                                         xfill True
@@ -1479,7 +1479,7 @@ screen dossier():
                     spacing 10
                     xfill True
 
-                    text _translate_display_text("Exports are saved as plain .txt files to an exports folder or to your user profile if needed."):
+                    text t("Exports are saved as plain .txt files to an exports folder or to your user profile if needed."):
                         color "#AAB0D6"
                         size dossier_footer_size
                         xalign 0.5
@@ -1491,7 +1491,7 @@ screen dossier():
                         spacing 12
                         xfill True
 
-                        textbutton _translate_display_text("EXPORT TXT"):
+                        textbutton t("EXPORT TXT"):
                             style "modal_action_button"
                             xsize 220
                             background Solid("#244C2F")
@@ -1500,7 +1500,7 @@ screen dossier():
 
                         null xfill True
 
-                        textbutton _translate_display_text("RETURN"):
+                        textbutton t("RETURN"):
                             style "modal_action_button"
                             xsize 240
                             action Return()
@@ -2786,25 +2786,25 @@ screen preferences():
                         style "shell_nav_button"
                         xsize 312
                         selected _preferences.language is None
-                        action Language(None)
+                        action language_change_action(None)
 
                     textbutton _("Nederlands"):
                         style "shell_nav_button"
                         xsize 312
                         selected _preferences.language == "dutch"
-                        action Language("dutch")
+                        action language_change_action("dutch")
 
                     textbutton _("Français"):
                         style "shell_nav_button"
                         xsize 312
                         selected _preferences.language == "french"
-                        action Language("french")
+                        action language_change_action("french")
 
                     textbutton _("Українська"):
                         style "shell_nav_button"
                         xsize 312
                         selected _preferences.language == "ukrainian"
-                        action Language("ukrainian")
+                        action language_change_action("ukrainian")
 
 
 screen history():
@@ -2824,20 +2824,20 @@ screen history():
 
                         if h.who:
                             if "color" in h.who_args:
-                                text _translate_display_text(h.who):
+                                text t(h.who):
                                     color h.who_args["color"]
                                     size 20
                                     bold True
                                     substitute False
                             else:
-                                text _translate_display_text(h.who):
+                                text t(h.who):
                                     color "#8B8FCC"
                                     size 20
                                     bold True
                                     substitute False
 
                         $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
-                        text highlighted_dialogue(what):
+                        text trich(what):
                             color "#EAF4F1"
                             size 19
                             substitute False
@@ -3007,7 +3007,7 @@ screen confirm(message, yes_action, no_action):
             spacing 22
             xalign 0.5
 
-            text _translate_display_text(_(message)):
+            text t(_(message)):
                 color "#EAF4F1"
                 size 28
                 bold True
@@ -3111,7 +3111,7 @@ screen nvl_dialogue(dialogue):
                     text d.who:
                         id d.who_id
 
-                text highlighted_dialogue(d.what):
+                text trich(d.what):
                     id d.what_id
 
 
@@ -3188,7 +3188,7 @@ screen bubble(who, what):
                 text who:
                     id "who"
 
-        text highlighted_dialogue(what):
+        text trich(what):
             id "what"
 
         default ctc = None
