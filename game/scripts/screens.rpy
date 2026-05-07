@@ -374,6 +374,9 @@ screen quick_menu():
             textbutton _("Save") action ShowMenu("save")
             textbutton _("Prefs") action ShowMenu("preferences")
 
+    key "i" action ShowMenu("dossier")
+    key "I" action ShowMenu("dossier")
+
 
 screen game_hud():
     zorder 90
@@ -664,20 +667,53 @@ screen notebook_toggle():
     zorder 95
 
     if show_hud and not main_menu and not renpy.get_screen("pause_hub"):
-        imagebutton:
-            idle "images/ui/notebook_closed.png"
-            hover "images/ui/notebook_open.png"
-            selected_idle "images/ui/notebook_open.png"
-            selected_hover "images/ui/notebook_open.png"
-            selected renpy.get_screen("notebook_panel") is not None
-            focus_mask True
+        hbox:
             xalign 1.0
             xoffset 48
             yalign 1.0
             yoffset 54
-            action ToggleScreen("notebook_panel")
+            spacing 10
             at Transform(zoom=0.5, alpha=0.85)
-            tooltip "Notebook (N)"
+
+            fixed:
+                fit_first True
+
+                imagebutton:
+                    idle Transform("images/ui/notebook_closed.png", matrixcolor=TintMatrix("#006654"))
+                    hover Transform("images/ui/notebook_open.png", matrixcolor=TintMatrix("#006654"))
+                    selected_idle Transform("images/ui/notebook_open.png", matrixcolor=TintMatrix("#006654"))
+                    selected_hover Transform("images/ui/notebook_open.png", matrixcolor=TintMatrix("#006654"))
+                    selected renpy.get_screen("dossier") is not None
+                    focus_mask True
+                    action ShowMenu("dossier")
+                    tooltip "Dossier (I)"
+
+                text "DOSSIER":
+                    align (0.5, 0.45)
+                    color "#F7FFFC"
+                    size 28
+                    bold True
+                    outlines [(2, "#002922", 0, 0)]
+
+            fixed:
+                fit_first True
+
+                imagebutton:
+                    idle "images/ui/notebook_closed.png"
+                    hover "images/ui/notebook_open.png"
+                    selected_idle "images/ui/notebook_open.png"
+                    selected_hover "images/ui/notebook_open.png"
+                    selected renpy.get_screen("notebook_panel") is not None
+                    focus_mask True
+                    action ToggleScreen("notebook_panel")
+                    tooltip "Notebook (N)"
+
+                text "NOTEBOOK":
+                    align (0.5, 0.45)
+                    color "#AAB0D6"
+                    size 28
+                    bold True
+                    outlines [(2, "#101523", 0, 0)]
 
         key "n" action ToggleScreen("notebook_panel")
         key "N" action ToggleScreen("notebook_panel")
@@ -1144,6 +1180,11 @@ screen pause_hub():
                                 xfill True
                                 action Show("notebook_panel")
 
+                            textbutton "DOSSIER":
+                                style "modal_action_button"
+                                xfill True
+                                action ShowMenu("dossier")
+
                             textbutton "SAVE":
                                 style "modal_action_button"
                                 xfill True
@@ -1221,6 +1262,10 @@ screen pause_hub():
                 textbutton "OPEN NOTEBOOK":
                     style "modal_action_button"
                     action Show("notebook_panel")
+
+                textbutton "DOSSIER":
+                    style "modal_action_button"
+                    action ShowMenu("dossier")
 
                 textbutton "START":
                     style "modal_action_button"
@@ -1389,22 +1434,7 @@ screen dossier():
                     xfill True
                     xmaximum 1670
 
-                    for term, definition in [
-                        ("VPN (Virtual Private Network)", "Creates an encrypted tunnel between your device and a server, hiding your traffic from local network surveillance. Essential on untrusted networks like public Wi-Fi."),
-                        ("PGP (Pretty Good Privacy)", "Asymmetric encryption system using public/private key pairs. Public key encrypts, only the matching private key can decrypt. Used for secure email communication."),
-                        ("TOR (The Onion Router)", "Anonymization network that routes traffic through multiple relay nodes, each encrypting a layer. Makes it very difficult to trace traffic to its source."),
-                        ("HTTPS", "HTTP with TLS/SSL encryption. Secures data between your browser and a web server. Look for the padlock icon in your browser's address bar."),
-                        ("Firewall", "Network security system that monitors and filters incoming and outgoing traffic based on predefined rules. Acts as a barrier between trusted and untrusted networks."),
-                        ("Metadata", "Data about data — who you communicated with, when, for how long, from where. Does not include the message content but can reveal intimate patterns of life."),
-                        ("Man-in-the-Middle Attack", "An attacker secretly intercepts communication between two parties. Both parties think they're talking directly to each other. Key verification prevents this."),
-                        ("Caesar Cipher", "Simple substitution cipher where each letter is shifted by a fixed number. Easy to break but historically significant. Example: ROT-3 shifts A to D, B to E, and so on."),
-                        ("OpSec (Operational Security)", "The practice of protecting critical information by identifying what intelligence the adversary could gather from your actions and taking steps to prevent it."),
-                        ("Zero-Day Exploit", "A vulnerability in software unknown to the vendor. Called zero-day because there are zero days of notice before it is exploited. No patch exists yet."),
-                        ("AES-256", "Advanced Encryption Standard with a 256-bit key. Strong symmetric encryption that is effectively impossible to brute-force with current consumer hardware."),
-                        ("SecureDrop", "An open-source whistleblowing platform that allows anonymous document submission. Used by major news organizations to protect sources."),
-                        ("PRISM", "NSA surveillance program providing direct access to user data from major tech companies. Exposed by Snowden in 2013."),
-                        ("XKeyscore", "NSA tool for searching and analyzing internet data. It could search email content, browsing history, and other digital activity in near real time."),
-                    ]:
+                    for term, definition in DOSSIER_ENTRIES:
                         frame:
                             xfill True
                             xmaximum 1670
@@ -1445,20 +1475,35 @@ screen dossier():
                 background Solid("#171C30")
                 padding (20, 18)
 
-                hbox:
+                vbox:
+                    spacing 10
                     xfill True
 
-                    text _translate_display_text("Use the mouse wheel or drag to browse the archive."):
+                    text _translate_display_text("Exports are saved as plain .txt files to an exports folder or to your user profile if needed."):
                         color "#AAB0D6"
                         size dossier_footer_size
-                        yalign 0.5
+                        xalign 0.5
+                        text_align 0.5
+                        xmaximum 1400
                         substitute False
 
-                    textbutton _translate_display_text("RETURN"):
-                        style "modal_action_button"
-                        xsize 240
-                        xalign 1.0
-                        action Return()
+                    hbox:
+                        spacing 12
+                        xfill True
+
+                        textbutton _translate_display_text("EXPORT TXT"):
+                            style "modal_action_button"
+                            xsize 220
+                            background Solid("#244C2F")
+                            hover_background Solid("#3A7A58")
+                            action Function(export_dossier_txt)
+
+                        null xfill True
+
+                        textbutton _translate_display_text("RETURN"):
+                            style "modal_action_button"
+                            xsize 240
+                            action Return()
 
     key "game_menu" action Return()
 
@@ -1604,6 +1649,7 @@ screen intro_shortcuts_screen():
                                 ("Esc / Right Click / MENU", "Open mission control and game settings."),
                                 ("Back / Page Up", "Review previous dialogue."),
                                 ("N", "Open / close the field notebook."),
+                                ("I", "Open the network security dossier."),
                                 ("Notebook", "Save your own reminders while playing."),
                             ]:
                                 hbox:
@@ -1681,7 +1727,7 @@ screen briefing_screen():
                 vbox:
                     spacing 18
 
-                    text "OPERATIVE: Edward Snowden":
+                    text "OPERATIVE: [[CLASSIFIED]":
                         color "#EAF4F1"
                         size briefing_title_size
                         bold True

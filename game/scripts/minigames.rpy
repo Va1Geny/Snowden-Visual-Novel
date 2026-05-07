@@ -1,22 +1,24 @@
 ################################################################################
-## MINIGAMES.RPY — All Minigame Logic and Screens
-## Classified: The Snowden Files
+# MINIGAMES.RPY — All Minigame Logic and Screens
+# Classified: The Snowden Files
 ################################################################################
 
 ################################################################################
-## MINIGAME INTRO / RESULT SCREENS
+# MINIGAME INTRO / RESULT SCREENS
 ################################################################################
 
 # === Minigame Intro Splash ===
 screen minigame_intro(title, description):
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     add "#0A0E1ACC"
 
     frame:
         xalign 0.5 yalign 0.5
         xsize 900 ysize 500
         background "#0A0E1A"
-        padding (40, 40)
+        padding(40, 40)
 
         vbox:
             xalign 0.5 yalign 0.5
@@ -43,13 +45,15 @@ screen minigame_intro(title, description):
 # === Minigame Result ===
 screen minigame_result(passed, title, explanation):
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     add "#0A0E1ACC"
 
     frame:
         xalign 0.5 yalign 0.5
         xsize 900 ysize 500
         background "#0A0E1A"
-        padding (40, 40)
+        padding(40, 40)
 
         vbox:
             xalign 0.5 yalign 0.5
@@ -74,8 +78,8 @@ screen minigame_result(passed, title, explanation):
 
 
 ################################################################################
-## MINIGAME 1: FIREWALL BREACH (Chapter 1) — REDESIGNED
-## Cinematic NSA Workstation-style packet analysis minigame
+# MINIGAME 1: FIREWALL BREACH (Chapter 1) — REDESIGNED
+# Cinematic NSA Workstation-style packet analysis minigame
 ################################################################################
 
 init python:
@@ -310,13 +314,13 @@ transform fw_packet_enter:
     ease 0.45 xoffset 0 alpha 1.0
 
 transform fw_packet_exit_allow:
-    ease 0.35 xoffset -700 alpha 0.0 zoom 0.92
+    ease 0.35 xoffset - 700 alpha 0.0 zoom 0.92
 
 transform fw_packet_exit_block:
     linear 0.06 xoffset 14
-    linear 0.06 xoffset -14
+    linear 0.06 xoffset - 14
     linear 0.06 xoffset 10
-    linear 0.06 xoffset -10
+    linear 0.06 xoffset - 10
     linear 0.04 xoffset 0
     ease 0.3 alpha 0.0 zoom 0.88
 
@@ -345,7 +349,7 @@ transform fw_result_enter:
     ease 0.6 alpha 1.0 zoom 1.0
 
 transform fw_title_enter:
-    alpha 0.0 yoffset -20
+    alpha 0.0 yoffset - 20
     pause 0.2
     ease 0.5 alpha 1.0 yoffset 0
 
@@ -369,6 +373,8 @@ transform fw_btn_enter:
 
 screen minigame_firewall():
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
 
     # Reset state on first show
     on "show" action Function(fw_reset)
@@ -426,7 +432,7 @@ screen minigame_firewall():
             xfill True ysize 100
             xpos 0 ypos 0
             background "#0D1220EE"
-            padding (30, 12)
+            padding(30, 12)
 
             vbox:
                 spacing 6
@@ -468,7 +474,7 @@ screen minigame_firewall():
                     frame:
                         xfill True ysize 6
                         background "#1A1A2E"
-                        padding (0, 0)
+                        padding(0, 0)
 
                         frame:
                             xsize int(1220 * _fw_frac)
@@ -482,7 +488,7 @@ screen minigame_firewall():
                     frame:
                         xfill True ysize 6
                         background "#1A1A2E"
-                        padding (0, 0)
+                        padding(0, 0)
 
         # ── PACKET CARD ──────────────────────────────────────────────────
         # Use showif per packet index to trigger enter animation on change
@@ -492,7 +498,7 @@ screen minigame_firewall():
                     xalign 0.5 yalign 0.42
                     xsize 820 ysize 280
                     background "#131928"
-                    padding (0, 0)
+                    padding(0, 0)
 
                     # Outer border
                     add Solid("#00FFD120"):
@@ -511,7 +517,7 @@ screen minigame_firewall():
                     text "◥" color "#00FFD140" size 14 xpos 798 ypos 258
 
                     vbox:
-                        pos (0, 0)
+                        pos(0, 0)
                         xsize 820
 
                         # Signature bar at top
@@ -526,13 +532,13 @@ screen minigame_firewall():
                             frame:
                                 xsize 240 ysize 32
                                 background "#1A2440"
-                                padding (10, 4)
+                                padding(10, 4)
                                 text "SIGNATURE" color "#C9D0F3" size 13 bold True yalign 0.5
 
                             frame:
                                 xfill True ysize 32
                                 background "#0D1220"
-                                padding (15, 4)
+                                padding(15, 4)
                                 text "[_pc_tag]" color "#8B8FCC" size 14 bold True yalign 0.5
 
                         null height 20
@@ -597,7 +603,7 @@ screen minigame_firewall():
                 frame:
                     xsize 220 ysize 70
                     background "#0D1220"
-                    padding (0, 0)
+                    padding(0, 0)
 
                     # Border
                     add Solid("#00FFD140"):
@@ -621,7 +627,7 @@ screen minigame_firewall():
                 frame:
                     xsize 220 ysize 70
                     background "#0D1220"
-                    padding (0, 0)
+                    padding(0, 0)
 
                     add Solid("#FF2D5540"):
                         xsize 220 ysize 1 xpos 0 ypos 0
@@ -646,12 +652,12 @@ screen minigame_firewall():
                 xalign 0.5 yalign 0.5
                 xsize 642 ysize 282
                 background "#00FFD130"
-                padding (1, 1)
+                padding(1, 1)
 
                 frame:
                     xsize 640 ysize 280
                     background "#0A0A14E6"
-                    padding (29, 19)
+                    padding(29, 19)
 
                     vbox:
                         spacing 10
@@ -700,7 +706,7 @@ screen minigame_firewall():
                 xalign 0.5 yalign 0.82
                 xsize 820 ysize 50
                 background "#0A0A14"
-                padding (20, 12)
+                padding(20, 12)
 
                 add Solid("#00FFD120"):
                     xsize 820 ysize 1 xpos 0 ypos 0
@@ -722,10 +728,11 @@ screen minigame_firewall():
         frame at fw_result_enter:
             xfill True yfill True
             background "#0A0E1A"
-            padding (40, 20)
+            padding(40, 20)
 
             vbox:
                 xalign 0.5
+                yalign 0.5
                 spacing 10
 
                 text "// FIREWALL ANALYSIS COMPLETE //" color "#00FFD1" size 28 bold True xalign 0.5 text_align 0.5
@@ -734,7 +741,7 @@ screen minigame_firewall():
                 frame:
                     xalign 0.5 xsize 700
                     background "#131928"
-                    padding (25, 15)
+                    padding(25, 15)
 
                     vbox:
                         spacing 6
@@ -771,7 +778,7 @@ screen minigame_firewall():
                 frame:
                     xalign 0.5 xsize 700
                     background "#0D1220"
-                    padding (15, 10)
+                    padding(15, 10)
 
                     viewport:
                         xfill True ysize 200
@@ -812,7 +819,7 @@ screen minigame_firewall():
                 frame:
                     xalign 0.5 xsize 700
                     background "#131928"
-                    padding (15, 10)
+                    padding(15, 10)
 
                     vbox:
                         spacing 4
@@ -834,7 +841,7 @@ screen minigame_firewall():
 
 
 ################################################################################
-## MINIGAME 2: DECRYPT THE MESSAGE (Chapter 2)
+# MINIGAME 2: DECRYPT THE MESSAGE (Chapter 2)
 ################################################################################
 
 init python:
@@ -863,9 +870,9 @@ init python:
                 "> PRISM was the codename for the NSA's secret",
                 "  surveillance program that collected data from",
                 "  internet companies including Google, Facebook,",
-                "  and Apple. Snowden revealed it in 2013."
+                "  and Apple. You revealed it in 2013."
             ],
-            "hint": "This is the name of the surveillance program Snowden risked everything to expose."
+            "hint": "This is the name of the surveillance program you risked everything to expose."
         },
         {
             "word": "ENCRYPTED",
@@ -873,7 +880,7 @@ init python:
             "difficulty": "MEDIUM",
             "headline": "PGP CHANNEL ANALYSIS",
             "context": [
-                "> To protect his communications, Snowden used",
+                "> To protect your communications, you used",
                 "  ENCRYPTION — the process of scrambling data",
                 "  so only the intended recipient can read it.",
                 "  PGP encryption was his primary tool."
@@ -912,7 +919,8 @@ init python:
         for _i in range(6):
             rows = []
             for _j in range(20):
-                rows.append(" ".join(random.choice(letters) for _k in range(14)))
+                rows.append(" ".join(random.choice(letters)
+                            for _k in range(14)))
             streams.append("\n".join(rows))
         return streams
 
@@ -1010,7 +1018,8 @@ init python:
 
     def decrypt_set_hover_letter(letter):
         decrypt_state["hover_letter"] = letter
-        decrypt_state["wheel_angle"] = -(ord(letter) - ord("A")) * (360.0 / 26.0)
+        decrypt_state["wheel_angle"] = - \
+            (ord(letter) - ord("A")) * (360.0 / 26.0)
         renpy.restart_interaction()
 
     def decrypt_clear_hover_letter():
@@ -1022,7 +1031,8 @@ init python:
             return
         decrypt_state["selected_position"] = position
         puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
-        decrypt_state["wheel_angle"] = -(ord(puzzle["encrypted"][position]) - ord("A")) * (360.0 / 26.0)
+        decrypt_state["wheel_angle"] = - \
+            (ord(puzzle["encrypted"][position]) - ord("A")) * (360.0 / 26.0)
         decrypt_record_activity()
         renpy.restart_interaction()
 
@@ -1058,7 +1068,8 @@ init python:
         if letter == puzzle["word"][position]:
             decrypt_state["letters_placed"][position] = letter
             decrypt_state["wrong_position"] = None
-            decrypt_log("> " + puzzle["encrypted"][position] + " -> " + letter + " mapped.")
+            decrypt_log("> " + puzzle["encrypted"]
+                        [position] + " -> " + letter + " mapped.")
             decrypt_advance_selection()
             renpy.restart_interaction()
             decrypt_check_word()
@@ -1071,7 +1082,8 @@ init python:
         if decrypt_state["phase"] != "playing":
             return
 
-        decrypt_place_letter(decrypt_get_selected_position(), letter.upper(), source="hardware")
+        decrypt_place_letter(decrypt_get_selected_position(),
+                             letter.upper(), source="hardware")
 
     def decrypt_use_cipher_letter(cipher_letter):
         if decrypt_state["phase"] != "playing":
@@ -1083,11 +1095,13 @@ init python:
         for idx, encrypted_letter in enumerate(puzzle["encrypted"]):
             if encrypted_letter == cipher_letter and decrypt_state["letters_placed"][idx] != puzzle["word"][idx]:
                 decrypt_state["selected_position"] = idx
-                decrypt_log("> Reference focus: " + cipher_letter + " -> " + caesar_map[cipher_letter])
+                decrypt_log("> Reference focus: " + cipher_letter +
+                            " -> " + caesar_map[cipher_letter])
                 renpy.restart_interaction()
                 return
 
-        decrypt_log("> Reference focus: " + cipher_letter + " -> " + caesar_map[cipher_letter])
+        decrypt_log("> Reference focus: " + cipher_letter +
+                    " -> " + caesar_map[cipher_letter])
         renpy.restart_interaction()
 
     def decrypt_delete_letter():
@@ -1122,7 +1136,8 @@ init python:
             return
 
         puzzle = decrypt_puzzles[stage_index]
-        candidates = [idx for idx, value in enumerate(decrypt_state["letters_placed"]) if value != puzzle["word"][idx]]
+        candidates = [idx for idx, value in enumerate(
+            decrypt_state["letters_placed"]) if value != puzzle["word"][idx]]
         if not candidates:
             return
 
@@ -1172,7 +1187,8 @@ init python:
         if decrypt_state["letters_placed"] != list(puzzle["word"]):
             return False
 
-        decrypt_state["stage_times"][stage_index] = decrypt_elapsed(stage_index)
+        decrypt_state["stage_times"][stage_index] = decrypt_elapsed(
+            stage_index)
         score = decrypt_calculate_stage_score(stage_index)
         decrypt_state["stage_scores"][stage_index] = score
         decrypt_state["stars_earned"][stage_index] = score
@@ -1201,21 +1217,22 @@ init python:
 
     def decrypt_tick_cursor():
         if decrypt_state.get("phase") == "playing":
-            decrypt_state["cursor_visible"] = not decrypt_state.get("cursor_visible", True)
+            decrypt_state["cursor_visible"] = not decrypt_state.get(
+                "cursor_visible", True)
             renpy.restart_interaction()
 
 
 transform letter_reveal:
     alpha 0.0
     zoom 0.5
-    yoffset -10
+    yoffset - 10
     ease 0.25 alpha 1.0 zoom 1.0 yoffset 0
 
 transform letter_wrong_shake:
     xoffset 0
-    ease 0.05 xoffset -12
+    ease 0.05 xoffset - 12
     ease 0.05 xoffset 12
-    ease 0.05 xoffset -8
+    ease 0.05 xoffset - 8
     ease 0.05 xoffset 8
     ease 0.05 xoffset 0
 
@@ -1229,7 +1246,7 @@ transform word_complete_pulse:
 transform star_earn:
     alpha 0.0
     zoom 0.3
-    rotate -20
+    rotate - 20
     ease 0.4 alpha 1.0 zoom 1.0 rotate 0
 
 transform wheel_spin:
@@ -1242,7 +1259,7 @@ transform wheel_snap_to(angle):
     ease 0.3 rotate angle
 
 transform bg_scroll_down(delay=0.0):
-    yoffset -720
+    yoffset - 720
     pause delay
     linear 30.0 yoffset 720
     repeat
@@ -1264,7 +1281,7 @@ screen decrypt_alphabet_panel():
     frame:
         xfill True
         background Solid("#0C1018EE")
-        padding (20, 16)
+        padding(20, 16)
 
         vbox:
             spacing 10
@@ -1283,12 +1300,12 @@ screen decrypt_alphabet_panel():
                         spacing 18
                         yalign 0.5
 
-                        text ("CIPHER →" if row_start == 0 else ""):
+                        text("CIPHER →" if row_start == 0 else ""):
                             color "#607080"
                             size 14
                             font "DejaVuSans.ttf"
 
-                        text ("PLAIN  →" if row_start == 0 else ""):
+                        text("PLAIN  →" if row_start == 0 else ""):
                             color "#607080"
                             size 14
                             font "DejaVuSans.ttf"
@@ -1307,7 +1324,8 @@ screen decrypt_alphabet_panel():
                             xalign 0.5
 
                             button:
-                                style ("alphabet_cell_highlighted_cipher" if is_focus else "alphabet_cell")
+                                style(
+                                    "alphabet_cell_highlighted_cipher" if is_focus else "alphabet_cell")
                                 background Solid("#3A2912" if is_focus else "#18212B" if appears_here else "#111820")
                                 hovered Function(decrypt_set_hover_letter, cipher_letter)
                                 unhovered Function(decrypt_clear_hover_letter)
@@ -1331,7 +1349,7 @@ screen decrypt_alphabet_panel():
                                 xsize 50
                                 ysize 42
                                 background Solid("#003E38" if is_focus else "#111820")
-                                padding (0, 0)
+                                padding(0, 0)
 
                                 text "[plain_letter]":
                                     font "DejaVuSans.ttf"
@@ -1349,7 +1367,7 @@ screen decrypt_word_display():
     frame:
         xfill True
         background Solid("#0C1018EE")
-        padding (28, 22)
+        padding(28, 22)
 
         vbox:
             spacing 18
@@ -1463,7 +1481,7 @@ screen decrypt_word_display():
                                         yalign 0.5
                                         at letter_reveal
                                 else:
-                                    text ("_" if is_selected and decrypt_state.get("cursor_visible", True) else ""):
+                                    text("_" if is_selected and decrypt_state.get("cursor_visible", True) else ""):
                                         font "DejaVuSans.ttf"
                                         size 30
                                         color empty_color
@@ -1485,7 +1503,7 @@ screen decrypt_word_display():
                                         yalign 0.5
                                         at letter_reveal
                                 else:
-                                    text ("_" if is_selected and decrypt_state.get("cursor_visible", True) else ""):
+                                    text("_" if is_selected and decrypt_state.get("cursor_visible", True) else ""):
                                         font "DejaVuSans.ttf"
                                         size 30
                                         color empty_color
@@ -1513,7 +1531,7 @@ screen decrypt_keyboard():
     frame:
         xfill True
         background Solid("#0C1018EE")
-        padding (24, 20)
+        padding(24, 20)
 
         vbox:
             spacing 16
@@ -1689,7 +1707,7 @@ screen decrypt_game():
         timer 25.0 repeat True action Function(decrypt_give_hint)
         timer 0.5 repeat True action Function(decrypt_tick_cursor)
         for _letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-            key ("K_" + _letter.lower()) action Function(decrypt_type_letter, _letter)
+            key("K_" + _letter.lower()) action Function(decrypt_type_letter, _letter)
         key "K_BACKSPACE" action Function(decrypt_delete_letter)
         key "K_DELETE" action Function(decrypt_delete_letter)
         key "K_RETURN" action Function(decrypt_confirm_word)
@@ -1709,7 +1727,7 @@ screen decrypt_game():
         for idx, stream in enumerate(decrypt_state.get("bg_streams", [])):
             text "[stream]":
                 xpos 30 + (idx * 310)
-                ypos -620 + (idx * 80)
+                ypos - 620 + (idx * 80)
                 color "#2A3A4A10"
                 size 18
                 line_spacing 2
@@ -1724,7 +1742,7 @@ screen decrypt_game():
         xsize 1540
         ysize 72
         background Solid("#0C1018F0")
-        padding (24, 14)
+        padding(24, 14)
 
         hbox:
             xfill True
@@ -1751,7 +1769,7 @@ screen decrypt_game():
         xsize 1816
         ysize 340
         background Solid("#0C1018EE")
-        padding (0, 0)
+        padding(0, 0)
 
         fixed:
             xfill True
@@ -1786,7 +1804,7 @@ screen decrypt_game():
         xsize 600
         ysize 270
         background Solid("#0C1018EE")
-        padding (22, 18)
+        padding(22, 18)
 
         vbox:
             spacing 8
@@ -1816,14 +1834,14 @@ screen decrypt_game():
                     spacing 12
 
                     text "Stage [_si + 1]":
-                        color ("#FFD700" if _active else "#607080")
+                        color("#FFD700" if _active else "#607080")
                         size 16
                         bold _active
                         font "DejaVuSans.ttf"
                         yalign 0.5
 
                     text "[_sd]":
-                        color ("#8B8FCC" if _active else "#4D5186")
+                        color("#8B8FCC" if _active else "#4D5186")
                         size 14
                         font "DejaVuSans.ttf"
                         yalign 0.5
@@ -1887,7 +1905,7 @@ screen decrypt_game():
         xsize 430
         ysize 270
         background Solid("#0C1018EE")
-        padding (22, 18)
+        padding(22, 18)
 
         vbox:
             spacing 6
@@ -1926,7 +1944,7 @@ screen decrypt_game():
         xsize 754
         ysize 270
         style "decrypt_terminal"
-        padding (22, 18)
+        padding(22, 18)
 
         vbox:
             spacing 10
@@ -1958,7 +1976,7 @@ screen decrypt_game():
         xsize 1430
         ysize 274
         background Solid("#0C1018EE")
-        padding (0, 0)
+        padding(0, 0)
 
         fixed:
             xfill True
@@ -1982,7 +2000,7 @@ screen decrypt_game():
         xsize 370
         ysize 274
         background Solid("#0C1018EE")
-        padding (22, 18)
+        padding(22, 18)
 
         vbox:
             spacing 10
@@ -2075,7 +2093,7 @@ screen decrypt_game():
             xsize 760
             ysize 240
             background Solid("#08130DDC")
-            padding (28, 22)
+            padding(28, 22)
             at stage_transition_in
 
             vbox:
@@ -2125,7 +2143,7 @@ screen decrypt_stage_transition(word, score, stars):
         xsize 900
         ysize 360
         background Solid("#0C1018F4")
-        padding (40, 34)
+        padding(40, 34)
         at stage_transition_in
 
         vbox:
@@ -2185,7 +2203,7 @@ screen decrypt_result():
         for idx, stream in enumerate(decrypt_build_bg_streams()):
             text "[stream]":
                 xpos 24 + (idx * 320)
-                ypos -580 + (idx * 90)
+                ypos - 580 + (idx * 90)
                 color "#2A3A4A0F"
                 size 18
                 line_spacing 2
@@ -2198,7 +2216,7 @@ screen decrypt_result():
         xsize 1240
         ysize 360
         background Solid("#0C1018EE")
-        padding (34, 28)
+        padding(34, 28)
 
         vbox:
             spacing 18
@@ -2246,7 +2264,7 @@ screen decrypt_result():
         xsize 1240
         ysize 300
         background Solid("#0C1018EE")
-        padding (34, 28)
+        padding(34, 28)
 
         vbox:
             spacing 18
@@ -2265,7 +2283,7 @@ screen decrypt_result():
                 color "#E8E8E8"
                 size 22
 
-            text "Snowden used PGP encryption to contact journalists. Without encryption, his communications could have been intercepted long before the files reached the public.":
+            text "You used PGP encryption to contact journalists. Without encryption, your communications could have been intercepted long before the files reached the public.":
                 color "#E8E8E8"
                 size 22
 
@@ -2322,20 +2340,20 @@ label decrypt_game_results:
 
     $ mg_decrypt_solved = total >= 3
     $ renpy.notify("Decryption score: {}/9".format(total))
-    
+
     $ quick_menu = True
     $ show_hud = True
     return
 
 
 ################################################################################
-## MINIGAME 3: CLEAN THE MESSAGE (Chapter 3)
-## -> Implemented in minigame_ctm.rpy
+# MINIGAME 3: CLEAN THE MESSAGE (Chapter 3)
+# -> Implemented in minigame_ctm.rpy
 ################################################################################
 
 
 ################################################################################
-## MINIGAME 4: TRACE THE ROUTE (Chapter 4)
+# MINIGAME 4: TRACE THE ROUTE (Chapter 4)
 ################################################################################
 
 init python:
@@ -2344,8 +2362,8 @@ init python:
             "home":     {"name": "YOUR LAPTOP",      "x": 0.1,  "y": 0.5, "type": "start"},
             "isp":      {"name": "ISP ROUTER",       "x": 0.28, "y": 0.3, "type": "normal"},
             "vpn":      {"name": "VPN SERVER",        "x": 0.28, "y": 0.7, "type": "safe"},
-            "tor1":     {"name": "TOR NODE 1",        "x": 0.46, "y": 0.25,"type": "safe"},
-            "tor2":     {"name": "TOR NODE 2",        "x": 0.46, "y": 0.75,"type": "safe"},
+            "tor1":     {"name": "TOR NODE 1",        "x": 0.46, "y": 0.25, "type": "safe"},
+            "tor2":     {"name": "TOR NODE 2",        "x": 0.46, "y": 0.75, "type": "safe"},
             "gov":      {"name": "GOV MONITOR",       "x": 0.46, "y": 0.5, "type": "danger"},
             "cdn":      {"name": "CDN SERVER",         "x": 0.64, "y": 0.3, "type": "normal"},
             "secure":   {"name": "SECURE RELAY",       "x": 0.64, "y": 0.7, "type": "safe"},
@@ -2389,6 +2407,8 @@ init python:
 
 screen minigame_trace():
     modal True
+    key "rollback" action NullAction()
+    key "K_BACKSPACE" action NullAction()
     default nodes = get_trace_nodes()
     default current_node = "home"
     default path = ["home"]
@@ -2414,7 +2434,7 @@ screen minigame_trace():
     frame:
         xfill True yfill True
         background "#0A0E1A"
-        padding (40, 30)
+        padding(40, 30)
 
         if not reached_end and not hit_gov and moves < max_moves and time_left > 0:
             vbox:
@@ -2430,20 +2450,20 @@ screen minigame_trace():
                     frame:
                         xsize 330
                         background "#111827"
-                        padding (20, 16)
+                        padding(20, 16)
 
                         vbox:
                             spacing 8
                             text "LIVE STATUS" color "#8B8FCC" size 16 bold True
                             text "[nodes[current_node]['name']]" color "#EAF4F1" size 28 bold True
                             text "Moves remaining: [max_moves - moves]/[max_moves]" color "#FFD700" size 18
-                            text "Time left: [time_left]s" color ("#FF2D55" if time_left <= 8 else "#00FFD1") size 18 bold True
+                            text "Time left: [time_left]s" color("#FF2D55" if time_left <= 8 else "#00FFD1") size 18 bold True
                             text "Path: " + " -> ".join([nodes[n]["name"] for n in path]) color "#AAB0D6" size 15
 
                     frame:
                         xfill True
                         background "#111827"
-                        padding (20, 16)
+                        padding(20, 16)
 
                         text trace_hint(current_node):
                             color "#EAF4F1"
@@ -2455,7 +2475,7 @@ screen minigame_trace():
                     xfill True
                     ysize 420
                     background "#0D1220"
-                    padding (24, 20)
+                    padding(24, 20)
 
                     fixed:
                         xfill True
@@ -2474,26 +2494,26 @@ screen minigame_trace():
                                 xsize 220
                                 ysize 78
                                 background node_color
-                                padding (14, 10)
+                                padding(14, 10)
 
                                 vbox:
                                     spacing 2
                                     text node["name"]:
-                                        color ("#0A0E1A" if active else "#EAF4F1")
+                                        color("#0A0E1A" if active else "#EAF4F1")
                                         size 18
                                         bold True
                                         xalign 0.5
                                         text_align 0.5
 
-                                    text ("CURRENT" if active else "VISITED" if visited else node["type"].upper()):
-                                        color ("#0A0E1A" if active else "#C8D8D0")
+                                    text("CURRENT" if active else "VISITED" if visited else node["type"].upper()):
+                                        color("#0A0E1A" if active else "#C8D8D0")
                                         size 13
                                         xalign 0.5
 
                 frame:
                     xfill True
                     background "#111827"
-                    padding (20, 18)
+                    padding(20, 18)
 
                     vbox:
                         spacing 12
@@ -2511,12 +2531,16 @@ screen minigame_trace():
                                     background Solid(btn_bg)
                                     hover_background Solid("#006654" if nn["type"] != "danger" else "#7A203A")
                                     xsize 430
-                                    action [
-                                        SetScreenVariable("current_node", next_node),
-                                        SetScreenVariable("path", path + [next_node]),
+                                    action[
+                                        SetScreenVariable(
+                                            "current_node", next_node),
+                                        SetScreenVariable(
+                                            "path", path + [next_node]),
                                         SetScreenVariable("moves", moves + 1),
-                                        SetScreenVariable("hit_gov", next_node == "gov"),
-                                        SetScreenVariable("reached_end", next_node == "target"),
+                                        SetScreenVariable(
+                                            "hit_gov", next_node == "gov"),
+                                        SetScreenVariable(
+                                            "reached_end", next_node == "target"),
                                     ]
 
         else:
@@ -2525,7 +2549,7 @@ screen minigame_trace():
                 yalign 0.5
                 xsize 940
                 background "#111827"
-                padding (32, 28)
+                padding(32, 28)
 
                 vbox:
                     spacing 14
@@ -2552,4 +2576,3 @@ screen minigame_trace():
                         xalign 0.5
                         text_style "menu_btn_text"
                         action Return(reached_end and not hit_gov)
-

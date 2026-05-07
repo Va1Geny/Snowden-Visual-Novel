@@ -1645,7 +1645,7 @@ screen story_tree():
             text_xalign 0.5
             action If(main_menu, true=ShowMenu("main_menu"), false=ShowMenu("pause_hub"))
 
-        textbutton "OPEN ESC MENU":
+        textbutton "MOD MENU":
             background "#171B31"
             hover_background "#4D5186"
             text_color "#EAF4F1"
