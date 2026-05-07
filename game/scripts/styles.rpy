@@ -597,3 +597,34 @@ style ct_learn_body:
     font "DejaVuSans.ttf"
     size 16
     line_leading 5
+
+# === Minigame 3 (Brute Force) Terminal Styles ===
+
+style terminal_screen_bg:
+    background "#1a1a2e"
+
+style terminal_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#ffffff"
+    line_leading 4
+
+style terminal_input_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#ffffff"
+
+style terminal_correct_line:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#00ff00"
+
+style terminal_error_line:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#ff0000"
+
+style terminal_learn_line:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#ffffff"

@@ -193,9 +193,9 @@ screen ui_backdrop():
 
 screen shell_header(kicker, title, body=None):
     $ compact = is_compact_layout()
-    $ header_xpos = 24 if compact else 72
-    $ header_ypos = 24 if compact else 54
-    $ header_xsize = 1872 if compact else 1776
+    $ header_xpos = 24 if compact else 32
+    $ header_ypos = 24 if compact else 44
+    $ header_xsize = 1872 if compact else 1856
     $ header_ysize = 142 if compact else 116
     $ header_padding_x = 24 if compact else 34
     $ header_padding_y = 20 if compact else 24
@@ -771,8 +771,8 @@ screen main_menu():
     tag menu
 
     $ compact = is_medium_layout()
-    $ menu_frame_xsize = 1840 if compact else 1100
-    $ menu_frame_ysize = 990 if compact else 940
+    $ menu_frame_xsize = 1840 if compact else 1500
+    $ menu_frame_ysize = 990 if compact else 1020
     $ menu_padding_x = 36 if compact else 56
     $ menu_padding_y = 30 if compact else 44
     $ menu_content_max = 1660 if compact else 940
@@ -888,7 +888,7 @@ screen main_menu():
             ypos 4
             xsize (menu_frame_xsize - 8)
             ysize (menu_frame_ysize - 8)
-            background Solid("#0E1321F2")
+            background Solid("#0E1321C0")
             padding (menu_padding_x, menu_padding_y)
 
             ## Animated accent rails
@@ -935,13 +935,13 @@ screen main_menu():
                 ysize 3
                 xpos 12
                 yalign 1.0
-                yoffset -15
+                yoffset -12
             add Solid("#0B6E5F"):
                 xsize 3
                 ysize corner_size
                 xpos 12
                 yalign 1.0
-                yoffset -34
+                yoffset -12
 
             add Solid("#0B6E5F"):
                 xsize corner_size
@@ -949,14 +949,14 @@ screen main_menu():
                 xalign 1.0
                 xoffset -12
                 yalign 1.0
-                yoffset -15
+                yoffset -12
             add Solid("#0B6E5F"):
                 xsize 3
                 ysize corner_size
                 xalign 1.0
                 xoffset -12
                 yalign 1.0
-                yoffset -34
+                yoffset -12
 
             vbox:
                 xalign 0.5
@@ -1245,11 +1245,11 @@ screen pause_hub():
                                     size 17
     else:
         frame:
-            xpos 72
-            ypos 214
+            xpos 32
+            ypos 190
             xsize 620
-            ysize 770
-            background Solid("#101523EE")
+            ysize 850
+            background Solid("#101523CC")
             padding (34, 30)
 
             vbox:
@@ -1292,11 +1292,11 @@ screen pause_hub():
 
         frame:
             xalign 1.0
-            xoffset -72
-            ypos 214
-            xsize 1080
-            ysize 770
-            background Solid("#0E1321E6")
+            xoffset -32
+            ypos 190
+            xsize 1196
+            ysize 850
+            background Solid("#0E1321C0")
             padding (36, 32)
 
             vbox:
@@ -1599,17 +1599,19 @@ screen intro_shortcuts_screen():
         xalign 0.5
         yalign 0.5
         xsize intro_xsize
-        background Solid("#0E1321F2")
+        background Solid("#0E132188")
         padding (0, 0)
 
         vbox:
             spacing 0
+            
 
             frame:
                 xfill True
                 ysize 66
-                background Solid("#002922")
+                background Solid("#00292288")
                 padding (28, 0)
+                
 
                 text t("CLASSIFIED BRIEFING"):
                     color "#EAF4F1"
@@ -1617,11 +1619,13 @@ screen intro_shortcuts_screen():
                     bold True
                     xalign 0.5
                     yalign 0.5
+                    
 
             frame:
                 xfill True
-                background Solid("#101523")
+                background Solid("#10152380")
                 padding (36, 30)
+                
 
                 vbox:
                     spacing 18
@@ -1633,7 +1637,7 @@ screen intro_shortcuts_screen():
 
                     frame:
                         xfill True
-                        background Solid("#171C30")
+                        background Solid("#171C3080")
                         padding (24, 20)
 
                         vbox:
@@ -1648,9 +1652,9 @@ screen intro_shortcuts_screen():
                                 ("Click / Enter / Space", "Advance dialogue and confirm UI actions."),
                                 ("Esc / Right Click / MENU", "Open mission control and game settings."),
                                 ("Back / Page Up", "Review previous dialogue."),
-                                ("N", "Open / close the field notebook."),
-                                ("I", "Open the network security dossier."),
-                                ("Notebook", "Save your own reminders while playing."),
+                                ("N", "                         Open / close the field notebook."),
+                                ("I", "                         Open the network security dossier."),
+                                ("Notebook", "              Save your own reminders while playing."),
                             ]:
                                 hbox:
                                     spacing 14
@@ -1669,7 +1673,7 @@ screen intro_shortcuts_screen():
 
             frame:
                 xfill True
-                background Solid("#171C30")
+                background Solid("#171C3080")
                 padding (24, 22)
 
                 hbox:
