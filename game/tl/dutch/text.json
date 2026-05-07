@@ -1168,5 +1168,7 @@
   "Refuse —\nToo High a Price": "Weigeren —\nTe hoge prijs",
   " _": " _",
   "//": "//",
-  "_": "_"
+  "_": "_",
+  "Are you sure you want to quit?": "Weet u zeker dat u wilt afsluiten?",
+  "Are you sure you want to return to the main menu?": "Weet u zeker dat u wilt terugkeren naar het hoofdmenu?"
 }

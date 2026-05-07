@@ -1169,5 +1169,7 @@
   "Refuse —\nToo High a Price": "Refuser —\nPrix trop ?lev?",
   " _": " _",
   "//": "//",
-  "_": "_"
+  "_": "_",
+  "Are you sure you want to quit?": "Voulez-vous vraiment quitter ?",
+  "Are you sure you want to return to the main menu?": "Voulez-vous vraiment revenir au menu principal ?"
 }

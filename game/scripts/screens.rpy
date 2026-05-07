@@ -257,10 +257,10 @@ screen say(who, what):
             window:
                 id "namebox"
                 style "namebox"
-                text t(who) id "who":
+                text who id "who":
                     substitute False
 
-        text td(what) id "what":
+        text what id "what":
             substitute False
 
     if not renpy.variant("small"):
@@ -3007,7 +3007,7 @@ screen confirm(message, yes_action, no_action):
             spacing 22
             xalign 0.5
 
-            text t(_(message)):
+            text t(message):
                 color "#EAF4F1"
                 size 28
                 bold True
@@ -3111,7 +3111,7 @@ screen nvl_dialogue(dialogue):
                     text d.who:
                         id d.who_id
 
-                text trich(d.what):
+                text d.what:
                     id d.what_id
 
 
@@ -3188,7 +3188,7 @@ screen bubble(who, what):
                 text who:
                     id "who"
 
-        text trich(what):
+        text what:
             id "what"
 
         default ctc = None
