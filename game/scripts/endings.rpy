@@ -1,5 +1,5 @@
 ################################################################################
-## ENDINGS.RPY — All 5 Ending Sequences
+## ENDINGS.RPY â€” All 5 Ending Sequences
 ## Classified: The Snowden Files
 ################################################################################
 
@@ -74,7 +74,7 @@ label ending_hero:
         description=t("You successfully leaked all documents, escaped to safety, and your disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed."),
         lessons=[
             "Strong encryption (AES-256, PGP) is the foundation of digital privacy. Without it, no communication is truly private.",
-            "Operational Security (OpSec) is not optional — every step in the chain must be secured, from encrypted channels to physical device security.",
+            "Operational Security (OpSec) is not optional â€” every step in the chain must be secured, from encrypted channels to physical device security.",
             "Whistleblowing platforms like SecureDrop exist to protect sources. Technology can be a shield for truth."
         ]
     )
@@ -100,7 +100,7 @@ label ending_fugitive:
 
     narrator_voice "You escape, barely. Your passport is revoked mid-flight. You are stranded in a Moscow airport for 40 days."
 
-    narrator_voice "Russia grants you asylum — not out of kindness, but politics."
+    narrator_voice "Russia grants you asylum â€” not out of kindness, but politics."
 
     narrator_voice "You become a symbol, but an incomplete one. A person trapped between two superpowers."
 
@@ -113,9 +113,9 @@ label ending_fugitive:
         color="#FFD700",
         description=t("You leaked crucial files and escaped, but live in permanent exile. The truth reached the public, but gaps in your operational security meant some evidence was lost. The surveillance debate continues, but reform is slow."),
         lessons=[
-            "VPNs encrypt your traffic, but they don't make you invisible. Your VPN provider can still see your activity — trust matters.",
+            "VPNs encrypt your traffic, but they don't make you invisible. Your VPN provider can still see your activity â€” trust matters.",
             "Metadata (who you contacted, when, from where) can be as revealing as message content. Stripping metadata from files before sharing is essential.",
-            "Digital security requires constant vigilance — one mistake can compromise months of careful planning."
+            "Digital security requires constant vigilance â€” one mistake can compromise months of careful planning."
         ]
     )
     if _return == "restart":
@@ -154,7 +154,7 @@ label ending_imprisoned:
         description=t("Your identity was exposed before you could escape. You were arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed."),
         lessons=[
             "IP tracking and digital forensics can identify you in minutes if you leave traces. Always use Tor and VPNs together on untrusted networks.",
-            "The Espionage Act of 1917 doesn't distinguish between whistleblowers and spies — legal protections for digital whistleblowers remain weak.",
+            "The Espionage Act of 1917 doesn't distinguish between whistleblowers and spies â€” legal protections for digital whistleblowers remain weak.",
             "Physical security is as important as digital security. Cameras, keyloggers, and 'evil maid' attacks can bypass the strongest encryption."
         ]
     )
@@ -194,7 +194,7 @@ label ending_silenced:
         description=t("NSA internal monitors detected your suspicious behavior before you could act. Your clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret."),
         lessons=[
             "Network monitoring tools like intrusion detection systems (IDS) track access patterns. Unusual behavior triggers automated alerts.",
-            "Insider threat programs use behavioral analytics to detect anomalies — accessing files outside your clearance level is immediately flagged.",
+            "Insider threat programs use behavioral analytics to detect anomalies â€” accessing files outside your clearance level is immediately flagged.",
             "Firewalls work both ways: they keep threats out, but they also monitor what goes out. Data Loss Prevention (DLP) systems watch for unauthorized transfers."
         ]
     )
@@ -216,7 +216,7 @@ label ending_betrayed:
 
     narrator_voice "The journalist's email was compromised from the start."
 
-    narrator_voice "What you thought was a secure PGP channel was actually a honeypot — a man-in-the-middle operation run by the very agency you were trying to expose."
+    narrator_voice "What you thought was a secure PGP channel was actually a honeypot â€” a man-in-the-middle operation run by the very agency you were trying to expose."
 
     narrator_voice "Every document you shared was intercepted. Every plan you made was monitored. Every ally you trusted was catalogued."
 
@@ -234,7 +234,7 @@ label ending_betrayed:
         description=t("Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. You vanished without a trace."),
         lessons=[
             "Man-in-the-middle attacks can compromise even encrypted channels if you don't verify the other party's identity through key fingerprints.",
-            "Trust verification is critical — in cryptography, you must independently verify public keys through a separate channel, not just accept them.",
+            "Trust verification is critical â€” in cryptography, you must independently verify public keys through a separate channel, not just accept them.",
             "Zero-day exploits can break any system. Defense in depth (multiple layers of security) is the only way to mitigate unknown vulnerabilities."
         ]
     )
@@ -264,7 +264,7 @@ transform slide_up_delay(d):
 screen ending_screen(title, color, description, lessons):
     modal True
     
-    # ── Background Layer ──────────────────────────────────────────────
+    # â”€â”€ Background Layer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     add "#080C10"
     
     add Solid("#00FFD105")
@@ -276,7 +276,7 @@ screen ending_screen(title, color, description, lessons):
         fit "contain"
         xsize 1000 ysize 1000
 
-    # ── Main Content Viewport ──────────────────────────────────────────
+    # â”€â”€ Main Content Viewport â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     # NOTE: scrollbars on a viewport steal width from the inner content area,
     # which shifts xalign 0.5 off-center on a 1920px stage. We pin the column
     # at xpos 360 (= (1920 - 1200) / 2) so it sits at true visual center.
@@ -296,23 +296,23 @@ screen ending_screen(title, color, description, lessons):
 
             null height 80
             
-            # ── HEADER: ENDING TITLE ──
+            # â”€â”€ HEADER: ENDING TITLE â”€â”€
             vbox:
                 xalign 0.5
                 spacing 10
-                text t("// MISSION COMPLETE //") color "#7A8A99" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
+                text t("// MISSION COMPLETE //") color "#7A8A99" size 16 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                 text title:
                     color color
                     size 72
                     bold True
                     xalign 0.5
-                    font "DejaVuSans.ttf"
+                    font "fonts/ShareTechMono-Regular.ttf"
                     at terminal_glitch
                 frame:
                     xalign 0.5 xsize 400 ysize 2
                     background color
             
-            # ── DESCRIPTION CARD ──
+            # â”€â”€ DESCRIPTION CARD â”€â”€
             frame:
                 xalign 0.5 xsize 1000
                 background "#0D1117F0"
@@ -324,9 +324,9 @@ screen ending_screen(title, color, description, lessons):
                     size 24
                     text_align 0.5
                     line_spacing 6
-                    font "DejaVuSans.ttf"
+                    font "fonts/ShareTechMono-Regular.ttf"
             
-            # ── METRICS & LOGS ──
+            # â”€â”€ METRICS & LOGS â”€â”€
             hbox:
                 xalign 0.5
                 spacing 30
@@ -342,8 +342,8 @@ screen ending_screen(title, color, description, lessons):
                         spacing 15
                         hbox:
                             xfill True
-                            text t("MISSION METRICS") color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
-                            text t("[config.version]") color "#3A4A55" size 12 font "DejaVuSans.ttf" xalign 1.0
+                            text t("MISSION METRICS") color "#00FFD1" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
+                            text t("[config.version]") color "#3A4A55" size 12 font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
                         
                         null height 10
                         
@@ -352,8 +352,8 @@ screen ending_screen(title, color, description, lessons):
                             spacing 4
                             hbox:
                                 xfill True
-                                text t("OPERATIONAL KNOWLEDGE") color "#7A8A99" size 12 font "DejaVuSans.ttf"
-                                text t("[knowledge_score]/10") color "#00FFD1" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("OPERATIONAL KNOWLEDGE") color "#7A8A99" size 12 font "fonts/ShareTechMono-Regular.ttf"
+                                text t("[knowledge_score]/10") color "#00FFD1" size 12 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
                             frame:
                                 xfill True ysize 8
                                 background "#1A2530"
@@ -366,8 +366,8 @@ screen ending_screen(title, color, description, lessons):
                             spacing 4
                             hbox:
                                 xfill True
-                                text t("NSA SUSPICION LEVEL") color "#7A8A99" size 12 font "DejaVuSans.ttf"
-                                text t("[suspicion_level]/5") color "#FF2D55" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("NSA SUSPICION LEVEL") color "#7A8A99" size 12 font "fonts/ShareTechMono-Regular.ttf"
+                                text t("[suspicion_level]/5") color "#FF2D55" size 12 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
                             frame:
                                 xfill True ysize 8
                                 background "#1A2530"
@@ -384,32 +384,32 @@ screen ending_screen(title, color, description, lessons):
                         # Toggle Stats
                         hbox:
                             xfill True
-                            text t("IDENTITY STATUS:") color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("IDENTITY STATUS:") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf"
                             if identity_exposed:
-                                text t("EXPOSED") color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("EXPOSED") color "#FF2D55" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
                             else:
-                                text t("SECURE") color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("SECURE") color "#00FF88" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
                         
                         hbox:
                             xfill True
-                            text t("EVIDENCE STATUS:") color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("EVIDENCE STATUS:") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf"
                             if evidence_secured:
-                                text t("ENCRYPTED & SENT") color "#00FFD1" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("ENCRYPTED & SENT") color "#00FFD1" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
                             else:
-                                text t("LOST/RECOVERED") color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("LOST/RECOVERED") color "#FF2D55" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
 
                         hbox:
                             xfill True
-                            text t("ESCAPE ROUTE:") color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("ESCAPE ROUTE:") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf"
                             if escape_successful:
-                                text t("SUCCESSFUL") color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("SUCCESSFUL") color "#00FF88" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
                             else:
-                                text t("COMPROMISED") color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("COMPROMISED") color "#FF2D55" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
 
                         hbox:
                             xfill True
-                            text t("CONTACTS SECURED:") color "#7A8A99" size 14 font "DejaVuSans.ttf"
-                            text t("[contacts_secured]") color "#FFD700" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                            text t("CONTACTS SECURED:") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf"
+                            text t("[contacts_secured]") color "#FFD700" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
 
                 # Right Side: Post-Mortem Analysis
                 frame:
@@ -420,7 +420,7 @@ screen ending_screen(title, color, description, lessons):
                     
                     vbox:
                         spacing 15
-                        text t("POST-MORTEM ANALYSIS") color "#FFD700" size 14 bold True font "DejaVuSans.ttf"
+                        text t("POST-MORTEM ANALYSIS") color "#FFD700" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
                         
                         null height 5
                         
@@ -433,10 +433,10 @@ screen ending_screen(title, color, description, lessons):
                                 for i, lesson in enumerate(lessons):
                                     hbox:
                                         spacing 12
-                                        text str(i+1) color "#FFD700" size 14 bold True font "DejaVuSans.ttf" xsize 20
-                                        text lesson color "#B8C8D8" size 14 font "DejaVuSans.ttf" line_spacing 4
+                                        text str(i+1) color "#FFD700" size 14 bold True font "fonts/ShareTechMono-Regular.ttf" xsize 20
+                                        text lesson color "#B8C8D8" size 14 font "fonts/ShareTechMono-Regular.ttf" line_spacing 4
 
-            # ── ACTION BUTTONS ──
+            # â”€â”€ ACTION BUTTONS â”€â”€
             hbox:
                 xalign 0.5
                 spacing 60
@@ -449,7 +449,7 @@ screen ending_screen(title, color, description, lessons):
                     text_hover_color "#080C10"
                     text_size 20
                     text_bold True
-                    text_font "DejaVuSans.ttf"
+                    text_font "fonts/ShareTechMono-Regular.ttf"
                     padding (40, 16)
                     action [Return("restart")]
 
@@ -460,7 +460,7 @@ screen ending_screen(title, color, description, lessons):
                     text_hover_color "#FFFFFF"
                     text_size 20
                     text_bold True
-                    text_font "DejaVuSans.ttf"
+                    text_font "fonts/ShareTechMono-Regular.ttf"
                     padding (40, 16)
                     action MainMenu()
 

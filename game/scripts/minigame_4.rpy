@@ -117,13 +117,17 @@ init python:
             return []
 
     class ScanlineOverlay(renpy.Displayable):
-        def __init__(self, **kw):
+        def __init__(self, width=1920, height=1080, line_spacing=3, line_width=2, **kw):
             super(ScanlineOverlay, self).__init__(**kw)
+            self.s_width = int(width)
+            self.s_height = int(height)
+            self.line_spacing = line_spacing
+            self.line_width = line_width
         def render(self, width, height, st, at):
-            r = renpy.Render(1920, 1080)
+            r = renpy.Render(self.s_width, self.s_height)
             c = r.canvas()
-            for y in range(0, 1080, 3):
-                c.line((0, 0, 0, 10), (0, y), (1920, y))
+            for y in range(0, self.s_height, self.line_spacing):
+                c.line((0, 0, 0, 10), (0, y), (self.s_width, y), self.line_width)
             return r
         def event(self, ev, x, y, st):
             pass
@@ -140,16 +144,16 @@ init python:
 
     ct_traces = [
         {
-            "id": 1, "name": "Browser History", "icon": "🌐", "phase": 1,
+            "id": 1, "name": "Browser History", "icon": "ðŸŒ", "phase": 1,
             "danger_title": "YOUR BROWSING PROVES INTENT",
             "danger_text": "Every URL you visited is stored locally with timestamps. NSA forensics will find your searches for WikiLeaks and journalist contacts.",
             "file_type": "SQLite Database", "file_size": "4.2 MB", "risk_level": "CRITICAL",
             "forensic_note": "Recoverable with Autopsy or DB Browser",
             "correct_command": "rm -rf ~/.config/chromium/Default/History",
             "command_breakdown": [
-                ("rm", "remove — deletes a file or directory"),
-                ("-r", "recursive — removes all contents inside"),
-                ("-f", "force — no confirmation prompts"),
+                ("rm", "remove â€” deletes a file or directory"),
+                ("-r", "recursive â€” removes all contents inside"),
+                ("-f", "force â€” no confirmation prompts"),
                 ("~/.config/chromium/Default/History", "exact path to Chromium browser history database"),
             ],
             "tokens": [], "options": [],
@@ -162,11 +166,11 @@ init python:
                 "[[  OK  ] Browser history: PERMANENTLY DELETED",
                 "[[  OK  ] Trace 1/8 eliminated.",
             ],
-            "success_feedback": "Browser history destroyed. Forensic tools like Autopsy can no longer recover your search history. Normal deletion (Recycle Bin) only hides the file — rm -rf removes it from the filesystem entirely.",
+            "success_feedback": "Browser history destroyed. Forensic tools like Autopsy can no longer recover your search history. Normal deletion (Recycle Bin) only hides the file â€” rm -rf removes it from the filesystem entirely.",
             "learn_text": "Browsers store every URL in a local database file called History. Forensics investigators always look here first. Even incognito mode only hides history from other users, not from investigators with physical access.",
         },
         {
-            "id": 2, "name": "Session Tokens", "icon": "🔑", "phase": 1,
+            "id": 2, "name": "Session Tokens", "icon": "ðŸ”‘", "phase": 1,
             "danger_title": "SAVED LOGINS REVEAL YOUR IDENTITY",
             "danger_text": "Your browser stored authentication tokens for 3 classified NSA systems. These tokens prove you had active sessions during document exfiltration.",
             "file_type": "JSON / SQLite cookies", "file_size": "892 KB", "risk_level": "CRITICAL",
@@ -194,7 +198,7 @@ init python:
             "learn_text": "When you log into a website, the server sends a session token stored in Cookies. This token acts like a temporary ID card. Investigators use tokens to prove you were logged into specific systems at specific times.",
         },
         {
-            "id": 3, "name": "GPS Photo Metadata", "icon": "📸", "phase": 2,
+            "id": 3, "name": "GPS Photo Metadata", "icon": "ðŸ“¸", "phase": 2,
             "danger_title": "YOUR PHOTOS CONTAIN HIDDEN LOCATION DATA",
             "danger_text": "3 photos contain EXIF metadata with GPS coordinates placing you at NSA HQ during the exfiltration window.",
             "file_type": "JPEG EXIF Metadata", "file_size": "3 x embedded GPS", "risk_level": "CRITICAL",
@@ -222,9 +226,9 @@ init python:
             "learn_text": "Every photo contains hidden EXIF metadata: GPS coordinates (accurate to meters), time/date, camera model and serial number. Journalists and whistleblowers ALWAYS strip EXIF data. Tools: exiftool, MAT2, ExifCleaner.",
         },
         {
-            "id": 4, "name": "Downloaded PRISM Files", "icon": "📁", "phase": 2,
+            "id": 4, "name": "Downloaded PRISM Files", "icon": "ðŸ“", "phase": 2,
             "danger_title": "56,000 CLASSIFIED DOCUMENTS ON DISK",
-            "danger_text": "The NSA files are still on your hard drive. Standard DELETE will not work — forensic tools recover deleted files in seconds. You need secure overwrite.",
+            "danger_text": "The NSA files are still on your hard drive. Standard DELETE will not work â€” forensic tools recover deleted files in seconds. You need secure overwrite.",
             "file_type": "Classified PDF / DOCX", "file_size": "2.3 GB", "risk_level": "CRITICAL",
             "forensic_note": "Standard rm recoverable with Recuva/PhotoRec",
             "correct_command": "shred -vzu -n 7 ~/documents/nsa_files/*",
@@ -249,17 +253,17 @@ init python:
                 "[[  OK  ] Data unrecoverable. Trace 4/8 eliminated.",
             ],
             "success_feedback": "Files securely overwritten 7 times then deleted. Unlike rm, shred overwrites the actual disk sectors with random data, making forensic recovery impossible.",
-            "learn_text": "Normal deletion only removes the file's address from the index — the data stays on disk. shred overwrites actual disk sectors multiple times. The DoD 5220.22-M standard requires 7 passes.",
+            "learn_text": "Normal deletion only removes the file's address from the index â€” the data stays on disk. shred overwrites actual disk sectors multiple times. The DoD 5220.22-M standard requires 7 passes.",
         },
         {
-            "id": 5, "name": "Hotel WiFi Record", "icon": "📡", "phase": 2,
+            "id": 5, "name": "Hotel WiFi Record", "icon": "ðŸ“¡", "phase": 2,
             "danger_title": "YOUR DEVICE IS FINGERPRINTED ON THIS NETWORK",
-            "danger_text": "The Mira Hotel router logged your MAC address — a unique hardware ID identifying your specific laptop at this location.",
+            "danger_text": "The Mira Hotel router logged your MAC address â€” a unique hardware ID identifying your specific laptop at this location.",
             "file_type": "Network Interface ID", "file_size": "Hardware level", "risk_level": "HIGH",
             "forensic_note": "MAC logged by hotel for 90 days minimum",
             "correct_command": "sudo macchanger -r wlan0",
             "command_breakdown": [
-                ("sudo", "superuser do — run with admin privileges"),
+                ("sudo", "superuser do â€” run with admin privileges"),
                 ("macchanger", "tool for changing MAC address"),
                 ("-r", "random: assign a completely random MAC"),
                 ("wlan0", "your wireless network interface name"),
@@ -277,10 +281,10 @@ init python:
                 "[[  OK  ] Trace 5/8 eliminated.",
             ],
             "success_feedback": "MAC address randomized. The hotel log now points to a hardware ID that no longer exists on any device. Future connections use a different fingerprint.",
-            "learn_text": "Every network device has a MAC address — a unique hardware ID. Hotels and public WiFi log MACs to track devices. MAC spoofing broadcasts a fake ID, breaking the link between your device and the log.",
+            "learn_text": "Every network device has a MAC address â€” a unique hardware ID. Hotels and public WiFi log MACs to track devices. MAC spoofing broadcasts a fake ID, breaking the link between your device and the log.",
         },
         {
-            "id": 6, "name": "USB Device History", "icon": "💾", "phase": 3,
+            "id": 6, "name": "USB Device History", "icon": "ðŸ’¾", "phase": 3,
             "danger_title": "LINUX LOGGED EVERY USB DEVICE YOU CONNECTED",
             "danger_text": "The kernel logged the serial number, model, and connection time of the USB drive used to copy PRISM files.",
             "file_type": "Kernel syslog / udev journal", "file_size": "Log entries", "risk_level": "HIGH",
@@ -313,18 +317,18 @@ init python:
             "learn_text": "Linux keeps detailed logs of every USB device connected. The systemd journal stores device model, serial number, and timestamp. journalctl manages these logs. The rotate + vacuum trick is a real anti-forensics technique.",
         },
         {
-            "id": 7, "name": "Bash Command History", "icon": "⌨", "phase": 3,
+            "id": 7, "name": "Bash Command History", "icon": "âŒ¨", "phase": 3,
             "danger_title": "EVERY COMMAND YOU TYPED IS RECORDED",
             "danger_text": "Your terminal history contains the exact commands used to copy PRISM files to USB. Timestamped evidence of exfiltration.",
             "file_type": ".bash_history plaintext", "file_size": "12 KB", "risk_level": "CRITICAL",
             "forensic_note": "Readable with any text editor",
             "correct_command": "cat /dev/null > ~/.bash_history && history -c && exit",
             "command_breakdown": [
-                ("cat /dev/null", "reads from /dev/null — always empty"),
+                ("cat /dev/null", "reads from /dev/null â€” always empty"),
                 (">", "redirect output INTO the file (overwrites)"),
                 ("~/.bash_history", "your terminal history file"),
                 ("history -c", "clear current session's in-memory history"),
-                ("exit", "close terminal — writes empty history to disk"),
+                ("exit", "close terminal â€” writes empty history to disk"),
             ],
             "tokens": [],
             "options": [
@@ -349,10 +353,10 @@ init python:
             "learn_text": "Every command typed in a Linux terminal is saved to ~/.bash_history. The correct technique requires THREE steps: (1) overwrite file with /dev/null, (2) clear in-memory history, (3) exit so bash writes empty history.",
         },
         {
-            "id": 8, "name": "Cloud Backup Sync", "icon": "☁", "phase": 3,
+            "id": 8, "name": "Cloud Backup Sync", "icon": "â˜", "phase": 3,
             "danger_title": "YOUR FILES ARE ON A REMOTE SERVER",
             "danger_text": "A background sync process uploaded copies of your documents to a cloud server. The NSA can subpoena those files in minutes.",
-            "file_type": "Cloud sync daemon", "file_size": "Remote — 2.3 GB", "risk_level": "CRITICAL",
+            "file_type": "Cloud sync daemon", "file_size": "Remote â€” 2.3 GB", "risk_level": "CRITICAL",
             "forensic_note": "Subpoena to provider takes < 2 hours",
             "correct_command": "pkill -f dropbox && rm -rf ~/.dropbox && rm -rf ~/Dropbox",
             "command_breakdown": [
@@ -582,7 +586,7 @@ transform ct_panel_enter:
 
 
 ################################################################################
-## MAIN GAME SCREEN — eDEX-UI TERMINAL LAYOUT
+## MAIN GAME SCREEN â€” eDEX-UI TERMINAL LAYOUT
 ################################################################################
 
 screen screen_cover_tracks():
@@ -608,7 +612,7 @@ screen screen_cover_tracks():
         xalign 0.5 yalign 0.5 alpha 0.04
         fit "contain" xsize 900 ysize 900
 
-    # ── TOP BAR 1920×52 ──
+    # â”€â”€ TOP BAR 1920Ã—52 â”€â”€
     frame:
         xpos 0 ypos 0 xsize 1920 ysize 52
         background "#0D1117F0"
@@ -617,16 +621,16 @@ screen screen_cover_tracks():
             xfill True yalign 0.5
             hbox:
                 spacing 20 yalign 0.5
-                text t("CLASSIFIED") color "#FF2D55" size 11 bold True font "DejaVuSans.ttf"
-                text t("CH.4: THE ESCAPE") color "#7A8A99" size 11 font "DejaVuSans.ttf"
-                text t("// COVER YOUR TRACKS //") color "#00FFD1" size 16 bold True font "DejaVuSans.ttf"
+                text t("CLASSIFIED") color "#FF2D55" size 11 bold True font "fonts/ShareTechMono-Regular.ttf"
+                text t("CH.4: THE ESCAPE") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
+                text t("// COVER YOUR TRACKS //") color "#00FFD1" size 16 bold True font "fonts/ShareTechMono-Regular.ttf"
             hbox:
                 spacing 24 xalign 1.0 yalign 0.5
-                text t("TRACES: [_ct_wiped]/8") color "#E8E8E8" size 14 bold True font "DejaVuSans.ttf"
-                text t("[_ct_eta]") color (_ct_tcol if _ct_rem > 0 else "#FF2D55") size 22 bold True font "DejaVuSans.ttf"
-                text t("THREAT: [_ct_tlvl]") color _ct_tcol size 14 bold True font "DejaVuSans.ttf"
+                text t("TRACES: [_ct_wiped]/8") color "#E8E8E8" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
+                text t("[_ct_eta]") color (_ct_tcol if _ct_rem > 0 else "#FF2D55") size 22 bold True font "fonts/ShareTechMono-Regular.ttf"
+                text t("THREAT: [_ct_tlvl]") color _ct_tcol size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
 
-    # ── LEFT PANEL 330×924 ──
+    # â”€â”€ LEFT PANEL 330Ã—924 â”€â”€
     frame:
         xpos 0 ypos 52 xsize 330 ysize 924
         background "#0D1117"
@@ -635,15 +639,15 @@ screen screen_cover_tracks():
             spacing 6
 
             # SYS MONITOR
-            text t("--- SYS MONITOR ---") color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            text t("--- SYS MONITOR ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 4
             hbox:
                 xfill True
-                text t("CPU") color "#7A8A99" size 11 bold True font "DejaVuSans.ttf" yalign 0.5 xsize 30
+                text t("CPU") color "#7A8A99" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" yalign 0.5 xsize 30
                 add ct_wave_cpu
             hbox:
                 xfill True
-                text t("RAM") color "#7A8A99" size 11 bold True font "DejaVuSans.ttf" yalign 0.5 xsize 30
+                text t("RAM") color "#7A8A99" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" yalign 0.5 xsize 30
                 frame:
                     xsize 280 ysize 14 yalign 0.5
                     background "#111720"
@@ -652,7 +656,7 @@ screen screen_cover_tracks():
                         background "#FFD700"
             hbox:
                 xfill True
-                text t("NET") color "#7A8A99" size 11 bold True font "DejaVuSans.ttf" yalign 0.5 xsize 30
+                text t("NET") color "#7A8A99" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" yalign 0.5 xsize 30
                 add ct_wave_net
 
             null height 6
@@ -661,14 +665,14 @@ screen screen_cover_tracks():
                 background "#3A4A55"
 
             # PROCESSES
-            text t("--- PROCESSES ---") color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            text t("--- PROCESSES ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 2
-            text t("PID   NAME              CPU   MEM") color "#3A4A55" size 10 font "DejaVuSans.ttf"
-            text t("1024  snowden-os        2.1%%  4.8%%") color "#7A8A99" size 10 font "DejaVuSans.ttf"
-            text t("3847  dropbox-daemon   12.4%%  8.2%%") color "#7A8A99" size 10 font "DejaVuSans.ttf"
-            text t("4401  ssh-agent         0.3%%  0.1%%") color "#7A8A99" size 10 font "DejaVuSans.ttf"
-            text t("5102  chrome-render    43.8%% 19.6%%") color "#7A8A99" size 10 font "DejaVuSans.ttf"
-            text t("7788  wpa_supplicant    1.1%%  0.3%%") color "#7A8A99" size 10 font "DejaVuSans.ttf"
+            text t("PID   NAME              CPU   MEM") color "#3A4A55" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("1024  snowden-os        2.1%%  4.8%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("3847  dropbox-daemon   12.4%%  8.2%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("4401  ssh-agent         0.3%%  0.1%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("5102  chrome-render    43.8%% 19.6%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("7788  wpa_supplicant    1.1%%  0.3%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
 
             null height 6
             frame:
@@ -676,7 +680,7 @@ screen screen_cover_tracks():
                 background "#3A4A55"
 
             # TRACES DETECTED
-            text t("--- TRACES DETECTED ---") color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            text t("--- TRACES DETECTED ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 4
             for _i in range(8):
                 $ _tr = ct_traces[_i]
@@ -696,11 +700,11 @@ screen screen_cover_tracks():
                         xfill True yalign 0.5
                         hbox:
                             spacing 6 yalign 0.5
-                            text _tr["icon"] size 14 font "DejaVuSans.ttf" yalign 0.5
-                            text _tr["name"] color ("#E8E8E8" if _is_cur else "#7A8A99") size 12 font "DejaVuSans.ttf" yalign 0.5
-                        text _st color _stcol size 10 bold True font "DejaVuSans.ttf" xalign 1.0 yalign 0.5
+                            text _tr["icon"] size 14 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
+                            text _tr["name"] color ("#E8E8E8" if _is_cur else "#7A8A99") size 12 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
+                        text _st color _stcol size 10 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 1.0 yalign 0.5
 
-    # ── RIGHT PANEL 330×924 ──
+    # â”€â”€ RIGHT PANEL 330Ã—924 â”€â”€
     frame:
         xpos 1590 ypos 52 xsize 330 ysize 924
         background "#0D1117"
@@ -709,13 +713,13 @@ screen screen_cover_tracks():
             spacing 8
 
             # NSA THREAT MONITOR
-            text t("--- NSA MONITOR ---") color "#FF2D55" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            text t("--- NSA MONITOR ---") color "#FF2D55" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 4
             add ct_threat_bar xalign 0.5
             $ _pct_text = "{:.0f}%%".format(_ct_prog * 100)
-            text _pct_text color _ct_tcol size 24 bold True font "DejaVuSans.ttf" xalign 0.5
-            text t("NSA CLOSING IN") color "#7A8A99" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
-            text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 18 bold True font "DejaVuSans.ttf" xalign 0.5
+            text _pct_text color _ct_tcol size 24 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("NSA CLOSING IN") color "#7A8A99" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 18 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
 
             null height 6
             frame:
@@ -723,11 +727,11 @@ screen screen_cover_tracks():
                 background "#3A4A55"
 
             # NET TRAFFIC
-            text t("--- NET TRAFFIC ---") color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            text t("--- NET TRAFFIC ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 2
             add ct_wave_up xalign 0.5
             add ct_wave_dn xalign 0.5
-            text t("UP: 2.4 KB/s   DOWN: 14.8 KB/s") color "#7A8A99" size 10 font "DejaVuSans.ttf" xalign 0.5
+            text t("UP: 2.4 KB/s   DOWN: 14.8 KB/s") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
 
             null height 6
             frame:
@@ -736,23 +740,23 @@ screen screen_cover_tracks():
 
             # EVIDENCE ANALYSIS
             if _ct is not None:
-                text t("--- EVIDENCE SCAN ---") color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+                text t("--- EVIDENCE SCAN ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                 null height 4
                 $ _rl = _ct["risk_level"]
                 $ _rlcol = "#FF2D55" if _rl == "CRITICAL" else "#FF8C00" if _rl == "HIGH" else "#FFD700"
                 hbox:
                     xfill True
-                    text t("FILE TYPE:") color "#7A8A99" size 11 font "DejaVuSans.ttf"
-                    text _ct["file_type"] color "#E8E8E8" size 11 font "DejaVuSans.ttf" xalign 1.0
+                    text t("FILE TYPE:") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
+                    text _ct["file_type"] color "#E8E8E8" size 11 font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
                 hbox:
                     xfill True
-                    text t("SIZE:") color "#7A8A99" size 11 font "DejaVuSans.ttf"
-                    text _ct["file_size"] color "#E8E8E8" size 11 font "DejaVuSans.ttf" xalign 1.0
+                    text t("SIZE:") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
+                    text _ct["file_size"] color "#E8E8E8" size 11 font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
                 hbox:
                     xfill True
-                    text t("RISK:") color "#7A8A99" size 11 font "DejaVuSans.ttf"
-                    text t("[_rl]") color _rlcol size 11 bold True font "DejaVuSans.ttf" xalign 1.0
-                text _ct["forensic_note"] color "#3A4A55" size 10 font "DejaVuSans.ttf"
+                    text t("RISK:") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
+                    text t("[_rl]") color _rlcol size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
+                text _ct["forensic_note"] color "#3A4A55" size 10 font "fonts/ShareTechMono-Regular.ttf"
 
             null height 6
             frame:
@@ -760,15 +764,15 @@ screen screen_cover_tracks():
                 background "#3A4A55"
 
             # LOCATION DATA
-            text t("--- LOCATION ---") color "#00FFD1" size 11 bold True font "DejaVuSans.ttf" xalign 0.5
+            text t("--- LOCATION ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 4
-            text t("IP:     172.16.4.22") color "#7A8A99" size 10 font "DejaVuSans.ttf"
-            text t("VPN:    ACTIVE (ProtonVPN)") color "#00FF88" size 10 font "DejaVuSans.ttf"
-            text t("LOC:    Hong Kong, CN") color "#7A8A99" size 10 font "DejaVuSans.ttf"
-            text t("UPTIME: 00:01:23") color "#7A8A99" size 10 font "DejaVuSans.ttf"
-            text t("CRYPTO: AES-256-GCM") color "#00FFD1" size 10 font "DejaVuSans.ttf"
+            text t("IP:     172.16.4.22") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("VPN:    ACTIVE (ProtonVPN)") color "#00FF88" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("LOC:    Hong Kong, CN") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("UPTIME: 00:01:23") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("CRYPTO: AES-256-GCM") color "#00FFD1" size 10 font "fonts/ShareTechMono-Regular.ttf"
 
-    # ── CENTER TERMINAL 1260×924 ──
+    # â”€â”€ CENTER TERMINAL 1260Ã—924 â”€â”€
     if _ct is not None and not ct_state["show_result"]:
         frame:
             xpos 330 ypos 52 xsize 1260 ysize 924
@@ -789,10 +793,10 @@ screen screen_cover_tracks():
                         $ _trace_name = _ct["name"]
                         hbox:
                             spacing 12
-                            text t("TARGET: TRACE [_trace_id]/8 — [_trace_name]") color "#00FFD1" size 15 bold True font "DejaVuSans.ttf" yalign 0.5
-                            text t("MODE: [_phase_label]") color "#7A8A99" size 12 font "DejaVuSans.ttf" yalign 0.5
-                        text _ct["danger_title"] color "#FF2D55" size 13 bold True font "DejaVuSans.ttf"
-                        text _ct["danger_text"] color "#7A8A99" size 11 font "DejaVuSans.ttf"
+                            text t("TARGET: TRACE [_trace_id]/8 â€” [_trace_name]") color "#00FFD1" size 15 bold True font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
+                            text t("MODE: [_phase_label]") color "#7A8A99" size 12 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
+                        text _ct["danger_title"] color "#FF2D55" size 13 bold True font "fonts/ShareTechMono-Regular.ttf"
+                        text _ct["danger_text"] color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
 
                 # Terminal console log
                 frame:
@@ -818,12 +822,12 @@ screen screen_cover_tracks():
                                 spacing 2
                                 for _line in ct_state["terminal_log"][-25:]:
                                     $ _lcol = "#00FF88" if "[[  OK  ]" in _line else "#FF2D55" if "FAILED" in _line or "PENALTY" in _line else "#FFD700" if "WARN" in _line or "HINT" in _line else "#C8E6C9"
-                                    text _line color _lcol size 13 font "DejaVuSans.ttf"
+                                    text _line color _lcol size 13 font "fonts/ShareTechMono-Regular.ttf"
                                 # Prompt with cursor
                                 hbox:
                                     spacing 4
-                                    text t("root@snowden-laptop:~$") color "#00FFD1" size 13 bold True font "DejaVuSans.ttf"
-                                    text t("_") color "#00FFD1" size 13 font "DejaVuSans.ttf" at ct_cursor_blink
+                                    text t("root@snowden-laptop:~$") color "#00FFD1" size 13 bold True font "fonts/ShareTechMono-Regular.ttf"
+                                    text t("_") color "#00FFD1" size 13 font "fonts/ShareTechMono-Regular.ttf" at ct_cursor_blink
 
                 # Command display
                 frame:
@@ -832,9 +836,9 @@ screen screen_cover_tracks():
                     padding (12, 8)
                     hbox:
                         spacing 6 yalign 0.5
-                        text t("root@snowden-laptop:~$") color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
+                        text t("root@snowden-laptop:~$") color "#00FFD1" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
                         $ _cmd_display = ct_get_input_command()
-                        text t("[_cmd_display]") color "#A8FF78" size 14 font "DejaVuSans.ttf"
+                        text t("[_cmd_display]") color "#A8FF78" size 14 font "fonts/ShareTechMono-Regular.ttf"
 
                 null height 4
 
@@ -846,8 +850,8 @@ screen screen_cover_tracks():
                         padding (14, 10)
                         vbox:
                             spacing 6
-                            text t("GUIDED MODE — Review the command, then press EXECUTE") color "#FFD700" size 12 bold True font "DejaVuSans.ttf"
-                            text t("The correct command is pre-filled above. Study each part before executing.") color "#7A8A99" size 11 font "DejaVuSans.ttf"
+                            text t("GUIDED MODE â€” Review the command, then press EXECUTE") color "#FFD700" size 12 bold True font "fonts/ShareTechMono-Regular.ttf"
+                            text t("The correct command is pre-filled above. Study each part before executing.") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
 
                 elif _ct["phase"] == 2:
                     frame:
@@ -856,7 +860,7 @@ screen screen_cover_tracks():
                         padding (14, 10)
                         vbox:
                             spacing 8
-                            text t("ASSEMBLY MODE — Click tokens in the correct order") color "#FFD700" size 12 bold True font "DejaVuSans.ttf"
+                            text t("ASSEMBLY MODE â€” Click tokens in the correct order") color "#FFD700" size 12 bold True font "fonts/ShareTechMono-Regular.ttf"
                             hbox:
                                 spacing 8
                                 box_wrap True
@@ -869,17 +873,17 @@ screen screen_cover_tracks():
                                             text_color "#A8FF78"
                                             text_hover_color "#000000"
                                             text_size 14
-                                            text_font "DejaVuSans.ttf"
+                                            text_font "fonts/ShareTechMono-Regular.ttf"
                                             padding (12, 8)
                                             action Function(ct_add_token, _tok)
                             if ct_state["assembled_tokens"]:
                                 hbox:
                                     spacing 6
-                                    text t("Built:") color "#7A8A99" size 12 font "DejaVuSans.ttf" yalign 0.5
+                                    text t("Built:") color "#7A8A99" size 12 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
                                     for _atok in ct_state["assembled_tokens"]:
-                                        text t("[_atok]") color "#00FFD1" size 13 font "DejaVuSans.ttf" yalign 0.5
+                                        text t("[_atok]") color "#00FFD1" size 13 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
                                     textbutton t("UNDO"):
-                                        text_color "#FF2D55" text_size 12 text_font "DejaVuSans.ttf"
+                                        text_color "#FF2D55" text_size 12 text_font "fonts/ShareTechMono-Regular.ttf"
                                         action Function(ct_remove_last_token)
 
                 elif _ct["phase"] == 3:
@@ -889,7 +893,7 @@ screen screen_cover_tracks():
                         padding (14, 10)
                         vbox:
                             spacing 8
-                            text t("SELECT MODE — Choose the correct command") color "#FFD700" size 12 bold True font "DejaVuSans.ttf"
+                            text t("SELECT MODE â€” Choose the correct command") color "#FFD700" size 12 bold True font "fonts/ShareTechMono-Regular.ttf"
                             for _opt in _ct["options"]:
                                 $ _is_sel = (ct_state["typed_input"] == _opt)
                                 textbutton t("[_opt]"):
@@ -899,7 +903,7 @@ screen screen_cover_tracks():
                                     text_color ("#00FFD1" if _is_sel else "#A8FF78")
                                     text_hover_color "#000000"
                                     text_size 13
-                                    text_font "DejaVuSans.ttf"
+                                    text_font "fonts/ShareTechMono-Regular.ttf"
                                     padding (12, 8)
                                     action Function(ct_select_option, _opt)
 
@@ -914,7 +918,7 @@ screen screen_cover_tracks():
                         text_hover_color "#000000"
                         text_size 18
                         text_bold True
-                        text_font "DejaVuSans.ttf"
+                        text_font "fonts/ShareTechMono-Regular.ttf"
                         padding (40, 12)
                         action Function(ct_execute)
                     if not ct_state["hint_used"]:
@@ -924,11 +928,11 @@ screen screen_cover_tracks():
                             text_color "#FFD700"
                             text_hover_color "#000000"
                             text_size 14
-                            text_font "DejaVuSans.ttf"
+                            text_font "fonts/ShareTechMono-Regular.ttf"
                             padding (15, 8)
                             action Function(ct_use_hint)
 
-    # ── COMMAND BREAKDOWN OVERLAY ──
+    # â”€â”€ COMMAND BREAKDOWN OVERLAY â”€â”€
     if ct_state["show_breakdown"] and _ct is not None:
         add "#080C10DD"
         frame at ct_panel_enter:
@@ -938,35 +942,35 @@ screen screen_cover_tracks():
             vbox:
                 spacing 12
                 if ct_state["feedback_ok"]:
-                    text t("// TRACE WIPED //") color "#00FF88" size 24 bold True font "DejaVuSans.ttf" xalign 0.5
+                    text t("// TRACE WIPED //") color "#00FF88" size 24 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                 else:
-                    text t("// TRACE FAILED //") color "#FF2D55" size 24 bold True font "DejaVuSans.ttf" xalign 0.5
+                    text t("// TRACE FAILED //") color "#FF2D55" size 24 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                 $ _fb = ct_state["feedback_text"]
-                text t("[_fb]") color "#E8E8E8" size 14 font "DejaVuSans.ttf"
+                text t("[_fb]") color "#E8E8E8" size 14 font "fonts/ShareTechMono-Regular.ttf"
                 null height 6
-                text t("--- COMMAND BREAKDOWN ---") color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
+                text t("--- COMMAND BREAKDOWN ---") color "#00FFD1" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
                 for _bk, _bv in _ct["command_breakdown"]:
                     hbox:
                         spacing 12
-                        text t("[_bk]") color "#00FFD1" size 13 bold True font "DejaVuSans.ttf" xsize 220
-                        text t("[_bv]") color "#7A8A99" size 13 font "DejaVuSans.ttf"
+                        text t("[_bk]") color "#00FFD1" size 13 bold True font "fonts/ShareTechMono-Regular.ttf" xsize 220
+                        text t("[_bv]") color "#7A8A99" size 13 font "fonts/ShareTechMono-Regular.ttf"
                 null height 10
                 hbox:
                     xalign 0.5 spacing 16
                     textbutton t("> WHAT I LEARNED"):
                         background "#2A2000" hover_background "#FFD700"
                         text_color "#FFD700" text_hover_color "#000000"
-                        text_size 15 text_bold True text_font "DejaVuSans.ttf"
+                        text_size 15 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
                         padding (20, 10)
                         action Function(ct_show_learn)
                     textbutton t("> NEXT TRACE"):
                         background "#003A2A" hover_background "#00FFD1"
                         text_color "#00FFD1" text_hover_color "#000000"
-                        text_size 15 text_bold True text_font "DejaVuSans.ttf"
+                        text_size 15 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
                         padding (20, 10)
                         action Function(ct_advance)
 
-    # ── LEARN TEXT OVERLAY ──
+    # â”€â”€ LEARN TEXT OVERLAY â”€â”€
     if ct_state["show_learn"] and _ct is not None:
         add "#080C10DD"
         frame at ct_panel_enter:
@@ -975,19 +979,19 @@ screen screen_cover_tracks():
             padding (30, 24)
             vbox:
                 spacing 14
-                text t("--- WHAT YOU LEARNED ---") color "#FFD700" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
+                text t("--- WHAT YOU LEARNED ---") color "#FFD700" size 16 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                 $ _lt = _ct["learn_text"]
-                text t("[_lt]") color "#CCCCCC" size 15 font "DejaVuSans.ttf" line_spacing 4
+                text t("[_lt]") color "#CCCCCC" size 15 font "fonts/ShareTechMono-Regular.ttf" line_spacing 4
                 null height 10
                 textbutton t("> NEXT TRACE"):
                     background "#003A2A" hover_background "#00FFD1"
                     text_color "#00FFD1" text_hover_color "#000000"
-                    text_size 16 text_bold True text_font "DejaVuSans.ttf"
+                    text_size 16 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
                     padding (30, 12)
                     xalign 0.5
                     action Function(ct_advance)
 
-    # ── RESULT SCREEN ──
+    # â”€â”€ RESULT SCREEN â”€â”€
     if ct_state["show_result"]:
         add "#080C10EE"
         frame:
@@ -1001,19 +1005,19 @@ screen screen_cover_tracks():
                 vbox:
                     spacing 14 xalign 0.5
                     if _ct_wiped >= 8:
-                        text t("// MISSION ACCOMPLISHED //") color "#00FF88" size 28 bold True font "DejaVuSans.ttf" xalign 0.5
-                        text t("All 8 digital traces destroyed. NSA agents found nothing.") color "#E8E8E8" size 18 font "DejaVuSans.ttf" xalign 0.5 text_align 0.5
-                        text t("DIGITAL FORENSICS EXPERT") color "#00FFD1" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
+                        text t("// MISSION ACCOMPLISHED //") color "#00FF88" size 28 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                        text t("All 8 digital traces destroyed. NSA agents found nothing.") color "#E8E8E8" size 18 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5 text_align 0.5
+                        text t("DIGITAL FORENSICS EXPERT") color "#00FFD1" size 16 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                     elif _ct_wiped >= 6:
-                        text t("// MISSION PARTIAL //") color "#FFD700" size 28 bold True font "DejaVuSans.ttf" xalign 0.5
-                        text t("Most traces destroyed. Some evidence may be recoverable.") color "#E8E8E8" size 18 font "DejaVuSans.ttf" xalign 0.5 text_align 0.5
+                        text t("// MISSION PARTIAL //") color "#FFD700" size 28 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                        text t("Most traces destroyed. Some evidence may be recoverable.") color "#E8E8E8" size 18 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5 text_align 0.5
                     else:
-                        text t("// MISSION FAILED //") color "#FF2D55" size 28 bold True font "DejaVuSans.ttf" xalign 0.5
-                        text t("NSA agents reached the room. Forensic evidence recovered.") color "#E8E8E8" size 18 font "DejaVuSans.ttf" xalign 0.5 text_align 0.5
+                        text t("// MISSION FAILED //") color "#FF2D55" size 28 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                        text t("NSA agents reached the room. Forensic evidence recovered.") color "#E8E8E8" size 18 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5 text_align 0.5
                     null height 6
-                    text t("WIPED: [_ct_wiped] / 8") color "#00FFD1" size 22 bold True font "DejaVuSans.ttf" xalign 0.5
+                    text t("WIPED: [_ct_wiped] / 8") color "#00FFD1" size 22 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                     null height 10
-                    text t("--- 8 THINGS YOU LEARNED TODAY ---") color "#FFD700" size 15 bold True font "DejaVuSans.ttf" xalign 0.5
+                    text t("--- 8 THINGS YOU LEARNED TODAY ---") color "#FFD700" size 15 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                     for _si in range(8):
                         $ _str = ct_traces[_si]
                         $ _sst = ct_state["statuses"][_si]
@@ -1024,23 +1028,23 @@ screen screen_cover_tracks():
                             padding (14, 8)
                             hbox:
                                 spacing 10
-                                text str(_si + 1) + "." color "#7A8A99" size 14 font "DejaVuSans.ttf" yalign 0.0 xsize 24
+                                text str(_si + 1) + "." color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf" yalign 0.0 xsize 24
                                 vbox:
                                     spacing 2
                                     hbox:
                                         spacing 8
-                                        text _str["name"] color "#E8E8E8" size 14 bold True font "DejaVuSans.ttf"
-                                        text t("[_sst]") color _ssc size 12 bold True font "DejaVuSans.ttf"
-                                    text _str["learn_text"][:80] + "..." color "#7A8A99" size 12 font "DejaVuSans.ttf"
+                                        text _str["name"] color "#E8E8E8" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
+                                        text t("[_sst]") color _ssc size 12 bold True font "fonts/ShareTechMono-Regular.ttf"
+                                    text _str["learn_text"][:80] + "..." color "#7A8A99" size 12 font "fonts/ShareTechMono-Regular.ttf"
                     null height 16
                     textbutton t("> CONTINUE MISSION"):
                         background "#003A2A" hover_background "#00FFD1"
                         text_color "#00FFD1" text_hover_color "#000000"
-                        text_size 20 text_bold True text_font "DejaVuSans.ttf"
+                        text_size 20 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
                         padding (40, 14) xalign 0.5
                         action Return(_ct_wiped)
 
-    # ── BOTTOM BAR 1920×104 ──
+    # â”€â”€ BOTTOM BAR 1920Ã—104 â”€â”€
     if not ct_state["show_result"] and not ct_state["show_breakdown"] and not ct_state["show_learn"]:
         frame:
             xpos 0 ypos 976 xsize 1920 ysize 104
@@ -1050,11 +1054,11 @@ screen screen_cover_tracks():
                 xfill True yalign 0.5
                 hbox:
                     spacing 30
-                    text t("ESC: ABORT") color "#3A4A55" size 12 font "DejaVuSans.ttf"
-                    text t("ENTER: EXECUTE") color "#3A4A55" size 12 font "DejaVuSans.ttf"
-                    text t("HINT: -5 SEC") color "#3A4A55" size 12 font "DejaVuSans.ttf"
-                text t("Leave no trace. Destroy all evidence.") color "#7A8A99" size 14 font "DejaVuSans.ttf" xalign 0.5
-                text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 16 bold True font "DejaVuSans.ttf" xalign 1.0
+                    text t("ESC: ABORT") color "#3A4A55" size 12 font "fonts/ShareTechMono-Regular.ttf"
+                    text t("ENTER: EXECUTE") color "#3A4A55" size 12 font "fonts/ShareTechMono-Regular.ttf"
+                    text t("HINT: -5 SEC") color "#3A4A55" size 12 font "fonts/ShareTechMono-Regular.ttf"
+                text t("Leave no trace. Destroy all evidence.") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 16 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
 
     # Scanline overlay
     add ct_scanlines
@@ -1097,7 +1101,7 @@ label minigame_4_cover_tracks:
         $ knowledge_score += 3
         $ escape_successful = True
         $ evidence_secured = True
-        $ renpy.notify(t("PERFECT — Digital Forensics Expert! +3"))
+        $ renpy.notify(t("PERFECT â€” Digital Forensics Expert! +3"))
     elif cover_wiped >= 6:
         $ knowledge_score += 2
         $ escape_successful = True

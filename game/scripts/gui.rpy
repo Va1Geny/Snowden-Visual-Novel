@@ -25,45 +25,45 @@ define config.check_conflicting_properties = True
 ## The colors of text in the interface.
 
 ## An accent color used throughout the interface to label and highlight text.
-define gui.accent_color = '#008069'
+define gui.accent_color = '#00FFD1'
 
 ## The color used for a text button when it is neither selected nor hovered.
-define gui.idle_color = '#8B8FCC'
+define gui.idle_color = '#7A8A99'
 
 ## The small color is used for small text, which needs to be brighter/darker to
 ## achieve the same effect.
-define gui.idle_small_color = '#AAB0D6'
+define gui.idle_small_color = '#7A8A99'
 
 ## The color that is used for buttons and bars that are hovered.
-define gui.hover_color = '#006654'
+define gui.hover_color = '#00FFD1'
 
 ## The color used for a text button when it is selected but not focused. A
 ## button is selected if it is the current screen or preference value.
-define gui.selected_color = '#F2FFFC'
+define gui.selected_color = '#00FFD1'
 
 ## The color used for a text button when it cannot be selected.
-define gui.insensitive_color = '#8B8FCC7F'
+define gui.insensitive_color = '#3A4A557F'
 
 ## Colors used for the portions of bars that are not filled in. These are not
 ## used directly, but are used when re-generating bar image files.
-define gui.muted_color = '#131421'
-define gui.hover_muted_color = '#1C1F35'
+define gui.muted_color = '#080C10'
+define gui.hover_muted_color = '#111720'
 
 ## The colors used for dialogue and menu choice text.
-define gui.text_color = '#EAF4F1'
-define gui.interface_text_color = '#EAF4F1'
+define gui.text_color = '#E8E8E8'
+define gui.interface_text_color = '#E8E8E8'
 
 
 ## Fonts and Font Sizes ########################################################
 
 ## The font used for in-game text.
-define gui.text_font = "fonts/DejaVuSans.ttf"
+define gui.text_font = "fonts/Rajdhani-Regular.ttf"
 
 ## The font used for character names.
-define gui.name_text_font = "fonts/DejaVuSans.ttf"
+define gui.name_text_font = "fonts/ShareTechMono-Regular.ttf"
 
 ## The font used for out-of-game text.
-define gui.interface_text_font = "fonts/DejaVuSans.ttf"
+define gui.interface_text_font = "fonts/ShareTechMono-Regular.ttf"
 
 ## The size of normal dialogue text.
 define gui.text_size = 33
@@ -211,9 +211,9 @@ define gui.choice_button_borders = Borders(150, 8, 150, 8)
 define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
-define gui.choice_button_text_idle_color = '#EAF4F1'
-define gui.choice_button_text_hover_color = "#F2FFFC"
-define gui.choice_button_text_insensitive_color = '#8B8FCC7F'
+define gui.choice_button_text_idle_color = '#E8E8E8'
+define gui.choice_button_text_hover_color = "#00FFD1"
+define gui.choice_button_text_insensitive_color = '#3A4A557F'
 
 
 ## File Slot Buttons ###########################################################
