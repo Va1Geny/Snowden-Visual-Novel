@@ -374,8 +374,7 @@ screen quick_menu():
             textbutton t("Save") action ShowMenu("save")
             textbutton t("Prefs") action ShowMenu("preferences")
 
-    key "i" action ShowMenu("dossier")
-    key "I" action ShowMenu("dossier")
+    key "ctrl_K_i" action ShowMenu("dossier")
 
 
 screen game_hud():
@@ -659,8 +658,7 @@ screen notebook_panel():
                             action Hide("notebook_panel")
 
     key "game_menu" action Hide("notebook_panel")
-    key "n" action Hide("notebook_panel")
-    key "N" action Hide("notebook_panel")
+    key "ctrl_K_n" action Hide("notebook_panel")
     key "K_RETURN" action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
     key "K_KP_ENTER" action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
 screen notebook_toggle():
@@ -686,7 +684,7 @@ screen notebook_toggle():
                     selected renpy.get_screen("dossier") is not None
                     focus_mask True
                     action ShowMenu("dossier")
-                    tooltip t("Dossier (I)")
+                    tooltip t("Dossier (Ctrl+I)")
 
                 text t("DOSSIER"):
                     align (0.5, 0.45)
@@ -706,7 +704,7 @@ screen notebook_toggle():
                     selected renpy.get_screen("notebook_panel") is not None
                     focus_mask True
                     action ToggleScreen("notebook_panel")
-                    tooltip t("Notebook (N)")
+                    tooltip t("Notebook (Ctrl+N)")
 
                 text t("NOTEBOOK"):
                     align (0.5, 0.45)
@@ -715,8 +713,7 @@ screen notebook_toggle():
                     bold True
                     outlines [(2, "#101523", 0, 0)]
 
-        key "n" action ToggleScreen("notebook_panel")
-        key "N" action ToggleScreen("notebook_panel")
+        key "ctrl_K_n" action ToggleScreen("notebook_panel")
 
 
 screen suspicion_lockdown_watch():
@@ -1652,8 +1649,8 @@ screen intro_shortcuts_screen():
                                 ("Click / Enter / Space", "Advance dialogue and confirm UI actions."),
                                 ("Esc / Right Click / MENU", "Open mission control and game settings."),
                                 ("Back / Page Up", "Review previous dialogue."),
-                                ("N", "                         Open / close the field notebook."),
-                                ("I", "                         Open the network security dossier."),
+                                ("Ctrl+N", "                   Open / close the field notebook."),
+                                ("Ctrl+I", "                   Open the network security dossier."),
                                 ("Notebook", "              Save your own reminders while playing."),
                             ]:
                                 hbox:

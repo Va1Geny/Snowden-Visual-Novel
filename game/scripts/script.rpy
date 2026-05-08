@@ -73,10 +73,12 @@ label intro:
 label chapter_1:
     call show_loading_screen
     $ current_chapter = 1
-    $ show_hud = True
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 1)
 
-    call screen chapter_title_screen(1, "INSIDE THE MACHINE", "NSA Facility — Oahu, Hawaii — 2012")
+    call screen chapter_transition(chapter_num=1, codename="INSIDE THE MACHINE", location="Fort Meade, Maryland, USA", date="June 2013", time_str="09:14 EST", clearance="TOP SECRET // SCI", description="Edward Snowden begins his final day at the NSA.\nThe PRISM surveillance program is fully\noperational. The files are within reach —\nbut so are the eyes of the agency.", status="ACTIVE", bg_image="bg_nsa_exterior")
+    $ show_hud = True
+    $ quick_menu = True
+
 
     scene bg_nsa_exterior at parallax with chapter_transition
 
@@ -204,7 +206,7 @@ label chapter_1:
     # --- Minigame 1: Firewall Breach ---
 
     window hide
-    $ mg_intro = renpy.call_screen("minigame_intro", title=t("FIREWALL BREACH"), description=t("You must analyze incoming network packets and decide which to ALLOW through the firewall and which to BLOCK. Look for suspicious ports, unknown source IPs, and insecure protocols."))
+    $ mg_intro = renpy.call_screen("minigame_briefing", challenge_title="FIREWALL BREACH", subtitle="Eight packets. Eight decisions.\nOne wrong call exposes the network.", mission_id="OPS-01-01-2013", classification="TOP SECRET // SCI", challenge_type="NETWORK SECURITY", estimated_time="60-90 SECONDS", difficulty=2, difficulty_label="ANALYST", succeed_reward="knowledge_score +2", fail_penalty="suspicion_level +1", learn_concept="Firewalls filter traffic using ports,\nIP addresses, and protocol rules.", briefing_text="You are monitoring the NSA firewall.\nIncoming data packets are attempting to enter the network.\n\nEach packet shows three pieces of information:\n  WHERE it is coming from  (IP address)\n  Which DOOR it is using   (Port number)\n  What TYPE of data it is  (Protocol)\n\nYour job: decide ALLOW or BLOCK for each packet.", controls=[("ALLOW", "Permit the packet through"),("BLOCK", "Reject the packet")])
 
     if mg_intro:
         $ quick_menu = False
@@ -212,7 +214,9 @@ label chapter_1:
         $ mg_firewall_score = renpy.call_screen("minigame_firewall")
         $ quick_menu = True
         $ show_hud = True
-        if mg_firewall_score >= 6:
+        if mg_firewall_score == "SKIP":
+            $ renpy.notify(t("Minigame Skipped"))
+        elif mg_firewall_score >= 6:
             $ knowledge_score += 2
             $ renpy.notify(t("Knowledge +2"))
             sys "// CHALLENGE PASSED. Your firewall analysis was solid. //"
@@ -307,7 +311,10 @@ label chapter_2:
     $ current_chapter = 2
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 2)
 
-    call screen chapter_title_screen(2, "THE PRISM REVELATION", "NSA Servers — Classified Briefings — 2012-2013")
+    call screen chapter_transition(chapter_num=2, codename="THE PRISM REVELATION", location="NSA Data Center, Fort Meade", date="June 5, 2013", time_str="23:47 EST", clearance="TOP SECRET // SCI // PRISM", description="The full scope of the surveillance program\nbecomes clear. Millions of citizens monitored\nwithout warrants. Snowden must decide:\nstay silent, or act.", status="ACTIVE", bg_image="bg_prism")
+    $ show_hud = True
+    $ quick_menu = True
+
 
     scene bg_prism at parallax with chapter_transition
 
@@ -491,7 +498,10 @@ label chapter_3:
     $ current_chapter = 3
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 3)
 
-    call screen chapter_title_screen(3, "THE CONTACT", "Encrypted Communications — January 2013")
+    call screen chapter_transition(chapter_num=3, codename="THE CONTACT", location="Encrypted Channel — Location Unknown", date="June 9, 2013", time_str="02:31 EST", clearance="TOP SECRET // HUMINT", description="First contact with journalists Glenn Greenwald\nand Laura Poitras. Every message could be\nintercepted. Operational security is the\ndifference between freedom and prison.", status="ACTIVE", bg_image="bg_hong_kong")
+    $ show_hud = True
+    $ quick_menu = True
+
 
     scene bg_hong_kong at parallax with chapter_transition
 
@@ -703,21 +713,23 @@ label ch3_continue:
 
     # --- Putting It Together ---
 
-    im "Now it's time to put that knowledge into practice. I've drafted an email to Grayson Wardell — but before I can send it, I need to strip every trace of my identity from the message. One mistake, and the NSA finds me."
+    im "Now it's time to put that knowledge into practice. I've intercepted an encrypted password hash from the internal NSA directory. Before I can access the PRISM architecture files, I need to crack it. One mistake, and the system locks down."
 
-    sys "// SYSTEM NOTE: Every digital message carries metadata — sender address, device info, routing headers, file authorship — that can expose your identity even if the content is encrypted. //"
+    sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Weak passwords can be cracked instantly using dictionary attacks and rule-based mutations. //"
 
     window hide
-    $ mg_intro3 = renpy.call_screen("minigame_intro", title=t("CLEAN THE MESSAGE"), description=t("You have drafted an email to journalist Grayson Wardell. Find and remove all 8 dangerous metadata elements before sending. Click on suspicious items to inspect and clean them."))
+    $ mg_intro3 = renpy.call_screen("minigame_briefing", challenge_title="BRUTE FORCE", subtitle="Passwords are only as strong as their entropy.\nTime to crack the hashes.", mission_id="OPS-03-09-2013", classification="TOP SECRET // EYES ONLY", challenge_type="CRYPTANALYSIS", estimated_time="120 SECONDS", difficulty=3, difficulty_label="OPERATIVE", succeed_reward="access_granted +1", fail_penalty="suspicion_level +1", learn_concept="Dictionary attacks and rule-based mutations\ncan break weak passwords instantly.", briefing_text="You intercepted an NSA internal system hash.\nYour task is to run a dictionary attack against this hash using John the Ripper.\n\nThe rockyou wordlist is available at /usr/share/wordlists/rockyou.txt\n\nType the correct terminal commands to crack the hashes.", controls=[("TAB", "Autocomplete command"),("ENTER", "Execute operation")])
 
     if mg_intro3:
         $ quick_menu = False
         $ show_hud = False
-        $ mg_opsec_score = renpy.call_screen("minigame_clean_message")
+        call minigame_3_brute_force
         $ quick_menu = True
         $ show_hud = True
         
-        if mg_opsec_score >= 4:
+        if mg_opsec_score == "SKIP":
+            $ renpy.notify(t("Minigame Skipped"))
+        elif mg_opsec_score >= 4:
             $ contacts_secured += 1
             $ knowledge_score += 1
             $ renpy.notify(t("Contacts +1 | Knowledge +1"))
@@ -796,7 +808,10 @@ label chapter_4:
     $ current_chapter = 4
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 4)
 
-    call screen chapter_title_screen(4, "THE ESCAPE", "Hong Kong — May 2013")
+    call screen chapter_transition(chapter_num=4, codename="THE ESCAPE", location="Mira Hotel, Hong Kong", date="June 10, 2013", time_str="14:22 HKT", clearance="TOP SECRET // EYES ONLY", description="NSA agents are closing in. The hotel room\nis the last safe ground. Every digital trace\nmust be destroyed before they arrive.\nNinety seconds. No margin for error.", status="ACTIVE", bg_image="bg_hong_kong_street")
+    $ show_hud = True
+    $ quick_menu = True
+
 
     scene bg_hong_kong_hotel at parallax with chapter_transition
 
@@ -951,7 +966,7 @@ label chapter_4:
 
     sys "// ALERT: NSA RESPONSE TEAM EN ROUTE. ESTIMATED ARRIVAL: 90 SECONDS. BEGIN DIGITAL EVIDENCE ELIMINATION. //"
 
-    $ mg_intro4 = renpy.call_screen("minigame_intro", title=t("COVER YOUR TRACKS"), description=t("NSA forensic agents are knocking on the hotel door. You have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive. Type commands or select tokens to destroy all 8 forensic traces."))
+    $ mg_intro4 = renpy.call_screen("minigame_briefing", challenge_title="COVER YOUR TRACKS", subtitle="NSA forensics are knocking. Destroy the evidence.", mission_id="OPS-04-10-2013", classification="TOP SECRET // BLACK", challenge_type="DIGITAL FORENSICS", estimated_time="90 SECONDS", difficulty=4, difficulty_label="EXPERT", succeed_reward="escape_secured = True", fail_penalty="evidence_compromised = True", learn_concept="Secure deletion requires overwriting data,\nnot just deleting file pointers.", briefing_text="NSA forensic agents are knocking on the hotel door.\nYou have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive.\n\nType commands or select tokens to destroy all 8 forensic traces.", controls=[("TAB", "Autocomplete command"),("ENTER", "Execute operation")])
 
     if mg_intro4:
         call minigame_4_cover_tracks
@@ -1068,7 +1083,10 @@ label chapter_5:
     $ current_chapter = 5
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 5)
 
-    call screen chapter_title_screen(5, "PERMANENT RECORD", "Moscow, Russia — 2013 to Present")
+    call screen chapter_transition(chapter_num=5, codename="NO WAY BACK", location="Sheremetyevo Airport, Moscow", date="June 23, 2013", time_str="18:05 MSK", clearance="DECLASSIFIED // PUBLIC RECORD", description="The documents are published. The world knows.\nSnowden's passport has been revoked mid-flight.\nStranded in transit. The final choice:\nasylum, silence, or surrender.", status="ACTIVE", bg_image="bg_moscow_airport")
+    $ show_hud = True
+    $ quick_menu = True
+
 
     scene bg_sheremetyevo at parallax with chapter_transition
 

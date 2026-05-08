@@ -1063,6 +1063,8 @@ screen screen_cover_tracks():
     key "K_BACKSPACE" action NullAction()
     key "mouseup_3" action NullAction()
 
+    use block_shortcuts_and_skip("SKIP")
+
 
 
 ################################################################################
@@ -1079,6 +1081,12 @@ label minigame_4_cover_tracks:
     $ show_hud = False
 
     call screen screen_cover_tracks
+    
+    if _return == "SKIP":
+        $ quick_menu = True
+        $ show_hud = True
+        $ renpy.notify("Minigame Skipped")
+        return
 
     $ cover_wiped = ct_state["wiped"]
     $ cover_failed = ct_state["failed"]

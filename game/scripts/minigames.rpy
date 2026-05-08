@@ -8,6 +8,25 @@
 ################################################################################
 
 # === Minigame Intro Splash ===
+screen block_shortcuts_and_skip(return_value="SKIP", show_skip_button=True):
+    zorder 100
+    
+    key "rollback" action NullAction()
+    key "rollforward" action NullAction()
+    key "ctrl_K_i" action NullAction()
+    key "ctrl_K_n" action NullAction()
+
+    if show_skip_button:
+        textbutton t("SKIP MINIGAME"):
+            xalign 0.98
+            yalign 0.02
+            text_size 16
+            text_color "#ff4444"
+            text_hover_color "#ff0000"
+            background Solid("#00000088")
+            padding (10, 5)
+            action Return(return_value)
+
 screen minigame_intro(title, description):
     modal True
     key "rollback" action NullAction()
@@ -714,6 +733,8 @@ screen minigame_firewall():
                 hbox:
                     text t("> Scanning packet... Awaiting your authorization") color "#00FFD160" size 14
                     text t(" _") at fw_cursor_blink color "#00FFD1" size 14
+
+    use block_shortcuts_and_skip("SKIP")
 
     # ══════════════════════════════════════════════════════════════════════
     #  PHASE: COMPLETE (Result / Mission Debrief)
@@ -2129,7 +2150,8 @@ screen decrypt_game():
                     action Return("next")
     key "K_BACKSPACE" action NullAction()
     key "mouseup_3" action NullAction()
-
+    
+    use block_shortcuts_and_skip("SKIP")
 
 screen decrypt_stage_transition(word, score, stars):
     modal True
@@ -2297,7 +2319,7 @@ screen decrypt_result():
 
 label minigame_2_decrypt:
     window hide
-    $ mg_intro2 = renpy.call_screen("minigame_intro", title=t("DECRYPT THE MESSAGE"), description=t("A classified NSA transmission has been encrypted with a Caesar cipher. Crack three intercepted words by shifting each cipher letter back by 3."))
+    $ mg_intro2 = renpy.call_screen("minigame_briefing", challenge_title="DECRYPT THE MESSAGE", subtitle="Basic encryption relies on keys.\nFind the key, break the cipher.", mission_id="OPS-02-05-2013", classification="TOP SECRET // EYES ONLY", challenge_type="CRYPTOGRAPHY", estimated_time="45 SECONDS", difficulty=1, difficulty_label="TRAINEE", succeed_reward="knowledge_score +1", fail_penalty="suspicion_level +1", learn_concept="Caesar Ciphers shift letters by a fixed amount.\nModern encryption uses the same core principle.", briefing_text="A classified NSA transmission has been encrypted with a Caesar cipher.\n\nCrack three intercepted words by shifting each cipher letter back by 3.\n\nExample: 'D' shifted back by 3 is 'A'.", controls=[("CLICK", "Select letter to input"),("ENTER", "Submit decrypted word")])
     if not mg_intro2:
         $ knowledge_score -= 1
         $ mg_decrypt_solved = False
@@ -2310,6 +2332,8 @@ label minigame_2_decrypt:
 
     while True:
         $ _decrypt_step = renpy.call_screen("decrypt_game")
+        if _decrypt_step == "SKIP":
+            jump decrypt_game_results
 
         if decrypt_state["phase"] == "word_complete":
             if decrypt_state["current_stage"] < len(decrypt_puzzles) - 1:

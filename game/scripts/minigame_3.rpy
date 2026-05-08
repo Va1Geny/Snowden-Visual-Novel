@@ -17,7 +17,9 @@ init python:
             renpy.restart_interaction()
             
         def enter(self):
-            pw_check_command()
+            res = pw_check_command()
+            if res == "EXIT":
+                return True
             renpy.restart_interaction()
             raise renpy.IgnoreEvent()
 
@@ -269,8 +271,8 @@ init python:
         pw_game_state["current_input"] = ""
         
         if pw_game_state["status"] == "report":
-            if inp.lower() == "exit":
-                renpy.return_statement()
+            if inp.lower() == "exit" or inp == "":
+                return "EXIT"
             else:
                 pw_add_line("└─$ " + inp)
                 if inp:
@@ -326,7 +328,7 @@ init python:
             elif cmd_base == "crack":
                 pw_add_line("crack: command not found.", color="#ff0000")
             else:
-                pw_add_line(f"command not found: {cmd_base}", color="#ff0000")
+                pw_add_line(f"command not found: {inp}", color="#ff0000")
                 
             wa = pw_game_state["wrong_attempts"]
             
@@ -384,9 +386,9 @@ init python:
             renpy.restart_interaction()
 
 image terminal_caret:
-    Text("_", font="fonts/ShareTechMono-Regular.ttf", size=17, color="#ffffff")
+    Text("_", font=FONT_MONO, size=17, color="#ffffff")
     pause 0.5
-    Text(" ", font="fonts/ShareTechMono-Regular.ttf", size=17, color="#ffffff")
+    Text(" ", font=FONT_MONO, size=17, color="#ffffff")
     pause 0.5
     repeat
 
@@ -437,11 +439,11 @@ screen minigame_3_main():
                     
                     for line in pw_game_state["lines"]:
                         if line.color == "#00ff00" and not line.expired:
-                            text line.text style "terminal_correct_line"
+                            text line.text style "terminal_correct_line" substitute False
                         elif line.color == "#ff0000" and not line.expired:
-                            text line.text style "terminal_error_line"
+                            text line.text style "terminal_error_line" substitute False
                         else:
-                            text line.text style "terminal_text"
+                            text line.text style "terminal_text" substitute False
                             
                     if pw_game_state["status"] in ["playing", "report"]:
                         hbox:
@@ -459,11 +461,13 @@ screen minigame_3_main():
             key "K_TAB" action Function(pw_autocomplete)
             
             if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
-                text "Press TAB to autocomplete" xalign 0.5 yalign 0.95 color "#888888" size 14 font "fonts/ShareTechMono-Regular.ttf"
+                text "Press TAB to autocomplete" xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
                 
         if pw_game_state["status"] == "learning":
             key "K_RETURN" action Function(pw_check_command)
             key "K_KP_ENTER" action Function(pw_check_command)
+            
+    use block_shortcuts_and_skip("SKIP")
 
 label minigame_3_brute_force:
     python:
@@ -471,7 +475,7 @@ label minigame_3_brute_force:
         
     call screen minigame_3_main
     
-    python:
-        pw_apply_results()
+    if _return == "SKIP":
+        return "SKIP"
         
-    return
+    return pw_game_state["score"]
