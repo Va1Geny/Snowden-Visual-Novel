@@ -54,18 +54,25 @@ label ending_hero:
 
     show logo_watermark
 
+    voice "audio/voice/en/endings_0057_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The documents are out. Every major newspaper in the world carries the story."
 
+    voice "audio/voice/en/endings_0059_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "PRISM. XKeyscore. Boundless Informant. The names of the programs become household words."
 
+    voice "audio/voice/en/endings_0061_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "Governments scramble to explain. Citizens demand answers. The conversation about privacy changes forever."
 
+    voice "audio/voice/en/endings_0063_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "You sit in a modest apartment in Moscow, watching the world you set in motion."
 
+    voice "audio/voice/en/endings_0065_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "You are wanted by the most powerful nation on Earth. You may never go home again."
 
+    voice "audio/voice/en/endings_0067_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "But the truth is out. And it can never be taken back."
 
+    voice "audio/voice/en/endings_0069_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "In boardrooms and bedrooms, in parliaments and classrooms, people are asking the question he wanted them to ask: {i}Who is watching the watchers?{/i}"
 
     call screen ending_screen(
@@ -94,18 +101,25 @@ label ending_fugitive:
 
     show logo_watermark
 
+    voice "audio/voice/en/endings_0097_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The documents reach the journalists. The stories are published."
 
+    voice "audio/voice/en/endings_0099_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "But the coverage is incomplete. Some of the most damning evidence never makes it to print."
 
+    voice "audio/voice/en/endings_0101_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "You escape, barely. Your passport is revoked mid-flight. You are stranded in a Moscow airport for 40 days."
 
+    voice "audio/voice/en/endings_0103_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "Russia grants you asylum â€” not out of kindness, but politics."
 
+    voice "audio/voice/en/endings_0105_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "You become a symbol, but an incomplete one. A person trapped between two superpowers."
 
+    voice "audio/voice/en/endings_0107_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The truth is out there, some of it. But the cost is measured in a life lived in exile."
 
+    voice "audio/voice/en/endings_0109_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "You will never eat at your favorite diner again. Never see your family without a screen between you. The price of partial truth."
 
     call screen ending_screen(
@@ -134,18 +148,25 @@ label ending_imprisoned:
 
     show logo_watermark
 
+    voice "audio/voice/en/endings_0137_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "They were waiting for him at the airport."
 
+    voice "audio/voice/en/endings_0139_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The moment your passport was scanned, the system flagged you. Every camera, every sensor, every algorithm turned its eye toward Gate 14."
 
+    voice "audio/voice/en/endings_0141_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "Men in dark suits. No badges. No names. Just a quiet walk to a windowless room."
 
+    voice "audio/voice/en/endings_0143_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The charges: espionage, theft of government property, violation of the Espionage Act of 1917."
 
+    voice "audio/voice/en/endings_0145_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The trial is closed to the public. The evidence is classified. The verdict is predetermined."
 
+    voice "audio/voice/en/endings_0147_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "In a federal supermax facility, you watch the news through a 4-inch window of reinforced glass. The surveillance programs continue unchanged."
 
+    voice "audio/voice/en/endings_0149_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The truth dies in a cell. And the machine keeps running."
 
     call screen ending_screen(
@@ -174,18 +195,25 @@ label ending_silenced:
 
     show logo_watermark
 
+    voice "audio/voice/en/endings_0177_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The internal monitoring system flagged your access patterns three weeks before you planned to act."
 
+    voice "audio/voice/en/endings_0179_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "Unusual file access. After-hours logins. Queries that didn't match your assigned projects."
 
+    voice "audio/voice/en/endings_0181_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "A quiet reassignment. Your clearance revoked overnight. Your workstation wiped."
 
+    voice "audio/voice/en/endings_0183_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "No arrest. No trial. No headlines. Just silence."
 
+    voice "audio/voice/en/endings_0185_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "You find yourself working IT support in a suburban Virginia office park. No access. No power. No story."
 
+    voice "audio/voice/en/endings_0187_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The journalists wait for a contact that never comes. The documents remain locked in NSA servers."
 
+    voice "audio/voice/en/endings_0189_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The greatest surveillance apparatus in history continues to grow, invisible and unchallenged."
 
     call screen ending_screen(
@@ -214,18 +242,25 @@ label ending_betrayed:
 
     show logo_watermark
 
+    voice "audio/voice/en/endings_0217_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The journalist's email was compromised from the start."
 
+    voice "audio/voice/en/endings_0219_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "What you thought was a secure PGP channel was actually a honeypot â€” a man-in-the-middle operation run by the very agency you were trying to expose."
 
+    voice "audio/voice/en/endings_0221_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "Every document you shared was intercepted. Every plan you made was monitored. Every ally you trusted was catalogued."
 
+    voice "audio/voice/en/endings_0223_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "The co-worker who offered to help? An informant. The encrypted channel? Broken by a zero-day exploit."
 
+    voice "audio/voice/en/endings_0225_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "You disappeared on a Tuesday morning. No announcement. No media coverage."
 
+    voice "audio/voice/en/endings_0227_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "Your apartment was cleaned out within 24 hours. Your digital footprint scrubbed from every server."
 
+    voice "audio/voice/en/endings_0229_narrator_voice.mp3"  # edge-tts-auto
     narrator_voice "It was as if you never existed at all."
 
     call screen ending_screen(

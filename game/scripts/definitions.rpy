@@ -118,6 +118,7 @@ default current_chapter = 1
 default show_hud = True
 default notebook_entries = []
 default notebook_draft = ""
+default english_voice_bootstrap_done = False
 default suspicion_lockdown_triggered = False
 
 # === Minigame State ===
