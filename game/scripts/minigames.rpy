@@ -1,16 +1,6 @@
-################################################################################
-# MINIGAMES.RPY — All Minigame Logic and Screens
-# Classified: The Snowden Files
-################################################################################
-
-################################################################################
-# MINIGAME INTRO / RESULT SCREENS
-################################################################################
-
-# === Minigame Intro Splash ===
 screen block_shortcuts_and_skip(return_value="SKIP", show_skip_button=True):
     zorder 100
-    
+
     key "rollback" action NullAction()
     key "rollforward" action NullAction()
     key "ctrl_K_i" action NullAction()
@@ -60,8 +50,6 @@ screen minigame_intro(title, description):
                 text_size 21
                 action Return(False)
 
-
-# === Minigame Result ===
 screen minigame_result(passed, title, explanation):
     modal True
     key "rollback" action NullAction()
@@ -95,16 +83,9 @@ screen minigame_result(passed, title, explanation):
                 text_style "menu_btn_text"
                 action Return()
 
-
-################################################################################
-# MINIGAME 1: FIREWALL BREACH (Chapter 1) â€” REDESIGNED
-# Cinematic NSA Workstation-style packet analysis minigame
-################################################################################
-
 init python:
     import time as _time
 
-    # â”€â”€ Packet Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     def get_fw_packets():
         return [
             {
@@ -157,7 +138,6 @@ init python:
             },
         ]
 
-    # â”€â”€ Timer Class â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     class PacketTimer(object):
         def __init__(self, max_time=15.0):
             self.max_time = max_time
@@ -187,7 +167,6 @@ init python:
 
     packet_timer = PacketTimer()
 
-    # â”€â”€ Game State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     fw_state = {
         "phase": "incoming",
         "current_index": 0,
@@ -326,8 +305,6 @@ init python:
         }
         return protocol_tags.get(packet["protocol"], "UNCLASSIFIED FLOW")
 
-# â”€â”€ ATL Transforms â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
 transform fw_packet_enter:
     xoffset 600 alpha 0.0
     ease 0.45 xoffset 0 alpha 1.0
@@ -387,15 +364,11 @@ transform fw_btn_enter:
     pause 1.5
     ease 0.3 alpha 1.0
 
-
-# â”€â”€ Main Firewall Minigame Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
 screen minigame_firewall():
     modal True
     key "rollback" action NullAction()
     key "K_BACKSPACE" action NullAction()
 
-    # Reset state on first show
     on "show" action Function(fw_reset)
 
     add "#0A0E1A"
@@ -408,24 +381,17 @@ screen minigame_firewall():
         xsize 900
         ysize 900
 
-    # â”€â”€ Scanline overlay (subtle) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     for _sl_y in range(0, 720, 4):
         add Solid("#00000010"):
             xsize 1280 ysize 1
             xpos 0 ypos _sl_y
 
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    #  PHASE: INCOMING / FEEDBACK (main gameplay)
-    #  (Intro/skip is handled by the existing minigame_intro screen)
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
     if fw_state["phase"] in ("incoming", "feedback"):
 
-        # Timer tick â€” refresh display for timer bar
         if fw_state["phase"] == "incoming":
             timer 0.1 repeat True action Function(renpy.restart_interaction)
             timer fw_current_time_limit() action Function(fw_handle_timeout)
 
-        # Feedback continue delay
         if fw_state["phase"] == "feedback" and not fw_state["show_continue"]:
             timer 1.5 action Function(fw_show_continue)
 
@@ -446,7 +412,6 @@ screen minigame_firewall():
         $ _fw_streak = fw_state["streak"]
         $ _fw_tag = fw_packet_tag(_fw_pkt)
 
-        # â”€â”€ TOP HUD BAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         frame:
             xfill True ysize 100
             xpos 0 ypos 0
@@ -456,7 +421,6 @@ screen minigame_firewall():
             vbox:
                 spacing 6
 
-                # Title row
                 hbox:
                     xfill True
                     text t("// NSA NETWORK MONITOR //") color "#00FFD180" size 14 bold True yalign 0.5
@@ -469,12 +433,11 @@ screen minigame_firewall():
                         text t("BLOCKED: [fw_state['blocked_count']]") color "#FF2D55" size 14 bold True yalign 0.5
                         text t("SCORE: [_fw_score]") color "#E8E8E8" size 14 bold True yalign 0.5
 
-                # Progress dots
                 hbox:
                     spacing 8
                     for _dot_i in range(8):
                         if _dot_i < _fw_idx:
-                            # Completed
+
                             $ _dot_ans = fw_state["answers"][_dot_i] if _dot_i < len(fw_state["answers"]) else None
                             if _dot_ans and _dot_ans["is_correct"]:
                                 text t("â—") color "#00FFD1" size 18
@@ -488,7 +451,6 @@ screen minigame_firewall():
                     null width 20
                     text t("PACKET [_fw_num] / 8") color "#888888" size 14 yalign 0.5
 
-                # Timer bar
                 if fw_state["phase"] == "incoming":
                     frame:
                         xfill True ysize 6
@@ -509,8 +471,6 @@ screen minigame_firewall():
                         background "#1A1A2E"
                         padding(0, 0)
 
-        # â”€â”€ PACKET CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-        # Use showif per packet index to trigger enter animation on change
         for _pc_i in range(8):
             showif fw_state["current_index"] == _pc_i and fw_state["phase"] in ("incoming", "feedback"):
                 frame at fw_packet_enter:
@@ -519,7 +479,6 @@ screen minigame_firewall():
                     background "#131928"
                     padding(0, 0)
 
-                    # Outer border
                     add Solid("#00FFD120"):
                         xsize 820 ysize 1 xpos 0 ypos 0
                     add Solid("#00FFD120"):
@@ -529,7 +488,6 @@ screen minigame_firewall():
                     add Solid("#00FFD120"):
                         xsize 1 ysize 280 xpos 819 ypos 0
 
-                    # Corner brackets
                     text t("â—¢") color "#00FFD140" size 14 xpos 6 ypos 2
                     text t("â—£") color "#00FFD140" size 14 xpos 798 ypos 2
                     text t("â—¤") color "#00FFD140" size 14 xpos 6 ypos 258
@@ -539,7 +497,6 @@ screen minigame_firewall():
                         pos(0, 0)
                         xsize 820
 
-                        # Signature bar at top
                         $ _pc_pkts = get_fw_packets()
                         $ _pc_pkt = _pc_pkts[_pc_i]
                         $ _pc_tag = fw_packet_tag(_pc_pkt)
@@ -562,12 +519,10 @@ screen minigame_firewall():
 
                         null height 20
 
-                        # Data fields
                         hbox:
                             xfill True
                             spacing 0
 
-                            # Source IP column
                             vbox:
                                 xsize 320
                                 xalign 0.0
@@ -577,7 +532,6 @@ screen minigame_firewall():
                                 $ _pc_ip = _pc_pkt["source_ip"]
                                 text t("[_pc_ip]") color "#00FFD1" size 26 bold True
 
-                            # Port column
                             vbox:
                                 xsize 200
                                 spacing 4
@@ -585,7 +539,6 @@ screen minigame_firewall():
                                 $ _pc_port = str(_pc_pkt["port"])
                                 text t("[_pc_port]") color "#FFD700" size 30 bold True
 
-                            # Protocol column
                             vbox:
                                 xsize 250
                                 spacing 4
@@ -595,14 +548,12 @@ screen minigame_firewall():
 
                         null height 20
 
-                        # Description line
                         hbox:
                             xoffset 30
                             text t("CLASSIFICATION: ") color "#555555" size 14
                             $ _pc_desc2 = _pc_pkt["description"]
                             text t("[_pc_desc2]") color "#888888" size 14 italic True
 
-                        # Feedback overlay on card
                         if fw_state["phase"] == "feedback" and fw_state["current_index"] == _pc_i:
                             null height 15
                             hbox:
@@ -612,19 +563,16 @@ screen minigame_firewall():
                                 else:
                                     text t("âœ— INCORRECT ANALYSIS") color "#FF2D55" size 16 bold True
 
-        # â”€â”€ ACTION BUTTONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         if fw_state["phase"] == "incoming":
             hbox at fw_fade_in:
                 xalign 0.5 yalign 0.72
                 spacing 60
 
-                # ALLOW button
                 frame:
                     xsize 220 ysize 70
                     background "#0D1220"
                     padding(0, 0)
 
-                    # Border
                     add Solid("#00FFD140"):
                         xsize 220 ysize 1 xpos 0 ypos 0
                     add Solid("#00FFD140"):
@@ -642,7 +590,6 @@ screen minigame_firewall():
                         text_bold True
                         action Function(fw_evaluate, "ALLOW")
 
-                # BLOCK button
                 frame:
                     xsize 220 ysize 70
                     background "#0D1220"
@@ -665,7 +612,6 @@ screen minigame_firewall():
                         text_bold True
                         action Function(fw_evaluate, "BLOCK")
 
-        # â”€â”€ ANALYSIS TERMINAL (feedback) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         if fw_state["phase"] == "feedback":
             frame at fw_feedback_enter:
                 xalign 0.5 yalign 0.5
@@ -682,7 +628,6 @@ screen minigame_firewall():
                         spacing 10
                         xalign 0.5
 
-                        # Terminal header
                         text t("> ANALYSIS TERMINAL <") color "#00FFD180" size 14 bold True xalign 0.5
 
                         if fw_state["timed_out"]:
@@ -696,7 +641,6 @@ screen minigame_firewall():
                         else:
                             text t("{cps=40}âš  INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
 
-                        # Explanation
                         text t("{cps=30}[_fw_explanation]{/cps}") color "#AAAAAA" size 15 text_align 0.5 xalign 0.5 justify True
 
                         if fw_state["last_correct"] and not fw_state["timed_out"]:
@@ -704,7 +648,6 @@ screen minigame_firewall():
 
                         null height 5
 
-                        # Continue button (delayed)
                         if fw_state["show_continue"]:
                             textbutton t("> CONTINUE â†’"):
                                 xalign 0.5
@@ -719,7 +662,6 @@ screen minigame_firewall():
                                 text t("> Processing") color "#00FFD180" size 14
                                 text t(" _") at fw_cursor_blink color "#00FFD1" size 14
 
-        # â”€â”€ Waiting prompt (incoming phase) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         if fw_state["phase"] == "incoming":
             frame:
                 xalign 0.5 yalign 0.82
@@ -735,8 +677,7 @@ screen minigame_firewall():
                     text t(" _") at fw_cursor_blink color "#00FFD1" size 14
 
     use block_shortcuts_and_skip("SKIP")
-    #  PHASE: COMPLETE (Result / Mission Debrief)
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
     if fw_state["phase"] == "complete":
         $ _r_score = fw_state["score"]
         $ _r_allowed = fw_state["allowed_count"]
@@ -756,7 +697,6 @@ screen minigame_firewall():
 
                 text t("// FIREWALL ANALYSIS COMPLETE //") color "#00FFD1" size 28 bold True xalign 0.5 text_align 0.5
 
-                # Mission outcome panel (compact)
                 frame:
                     xalign 0.5 xsize 700
                     background "#131928"
@@ -781,7 +721,6 @@ screen minigame_firewall():
                             text t("Knowledge Bonus:") color "#888888" size 15
                             text t("+[_r_bonus]") color "#FFD700" size 15 bold True xalign 1.0
 
-                # Grade display
                 text t("GRADE:") color "#888888" size 14 xalign 0.5
 
                 if _r_score >= 7:
@@ -793,7 +732,6 @@ screen minigame_firewall():
                 else:
                     text t("[_r_grade]") color "#FF2D55" size 32 bold True xalign 0.5
 
-                # Per-packet breakdown (scrollable)
                 frame:
                     xalign 0.5 xsize 700
                     background "#0D1220"
@@ -834,7 +772,6 @@ screen minigame_firewall():
                                         else:
                                             text t("[_r_ch] (should: [_r_co])") color "#FF2D55" size 12 yalign 0.5
 
-                # Key takeaway (compact)
                 frame:
                     xalign 0.5 xsize 700
                     background "#131928"
@@ -847,7 +784,6 @@ screen minigame_firewall():
 
                 null height 5
 
-                # CONTINUE button â€” always visible at bottom
                 textbutton t("> CONTINUE MISSION"):
                     xalign 0.5
                     text_color "#00FFD1"
@@ -857,11 +793,6 @@ screen minigame_firewall():
                     action Return(_r_score)
     key "K_BACKSPACE" action NullAction()
     key "mouseup_3" action NullAction()
-
-
-################################################################################
-# MINIGAME 2: DECRYPT THE MESSAGE (Chapter 2)
-################################################################################
 
 init python:
     import random
@@ -1240,7 +1171,6 @@ init python:
                 "cursor_visible", True)
             renpy.restart_interaction()
 
-
 transform letter_reveal:
     alpha 0.0
     zoom 0.5
@@ -1292,7 +1222,6 @@ transform stage_transition_out:
     alpha 1.0
     zoom 1.0
     ease 0.25 alpha 0.0 zoom 1.03
-
 
 screen decrypt_alphabet_panel():
     $ puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
@@ -1377,7 +1306,6 @@ screen decrypt_alphabet_panel():
                                     color plain_color
                                     xalign 0.5
                                     yalign 0.5
-
 
 screen decrypt_word_display():
     $ puzzle = decrypt_puzzles[decrypt_state["current_stage"]]
@@ -1543,7 +1471,6 @@ screen decrypt_word_display():
                     xalign 0.5
                     font "fonts/ShareTechMono-Regular.ttf"
 
-
 screen decrypt_keyboard():
     $ selected = decrypt_get_selected_position()
     $ mapped_hint = caesar_map[decrypt_puzzles[decrypt_state["current_stage"]]["encrypted"][selected]]
@@ -1593,7 +1520,6 @@ screen decrypt_keyboard():
                         style "keyboard_key"
                         text_style "keyboard_key_text"
                         action Function(decrypt_confirm_word)
-
 
 screen decrypt_cipher_wheel():
     vbox:
@@ -1701,7 +1627,6 @@ screen decrypt_cipher_wheel():
                     color "#00FFD1"
                     font "fonts/ShareTechMono-Regular.ttf"
 
-            # Small dot in center instead of text
             add Solid("#00FFD160"):
                 xsize 6
                 ysize 6
@@ -1714,7 +1639,6 @@ screen decrypt_cipher_wheel():
             bold True
             color "#8B8FCC"
             font "fonts/ShareTechMono-Regular.ttf"
-
 
 screen decrypt_game():
     modal True
@@ -1753,8 +1677,6 @@ screen decrypt_game():
                 font "fonts/ShareTechMono-Regular.ttf"
                 at bg_scroll_down(idx * 0.25)
 
-    # â”€â”€ TOP HEADER BAR â”€â”€
-    # xsize capped at 1540 so it does not collide with the quick-menu / HUD in the top-right corner
     frame:
         xpos 52
         ypos 20
@@ -1781,7 +1703,6 @@ screen decrypt_game():
                 xalign 1.0
                 yalign 0.5
 
-    # â”€â”€ CIPHER DISPLAY (CENTERED) â”€â”€
     frame:
         xpos 52
         ypos 106
@@ -1815,8 +1736,6 @@ screen decrypt_game():
                 size 18
             use decrypt_word_display
 
-    # â”€â”€ BOTTOM ROW: Score/Stars + Cipher Wheel + Analysis Log â”€â”€
-    # Score stars panel
     frame:
         xpos 52
         ypos 460
@@ -1917,7 +1836,6 @@ screen decrypt_game():
                     xalign 1.0
                     yalign 0.5
 
-    # Cipher wheel panel
     frame:
         xpos 668
         ypos 460
@@ -1956,7 +1874,6 @@ screen decrypt_game():
                     font "fonts/ShareTechMono-Regular.ttf"
                     yalign 0.5
 
-    # Analysis log panel
     frame:
         xpos 1114
         ypos 460
@@ -1988,7 +1905,6 @@ screen decrypt_game():
                 text_align 0.0
                 line_spacing 2
 
-    # â”€â”€ CAESAR CIPHER REFERENCE (BOTTOM LEFT) â”€â”€
     frame:
         xpos 52
         ypos 744
@@ -2012,7 +1928,6 @@ screen decrypt_game():
                 size 18
             use decrypt_alphabet_panel
 
-    # â”€â”€ DECRYPTION CONTROLS (BOTTOM RIGHT) â”€â”€
     frame:
         xpos 1498
         ypos 744
@@ -2148,7 +2063,7 @@ screen decrypt_game():
                     action Return("next")
     key "K_BACKSPACE" action NullAction()
     key "mouseup_3" action NullAction()
-    
+
     use block_shortcuts_and_skip("SKIP")
 
 screen decrypt_stage_transition(word, score, stars):
@@ -2209,7 +2124,6 @@ screen decrypt_stage_transition(word, score, stars):
                 xalign 0.5
 
     timer 1.9 action Return(True)
-
 
 screen decrypt_result():
     modal True
@@ -2314,7 +2228,6 @@ screen decrypt_result():
         ypos 828
         action Return(True)
 
-
 label minigame_2_decrypt:
     window hide
     $ mg_intro2 = renpy.call_screen("minigame_briefing", challenge_title="DECRYPT THE MESSAGE", subtitle="Basic encryption relies on keys.\nFind the key, break the cipher.", mission_id="OPS-02-05-2013", classification="TOP SECRET // EYES ONLY", challenge_type="CRYPTOGRAPHY", estimated_time="45 SECONDS", difficulty=1, difficulty_label="TRAINEE", succeed_reward="knowledge_score +1", fail_penalty="suspicion_level +1", learn_concept="Caesar Ciphers shift letters by a fixed amount.\nModern encryption uses the same core principle.", briefing_text="A classified NSA transmission has been encrypted with a Caesar cipher.\n\nCrack three intercepted words by shifting each cipher letter back by 3.\n\nExample: 'D' shifted back by 3 is 'A'.", controls=[("CLICK", "Select letter to input"),("ENTER", "Submit decrypted word")])
@@ -2367,17 +2280,6 @@ label decrypt_game_results:
     $ show_hud = True
     return
 
-
-################################################################################
-# MINIGAME 3: CLEAN THE MESSAGE (Chapter 3)
-# -> Implemented in minigame_ctm.rpy
-################################################################################
-
-
-################################################################################
-# MINIGAME 4: TRACE THE ROUTE (Chapter 4)
-################################################################################
-
 init python:
     def get_trace_nodes():
         return {
@@ -2392,7 +2294,6 @@ init python:
             "target":   {"name": "JOURNALIST SERVER", "x": 0.85, "y": 0.5, "type": "end"},
         }
 
-    # Valid safe paths (avoiding gov monitor)
     safe_connections = {
         "home": ["isp", "vpn"],
         "isp": ["tor1", "gov"],
@@ -2425,7 +2326,6 @@ init python:
             "secure": "One more clean hop gets the instructions home.",
         }
         return hints.get(current_node, "Keep the route tight and avoid the red monitor.")
-
 
 screen minigame_trace():
     modal True
@@ -2598,4 +2498,3 @@ screen minigame_trace():
                         xalign 0.5
                         text_style "menu_btn_text"
                         action Return(reached_end and not hit_gov)
-

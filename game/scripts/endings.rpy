@@ -1,12 +1,3 @@
-################################################################################
-## ENDINGS.RPY â€” All 5 Ending Sequences
-## Classified: The Snowden Files
-################################################################################
-
-################################################################################
-## ENDING DETERMINATION LOGIC
-################################################################################
-
 label max_suspicion_game_over:
     $ show_hud = False
     $ quick_menu = True
@@ -14,9 +5,8 @@ label max_suspicion_game_over:
     $ tree_record_ending("silenced")
     jump ending_silenced
 
-
 label determine_ending:
-    # Calculate the ending based on accumulated flags
+
     if knowledge_score >= 8 and escape_successful and contacts_secured >= 2 and not identity_exposed:
         $ ending_type = "hero"
         $ tree_record_ending("hero")
@@ -42,11 +32,6 @@ label determine_ending:
         $ tree_record_ending("betrayed")
         jump ending_betrayed
 
-
-################################################################################
-## ENDING 1: THE HERO (Best Ending)
-################################################################################
-
 label ending_hero:
     scene black with chapter_transition
     $ renpy.pause(1.0, hard=True)
@@ -54,25 +39,25 @@ label ending_hero:
 
     show logo_watermark
 
-    voice "audio/voice/en/endings_0057_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0057_narrator_voice.mp3"
     narrator_voice "The documents are out. Every major newspaper in the world carries the story."
 
-    voice "audio/voice/en/endings_0059_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0059_narrator_voice.mp3"
     narrator_voice "PRISM. XKeyscore. Boundless Informant. The names of the programs become household words."
 
-    voice "audio/voice/en/endings_0061_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0061_narrator_voice.mp3"
     narrator_voice "Governments scramble to explain. Citizens demand answers. The conversation about privacy changes forever."
 
-    voice "audio/voice/en/endings_0063_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0063_narrator_voice.mp3"
     narrator_voice "You sit in a modest apartment in Moscow, watching the world you set in motion."
 
-    voice "audio/voice/en/endings_0065_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0065_narrator_voice.mp3"
     narrator_voice "You are wanted by the most powerful nation on Earth. You may never go home again."
 
-    voice "audio/voice/en/endings_0067_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0067_narrator_voice.mp3"
     narrator_voice "But the truth is out. And it can never be taken back."
 
-    voice "audio/voice/en/endings_0069_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0069_narrator_voice.mp3"
     narrator_voice "In boardrooms and bedrooms, in parliaments and classrooms, people are asking the question he wanted them to ask: {i}Who is watching the watchers?{/i}"
 
     call screen ending_screen(
@@ -89,11 +74,6 @@ label ending_hero:
         jump start
     return
 
-
-################################################################################
-## ENDING 2: THE FUGITIVE (Neutral Good)
-################################################################################
-
 label ending_fugitive:
     scene black with chapter_transition
     $ renpy.pause(1.0, hard=True)
@@ -101,25 +81,25 @@ label ending_fugitive:
 
     show logo_watermark
 
-    voice "audio/voice/en/endings_0097_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0097_narrator_voice.mp3"
     narrator_voice "The documents reach the journalists. The stories are published."
 
-    voice "audio/voice/en/endings_0099_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0099_narrator_voice.mp3"
     narrator_voice "But the coverage is incomplete. Some of the most damning evidence never makes it to print."
 
-    voice "audio/voice/en/endings_0101_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0101_narrator_voice.mp3"
     narrator_voice "You escape, barely. Your passport is revoked mid-flight. You are stranded in a Moscow airport for 40 days."
 
-    voice "audio/voice/en/endings_0103_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0103_narrator_voice.mp3"
     narrator_voice "Russia grants you asylum â€” not out of kindness, but politics."
 
-    voice "audio/voice/en/endings_0105_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0105_narrator_voice.mp3"
     narrator_voice "You become a symbol, but an incomplete one. A person trapped between two superpowers."
 
-    voice "audio/voice/en/endings_0107_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0107_narrator_voice.mp3"
     narrator_voice "The truth is out there, some of it. But the cost is measured in a life lived in exile."
 
-    voice "audio/voice/en/endings_0109_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0109_narrator_voice.mp3"
     narrator_voice "You will never eat at your favorite diner again. Never see your family without a screen between you. The price of partial truth."
 
     call screen ending_screen(
@@ -136,11 +116,6 @@ label ending_fugitive:
         jump start
     return
 
-
-################################################################################
-## ENDING 3: IMPRISONED (Bad Ending)
-################################################################################
-
 label ending_imprisoned:
     scene black with chapter_transition
     $ renpy.pause(1.0, hard=True)
@@ -148,25 +123,25 @@ label ending_imprisoned:
 
     show logo_watermark
 
-    voice "audio/voice/en/endings_0137_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0137_narrator_voice.mp3"
     narrator_voice "They were waiting for him at the airport."
 
-    voice "audio/voice/en/endings_0139_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0139_narrator_voice.mp3"
     narrator_voice "The moment your passport was scanned, the system flagged you. Every camera, every sensor, every algorithm turned its eye toward Gate 14."
 
-    voice "audio/voice/en/endings_0141_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0141_narrator_voice.mp3"
     narrator_voice "Men in dark suits. No badges. No names. Just a quiet walk to a windowless room."
 
-    voice "audio/voice/en/endings_0143_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0143_narrator_voice.mp3"
     narrator_voice "The charges: espionage, theft of government property, violation of the Espionage Act of 1917."
 
-    voice "audio/voice/en/endings_0145_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0145_narrator_voice.mp3"
     narrator_voice "The trial is closed to the public. The evidence is classified. The verdict is predetermined."
 
-    voice "audio/voice/en/endings_0147_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0147_narrator_voice.mp3"
     narrator_voice "In a federal supermax facility, you watch the news through a 4-inch window of reinforced glass. The surveillance programs continue unchanged."
 
-    voice "audio/voice/en/endings_0149_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0149_narrator_voice.mp3"
     narrator_voice "The truth dies in a cell. And the machine keeps running."
 
     call screen ending_screen(
@@ -183,11 +158,6 @@ label ending_imprisoned:
         jump start
     return
 
-
-################################################################################
-## ENDING 4: SILENCED (Bad Ending)
-################################################################################
-
 label ending_silenced:
     scene black with chapter_transition
     $ renpy.pause(1.0, hard=True)
@@ -195,25 +165,25 @@ label ending_silenced:
 
     show logo_watermark
 
-    voice "audio/voice/en/endings_0177_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0177_narrator_voice.mp3"
     narrator_voice "The internal monitoring system flagged your access patterns three weeks before you planned to act."
 
-    voice "audio/voice/en/endings_0179_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0179_narrator_voice.mp3"
     narrator_voice "Unusual file access. After-hours logins. Queries that didn't match your assigned projects."
 
-    voice "audio/voice/en/endings_0181_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0181_narrator_voice.mp3"
     narrator_voice "A quiet reassignment. Your clearance revoked overnight. Your workstation wiped."
 
-    voice "audio/voice/en/endings_0183_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0183_narrator_voice.mp3"
     narrator_voice "No arrest. No trial. No headlines. Just silence."
 
-    voice "audio/voice/en/endings_0185_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0185_narrator_voice.mp3"
     narrator_voice "You find yourself working IT support in a suburban Virginia office park. No access. No power. No story."
 
-    voice "audio/voice/en/endings_0187_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0187_narrator_voice.mp3"
     narrator_voice "The journalists wait for a contact that never comes. The documents remain locked in NSA servers."
 
-    voice "audio/voice/en/endings_0189_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0189_narrator_voice.mp3"
     narrator_voice "The greatest surveillance apparatus in history continues to grow, invisible and unchallenged."
 
     call screen ending_screen(
@@ -230,11 +200,6 @@ label ending_silenced:
         jump start
     return
 
-
-################################################################################
-## ENDING 5: BETRAYED (Worst Ending)
-################################################################################
-
 label ending_betrayed:
     scene black with chapter_transition
     $ renpy.pause(1.0, hard=True)
@@ -242,25 +207,25 @@ label ending_betrayed:
 
     show logo_watermark
 
-    voice "audio/voice/en/endings_0217_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0217_narrator_voice.mp3"
     narrator_voice "The journalist's email was compromised from the start."
 
-    voice "audio/voice/en/endings_0219_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0219_narrator_voice.mp3"
     narrator_voice "What you thought was a secure PGP channel was actually a honeypot â€” a man-in-the-middle operation run by the very agency you were trying to expose."
 
-    voice "audio/voice/en/endings_0221_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0221_narrator_voice.mp3"
     narrator_voice "Every document you shared was intercepted. Every plan you made was monitored. Every ally you trusted was catalogued."
 
-    voice "audio/voice/en/endings_0223_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0223_narrator_voice.mp3"
     narrator_voice "The co-worker who offered to help? An informant. The encrypted channel? Broken by a zero-day exploit."
 
-    voice "audio/voice/en/endings_0225_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0225_narrator_voice.mp3"
     narrator_voice "You disappeared on a Tuesday morning. No announcement. No media coverage."
 
-    voice "audio/voice/en/endings_0227_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0227_narrator_voice.mp3"
     narrator_voice "Your apartment was cleaned out within 24 hours. Your digital footprint scrubbed from every server."
 
-    voice "audio/voice/en/endings_0229_narrator_voice.mp3"  # edge-tts-auto
+    voice "audio/voice/en/endings_0229_narrator_voice.mp3"
     narrator_voice "It was as if you never existed at all."
 
     call screen ending_screen(
@@ -276,11 +241,6 @@ label ending_betrayed:
     if _return == "restart":
         jump start
     return
-
-
-################################################################################
-## ENDING SCREEN (Shared UI - Hacker/Terminal Aesthetic)
-################################################################################
 
 transform terminal_glitch:
     alpha 0.0 yoffset 20
@@ -298,23 +258,17 @@ transform slide_up_delay(d):
 
 screen ending_screen(title, color, description, lessons):
     modal True
-    
-    # â”€â”€ Background Layer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
     add "#080C10"
-    
+
     add Solid("#00FFD105")
-    
-    # Subtle logo watermark
+
     add "images/logo.png":
         xalign 0.5 yalign 0.5
         alpha 0.03
         fit "contain"
         xsize 1000 ysize 1000
 
-    # â”€â”€ Main Content Viewport â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    # NOTE: scrollbars on a viewport steal width from the inner content area,
-    # which shifts xalign 0.5 off-center on a 1920px stage. We pin the column
-    # at xpos 360 (= (1920 - 1200) / 2) so it sits at true visual center.
     viewport:
         xfill True yfill True
         scrollbars "vertical"
@@ -323,15 +277,14 @@ screen ending_screen(title, color, description, lessons):
 
         vbox:
             xfill True
-            
+
             vbox:
                 xalign 0.5
                 xsize 1200
                 spacing 40
 
             null height 80
-            
-            # â”€â”€ HEADER: ENDING TITLE â”€â”€
+
             vbox:
                 xalign 0.5
                 spacing 10
@@ -346,43 +299,39 @@ screen ending_screen(title, color, description, lessons):
                 frame:
                     xalign 0.5 xsize 400 ysize 2
                     background color
-            
-            # â”€â”€ DESCRIPTION CARD â”€â”€
+
             frame:
                 xalign 0.5 xsize 1000
                 background "#0D1117F0"
                 padding (40, 30)
                 at slide_up_delay(0.4)
-                
+
                 text description:
                     color "#E8E8E8"
                     size 24
                     text_align 0.5
                     line_spacing 6
                     font "fonts/ShareTechMono-Regular.ttf"
-            
-            # â”€â”€ METRICS & LOGS â”€â”€
+
             hbox:
                 xalign 0.5
                 spacing 30
-                
-                # Left Side: Mission Metrics
+
                 frame:
                     xsize 580 ysize 420
                     background "#0D1117F0"
                     padding (24, 20)
                     at slide_up_delay(0.8)
-                    
+
                     vbox:
                         spacing 15
                         hbox:
                             xfill True
                             text t("MISSION METRICS") color "#00FFD1" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
                             text t("[config.version]") color "#3A4A55" size 12 font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
-                        
+
                         null height 10
-                        
-                        # Knowledge Bar
+
                         vbox:
                             spacing 4
                             hbox:
@@ -395,8 +344,7 @@ screen ending_screen(title, color, description, lessons):
                                 frame:
                                     xsize int(532 * (knowledge_score / 10.0)) ysize 8
                                     background "#00FFD1"
-                        
-                        # Suspicion Bar (Inverted Color)
+
                         vbox:
                             spacing 4
                             hbox:
@@ -416,7 +364,6 @@ screen ending_screen(title, color, description, lessons):
                             background "#2A3540"
                         null height 5
 
-                        # Toggle Stats
                         hbox:
                             xfill True
                             text t("IDENTITY STATUS:") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf"
@@ -424,7 +371,7 @@ screen ending_screen(title, color, description, lessons):
                                 text t("EXPOSED") color "#FF2D55" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
                             else:
                                 text t("SECURE") color "#00FF88" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
-                        
+
                         hbox:
                             xfill True
                             text t("EVIDENCE STATUS:") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf"
@@ -446,19 +393,18 @@ screen ending_screen(title, color, description, lessons):
                             text t("CONTACTS SECURED:") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf"
                             text t("[contacts_secured]") color "#FFD700" size 14 bold True xalign 1.0 font "fonts/ShareTechMono-Regular.ttf"
 
-                # Right Side: Post-Mortem Analysis
                 frame:
                     xsize 580 ysize 420
                     background "#0D1117F0"
                     padding (24, 20)
                     at slide_up_delay(1.2)
-                    
+
                     vbox:
                         spacing 15
                         text t("POST-MORTEM ANALYSIS") color "#FFD700" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
-                        
+
                         null height 5
-                        
+
                         viewport:
                             xfill True yfill True
                             scrollbars "vertical"
@@ -471,12 +417,11 @@ screen ending_screen(title, color, description, lessons):
                                         text str(i+1) color "#FFD700" size 14 bold True font "fonts/ShareTechMono-Regular.ttf" xsize 20
                                         text lesson color "#B8C8D8" size 14 font "fonts/ShareTechMono-Regular.ttf" line_spacing 4
 
-            # â”€â”€ ACTION BUTTONS â”€â”€
             hbox:
                 xalign 0.5
                 spacing 60
                 at slide_up_delay(1.6)
-                
+
                 textbutton t("> REBOOT SYSTEM (RESTART)"):
                     background "#1A2530"
                     hover_background "#00FFD1"
@@ -501,25 +446,19 @@ screen ending_screen(title, color, description, lessons):
 
             null height 100
 
-    # Scanline Overlay
     add Solid("#00000020")
     for _y in range(0, 1080, 4):
         add Solid("#00000040"):
             xsize 1920 ysize 1
             xpos 0 ypos _y
 
-
-################################################################################
-## DEV SHORTCUT: ENDING SELECTOR
-################################################################################
-
 label dev_ending_selector:
     scene black with dissolve
-    
+
     menu:
         "Select Ending to View (Dev Tool):"
         "Ending 1: The Hero":
-            # Set minimum requirements for the UI breakdown to not look weird
+
             $ knowledge_score = 10
             $ trust_score = 5
             $ suspicion_level = 0
@@ -528,7 +467,7 @@ label dev_ending_selector:
             $ escape_successful = True
             $ identity_exposed = False
             jump ending_hero
-            
+
         "Ending 2: The Fugitive":
             $ knowledge_score = 6
             $ trust_score = 3
@@ -538,7 +477,7 @@ label dev_ending_selector:
             $ escape_successful = True
             $ identity_exposed = True
             jump ending_fugitive
-            
+
         "Ending 3: Imprisoned":
             $ knowledge_score = 3
             $ trust_score = 2
@@ -548,7 +487,7 @@ label dev_ending_selector:
             $ escape_successful = False
             $ identity_exposed = True
             jump ending_imprisoned
-            
+
         "Ending 4: Silenced":
             $ knowledge_score = 4
             $ trust_score = 1
@@ -558,7 +497,7 @@ label dev_ending_selector:
             $ escape_successful = False
             $ identity_exposed = False
             jump ending_silenced
-            
+
         "Ending 5: Betrayed":
             $ knowledge_score = 2
             $ trust_score = -2
@@ -568,11 +507,10 @@ label dev_ending_selector:
             $ escape_successful = False
             $ identity_exposed = True
             jump ending_betrayed
-            
+
         "Cancel":
             return
 
 screen secret_ending_shortcut():
     key "shift_K_0" action Jump("dev_ending_selector")
     key "shift_0" action Jump("dev_ending_selector")
-

@@ -7,7 +7,6 @@ from pathlib import Path
 
 import edge_tts
 
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 GAME_DIR = REPO_ROOT / "game"
 VOICE_DIR = GAME_DIR / "audio" / "voice" / "en"
@@ -35,7 +34,6 @@ VOICE_PROFILES = {
 TAG_RE = re.compile(r"\{[^}]*\}")
 WHITESPACE_RE = re.compile(r"\s+")
 
-
 def clean_text(text: str) -> str:
     text = text.replace("\r\n", "\n").replace("\r", "\n")
     text = TAG_RE.sub("", text)
@@ -46,7 +44,6 @@ def clean_text(text: str) -> str:
     text = text.replace("–", " - ")
     text = WHITESPACE_RE.sub(" ", text).strip()
     return text
-
 
 def build_entries():
     entries = []
@@ -91,7 +88,6 @@ def build_entries():
 
     return entries
 
-
 async def synthesize_entry(entry, force=False):
     out_path = Path(entry["absolute_audio_path"])
     if out_path.exists() and not force:
@@ -107,7 +103,6 @@ async def synthesize_entry(entry, force=False):
     await communicate.save(str(out_path))
     return True
 
-
 async def generate_audio(entries, force=False, concurrency=4):
     semaphore = asyncio.Semaphore(concurrency)
     generated = 0
@@ -122,14 +117,12 @@ async def generate_audio(entries, force=False, concurrency=4):
     await asyncio.gather(*(worker(entry) for entry in entries))
     return generated
 
-
 def write_manifest(entries):
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST_PATH.write_text(
         json.dumps(entries, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
-
 
 def cleanup_stale_audio(entries):
     expected = {Path(entry["absolute_audio_path"]).resolve() for entry in entries}
@@ -138,7 +131,6 @@ def cleanup_stale_audio(entries):
     for path in VOICE_DIR.glob("*.mp3"):
         if path.resolve() not in expected:
             path.unlink()
-
 
 def inject_voice_calls(entries):
     grouped = defaultdict(list)
@@ -149,7 +141,6 @@ def inject_voice_calls(entries):
         file_path = GAME_DIR / relative_src
         lines = file_path.read_text(encoding="utf-8").splitlines()
 
-        # Reset previous auto-generated calls so line numbers stay aligned.
         lines = [line for line in lines if AUTO_MARKER not in line]
         rebuilt = []
         entry_index = 0
@@ -178,7 +169,6 @@ def inject_voice_calls(entries):
 
         file_path.write_text("\n".join(rebuilt) + "\n", encoding="utf-8")
 
-
 def main():
     parser = argparse.ArgumentParser(description="Generate and inject English Edge TTS voiceover.")
     parser.add_argument("--generate-only", action="store_true", help="Only generate audio and manifest.")
@@ -200,7 +190,6 @@ def main():
         print(f"Injected voice calls into {len({entry['src'] for entry in entries})} script files.")
 
     print(f"Prepared {len(entries)} English voice lines.")
-
 
 if __name__ == "__main__":
     main()

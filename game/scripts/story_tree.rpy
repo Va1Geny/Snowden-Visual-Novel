@@ -1,10 +1,4 @@
-################################################################################
-## STORY_TREE.RPY — Story Flowchart Screen (Detroit: Become Human Style)
-## Classified: The Snowden Files
-################################################################################
-
 init python:
-    # ── Helper functions ─────────────────────────────────────────────────────
 
     def _ch():
         """How many chapters have been reached."""
@@ -38,31 +32,27 @@ init python:
         total = tree_total_choice_count()
         return int((float(picked_count()) / total) * 100) if total else 0
 
-    # Node background color
     def nbg(var, val, ch):
         if not _finished(ch):
-            return "#1A1D2D" # Locked look until chapter is finished
+            return "#1A1D2D"
         if _is_active(var, val):
             return "#002922"
         if _is_unlocked(var, val):
             return "#191C31"
         return "#131421"
 
-    # Node text color
     def ntc(var, val, ch):
         if not _finished(ch):
-            return "#40466D" # Locked text until finished
+            return "#40466D"
         if _is_active(var, val):
             return "#F2FFFC"
         if _is_unlocked(var, val):
             return "#C9D0F3"
         return "#AAB0D6"
 
-    # Node bold
     def nbd(var, val, ch):
         return _finished(ch) and _is_active(var, val)
 
-    # Line / connector color
     def lnc(var, val, ch):
         if not _finished(ch):
             return "#20253D"
@@ -72,15 +62,12 @@ init python:
             return "#4D5186"
         return "#20253D"
 
-    # Chapter-wide stem color (becomes teal once chapter is finished)
     def stc(ch):
         return "#006654" if _finished(ch) else "#20253D"
 
-    # Chapter title text color (bright once finished)
     def chc(ch):
         return "#EAF4F1" if _finished(ch) else "#52597F"
 
-    # ── Ending label ─────────────────────────────────────────────────────────
     _ending_labels = {
         'hero':       'THE HERO',
         'fugitive':   'THE FUGITIVE',
@@ -109,21 +96,12 @@ init python:
             return "#191C31"
         return "#131421"
 
-
-################################################################################
-## STORY TREE SCREEN
-## Canvas: 1800 px wide. Two-choice nodes: left center x=500, right x=1300.
-## Three-choice nodes: left x=280, centre x=900, right x=1520.
-################################################################################
-
 screen story_tree():
     tag menu
 
-    ## ── Background ──────────────────────────────────────────────────────────
     add "#131421"
     add "logo_watermark"
 
-    ## ── Top header bar ──────────────────────────────────────────────────────
     frame:
         xfill True
         ypos 0
@@ -198,7 +176,6 @@ screen story_tree():
                         text t("Discovered across all runs"):
                             style "tree_hud_meta"
 
-    ## ── Legend ──────────────────────────────────────────────────────────────
     frame:
         xpos 72
         ypos 120
@@ -296,7 +273,6 @@ screen story_tree():
                 size 15
                 xmaximum 360
 
-    ## ── Scrollable tree canvas ──────────────────────────────────────────────
     viewport:
         id "story_tree_vp"
         xpos 72
@@ -313,11 +289,6 @@ screen story_tree():
             spacing 0
             yoffset 26
 
-            ##################################################################
-            ## CHAPTER 1 — INSIDE THE MACHINE
-            ##################################################################
-
-            # Chapter header
             fixed:
                 xsize 1800
                 ysize 74
@@ -347,15 +318,12 @@ screen story_tree():
                             bold True
                             yalign 0.5
 
-                # Stem going down
                 add Solid(stc(1)):
                     xpos 899
                     ypos 56
                     xsize 2
                     ysize 18
 
-            # ── Choice 1-1: Follow Protocol vs Explore Files ─────────────
-            # Splitter
             fixed:
                 xsize 1800
                 ysize 38
@@ -378,7 +346,6 @@ screen story_tree():
                     xsize 2
                     ysize 24
 
-            # Nodes
             fixed:
                 xsize 1800
                 ysize 72
@@ -419,7 +386,6 @@ screen story_tree():
                         xalign 0.5
                         yalign 0.5
 
-                # Stub lines going down
                 add Solid(lnc('choice_ch1_1', 'protocol', 1)):
                     xpos 499
                     ypos 60
@@ -432,7 +398,6 @@ screen story_tree():
                     xsize 2
                     ysize 12
 
-            # Merger → stem to Choice 1-2
             fixed:
                 xsize 1800
                 ysize 40
@@ -455,8 +420,6 @@ screen story_tree():
                     xsize 2
                     ysize 22
 
-            # ── Choice 1-2: Report Anomaly vs Stay Silent ─────────────────
-            # Splitter
             fixed:
                 xsize 1800
                 ysize 38
@@ -479,7 +442,6 @@ screen story_tree():
                     xsize 2
                     ysize 24
 
-            # Nodes
             fixed:
                 xsize 1800
                 ysize 72
@@ -532,7 +494,6 @@ screen story_tree():
                     xsize 2
                     ysize 12
 
-            # Merger → bridge to Chapter 2
             fixed:
                 xsize 1800
                 ysize 52
@@ -554,10 +515,6 @@ screen story_tree():
                     ypos 18
                     xsize 2
                     ysize 34
-
-            ##################################################################
-            ## CHAPTER 2 — THE PRISM REVELATION
-            ##################################################################
 
             fixed:
                 xsize 1800
@@ -594,7 +551,6 @@ screen story_tree():
                     xsize 2
                     ysize 18
 
-            # ── Choice 2-1: Trust Colleague vs Work Alone ─────────────────
             fixed:
                 xsize 1800
                 ysize 38
@@ -669,7 +625,6 @@ screen story_tree():
                     xsize 2
                     ysize 12
 
-            # Merger
             fixed:
                 xsize 1800
                 ysize 40
@@ -692,7 +647,6 @@ screen story_tree():
                     xsize 2
                     ysize 22
 
-            # ── Choice 2-2: Copy Files vs Take Notes ─────────────────────
             fixed:
                 xsize 1800
                 ysize 38
@@ -767,7 +721,6 @@ screen story_tree():
                     xsize 2
                     ysize 12
 
-            # Merger → bridge to Chapter 3
             fixed:
                 xsize 1800
                 ysize 52
@@ -789,11 +742,6 @@ screen story_tree():
                     ypos 18
                     xsize 2
                     ysize 34
-
-            ##################################################################
-            ## CHAPTER 3 — THE CONTACT
-            ## 3-choice layout: left x=280, mid x=900, right x=1520
-            ##################################################################
 
             fixed:
                 xsize 1800
@@ -830,7 +778,6 @@ screen story_tree():
                     xsize 2
                     ysize 18
 
-            # ── Choice 3-1: PGP+Tor vs Email vs Wait (3-way) ──────────────
             fixed:
                 xsize 1800
                 ysize 38
@@ -938,7 +885,6 @@ screen story_tree():
                     xsize 2
                     ysize 13
 
-            # 3-way merger
             fixed:
                 xsize 1800
                 ysize 40
@@ -961,7 +907,6 @@ screen story_tree():
                     xsize 2
                     ysize 22
 
-            # ── Choice 3-2: Tell Everything vs Partial vs Vague (3-way) ───
             fixed:
                 xsize 1800
                 ysize 38
@@ -1066,7 +1011,6 @@ screen story_tree():
                     xsize 2
                     ysize 13
 
-            # 3-way merger → bridge to Chapter 4
             fixed:
                 xsize 1800
                 ysize 52
@@ -1088,10 +1032,6 @@ screen story_tree():
                     ypos 18
                     xsize 2
                     ysize 34
-
-            ##################################################################
-            ## CHAPTER 4 — THE ESCAPE
-            ##################################################################
 
             fixed:
                 xsize 1800
@@ -1128,7 +1068,6 @@ screen story_tree():
                     xsize 2
                     ysize 18
 
-            # ── Choice 4-1: Hotel Wi-Fi vs Mobile Hotspot ─────────────────
             fixed:
                 xsize 1800
                 ysize 38
@@ -1205,7 +1144,6 @@ screen story_tree():
                     xsize 2
                     ysize 12
 
-            # Merger
             fixed:
                 xsize 1800
                 ysize 40
@@ -1228,8 +1166,6 @@ screen story_tree():
                     xsize 2
                     ysize 22
 
-            # ── Choice 4-2: Escape Route (5 options, all shown) ───────────
-            # Sub-label
             fixed:
                 xsize 1800
                 ysize 52
@@ -1255,7 +1191,6 @@ screen story_tree():
                     xsize 2
                     ysize 10
 
-            # 5-way splitter (centers at 230, 500, 900, 1300, 1570)
             fixed:
                 xsize 1800
                 ysize 38
@@ -1296,7 +1231,6 @@ screen story_tree():
                     xsize 2
                     ysize 24
 
-            # 5 escape nodes
             fixed:
                 xsize 1800
                 ysize 82
@@ -1396,14 +1330,12 @@ screen story_tree():
                         yalign 0.5
                         text_align 0.5
 
-                # Central stub going down
                 add Solid(stc(5)):
                     xpos 899
                     ypos 65
                     xsize 2
                     ysize 17
 
-            # Bridge to Chapter 5
             fixed:
                 xsize 1800
                 ysize 34
@@ -1413,10 +1345,6 @@ screen story_tree():
                     ypos 0
                     xsize 2
                     ysize 34
-
-            ##################################################################
-            ## CHAPTER 5 — PERMANENT RECORD
-            ##################################################################
 
             fixed:
                 xsize 1800
@@ -1453,7 +1381,6 @@ screen story_tree():
                     xsize 2
                     ysize 18
 
-            # ── Choice 5-1: Encourage vs Caution vs Refuse (3-way) ────────
             fixed:
                 xsize 1800
                 ysize 38
@@ -1561,7 +1488,6 @@ screen story_tree():
                     xsize 2
                     ysize 13
 
-            # Merger → ENDING node
             fixed:
                 xsize 1800
                 ysize 52
@@ -1583,10 +1509,6 @@ screen story_tree():
                     ypos 18
                     xsize 2
                     ysize 34
-
-            ##################################################################
-            ## ENDING NODE
-            ##################################################################
 
             fixed:
                 xsize 1800
@@ -1623,10 +1545,8 @@ screen story_tree():
                             bold True
                             yalign 0.5
 
-            # Footer padding
             null height 20
 
-    ## ── Return button ───────────────────────────────────────────────────────
     hbox:
         xalign 0.5
         yalign 1.0
@@ -1658,4 +1578,3 @@ screen story_tree():
             action ShowMenu("pause_hub")
 
     key "game_menu" action If(main_menu, true=ShowMenu("main_menu"), false=ShowMenu("pause_hub"))
-

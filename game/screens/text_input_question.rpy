@@ -1,8 +1,3 @@
-################################################################################
-## TEXT INPUT QUESTION - Cinematic Split Screen Variant C
-## Classified: The Snowden Files
-################################################################################
-
 init python:
     tiq_current_answer = ""
     tiq_show_result    = False
@@ -86,7 +81,6 @@ transform fade_in_card:
 screen text_input_question(chapter_num="01", chapter_name="Mission", question_text="", hint_text="", check_type="Text Input", difficulty="Easy", reward_label="+1 Knowledge", reward_color="green", correct_answer="", explanation="", allow_skip=True):
     modal True
 
-    # Block global Ren'Py hotkeys from interfering with the screen
     key "game_menu" action NullAction()
     key "hide_windows" action NullAction()
     key "rollback" action NullAction()
@@ -116,15 +110,13 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
         key "K_RETURN" action Return("continue")
         key "K_KP_ENTER" action Return("continue")
 
-    # === BG LAYER 1: solid base ===
     add Solid("#040810", xysize=(1920, 1080))
-    # === BG LAYER 2: center glow ===
+
     add Solid("#001E3208", xysize=(1200, 800)) xalign 0.5 yalign 0.5
     add Solid("#001E3212", xysize=(800, 500)) xalign 0.5 yalign 0.5
-    # === BG LAYER 3: scanlines ===
+
     add ScanlineOverlay(1920, 1080)
 
-    # === STATUS TABS above panel ===
     frame:
         xalign 0.5
         ypos 188
@@ -134,7 +126,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
         hbox:
             spacing 28
             xalign 0.0
-            # Active tab
+
             vbox:
                 spacing 2
                 text "INPUT - IN PROGRESS":
@@ -177,7 +169,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                     ysize 1
                     background None
 
-    # === OUTER GLOW (border effect) ===
     frame:
         xalign 0.5 yalign 0.5
         xsize 1108 ysize 668
@@ -189,7 +180,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
         background Solid("#00FFD112")
         padding (0,0)
 
-    # === TOP GLOW LINE ===
     frame:
         xalign 0.5
         ypos 208
@@ -201,7 +191,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
         xsize 800 ysize 4
         background "#00FFD108"
 
-    # === MAIN PANEL ===
     frame:
         xalign 0.5 yalign 0.5
         xsize 1100 ysize 660
@@ -210,16 +199,12 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
         hbox:
             spacing 0
 
-            # =========================================
-            # LEFT PANEL
-            # =========================================
             frame:
                 xsize 460
                 ysize 660
                 background Solid("#080F1A")
                 padding (44, 44)
 
-                # Corner decoration top-left
                 frame:
                     xpos 20 ypos 20
                     xsize 40 ysize 1
@@ -234,7 +219,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                     xalign 0.0
                     yalign 0.5
 
-                    # Chapter tag
                     hbox:
                         spacing 10
                         xalign 0.0
@@ -250,7 +234,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                     null height 8
 
-                    # Mission question label
                     text "// MISSION QUESTION":
                         font "fonts/ShareTechMono-Regular.ttf"
                         size 9
@@ -259,7 +242,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                     null height 6
 
-                    # Question text
                     text question_text:
                         font "fonts/Rajdhani-SemiBold.ttf"
                         size 21
@@ -271,7 +253,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                     null height 16
 
-                    # Hint box with left accent border
                     if hint_text:
                         frame:
                             xalign 0.0
@@ -281,11 +262,11 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                             padding (0, 0)
                             hbox:
                                 spacing 0
-                                # Left accent border
+
                                 frame:
                                     xsize 2 yfill True
                                     background "#00FFD155"
-                                # Content
+
                                 frame:
                                     background Solid("#00FFD106")
                                     padding (14, 12)
@@ -308,14 +289,13 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                         null height 16
 
-                    # Meta tiles 2x2
                     hbox:
                         spacing 8
                         xalign 0.0
-                        # Column 1
+
                         vbox:
                             spacing 8
-                            # CHECK TYPE
+
                             frame:
                                 xsize 164
                                 background Solid("#ffffff06")
@@ -334,7 +314,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                             font "fonts/ShareTechMono-Regular.ttf"
                                             size 14
                                             color "#00FFD1"
-                            # REWARD
+
                             frame:
                                 xsize 164
                                 background Solid("#ffffff06")
@@ -353,10 +333,10 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                             font "fonts/ShareTechMono-Regular.ttf"
                                             size 14
                                             color _rc
-                        # Column 2
+
                         vbox:
                             spacing 8
-                            # DIFFICULTY
+
                             frame:
                                 xsize 164
                                 background Solid("#ffffff06")
@@ -375,7 +355,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                             font "fonts/ShareTechMono-Regular.ttf"
                                             size 14
                                             color "#7A8A99"
-                            # ATTEMPTS
+
                             frame:
                                 xsize 164
                                 background Solid("#ffffff06")
@@ -397,7 +377,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                     null height 14
 
-                    # Attempt dots
                     if tiq_attempts > 0:
                         frame:
                             xalign 0.0
@@ -420,16 +399,10 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     color "#2A3A45"
                                     yalign 0.5
 
-            # =========================================
-            # DIVIDER
-            # =========================================
             frame:
                 xsize 1 ysize 660
                 background "#00FFD115"
 
-            # =========================================
-            # RIGHT PANEL
-            # =========================================
             frame:
                 xsize 639 ysize 660
                 background Solid("#06090F")
@@ -439,7 +412,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                     spacing 0
                     xalign 0.0
 
-                    # Header row
                     hbox:
                         xfill True
                         text "// ENTER ANSWER":
@@ -486,13 +458,12 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                     null height 18
 
-                    # Character boxes
                     hbox:
                         spacing 6
                         xalign 0.0
                         for _i in range(max(len(correct_answer), len(tiq_current_answer), 1)):
                             if _i < len(tiq_current_answer):
-                                # FILLED box
+
                                 frame:
                                     xsize 40 ysize 52
                                     if tiq_show_result and tiq_is_correct:
@@ -521,7 +492,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                                 color "#E8E8E8"
                                             xalign 0.5 yalign 0.5
                             elif _i == len(tiq_current_answer) and not tiq_show_result:
-                                # CURSOR box
+
                                 frame:
                                     xsize 40 ysize 52
                                     background Solid("#ffffff08")
@@ -535,7 +506,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                             background "#00FFD1"
                                             at blink_cursor
                             else:
-                                # EMPTY box
+
                                 frame:
                                     xsize 40 ysize 52
                                     background Solid("#ffffff08")
@@ -546,7 +517,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                     null height 14
 
-                    # Progress line
                     hbox:
                         spacing 0
                         if _bar_w > 0:
@@ -565,7 +535,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                     null height 16
 
-                    # Wrong result card (compact, above keyboard)
                     if tiq_show_result and not tiq_is_correct:
                         frame:
                             xfill True
@@ -592,7 +561,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                             size 11 color "#FF2D55" yalign 0.5
                         null height 12
 
-                    # Keyboard (visible when not correct)
                     if not (tiq_show_result and tiq_is_correct):
                         for _row in [["Q","W","E","R","T","Y","U","I","O"], ["A","S","D","F","G","H","J","K","L"], ["P","Z","X","C","V","B","N","M"]]:
                             hbox:
@@ -617,7 +585,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                                 color "#7A8A99"
                                             hover_color "#00FFD1"
                                             xalign 0.5 yalign 0.5
-                                # DEL on row 3
+
                                 if _row[0] == "P":
                                     button:
                                         xsize 88 ysize 44
@@ -633,7 +601,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                             xalign 0.5 yalign 0.5
                             null height 4
 
-                        # Control row
                         hbox:
                             spacing 4
                             xalign 0.0
@@ -673,7 +640,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                         bold True
                                         xalign 0.5 yalign 0.5
 
-                    # Correct result card (replaces keyboard)
                     if tiq_show_result and tiq_is_correct:
                         frame:
                             xfill True
@@ -724,7 +690,6 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                     null height 12
 
-                    # Action buttons
                     hbox:
                         spacing 10
                         xalign 0.0

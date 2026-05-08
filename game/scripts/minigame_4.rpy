@@ -1,8 +1,3 @@
-################################################################################
-## MINIGAME 4: COVER YOUR TRACKS (Chapter 4)
-## Educational: digital forensics, secure deletion, anti-forensics
-################################################################################
-
 init python:
     import time as _time
 
@@ -559,9 +554,6 @@ init python:
     def ct_reset_token_cache():
         ct_shuffled_tokens_cache.clear()
 
-
-# ATL Transforms
-
 transform ct_cursor_blink:
     alpha 1.0
     linear 0.5 alpha 0.0
@@ -584,11 +576,6 @@ transform ct_panel_enter:
     yoffset 30 alpha 0.0
     ease 0.3 yoffset 0 alpha 1.0
 
-
-################################################################################
-## MAIN GAME SCREEN â€” eDEX-UI TERMINAL LAYOUT
-################################################################################
-
 screen screen_cover_tracks():
     modal True
     on "show" action Function(ct_reset)
@@ -606,13 +593,11 @@ screen screen_cover_tracks():
     $ _ct_wiped = ct_state["wiped"]
     $ _ct_rem = cover_timer.get_remaining()
 
-    # BG
     add "#080C10"
     add "images/logo.png":
         xalign 0.5 yalign 0.5 alpha 0.04
         fit "contain" xsize 900 ysize 900
 
-    # â”€â”€ TOP BAR 1920Ã—52 â”€â”€
     frame:
         xpos 0 ypos 0 xsize 1920 ysize 52
         background "#0D1117F0"
@@ -630,7 +615,6 @@ screen screen_cover_tracks():
                 text t("[_ct_eta]") color (_ct_tcol if _ct_rem > 0 else "#FF2D55") size 22 bold True font "fonts/ShareTechMono-Regular.ttf"
                 text t("THREAT: [_ct_tlvl]") color _ct_tcol size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
 
-    # â”€â”€ LEFT PANEL 330Ã—924 â”€â”€
     frame:
         xpos 0 ypos 52 xsize 330 ysize 924
         background "#0D1117"
@@ -638,7 +622,6 @@ screen screen_cover_tracks():
         vbox:
             spacing 6
 
-            # SYS MONITOR
             text t("--- SYS MONITOR ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 4
             hbox:
@@ -664,7 +647,6 @@ screen screen_cover_tracks():
                 xfill True ysize 1
                 background "#3A4A55"
 
-            # PROCESSES
             text t("--- PROCESSES ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 2
             text t("PID   NAME              CPU   MEM") color "#3A4A55" size 10 font "fonts/ShareTechMono-Regular.ttf"
@@ -679,7 +661,6 @@ screen screen_cover_tracks():
                 xfill True ysize 1
                 background "#3A4A55"
 
-            # TRACES DETECTED
             text t("--- TRACES DETECTED ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 4
             for _i in range(8):
@@ -704,7 +685,6 @@ screen screen_cover_tracks():
                             text _tr["name"] color ("#E8E8E8" if _is_cur else "#7A8A99") size 12 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
                         text _st color _stcol size 10 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 1.0 yalign 0.5
 
-    # â”€â”€ RIGHT PANEL 330Ã—924 â”€â”€
     frame:
         xpos 1590 ypos 52 xsize 330 ysize 924
         background "#0D1117"
@@ -712,7 +692,6 @@ screen screen_cover_tracks():
         vbox:
             spacing 8
 
-            # NSA THREAT MONITOR
             text t("--- NSA MONITOR ---") color "#FF2D55" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 4
             add ct_threat_bar xalign 0.5
@@ -726,7 +705,6 @@ screen screen_cover_tracks():
                 xfill True ysize 1
                 background "#3A4A55"
 
-            # NET TRAFFIC
             text t("--- NET TRAFFIC ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 2
             add ct_wave_up xalign 0.5
@@ -738,7 +716,6 @@ screen screen_cover_tracks():
                 xfill True ysize 1
                 background "#3A4A55"
 
-            # EVIDENCE ANALYSIS
             if _ct is not None:
                 text t("--- EVIDENCE SCAN ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                 null height 4
@@ -763,7 +740,6 @@ screen screen_cover_tracks():
                 xfill True ysize 1
                 background "#3A4A55"
 
-            # LOCATION DATA
             text t("--- LOCATION ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
             null height 4
             text t("IP:     172.16.4.22") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
@@ -772,7 +748,6 @@ screen screen_cover_tracks():
             text t("UPTIME: 00:01:23") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
             text t("CRYPTO: AES-256-GCM") color "#00FFD1" size 10 font "fonts/ShareTechMono-Regular.ttf"
 
-    # â”€â”€ CENTER TERMINAL 1260Ã—924 â”€â”€
     if _ct is not None and not ct_state["show_result"]:
         frame:
             xpos 330 ypos 52 xsize 1260 ysize 924
@@ -781,7 +756,6 @@ screen screen_cover_tracks():
             vbox:
                 spacing 8
 
-                # Mission objective
                 frame:
                     xfill True ysize 90
                     background "#0D1117"
@@ -798,7 +772,6 @@ screen screen_cover_tracks():
                         text _ct["danger_title"] color "#FF2D55" size 13 bold True font "fonts/ShareTechMono-Regular.ttf"
                         text _ct["danger_text"] color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
 
-                # Terminal console log
                 frame:
                     xfill True ysize 380
                     background "#080C10"
@@ -808,7 +781,7 @@ screen screen_cover_tracks():
                     bottom_padding 8
 
                     hbox:
-                        # Cyan left border
+
                         frame:
                             xsize 2 yfill True
                             background "#00FFD1"
@@ -823,13 +796,12 @@ screen screen_cover_tracks():
                                 for _line in ct_state["terminal_log"][-25:]:
                                     $ _lcol = "#00FF88" if "[[  OK  ]" in _line else "#FF2D55" if "FAILED" in _line or "PENALTY" in _line else "#FFD700" if "WARN" in _line or "HINT" in _line else "#C8E6C9"
                                     text _line color _lcol size 13 font "fonts/ShareTechMono-Regular.ttf"
-                                # Prompt with cursor
+
                                 hbox:
                                     spacing 4
                                     text t("root@snowden-laptop:~$") color "#00FFD1" size 13 bold True font "fonts/ShareTechMono-Regular.ttf"
                                     text t("_") color "#00FFD1" size 13 font "fonts/ShareTechMono-Regular.ttf" at ct_cursor_blink
 
-                # Command display
                 frame:
                     xfill True ysize 40
                     background "#0D1117"
@@ -842,7 +814,6 @@ screen screen_cover_tracks():
 
                 null height 4
 
-                # Phase interaction area
                 if _ct["phase"] == 1:
                     frame:
                         xfill True
@@ -907,7 +878,6 @@ screen screen_cover_tracks():
                                     padding (12, 8)
                                     action Function(ct_select_option, _opt)
 
-                # Execute + Hint
                 null height 6
                 hbox:
                     xalign 0.5 spacing 20
@@ -932,7 +902,6 @@ screen screen_cover_tracks():
                             padding (15, 8)
                             action Function(ct_use_hint)
 
-    # â”€â”€ COMMAND BREAKDOWN OVERLAY â”€â”€
     if ct_state["show_breakdown"] and _ct is not None:
         add "#080C10DD"
         frame at ct_panel_enter:
@@ -970,7 +939,6 @@ screen screen_cover_tracks():
                         padding (20, 10)
                         action Function(ct_advance)
 
-    # â”€â”€ LEARN TEXT OVERLAY â”€â”€
     if ct_state["show_learn"] and _ct is not None:
         add "#080C10DD"
         frame at ct_panel_enter:
@@ -991,7 +959,6 @@ screen screen_cover_tracks():
                     xalign 0.5
                     action Function(ct_advance)
 
-    # â”€â”€ RESULT SCREEN â”€â”€
     if ct_state["show_result"]:
         add "#080C10EE"
         frame:
@@ -1044,7 +1011,6 @@ screen screen_cover_tracks():
                         padding (40, 14) xalign 0.5
                         action Return(_ct_wiped)
 
-    # â”€â”€ BOTTOM BAR 1920Ã—104 â”€â”€
     if not ct_state["show_result"] and not ct_state["show_breakdown"] and not ct_state["show_learn"]:
         frame:
             xpos 0 ypos 976 xsize 1920 ysize 104
@@ -1060,7 +1026,6 @@ screen screen_cover_tracks():
                 text t("Leave no trace. Destroy all evidence.") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
                 text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 16 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
 
-    # Scanline overlay
     add ct_scanlines
 
     key "K_RETURN" action Function(ct_execute)
@@ -1068,12 +1033,6 @@ screen screen_cover_tracks():
     key "mouseup_3" action NullAction()
 
     use block_shortcuts_and_skip("SKIP")
-
-
-
-################################################################################
-## INTEGRATION LABEL
-################################################################################
 
 label minigame_4_cover_tracks:
     $ cover_wiped = 0
@@ -1085,7 +1044,7 @@ label minigame_4_cover_tracks:
     $ show_hud = False
 
     call screen screen_cover_tracks
-    
+
     if _return == "SKIP":
         $ quick_menu = True
         $ show_hud = True
@@ -1116,4 +1075,3 @@ label minigame_4_cover_tracks:
         $ renpy.notify(t("Mission failed. NSA found evidence."))
 
     return
-

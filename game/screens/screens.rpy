@@ -1,16 +1,6 @@
-################################################################################
-## SCREENS.RPY â€” Unified UI System
-## Classified: The Snowden Files
-################################################################################
-
 init offset = -1
 
 define config.game_menu_action = ShowMenu("pause_hub")
-
-
-################################################################################
-## Shared Setup
-################################################################################
 
 init python:
     config.character_id_prefixes.append("namebox")
@@ -38,13 +28,7 @@ init python:
     def all_audio_muted():
         return all(preferences.get_mute(mixer) for mixer in ("music", "sfx", "voice"))
 
-
 default quick_menu = True
-
-
-################################################################################
-## Base Styles
-################################################################################
 
 style default:
     properties gui.text_properties()
@@ -186,14 +170,8 @@ style game_menu_viewport is empty
 style game_menu_label is label
 style game_menu_label_text is label_text
 
-
-################################################################################
-## Shared UI Helpers
-################################################################################
-
 screen ui_backdrop():
     add "#131421"
-
 
 screen shell_header(kicker, title, body=None):
     $ compact = is_compact_layout()
@@ -246,11 +224,6 @@ screen shell_header(kicker, title, body=None):
             if body:
                 null width 80
 
-
-################################################################################
-## Dialogue Screens
-################################################################################
-
 screen say(who, what):
 
     window:
@@ -271,7 +244,6 @@ screen say(who, what):
         $ edward_pov_bgs = ["bg_nsa_terminal", "bg_prism", "bg_prism1", "bg_hong_kong_terminal"]
         if not (renpy.get_say_image_tag() == "edward" and any(bg in renpy.get_showing_tags("master") for bg in edward_pov_bgs)):
             add SideImage() xalign 0.0 yalign 1.0
-
 
 style window is default
 style say_label is default
@@ -312,7 +284,6 @@ style say_dialogue:
     line_spacing 3
     adjust_spacing False
 
-
 screen input(prompt):
     style_prefix "input"
 
@@ -327,7 +298,6 @@ screen input(prompt):
                 substitute False
             input id "input"
 
-
 style input_prompt is default
 
 style input_prompt:
@@ -339,7 +309,6 @@ style input:
     size 30
     xmaximum 1544
 
-
 screen choice(items):
     style_prefix "choice"
 
@@ -350,11 +319,6 @@ screen choice(items):
 
         for i in items:
             textbutton t(i.caption) action i.action
-
-
-################################################################################
-## Quick Menu / HUD
-################################################################################
 
 screen quick_menu():
     zorder 100
@@ -379,7 +343,6 @@ screen quick_menu():
             textbutton t("Prefs") action ShowMenu("preferences")
 
     key "ctrl_K_i" action ShowMenu("dossier")
-
 
 screen game_hud():
     zorder 90
@@ -719,7 +682,6 @@ screen notebook_toggle():
 
         key "ctrl_K_n" action ToggleScreen("notebook_panel")
 
-
 screen suspicion_lockdown_watch():
     zorder 300
 
@@ -730,7 +692,6 @@ screen suspicion_lockdown_watch():
         and not main_menu
     ):
         timer 0.01 action [SetVariable("suspicion_lockdown_triggered", True), Jump("max_suspicion_game_over")]
-
 
 screen scene_stage_line():
     zorder 5
@@ -748,25 +709,17 @@ screen scene_stage_line():
             xsize 1920
             ysize 8
 
-
-################################################################################
-## Primary Menus
-################################################################################
-
-## Pulsing dot for the "SYSTEM ONLINE" indicator
 transform mm_pulse_dot:
     alpha 1.0
     easeout 0.9 alpha 0.35
     easein 0.9 alpha 1.0
     repeat
 
-## Subtle drift on the side accent bars
 transform mm_accent_drift:
     alpha 0.55
     easeout 1.6 alpha 1.0
     easein 1.6 alpha 0.55
     repeat
-
 
 screen main_menu():
     tag menu
@@ -787,7 +740,6 @@ screen main_menu():
 
     use ui_backdrop
 
-    ## ── Ambient backdrop accents ────────────────────────────────────
     add Solid("#003A3A0E"):
         xsize 480
         ysize 1080
@@ -806,7 +758,6 @@ screen main_menu():
         xsize 1920
         ysize 2
         ypos 982
-
 
     fixed:
         xpos 0
@@ -876,13 +827,11 @@ screen main_menu():
         xsize menu_frame_xsize
         ysize menu_frame_ysize
 
-        ## Outer halo â€” soft tinted edge for depth
         frame:
             xfill True
             yfill True
             background Solid("#003A3A18")
 
-        ## Main panel surface
         frame:
             xpos 4
             ypos 4
@@ -891,7 +840,6 @@ screen main_menu():
             background Solid("#0E1321C0")
             padding (menu_padding_x, menu_padding_y)
 
-            ## Animated accent rails
             add Solid("#003A3A"):
                 xsize 3
                 ysize (menu_frame_ysize - 160)
@@ -905,7 +853,6 @@ screen main_menu():
                 yalign 0.5
                 at mm_accent_drift
 
-            ## Corner brackets — terminal aesthetic
             add Solid("#003A3A"):
                 xsize corner_size
                 ysize 3
@@ -964,7 +911,6 @@ screen main_menu():
                 xmaximum menu_content_max
                 spacing menu_spacing
 
-                ## Kicker line: classified label between ticks
                 hbox:
                     xalign 0.5
                     spacing 12
@@ -1024,7 +970,6 @@ screen main_menu():
                         size menu_title_size
                         bold True
 
-                ## Refined separator under title
                 hbox:
                     xalign 0.5
                     spacing 8
@@ -1100,7 +1045,6 @@ screen main_menu():
 
                 null height 6
 
-                ## Footer line: build tag + version
                 hbox:
                     xalign 0.5
                     spacing 14
@@ -1121,8 +1065,6 @@ screen main_menu():
                         color "#7A8A99"
                         size 14
                         yalign 0.5
-
-
 
 screen pause_hub():
     tag menu
@@ -1382,11 +1324,6 @@ screen pause_hub():
 
     key "game_menu" action Return()
 
-
-################################################################################
-## Story / Learning Screens
-################################################################################
-
 screen dossier():
     tag menu
 
@@ -1507,7 +1444,6 @@ screen dossier():
 
     key "game_menu" action Return()
 
-
 screen intro_fullscreen_prompt():
     modal True
 
@@ -1582,7 +1518,6 @@ screen intro_fullscreen_prompt():
                         hover_background Solid("#3A4A55")
                         action Return()
 
-
 screen intro_shortcuts_screen():
     modal True
 
@@ -1604,14 +1539,12 @@ screen intro_shortcuts_screen():
 
         vbox:
             spacing 0
-            
 
             frame:
                 xfill True
                 ysize 66
                 background Solid("#001A1A")
                 padding (28, 0)
-                
 
                 text t("CLASSIFIED BRIEFING"):
                     color "#E8E8E8"
@@ -1619,13 +1552,11 @@ screen intro_shortcuts_screen():
                     bold True
                     xalign 0.5
                     yalign 0.5
-                    
 
             frame:
                 xfill True
                 background Solid("#10152380")
                 padding (36, 30)
-                
 
                 vbox:
                     spacing 18
@@ -1684,7 +1615,6 @@ screen intro_shortcuts_screen():
                         style "modal_action_button"
                         xsize 320
                         action Return()
-
 
 screen briefing_screen():
     modal True
@@ -1770,7 +1700,6 @@ screen briefing_screen():
                     xalign 0.5
                     action Return()
 
-
 screen chapter_title_screen(number, title, subtitle):
     modal True
 
@@ -1808,7 +1737,6 @@ screen chapter_title_screen(number, title, subtitle):
 
     timer 3.0 action Return()
     key "dismiss" action Return()
-
 
 screen chapter_summary(chapter_num, chapter_name):
     modal True
@@ -1934,7 +1862,6 @@ screen chapter_summary(chapter_num, chapter_name):
                         style "modal_action_button"
                         xalign 0.5
                         action Return()
-
 
 screen mcq_question(question, answers, correct_index, explanation, helper_text=None):
     modal True
@@ -2077,10 +2004,6 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                             else:
                                 action Return()
 
-################################################################################
-## Menu Shell
-################################################################################
-
 screen navigation():
     vbox:
         spacing 12
@@ -2138,7 +2061,6 @@ screen navigation():
                 background Solid("#241926")
                 hover_background Solid("#3A4A55")
                 action Quit(confirm=not main_menu)
-
 
 screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
     tag menu
@@ -2300,11 +2222,6 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
     else:
         key "game_menu" action ShowMenu("pause_hub")
 
-
-################################################################################
-## Standard Menus
-################################################################################
-
 screen about():
     tag menu
 
@@ -2339,16 +2256,13 @@ screen about():
                     color "#7A8A99"
                     size 16
 
-
 screen save():
     tag menu
     use file_slots(t("Save"))
 
-
 screen load():
     tag menu
     use file_slots(t("Load"))
-
 
 screen file_slots(title):
     default page_name_value = FilePageNameInputValue(pattern=t("Page {}"), auto=t("Automatic saves"), quick=t("Quick saves"))
@@ -2464,7 +2378,6 @@ screen file_slots(title):
                             xsize 74
                             action FilePageNext()
 
-
 screen preferences():
     tag menu
 
@@ -2555,7 +2468,6 @@ screen preferences():
                         selected all_audio_muted()
                         action Function(toggle_all_audio)
 
-
         frame:
             xfill True
             background Solid("#171C30")
@@ -2601,7 +2513,6 @@ screen preferences():
                         selected current_translation_language() == "ukrainian"
                         action language_change_action("ukrainian")
 
-
 screen history():
     tag menu
     predict False
@@ -2645,9 +2556,7 @@ screen history():
                     color "#7A8A99"
                     size 20
 
-
 define gui.history_allow_tags = { "alt", "noalt", "rt", "rb", "art" }
-
 
 screen help():
     tag menu
@@ -2685,7 +2594,6 @@ screen help():
             else:
                 use gamepad_help
 
-
 screen keyboard_help():
     vbox:
         spacing 12
@@ -2719,7 +2627,6 @@ screen keyboard_help():
                     size 19
                     xfill True
 
-
 screen mouse_help():
     vbox:
         spacing 12
@@ -2745,7 +2652,6 @@ screen mouse_help():
                     color "#E8E8E8"
                     size 19
                     xfill True
-
 
 screen gamepad_help():
     vbox:
@@ -2778,11 +2684,6 @@ screen gamepad_help():
             style "shell_nav_button"
             xsize 220
             action GamepadCalibrate()
-
-
-################################################################################
-## Utility Screens
-################################################################################
 
 screen confirm(message, yes_action, no_action):
     modal True
@@ -2829,7 +2730,6 @@ screen confirm(message, yes_action, no_action):
 
     key "game_menu" action no_action
 
-
 screen skip_indicator():
     zorder 100
 
@@ -2848,7 +2748,6 @@ screen skip_indicator():
                 color "#7A8A99"
                 size 18
 
-
 screen notify(message):
     zorder 300
 
@@ -2865,11 +2764,6 @@ screen notify(message):
             size 18
 
     timer 3.25 action Hide("notify")
-
-
-################################################################################
-## NVL / Bubble
-################################################################################
 
 screen nvl(dialogue, items=None):
     window:
@@ -2893,7 +2787,6 @@ screen nvl(dialogue, items=None):
 
     add SideImage() xalign 0.0 yalign 1.0
 
-
 screen nvl_dialogue(dialogue):
     for d in dialogue:
         window:
@@ -2908,7 +2801,6 @@ screen nvl_dialogue(dialogue):
 
                 text d.what:
                     id d.what_id
-
 
 define config.nvl_list_length = gui.nvl_list_length
 
@@ -2968,7 +2860,6 @@ style nvl_button_text:
     color "#E8E8E8"
     size 22
 
-
 screen bubble(who, what):
     style_prefix "bubble"
 
@@ -2989,7 +2880,6 @@ screen bubble(who, what):
         default ctc = None
         showif ctc:
             add ctc
-
 
 style bubble_window is empty
 style bubble_namebox is empty
@@ -3047,11 +2937,6 @@ define bubble.expand_area = {
     "thought": (0, 0, 0, 0),
 }
 
-
-################################################################################
-## Mobile Variants
-################################################################################
-
 screen quick_menu():
     variant "touch"
 
@@ -3069,4 +2954,3 @@ screen quick_menu():
             textbutton t("Notes") action Show("notebook_panel")
             textbutton t("Save") action ShowMenu("save")
             textbutton t("Menu") action ShowMenu("pause_hub")
-

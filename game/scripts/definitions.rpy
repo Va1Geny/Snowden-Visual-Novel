@@ -1,15 +1,5 @@
-################################################################################
-## DEFINITIONS.RPY — Character Definitions, Flags, Images, Transforms
-## Classified: The Snowden Files
-################################################################################
-
 init offset = -1
 
-################################################################################
-## CHARACTER DEFINITIONS
-################################################################################
-
-# === PROTAGONIST ===
 define e = Character("You",
     image="edward",
     color="#00FFD1",
@@ -18,7 +8,6 @@ define e = Character("You",
     what_size=20,
     who_bold=True)
 
-# === JOURNALISTS ===
 define greenwald = Character("Grayson Wardell",
     image="greenwald",
     color="#FFD700",
@@ -35,7 +24,6 @@ define poitras = Character("Leah Portman",
     who_size=22,
     what_size=20)
 
-# === ANTAGONISTS / AUTHORITY ===
 define nsa_chief = Character("Director Marcus Hale",
     image="nsa_chief",
     color="#FF2D55",
@@ -52,7 +40,6 @@ define supervisor = Character("Supervisor Daniel Cross",
     who_size=22,
     what_size=20)
 
-# === ALLIES / NEUTRAL ===
 define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
     image="colleague",
     color="#888888",
@@ -69,7 +56,6 @@ define russian_official = Character("Agent Viktor Malenkov",
     who_size=22,
     what_size=20)
 
-# === SYSTEM / NARRATOR ===
 define sys = Character("// SYSTEM //",
     color="#00FF00",
     what_color="#00FF00",
@@ -90,12 +76,6 @@ define im = Character("INTERNAL MONOLOGUE",
     who_size=18,
     what_size=20)
 
-
-################################################################################
-## STORY FLAGS
-################################################################################
-
-# === Core Metrics ===
 default trust_score = 0
 default knowledge_score = 0
 default suspicion_level = 0
@@ -104,16 +84,13 @@ default evidence_secured = False
 default identity_exposed = False
 default escape_successful = False
 
-# === Chapter Completion Flags ===
 default ch1_outcome = ""
 default ch2_outcome = ""
 default ch3_outcome = ""
 default ch4_outcome = ""
 
-# === Ending Tracker ===
 default ending_type = ""
 
-# === UI State ===
 default current_chapter = 1
 default show_hud = True
 default notebook_entries = []
@@ -121,7 +98,6 @@ default notebook_draft = ""
 default english_voice_bootstrap_done = False
 default suspicion_lockdown_triggered = False
 
-# === Minigame State ===
 default mg_firewall_score = 0
 default mg_decrypt_solved = False
 default mg_opsec_score = 0
@@ -129,13 +105,7 @@ default mg_trace_solved = False
 default cover_wiped = 0
 default cover_failed = 0
 
-# === Question Tracking ===
 default text_input_attempts = 0
-
-
-################################################################################
-## PARALLAX SYSTEM
-################################################################################
 
 init python:
     import re
@@ -402,17 +372,6 @@ init python:
         except Exception as exc:
             renpy.notify(f"Failed to export dossier: {exc}")
 
-    # ─── ACTIVE SPEAKER HIGHLIGHTING ──────────────────────────────────────
-    # Brighten the current speaker, dim everyone else. The earlier version
-    # was disabled because `renpy.show(tag, at_list=[active_char])` REPLACED
-    # the at_list — the entry transform (enter_left/stage_center/...) was
-    # discarded and characters snapped to (0, 0).
-    #
-    # This version preserves position by reading the live at_list with
-    # `renpy.get_at_list`, stripping any prior state transform, and re-
-    # applying `[position_transform, state_transform]`. Because Ren'Py
-    # treats the same transform reference as state-preserving, the entry
-    # animation isn't restarted — only the state layer is swapped.
     SPEAKER_HIGHLIGHT_TAGS = (
         "edward",
         "supervisor",
@@ -426,8 +385,7 @@ init python:
     )
 
     def _strip_speaker_state(at_list):
-        # We assume the first transform is the position/entry transform
-        # Everything else is previous state transforms which we strip
+
         return at_list[:1] if at_list else []
 
     def speaker_dimmer(event, interact=True, **kwargs):
@@ -447,8 +405,6 @@ init python:
 
             position_transforms = _strip_speaker_state(list(current or ()))
 
-            # If we have no position context, skip — re-applying with an
-            # empty position list would default the character to (0, 0).
             if not position_transforms:
                 continue
 
@@ -457,23 +413,20 @@ init python:
 
     config.character_callback = speaker_dimmer
 
-
     def autosave_chapter(chapter_num):
         """Autosave after a chapter completes and show a notification."""
         try:
-            # Save to a dedicated 'chapter' page so it gets its own tab in the Load screen
+
             renpy.save("chapter-%d" % chapter_num, extra_info="Chapter %d" % chapter_num)
             renpy.notify(t("Chapter %d autosave complete.") % chapter_num)
         except Exception:
             renpy.notify(t("Autosave failed."))
 
     def mouse_parallax(trans, st, at):
-        # Provide a subtle parallax based on mouse
-        # Ren'Py get_mouse_pos() might return a tuple
+
         import pygame
         x, y = renpy.get_mouse_pos()
-        
-        # Calculate offset from center (assuming 1920x1080)
+
         trans.xoffset = (960 - x) * 0.02
         trans.yoffset = (540 - y) * 0.02
         return 0
@@ -483,18 +436,6 @@ transform parallax:
     align (0.5, 0.5)
     function mouse_parallax
 
-################################################################################
-## IMAGE DEFINITIONS
-################################################################################
-
-# === Character Sprites ===
-
-# -- Edward --
-# NOTE: "neutral" sprites are 630x1394 (character fills the canvas), while every
-# other expression is 1024x1024 (character occupies a central ~980px strip).
-# Without compensation, neutral renders ~35% taller — that's the visible "jump"
-# when changing emotions. We lower the neutral zoom so the on-screen character
-# height matches the square expressions, and add yoffset so the feet line up.
 image edward neutral:
     "sprites/edward neutral.png"
     zoom 0.76
@@ -527,7 +468,6 @@ image edward relieved:
     "sprites/edward relieved.png"
     zoom 1.02
 
-# -- Supervisor --
 image supervisor neutral:
     "sprites/supervisor neutral.png"
     zoom 0.75
@@ -548,7 +488,6 @@ image supervisor cold:
     "sprites/supervisor cold.png"
     zoom 1.0
 
-# -- Colleague --
 image colleague neutral:
     "sprites/colleague neutral.png"
     zoom 0.74
@@ -569,7 +508,6 @@ image colleague cautious:
     "sprites/colleague cautious.png"
     zoom 0.98
 
-# -- Greenwald --
 image greenwald neutral:
     "sprites/greenwald neutral.png"
     zoom 1.02
@@ -595,7 +533,6 @@ image greenwald concerned:
     "sprites/greenwald concerned.png"
     zoom 1.02
 
-# -- Poitras --
 image poitras neutral:
     "sprites/poitras neutral.png"
     zoom 1.02
@@ -615,7 +552,6 @@ image poitras resolved:
     "sprites/poitras resolved.png"
     zoom 1.02
 
-# -- Russian Official --
 image russian_official neutral:
     "sprites/russian official neutral.png"
     zoom 0.76
@@ -636,7 +572,6 @@ image russian_official confident:
     "sprites/russian official confident.png"
     zoom 1.0
 
-# -- NSA Chief --
 image nsa_chief neutral:
     "sprites/nsa chief neutral.png"
     zoom 1.0
@@ -650,7 +585,6 @@ image nsa_chief cold:
     "sprites/nsa chief cold.png"
     zoom 1.0
 
-# -- Journalist --
 image journalist neutral:
     "sprites/journalist neutral.png"
     zoom 0.77
@@ -674,14 +608,10 @@ image journalist concerned:
     "sprites/journalist concerned.png"
     zoom 1.02
 
-# -- Editor --
-# Editor only ships with the tall format, so we just normalize its size to
-# match the rest of the cast — there's no other expression to "jump" to.
 image editor neutral:
     "sprites/editor neutral.png"
     zoom 0.76
 
-# === Logo Watermark ===
 image logo_watermark:
     "images/logo.png"
     xalign 0.5
@@ -689,7 +619,6 @@ image logo_watermark:
     zoom 1.15
     alpha 0.15
 
-# === Backgrounds ===
 image bg_1:
     "backgrounds/chapter_1/bg_1.png"
     xysize (1920, 1080)
@@ -751,28 +680,12 @@ image bg_sheremetyevo:
     "backgrounds/chapter_5/bg_sheremetyevo.png"
     xysize (1920, 1080)
 
-
-################################################################################
-## ATL TRANSFORMS — Character Animations
-################################################################################
-
-# === ACTIVE / INACTIVE STATES ===
-# PURE state transforms: only saturation, alpha, and a tiny zoom delta for the
-# speaker pop. They do NOT touch position (no xanchor/yanchor/xpos/ypos), so
-# they can be safely chained ON TOP of an entry/stage transform via at_list
-# without overwriting the character's position. The speaker_dimmer callback
-# reads the live at_list and applies [position, state] each time the speaker
-# changes.
-
 transform active_char:
     ease 0.3 matrixcolor SaturationMatrix(1.0) alpha 1.0 zoom 1.02
 
 transform inactive_char:
     ease 0.3 matrixcolor SaturationMatrix(0.35) alpha 0.8 zoom 0.97
 
-# === ENTRANCE TRANSFORMS ===
-
-# Slide in from left
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
@@ -782,7 +695,6 @@ transform enter_left:
     on replace:
         xpos 0.15 ypos 1.50 alpha 1.0 zoom 1.40
 
-# Slide in from right
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
@@ -792,7 +704,6 @@ transform enter_right:
     on replace:
         xpos 0.85 ypos 1.50 alpha 1.0 zoom 1.40
 
-# Fade in from center
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
@@ -808,31 +719,21 @@ transform stage_center:
     xpos 0.5
     ypos 1.15
 
-
-# === IDLE TRANSFORMS ===
-
-# Subtle breathing idle animation
 transform idle_breathe:
     zoom 1.0
     linear 2.0 zoom 1.01
     linear 2.0 zoom 1.0
     repeat
 
-# === EXIT TRANSFORMS ===
-
-# Slide out to left
 transform exit_left:
     ease 0.5 xpos -0.4 alpha 0.0
 
-# Slide out to right
 transform exit_right:
     ease 0.5 xpos 1.4 alpha 0.0
 
-# Fade out
 transform exit_fade:
     ease 0.4 alpha 0.0
 
-# Nervous/tense exit (for high suspicion moments)
 transform exit_panic:
     linear 0.1 xoffset 5
     linear 0.1 xoffset -5
@@ -840,9 +741,6 @@ transform exit_panic:
     linear 0.1 xoffset 0
     ease 0.3 xpos 1.4 alpha 0.0
 
-# === MENU / UI TRANSFORMS ===
-
-# Title glitch effect
 transform title_glitch:
     alpha 1.0
     pause 3.0
@@ -855,30 +753,25 @@ transform title_glitch:
     alpha 1.0
     repeat
 
-# Button hover glow
 transform btn_glow:
     linear 0.2 zoom 1.02
     linear 0.2 zoom 1.0
     repeat
 
-# Scanline effect for UI
 transform scanline_move:
     ypos 0.0
     linear 4.0 ypos 1.0
     ypos 0.0
     repeat
 
-# Fade in for chapter cards
 transform chapter_fade_in:
     alpha 0.0
     linear 1.0 alpha 1.0
 
-# Fade out for chapter cards
 transform chapter_fade_out:
     alpha 1.0
     linear 1.0 alpha 0.0
 
-# Typing cursor blink
 transform cursor_blink:
     alpha 1.0
     pause 0.5
@@ -886,25 +779,11 @@ transform cursor_blink:
     pause 0.5
     repeat
 
-
-################################################################################
-## SCENE TRANSITIONS
-################################################################################
-
-# Between dialogue segments
 define fade_quick = Fade(0.3, 0.0, 0.3)
 
-# Between chapters (more dramatic)
 define chapter_transition = Fade(1.0, 0.5, 1.0, color="#000000")
 
-# Glitch-style cut
 define glitch_cut = Fade(0.1, 0.05, 0.1, color="#00FFD1")
-
-
-################################################################################
-## PERSISTENT STORY-TREE INITIALISATION
-## (ensures all tree vars exist before the screen tries to read them)
-################################################################################
 
 init python:
     _tree_choice_map = {
