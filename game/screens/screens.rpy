@@ -1,5 +1,5 @@
 ################################################################################
-## SCREENS.RPY â€” Unified UI System
+## SCREENS.RPY — Unified UI System
 ## Classified: The Snowden Files
 ################################################################################
 
@@ -787,7 +787,7 @@ screen main_menu():
 
     use ui_backdrop
 
-    ## â”€â”€ Ambient backdrop accents â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    ## ── Ambient backdrop accents ────────────────────────────────────
     add Solid("#003A3A0E"):
         xsize 480
         ysize 1080
@@ -807,7 +807,7 @@ screen main_menu():
         ysize 2
         ypos 982
 
-    ## â”€â”€ Top status bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    ## ── Top status bar ──────────────────────────────────────────────
     fixed:
         xpos 0
         ypos 28
@@ -833,7 +833,7 @@ screen main_menu():
                 kerning 3
                 yalign 0.5
 
-            text t("Â·"):
+            text t("·"):
                 color "#3A4A55"
                 size 16
                 yalign 0.5
@@ -858,7 +858,7 @@ screen main_menu():
                 kerning 2
                 yalign 0.5
 
-            text t("Â·"):
+            text t("·"):
                 color "#3A4A55"
                 size 16
                 yalign 0.5
@@ -870,14 +870,14 @@ screen main_menu():
                 kerning 2
                 yalign 0.5
 
-    ## â”€â”€ Primary panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    ## ── Primary panel ───────────────────────────────────────────────
     fixed:
         xalign 0.5
         yalign 0.5
         xsize menu_frame_xsize
         ysize menu_frame_ysize
 
-        ## Outer halo â€” soft tinted edge for depth
+        ## Outer halo — soft tinted edge for depth
         frame:
             xfill True
             yfill True
@@ -906,7 +906,7 @@ screen main_menu():
                 yalign 0.5
                 at mm_accent_drift
 
-            ## Corner brackets â€” terminal aesthetic
+            ## Corner brackets — terminal aesthetic
             add Solid("#003A3A"):
                 xsize corner_size
                 ysize 3
@@ -936,13 +936,8 @@ screen main_menu():
                 ysize 3
                 xpos 12
                 yalign 1.0
-<<<<<<< HEAD:game/scripts/screens.rpy
-                yoffset -12
-            add Solid("#0B6E5F"):
-=======
                 yoffset -15
             add Solid("#003A3A"):
->>>>>>> b487fec (added the proper UI for the input menu, fixed some visual bugs that were occuring before):game/screens/screens.rpy
                 xsize 3
                 ysize corner_size
                 xpos 12
@@ -955,13 +950,8 @@ screen main_menu():
                 xalign 1.0
                 xoffset -12
                 yalign 1.0
-<<<<<<< HEAD:game/scripts/screens.rpy
-                yoffset -12
-            add Solid("#0B6E5F"):
-=======
                 yoffset -15
             add Solid("#003A3A"):
->>>>>>> b487fec (added the proper UI for the input menu, fixed some visual bugs that were occuring before):game/screens/screens.rpy
                 xsize 3
                 ysize corner_size
                 xalign 1.0
@@ -1075,34 +1065,34 @@ screen main_menu():
                     xalign 0.5
                     spacing 8
 
-                    textbutton t("â–¸ START"):
+                    textbutton t("▸ START"):
                         style "modal_action_button"
                         xalign 0.5
                         action Start()
 
                     if renpy.newest_slot():
-                        textbutton t("â–¸ CONTINUE"):
+                        textbutton t("▸ CONTINUE"):
                             style "modal_action_button"
                             xalign 0.5
                             action FileLoad(renpy.newest_slot(), confirm=False)
 
-                    textbutton t("â–¸ DOSSIER"):
+                    textbutton t("▸ DOSSIER"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("dossier")
 
-                    textbutton t("â–¸ STORY TREE"):
+                    textbutton t("▸ STORY TREE"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("story_tree")
 
-                    textbutton t("â–¸ SETTINGS"):
+                    textbutton t("▸ SETTINGS"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("preferences")
 
                     if renpy.variant("pc"):
-                        textbutton t("Ã— EXIT"):
+                        textbutton t("× EXIT"):
                             style "modal_action_button"
                             xalign 0.5
                             background Solid("#241926")
@@ -1123,7 +1113,7 @@ screen main_menu():
                         kerning 2
                         yalign 0.5
 
-                    text t("Â·"):
+                    text t("·"):
                         color "#3A4A55"
                         size 14
                         yalign 0.5
@@ -1620,11 +1610,7 @@ screen intro_shortcuts_screen():
             frame:
                 xfill True
                 ysize 66
-<<<<<<< HEAD:game/scripts/screens.rpy
-                background Solid("#00292288")
-=======
                 background Solid("#001A1A")
->>>>>>> b487fec (added the proper UI for the input menu, fixed some visual bugs that were occuring before):game/screens/screens.rpy
                 padding (28, 0)
                 
 
@@ -2570,11 +2556,11 @@ screen preferences():
                         selected all_audio_muted()
                         action Function(toggle_all_audio)
 
-        ## â”€â”€ LANGUAGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        ## ── LANGUAGE ────────────────────────────────────────────────────
         ## English is the default (language=None). Dutch/French/Ukrainian
         ## switch to the matching translation under game/tl/<name>/. If a
         ## translation folder is missing, Ren'Py falls back to the original
-        ## English text â€” the picker is safe to use either way.
+        ## English text — the picker is safe to use either way.
         frame:
             xfill True
             background Solid("#171C30")
@@ -2608,13 +2594,13 @@ screen preferences():
                         selected current_translation_language() == "dutch"
                         action language_change_action("dutch")
 
-                    textbutton t("FranÃ§ais"):
+                    textbutton t("Français"):
                         style "shell_nav_button"
                         xsize 312
                         selected current_translation_language() == "french"
                         action language_change_action("french")
 
-                    textbutton t("Ð£ÐºÑ€Ð°Ñ—Ð½ÑÑŒÐºÐ°"):
+                    textbutton t("УкраїнÑька"):
                         style "shell_nav_button"
                         xsize 312
                         selected current_translation_language() == "ukrainian"

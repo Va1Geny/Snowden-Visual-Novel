@@ -648,7 +648,6 @@ style ct_learn_body:
     size 16
     line_leading 5
 
-<<<<<<< HEAD
 # === Minigame 3 (Brute Force) Terminal Styles ===
 
 style terminal_screen_bg:
@@ -679,7 +678,7 @@ style terminal_learn_line:
     font FONT_MONO
     size 17
     color "#ffffff"
-=======
+
 ################################################################################
 ## CLASSIFIED BRIEFING, CHAPTER SELECT, GAME OVER
 ################################################################################
@@ -884,4 +883,3 @@ style game_over_btn_primary_text is game_over_btn_text:
 style game_over_btn_secondary_text is game_over_btn_text:
     color "#FF2D55"
     hover_color "#0D1117"
->>>>>>> b487fec (added the proper UI for the input menu, fixed some visual bugs that were occuring before)
