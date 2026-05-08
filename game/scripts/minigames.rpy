@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # MINIGAMES.RPY — All Minigame Logic and Screens
 # Classified: The Snowden Files
 ################################################################################
@@ -20,7 +20,7 @@ screen block_shortcuts_and_skip(return_value="SKIP", show_skip_button=True):
         textbutton t("SKIP MINIGAME"):
             xalign 0.98
             yalign 0.02
-            text_size 16
+            text_size 21
             text_color "#ff4444"
             text_hover_color "#ff0000"
             background Solid("#00000088")
@@ -57,7 +57,7 @@ screen minigame_intro(title, description):
             textbutton t("> SKIP (Knowledge -1)"):
                 xalign 0.5
                 text_color "#FF2D55"
-                text_size 18
+                text_size 21
                 action Return(False)
 
 
@@ -638,7 +638,7 @@ screen minigame_firewall():
                         xalign 0.5 yalign 0.5
                         text_color "#00FFD1"
                         text_hover_color "#FFFFFF"
-                        text_size 22
+                        text_size 25
                         text_bold True
                         action Function(fw_evaluate, "ALLOW")
 
@@ -661,7 +661,7 @@ screen minigame_firewall():
                         xalign 0.5 yalign 0.5
                         text_color "#FF2D55"
                         text_hover_color "#FFFFFF"
-                        text_size 22
+                        text_size 25
                         text_bold True
                         action Function(fw_evaluate, "BLOCK")
 
@@ -710,7 +710,7 @@ screen minigame_firewall():
                                 xalign 0.5
                                 text_color "#00FFD1"
                                 text_hover_color "#FFFFFF"
-                                text_size 16
+                                text_size 21
                                 text_bold True
                                 action Function(fw_next_packet)
                         else:
@@ -852,7 +852,7 @@ screen minigame_firewall():
                     xalign 0.5
                     text_color "#00FFD1"
                     text_hover_color "#FFFFFF"
-                    text_size 22
+                    text_size 25
                     text_bold True
                     action Return(_r_score)
     key "K_BACKSPACE" action NullAction()
@@ -2598,3 +2598,4 @@ screen minigame_trace():
                         xalign 0.5
                         text_style "menu_btn_text"
                         action Return(reached_end and not hit_gov)
+

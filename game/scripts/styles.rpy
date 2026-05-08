@@ -52,13 +52,13 @@ init python:
     DIVIDER_SUBTLE = "#ffffff11"
     BORDER_ACTIVE = "#00FFD1"
 
-    SIZE_XS = 13
-    SIZE_SM = 15
-    SIZE_MD = 19
-    SIZE_BASE = 17
-    SIZE_LG = 22
-    SIZE_XL = 28
-    SIZE_2XL = 36
+    SIZE_XS = 15
+    SIZE_SM = 17
+    SIZE_MD = 22
+    SIZE_BASE = 20
+    SIZE_LG = 25
+    SIZE_XL = 32
+    SIZE_2XL = 41
 
 ################################################################################
 ## CUSTOM STYLES
@@ -68,7 +68,7 @@ init python:
 style sys_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 28
+    size 32
     bold True
     text_align 0.5
     xalign 0.5
@@ -76,7 +76,7 @@ style sys_text:
 style chapter_title_text:
     font "fonts/Rajdhani-SemiBold.ttf"
     color "#E8E8E8"
-    size 64
+    size 74
     bold True
     text_align 0.5
     xalign 0.5
@@ -84,7 +84,7 @@ style chapter_title_text:
 style chapter_subtitle_text:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 24
+    size 28
     text_align 0.5
     xalign 0.5
     italic True
@@ -92,24 +92,24 @@ style chapter_subtitle_text:
 # === HUD Styles ===
 style hud_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 13
+    size 15
     color "#7A8A99"
 
 style hud_score_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 13
+    size 15
     color "#00FFD1"
 
 style hud_suspicion_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 13
+    size 15
     color "#FF2D55"
 
 # === Minigame Styles ===
 style minigame_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 36
+    size 41
     bold True
     text_align 0.5
     xalign 0.5
@@ -117,20 +117,20 @@ style minigame_title:
 style minigame_instruction:
     font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
-    size 22
+    size 25
     text_align 0.5
     xalign 0.5
 
 style minigame_label:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
-    size 18
+    size 21
     text_align 0.0
 
 style minigame_score:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 24
+    size 28
     bold True
     text_align 0.5
     xalign 0.5
@@ -139,7 +139,7 @@ style minigame_score:
 style question_text:
     font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
-    size 26
+    size 30
     text_align 0.5
     xalign 0.5
 
@@ -152,7 +152,7 @@ style answer_button_text:
     font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     hover_color "#0D1117"
-    size 22
+    size 25
     text_align 0.0
     xalign 0.0
 
@@ -160,7 +160,7 @@ style answer_button_text:
 style ending_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 48
+    size 55
     bold True
     text_align 0.5
     xalign 0.5
@@ -168,34 +168,34 @@ style ending_title:
 style ending_text:
     font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
-    size 22
+    size 25
     text_align 0.5
     xalign 0.5
 
 style ending_score_label:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
-    size 20
+    size 23
     text_align 0.0
 
 style ending_score_value:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 20
+    size 23
     bold True
     text_align 1.0
 
 style ending_lesson_text:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 18
+    size 21
     text_align 0.0
 
 # === Briefing Screen Styles ===
 style briefing_header:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#FF2D55"
-    size 32
+    size 37
     bold True
     text_align 0.5
     xalign 0.5
@@ -203,14 +203,14 @@ style briefing_header:
 style briefing_body:
     font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
-    size 22
+    size 25
     text_align 0.5
     xalign 0.5
 
 style briefing_warning:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 20
+    size 23
     italic True
     text_align 0.5
     xalign 0.5
@@ -219,7 +219,7 @@ style briefing_warning:
 style menu_title_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 52
+    size 60
     bold True
     text_align 0.5
     xalign 0.5
@@ -227,7 +227,7 @@ style menu_title_text:
 style menu_subtitle_text:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 20
+    size 23
     italic True
     text_align 0.5
     xalign 0.5
@@ -241,7 +241,7 @@ style menu_btn_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
     hover_color "#0D1117"
-    size 22
+    size 25
     bold True
     text_align 0.5
     xalign 0.5
@@ -249,7 +249,7 @@ style menu_btn_text:
 style menu_version:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#3A4A5560"
-    size 14
+    size 16
     text_align 0.5
     xalign 0.5
 
@@ -257,7 +257,7 @@ style menu_version:
 style dossier_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 36
+    size 41
     bold True
     text_align 0.5
     xalign 0.5
@@ -265,19 +265,19 @@ style dossier_title:
 style dossier_term:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
-    size 22
+    size 25
     bold True
 
 style dossier_definition:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 18
+    size 21
 
 # === Chapter Summary Styles ===
 style summary_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 36
+    size 41
     bold True
     text_align 0.5
     xalign 0.5
@@ -285,26 +285,26 @@ style summary_title:
 style summary_stat_label:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
-    size 20
+    size 23
 
 style summary_stat_value:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 20
+    size 23
     bold True
 
 # === Pause Hub / Story Tree HUD Styles ===
 style pause_title_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
-    size 58
+    size 67
     bold True
     text_align 0.0
 
 style pause_caption_text:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 18
+    size 21
     text_align 0.0
 
 style pause_btn:
@@ -316,26 +316,26 @@ style pause_btn_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
     hover_color "#0D1117"
-    size 24
+    size 28
     bold True
     text_align 0.0
 
 style tree_hud_kicker:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
-    size 15
+    size 17
     bold True
 
 style tree_hud_value:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
-    size 24
+    size 28
     bold True
 
 style tree_hud_meta:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 15
+    size 17
 
 # === Decrypt Minigame Styles ===
 style cipher_tile is button:
@@ -351,7 +351,7 @@ style cipher_tile is button:
 
 style cipher_tile_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 38
+    size 44
     bold True
     color "#FFD700"
     hover_color "#FFD700"
@@ -371,7 +371,7 @@ style decoded_tile is button:
 
 style decoded_tile_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 34
+    size 39
     bold True
     color "#E8E8E8"
     hover_color "#E8E8E8"
@@ -391,7 +391,7 @@ style decoded_tile_correct is button:
 
 style decoded_tile_correct_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 34
+    size 39
     bold True
     color "#00FF88"
     hover_color "#00FF88"
@@ -411,7 +411,7 @@ style decoded_tile_active is button:
 
 style decoded_tile_active_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 34
+    size 39
     bold True
     color "#00FFD1"
     hover_color "#00FFD1"
@@ -431,7 +431,7 @@ style alphabet_cell is button:
 
 style alphabet_cell_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 22
+    size 25
     bold True
     color "#7A8A99"
     hover_color "#E8E8E8"
@@ -451,7 +451,7 @@ style alphabet_cell_highlighted_cipher is button:
 
 style alphabet_cell_highlighted_cipher_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 22
+    size 25
     bold True
     color "#FFD700"
     hover_color "#FFD700"
@@ -480,7 +480,7 @@ style keyboard_key is button:
 
 style keyboard_key_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 22
+    size 25
     bold True
     color "#E8E8E8"
     hover_color "#00FFD1"
@@ -510,13 +510,13 @@ style stage_badge is frame:
 style ctm_field_label:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
-    size 15
+    size 17
     bold True
 
 style ctm_field_value:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
-    size 16
+    size 18
 
 style ctm_threat is button:
     background Solid("#1A0A10")
@@ -525,71 +525,71 @@ style ctm_threat is button:
 
 style ctm_threat_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 16
+    size 18
     color "#FF2D55"
     hover_color "#FF6680"
 
 style ctm_cleaned_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 16
+    size 18
     color "#00FF88"
 
 style ctm_body_text:
     font "fonts/Rajdhani-Regular.ttf"
-    size 16
+    size 18
     color "#E8E8E8"
     line_spacing 4
 
 style ctm_scanner_label:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
-    size 14
+    size 16
     bold True
 
 style ctm_scanner_value:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
-    size 14
+    size 16
 
 # === Cover Your Tracks — Minigame 4 Terminal Styles ===
 
 style ct_panel_title:
     color "#00FFD1"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 14
+    size 16
     bold True
 
 style ct_text:
     color "#E8E8E8"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 15
+    size 17
 
 style ct_text_dim:
     color "#7A8A99"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 13
+    size 15
 
 style ct_danger:
     color "#FF2D55"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 15
+    size 17
     bold True
 
 style ct_success:
     color "#00FF88"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 15
+    size 17
     bold True
 
 style ct_cmd:
     color "#00FF88"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 16
+    size 18
 
 style ct_prompt:
     color "#00FFD1"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 16
+    size 18
     bold True
 
 style ct_execute_btn is button:
@@ -602,7 +602,7 @@ style ct_execute_btn_text is button_text:
     color "#00FFD1"
     hover_color "#0D1117"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 18
+    size 21
     bold True
 
 style ct_hint_btn is button:
@@ -613,7 +613,7 @@ style ct_hint_btn is button:
 style ct_hint_btn_text is button_text:
     color "#FFD700"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 14
+    size 16
 
 style ct_token_btn is button:
     background Solid("#0A1A1A")
@@ -623,29 +623,29 @@ style ct_token_btn is button:
 style ct_token_btn_text is button_text:
     color "#00FF88"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 15
+    size 17
 
 style ct_breakdown_key:
     color "#00FFD1"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 14
+    size 16
     bold True
 
 style ct_breakdown_val:
     color "#7A8A99"
     font "fonts/Rajdhani-Regular.ttf"
-    size 14
+    size 16
 
 style ct_learn_title:
     color "#FFD700"
     font "fonts/ShareTechMono-Regular.ttf"
-    size 14
+    size 16
     bold True
 
 style ct_learn_body:
     color "#E8E8E8"
     font "fonts/Rajdhani-Regular.ttf"
-    size 16
+    size 18
     line_leading 5
 
 # === Minigame 3 (Brute Force) Terminal Styles ===
@@ -655,28 +655,28 @@ style terminal_screen_bg:
 
 style terminal_text:
     font FONT_MONO
-    size 17
+    size 20
     color "#ffffff"
     line_leading 4
 
 style terminal_input_text:
     font FONT_MONO
-    size 17
+    size 20
     color "#ffffff"
 
 style terminal_correct_line:
     font FONT_MONO
-    size 17
+    size 20
     color "#00ff00"
 
 style terminal_error_line:
     font FONT_MONO
-    size 17
+    size 20
     color "#ff0000"
 
 style terminal_learn_line:
     font FONT_MONO
-    size 17
+    size 20
     color "#ffffff"
 
 ################################################################################
@@ -687,7 +687,7 @@ style terminal_learn_line:
 style classified_briefing_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 28
+    size 32
     bold True
     text_align 0.5
     xalign 0.5
@@ -695,26 +695,26 @@ style classified_briefing_title:
 style classified_briefing_label:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
-    size 15
+    size 17
     text_align 0.0
 
 style classified_briefing_value:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
-    size 17
+    size 20
     text_align 0.0
 
 style classified_briefing_value_accent:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 17
+    size 20
     bold True
     text_align 0.0
 
 style classified_briefing_body:
     font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
-    size 17
+    size 20
     text_align 0.5
     xalign 0.5
     line_leading 6
@@ -722,7 +722,7 @@ style classified_briefing_body:
 style classified_briefing_muted:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 15
+    size 17
     text_align 0.5
     xalign 0.5
     line_leading 6
@@ -741,7 +741,7 @@ style classified_briefing_btn_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
     hover_color "#0D1117"
-    size 17
+    size 20
     bold True
     text_align 0.5
     xalign 0.5
@@ -750,7 +750,7 @@ style classified_briefing_btn_text is button_text:
 style chapter_select_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 28
+    size 32
     bold True
     text_align 0.5
     xalign 0.5
@@ -758,34 +758,34 @@ style chapter_select_title:
 style chapter_select_chapter_num:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
-    size 17
+    size 20
     bold True
     text_align 0.0
 
 style chapter_select_chapter_num_locked:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#3A4A55"
-    size 17
+    size 20
     bold True
     text_align 0.0
 
 style chapter_select_codename:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
-    size 17
+    size 20
     text_align 0.0
 
 style chapter_select_description:
     font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
-    size 15
+    size 17
     text_align 0.0
     line_leading 4
 
 style chapter_select_locked_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#FF2D55"
-    size 15
+    size 17
     text_align 0.0
 
 style chapter_select_btn is button:
@@ -801,7 +801,7 @@ style chapter_select_btn_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
     hover_color "#0D1117"
-    size 17
+    size 20
     bold True
     text_align 0.5
     xalign 0.5
@@ -810,7 +810,7 @@ style chapter_select_btn_text is button_text:
 style game_over_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#FF2D55"
-    size 28
+    size 32
     bold True
     text_align 0.5
     xalign 0.5
@@ -818,7 +818,7 @@ style game_over_title:
 style game_over_status:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#FF2D55"
-    size 36
+    size 41
     bold True
     text_align 0.5
     xalign 0.5
@@ -826,7 +826,7 @@ style game_over_status:
 style game_over_body:
     font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
-    size 17
+    size 20
     text_align 0.5
     xalign 0.5
     line_leading 6
@@ -834,20 +834,20 @@ style game_over_body:
 style game_over_label:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
-    size 15
+    size 17
     text_align 0.0
 
 style game_over_score_value:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
-    size 17
+    size 20
     bold True
     text_align 0.0
 
 style game_over_score_danger:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#FF2D55"
-    size 17
+    size 20
     bold True
     text_align 0.0
 
@@ -871,7 +871,7 @@ style game_over_btn_secondary is button:
 
 style game_over_btn_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
-    size 17
+    size 20
     bold True
     text_align 0.5
     xalign 0.5
@@ -883,3 +883,4 @@ style game_over_btn_primary_text is game_over_btn_text:
 style game_over_btn_secondary_text is game_over_btn_text:
     color "#FF2D55"
     hover_color "#0D1117"
+

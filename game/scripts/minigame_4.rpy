@@ -872,7 +872,7 @@ screen screen_cover_tracks():
                                             hover_background "#00FFD1"
                                             text_color "#A8FF78"
                                             text_hover_color "#000000"
-                                            text_size 14
+                                            text_size 21
                                             text_font "fonts/ShareTechMono-Regular.ttf"
                                             padding (12, 8)
                                             action Function(ct_add_token, _tok)
@@ -883,7 +883,7 @@ screen screen_cover_tracks():
                                     for _atok in ct_state["assembled_tokens"]:
                                         text t("[_atok]") color "#00FFD1" size 13 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
                                     textbutton t("UNDO"):
-                                        text_color "#FF2D55" text_size 12 text_font "fonts/ShareTechMono-Regular.ttf"
+                                        text_color "#FF2D55" text_size 21 text_font "fonts/ShareTechMono-Regular.ttf"
                                         action Function(ct_remove_last_token)
 
                 elif _ct["phase"] == 3:
@@ -902,7 +902,7 @@ screen screen_cover_tracks():
                                     hover_background "#00FFD1"
                                     text_color ("#00FFD1" if _is_sel else "#A8FF78")
                                     text_hover_color "#000000"
-                                    text_size 13
+                                    text_size 17
                                     text_font "fonts/ShareTechMono-Regular.ttf"
                                     padding (12, 8)
                                     action Function(ct_select_option, _opt)
@@ -916,7 +916,7 @@ screen screen_cover_tracks():
                         hover_background "#00FFD1"
                         text_color "#00FFD1"
                         text_hover_color "#000000"
-                        text_size 18
+                        text_size 21
                         text_bold True
                         text_font "fonts/ShareTechMono-Regular.ttf"
                         padding (40, 12)
@@ -927,7 +927,7 @@ screen screen_cover_tracks():
                             hover_background "#FFD700"
                             text_color "#FFD700"
                             text_hover_color "#000000"
-                            text_size 14
+                            text_size 21
                             text_font "fonts/ShareTechMono-Regular.ttf"
                             padding (15, 8)
                             action Function(ct_use_hint)
@@ -960,13 +960,13 @@ screen screen_cover_tracks():
                     textbutton t("> WHAT I LEARNED"):
                         background "#2A2000" hover_background "#FFD700"
                         text_color "#FFD700" text_hover_color "#000000"
-                        text_size 15 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
+                        text_size 17 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
                         padding (20, 10)
                         action Function(ct_show_learn)
                     textbutton t("> NEXT TRACE"):
                         background "#003A2A" hover_background "#00FFD1"
                         text_color "#00FFD1" text_hover_color "#000000"
-                        text_size 15 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
+                        text_size 17 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
                         padding (20, 10)
                         action Function(ct_advance)
 
@@ -986,7 +986,7 @@ screen screen_cover_tracks():
                 textbutton t("> NEXT TRACE"):
                     background "#003A2A" hover_background "#00FFD1"
                     text_color "#00FFD1" text_hover_color "#000000"
-                    text_size 16 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
+                    text_size 21 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
                     padding (30, 12)
                     xalign 0.5
                     action Function(ct_advance)
@@ -1040,7 +1040,7 @@ screen screen_cover_tracks():
                     textbutton t("> CONTINUE MISSION"):
                         background "#003A2A" hover_background "#00FFD1"
                         text_color "#00FFD1" text_hover_color "#000000"
-                        text_size 20 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
+                        text_size 23 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
                         padding (40, 14) xalign 0.5
                         action Return(_ct_wiped)
 
@@ -1116,3 +1116,4 @@ label minigame_4_cover_tracks:
         $ renpy.notify(t("Mission failed. NSA found evidence."))
 
     return
+

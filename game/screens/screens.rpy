@@ -807,7 +807,7 @@ screen main_menu():
         ysize 2
         ypos 982
 
-    ## â”€â”€ Top status bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
     fixed:
         xpos 0
         ypos 28
@@ -870,7 +870,6 @@ screen main_menu():
                 kerning 2
                 yalign 0.5
 
-    ## â”€â”€ Primary panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     fixed:
         xalign 0.5
         yalign 0.5
@@ -1065,34 +1064,34 @@ screen main_menu():
                     xalign 0.5
                     spacing 8
 
-                    textbutton t("â–¸ START"):
+                    textbutton t("– START"):
                         style "modal_action_button"
                         xalign 0.5
                         action Start()
 
                     if renpy.newest_slot():
-                        textbutton t("â–¸ CONTINUE"):
+                        textbutton t("– CONTINUE"):
                             style "modal_action_button"
                             xalign 0.5
                             action FileLoad(renpy.newest_slot(), confirm=False)
 
-                    textbutton t("â–¸ DOSSIER"):
+                    textbutton t("– DOSSIER"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("dossier")
 
-                    textbutton t("â–¸ STORY TREE"):
+                    textbutton t("– STORY TREE"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("story_tree")
 
-                    textbutton t("â–¸ SETTINGS"):
+                    textbutton t("– SETTINGS"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("preferences")
 
                     if renpy.variant("pc"):
-                        textbutton t("Ã— EXIT"):
+                        textbutton t("— EXIT"):
                             style "modal_action_button"
                             xalign 0.5
                             background Solid("#241926")
@@ -2556,11 +2555,7 @@ screen preferences():
                         selected all_audio_muted()
                         action Function(toggle_all_audio)
 
-        ## â”€â”€ LANGUAGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-        ## English is the default (language=None). Dutch/French/Ukrainian
-        ## switch to the matching translation under game/tl/<name>/. If a
-        ## translation folder is missing, Ren'Py falls back to the original
-        ## English text â€” the picker is safe to use either way.
+
         frame:
             xfill True
             background Solid("#171C30")
@@ -3074,3 +3069,4 @@ screen quick_menu():
             textbutton t("Notes") action Show("notebook_panel")
             textbutton t("Save") action ShowMenu("save")
             textbutton t("Menu") action ShowMenu("pause_hub")
+

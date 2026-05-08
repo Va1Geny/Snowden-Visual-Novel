@@ -1638,7 +1638,7 @@ screen story_tree():
             hover_background "#006654"
             text_color "#EAF4F1"
             text_hover_color "#F2FFFC"
-            text_size 22
+            text_size 25
             text_bold True
             xsize 220
             ysize 54
@@ -1650,7 +1650,7 @@ screen story_tree():
             hover_background "#4D5186"
             text_color "#EAF4F1"
             text_hover_color "#F2FFFC"
-            text_size 22
+            text_size 25
             text_bold True
             xsize 300
             ysize 54
@@ -1658,3 +1658,4 @@ screen story_tree():
             action ShowMenu("pause_hub")
 
     key "game_menu" action If(main_menu, true=ShowMenu("main_menu"), false=ShowMenu("pause_hub"))
+

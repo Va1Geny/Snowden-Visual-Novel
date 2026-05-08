@@ -447,7 +447,7 @@ screen ending_screen(title, color, description, lessons):
                     hover_background "#00FFD1"
                     text_color "#00FFD1"
                     text_hover_color "#080C10"
-                    text_size 20
+                    text_size 23
                     text_bold True
                     text_font "fonts/ShareTechMono-Regular.ttf"
                     padding (40, 16)
@@ -458,7 +458,7 @@ screen ending_screen(title, color, description, lessons):
                     hover_background "#FF2D55"
                     text_color "#FF2D55"
                     text_hover_color "#FFFFFF"
-                    text_size 20
+                    text_size 23
                     text_bold True
                     text_font "fonts/ShareTechMono-Regular.ttf"
                     padding (40, 16)
@@ -540,3 +540,4 @@ label dev_ending_selector:
 screen secret_ending_shortcut():
     key "shift_K_0" action Jump("dev_ending_selector")
     key "shift_0" action Jump("dev_ending_selector")
+
