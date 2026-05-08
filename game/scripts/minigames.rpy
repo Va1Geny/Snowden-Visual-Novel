@@ -734,13 +734,7 @@ screen minigame_firewall():
                     text t("> Scanning packet... Awaiting your authorization") color "#00FFD160" size 14
                     text t(" _") at fw_cursor_blink color "#00FFD1" size 14
 
-<<<<<<< HEAD
     use block_shortcuts_and_skip("SKIP")
-
-    # ══════════════════════════════════════════════════════════════════════
-=======
-    # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
->>>>>>> b487fec (added the proper UI for the input menu, fixed some visual bugs that were occuring before)
     #  PHASE: COMPLETE (Result / Mission Debrief)
     # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
     if fw_state["phase"] == "complete":

@@ -648,7 +648,6 @@ style ct_learn_body:
     size 16
     line_leading 5
 
-<<<<<<< HEAD
 # === Minigame 3 (Brute Force) Terminal Styles ===
 
 style terminal_screen_bg:
