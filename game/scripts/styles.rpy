@@ -1,15 +1,64 @@
 ################################################################################
-## STYLES.RPY — Custom Styles for Classified: The Snowden Files
-## Palette:
-##   #002922  Evergreen      — deep panel backgrounds
-##   #006654  Emerald Depths — secondary accent / hover
-##   #008069  Jungle Teal    — primary accent (active, selected)
-##   #8B8FCC  Soft Periwinkle — info / knowledge elements
-##   #4D5186  Dusty Grape    — borders, inactive, mid-tone
-##   #212339  Space Indigo   — main background
+## STYLES.RPY — Design System for Classified: The Snowden Files
+##
+## Color Palette:
+##   BG_DEEP        = #080C10    fullscreen backgrounds
+##   BG_PANEL       = #0D1117    card / panel fills
+##   BG_PANEL_ALT   = #111720    hover state / alternate panels
+##   CYAN           = #00FFD1    primary accent
+##   RED            = #FF2D55    danger / errors
+##   GOLD           = #FFD700    warnings / highlights
+##   GREEN          = #00FF88    success / confirmed
+##   ORANGE         = #FF8C00    high threat / caution
+##   TEXT_PRIMARY   = #E8E8E8    main body text
+##   TEXT_DIM       = #7A8A99    secondary / muted
+##   TEXT_FAINT     = #3A4A55    decorative / inactive
+##   TEXT_INVERSE   = #0D1117    text on bright backgrounds
+##
+## Typography:
+##   FONT_MONO      = fonts/ShareTechMono-Regular.ttf  (system/UI)
+##   FONT_BODY      = fonts/Rajdhani-Regular.ttf       (narrative)
+##   FONT_BODY_BOLD = fonts/Rajdhani-SemiBold.ttf      (narrative bold)
 ################################################################################
 
 init offset = -1
+
+################################################################################
+## FONT & COLOR TOKENS (for use in screens directly)
+################################################################################
+
+init python:
+    FONT_MONO = "fonts/ShareTechMono-Regular.ttf"
+    FONT_BODY = "fonts/Rajdhani-Regular.ttf"
+    FONT_BODY_BOLD = "fonts/Rajdhani-SemiBold.ttf"
+
+    BG_DEEP = "#080C10"
+    BG_PANEL = "#0D1117"
+    BG_PANEL_ALT = "#111720"
+    BG_OVERLAY = "#0D1117ee"
+
+    CYAN = "#00FFD1"
+    RED = "#FF2D55"
+    GOLD = "#FFD700"
+    GREEN = "#00FF88"
+    ORANGE = "#FF8C00"
+
+    TEXT_PRIMARY = "#E8E8E8"
+    TEXT_DIM = "#7A8A99"
+    TEXT_FAINT = "#3A4A55"
+    TEXT_INVERSE = "#0D1117"
+
+    DIVIDER_STRONG = "#00FFD122"
+    DIVIDER_SUBTLE = "#ffffff11"
+    BORDER_ACTIVE = "#00FFD1"
+
+    SIZE_XS = 13
+    SIZE_SM = 15
+    SIZE_MD = 19
+    SIZE_BASE = 17
+    SIZE_LG = 22
+    SIZE_XL = 28
+    SIZE_2XL = 36
 
 ################################################################################
 ## CUSTOM STYLES
@@ -17,24 +66,24 @@ init offset = -1
 
 # === Chapter Title Card Styles ===
 style sys_text:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 28
     bold True
     text_align 0.5
     xalign 0.5
 
 style chapter_title_text:
-    font "DejaVuSans.ttf"
-    color "#EDFAF5"
+    font "fonts/Rajdhani-SemiBold.ttf"
+    color "#E8E8E8"
     size 64
     bold True
     text_align 0.5
     xalign 0.5
 
 style chapter_subtitle_text:
-    font "DejaVuSans.ttf"
-    color "#4D5186"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
     size 24
     text_align 0.5
     xalign 0.5
@@ -42,45 +91,45 @@ style chapter_subtitle_text:
 
 # === HUD Styles ===
 style hud_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 13
-    color "#4D5186"
+    color "#7A8A99"
 
 style hud_score_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 13
-    color "#008069"
+    color "#00FFD1"
 
 style hud_suspicion_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 13
     color "#FF2D55"
 
 # === Minigame Styles ===
 style minigame_title:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 36
     bold True
     text_align 0.5
     xalign 0.5
 
 style minigame_instruction:
-    font "DejaVuSans.ttf"
-    color "#C8D8D0"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#E8E8E8"
     size 22
     text_align 0.5
     xalign 0.5
 
 style minigame_label:
-    font "DejaVuSans.ttf"
-    color "#8B8FCC"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#7A8A99"
     size 18
     text_align 0.0
 
 style minigame_score:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 24
     bold True
     text_align 0.5
@@ -88,8 +137,8 @@ style minigame_score:
 
 # === Question Screen Styles ===
 style question_text:
-    font "DejaVuSans.ttf"
-    color "#C8D8D0"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#E8E8E8"
     size 26
     text_align 0.5
     xalign 0.5
@@ -100,51 +149,51 @@ style answer_button:
     xalign 0.5
 
 style answer_button_text:
-    font "DejaVuSans.ttf"
-    color "#008069"
-    hover_color "#212339"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#00FFD1"
+    hover_color "#0D1117"
     size 22
     text_align 0.0
     xalign 0.0
 
 # === Ending Styles ===
 style ending_title:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 48
     bold True
     text_align 0.5
     xalign 0.5
 
 style ending_text:
-    font "DejaVuSans.ttf"
-    color "#C8D8D0"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#E8E8E8"
     size 22
     text_align 0.5
     xalign 0.5
 
 style ending_score_label:
-    font "DejaVuSans.ttf"
-    color "#4D5186"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#7A8A99"
     size 20
     text_align 0.0
 
 style ending_score_value:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 20
     bold True
     text_align 1.0
 
 style ending_lesson_text:
-    font "DejaVuSans.ttf"
-    color "#8B8FCC"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
     size 18
     text_align 0.0
 
 # === Briefing Screen Styles ===
 style briefing_header:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     color "#FF2D55"
     size 32
     bold True
@@ -152,15 +201,15 @@ style briefing_header:
     xalign 0.5
 
 style briefing_body:
-    font "DejaVuSans.ttf"
-    color "#C8D8D0"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#E8E8E8"
     size 22
     text_align 0.5
     xalign 0.5
 
 style briefing_warning:
-    font "DejaVuSans.ttf"
-    color "#8B8FCC"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
     size 20
     italic True
     text_align 0.5
@@ -168,16 +217,16 @@ style briefing_warning:
 
 # === Main Menu Custom Styles ===
 style menu_title_text:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 52
     bold True
     text_align 0.5
     xalign 0.5
 
 style menu_subtitle_text:
-    font "DejaVuSans.ttf"
-    color "#4D5186"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
     size 20
     italic True
     text_align 0.5
@@ -189,72 +238,72 @@ style menu_btn:
     xalign 0.5
 
 style menu_btn_text:
-    font "DejaVuSans.ttf"
-    color "#008069"
-    hover_color "#212339"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
+    hover_color "#0D1117"
     size 22
     bold True
     text_align 0.5
     xalign 0.5
 
 style menu_version:
-    font "DejaVuSans.ttf"
-    color "#4D518660"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#3A4A5560"
     size 14
     text_align 0.5
     xalign 0.5
 
 # === Dossier / Glossary Styles ===
 style dossier_title:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 36
     bold True
     text_align 0.5
     xalign 0.5
 
 style dossier_term:
-    font "DejaVuSans.ttf"
-    color "#8B8FCC"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
     size 22
     bold True
 
 style dossier_definition:
-    font "DejaVuSans.ttf"
-    color "#A8B8C0"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
     size 18
 
 # === Chapter Summary Styles ===
 style summary_title:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 36
     bold True
     text_align 0.5
     xalign 0.5
 
 style summary_stat_label:
-    font "DejaVuSans.ttf"
-    color "#4D5186"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#7A8A99"
     size 20
 
 style summary_stat_value:
-    font "DejaVuSans.ttf"
-    color "#008069"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
     size 20
     bold True
 
 # === Pause Hub / Story Tree HUD Styles ===
 style pause_title_text:
-    font "DejaVuSans.ttf"
-    color "#EAF4F1"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
     size 58
     bold True
     text_align 0.0
 
 style pause_caption_text:
-    font "DejaVuSans.ttf"
-    color "#8B8FCC"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
     size 18
     text_align 0.0
 
@@ -264,44 +313,44 @@ style pause_btn:
     xalign 0.0
 
 style pause_btn_text:
-    font "DejaVuSans.ttf"
-    color "#EAF4F1"
-    hover_color "#F2FFFC"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
+    hover_color "#0D1117"
     size 24
     bold True
     text_align 0.0
 
 style tree_hud_kicker:
-    font "DejaVuSans.ttf"
-    color "#8B8FCC"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#7A8A99"
     size 15
     bold True
 
 style tree_hud_value:
-    font "DejaVuSans.ttf"
-    color "#EAF4F1"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
     size 24
     bold True
 
 style tree_hud_meta:
-    font "DejaVuSans.ttf"
-    color "#AAB0D6"
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
     size 15
 
 # === Decrypt Minigame Styles ===
 style cipher_tile is button:
     xsize 84
     ysize 84
-    background Solid("#161E2A")
+    background Solid("#111720")
     hover_background Solid("#2B2312")
-    insensitive_background Solid("#161E2A")
+    insensitive_background Solid("#111720")
     top_padding 6
     bottom_padding 6
     left_padding 6
     right_padding 6
 
 style cipher_tile_text is button_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 38
     bold True
     color "#FFD700"
@@ -312,16 +361,16 @@ style cipher_tile_text is button_text:
 style decoded_tile is button:
     xsize 84
     ysize 76
-    background Solid("#0F1520")
-    hover_background Solid("#152131")
-    insensitive_background Solid("#0F1520")
+    background Solid("#0D1117")
+    hover_background Solid("#111720")
+    insensitive_background Solid("#0D1117")
     top_padding 4
     bottom_padding 4
     left_padding 6
     right_padding 6
 
 style decoded_tile_text is button_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 34
     bold True
     color "#E8E8E8"
@@ -332,36 +381,36 @@ style decoded_tile_text is button_text:
 style decoded_tile_correct is button:
     xsize 84
     ysize 76
-    background Solid("#12331A")
-    hover_background Solid("#174321")
-    insensitive_background Solid("#12331A")
+    background Solid("#0A2A12")
+    hover_background Solid("#0E3A18")
+    insensitive_background Solid("#0A2A12")
     top_padding 4
     bottom_padding 4
     left_padding 6
     right_padding 6
 
 style decoded_tile_correct_text is button_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 34
     bold True
-    color "#39FF14"
-    hover_color "#39FF14"
+    color "#00FF88"
+    hover_color "#00FF88"
     xalign 0.5
     text_align 0.5
 
 style decoded_tile_active is button:
     xsize 84
     ysize 76
-    background Solid("#132330")
-    hover_background Solid("#183043")
-    insensitive_background Solid("#132330")
+    background Solid("#0A1A2A")
+    hover_background Solid("#0D2A3A")
+    insensitive_background Solid("#0A1A2A")
     top_padding 4
     bottom_padding 4
     left_padding 6
     right_padding 6
 
 style decoded_tile_active_text is button_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 34
     bold True
     color "#00FFD1"
@@ -372,19 +421,19 @@ style decoded_tile_active_text is button_text:
 style alphabet_cell is button:
     xsize 50
     ysize 42
-    background Solid("#111820")
-    hover_background Solid("#18212B")
-    insensitive_background Solid("#111820")
+    background Solid("#0D1117")
+    hover_background Solid("#111720")
+    insensitive_background Solid("#0D1117")
     top_padding 0
     bottom_padding 0
     left_padding 0
     right_padding 0
 
 style alphabet_cell_text is button_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 22
     bold True
-    color "#A4B8C5"
+    color "#7A8A99"
     hover_color "#E8E8E8"
     xalign 0.5
     text_align 0.5
@@ -401,7 +450,7 @@ style alphabet_cell_highlighted_cipher is button:
     right_padding 0
 
 style alphabet_cell_highlighted_cipher_text is button_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 22
     bold True
     color "#FFD700"
@@ -412,7 +461,7 @@ style alphabet_cell_highlighted_cipher_text is button_text:
 style alphabet_cell_highlighted_plain is frame:
     xsize 50
     ysize 42
-    background Solid("#003E38")
+    background Solid("#003A3A")
     top_padding 0
     bottom_padding 0
     left_padding 0
@@ -421,16 +470,16 @@ style alphabet_cell_highlighted_plain is frame:
 style keyboard_key is button:
     xsize 84
     ysize 48
-    background Solid("#161E2A")
-    hover_background Solid("#0D3440")
-    insensitive_background Solid("#10161E")
+    background Solid("#111720")
+    hover_background Solid("#003A3A")
+    insensitive_background Solid("#0D1117")
     top_padding 0
     bottom_padding 0
     left_padding 0
     right_padding 0
 
 style keyboard_key_text is button_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 22
     bold True
     color "#E8E8E8"
@@ -439,18 +488,18 @@ style keyboard_key_text is button_text:
     text_align 0.5
 
 style keyboard_key_hover is keyboard_key:
-    background Solid("#0D3440")
-    hover_background Solid("#125568")
+    background Solid("#003A3A")
+    hover_background Solid("#005050")
 
 style decrypt_terminal is frame:
-    background Solid("#0C1018EE")
+    background Solid("#080C10EE")
     top_padding 22
     bottom_padding 18
     left_padding 22
     right_padding 22
 
 style stage_badge is frame:
-    background Solid("#111820")
+    background Solid("#0D1117")
     top_padding 8
     bottom_padding 8
     left_padding 14
@@ -459,99 +508,100 @@ style stage_badge is frame:
 # === Clean the Message Minigame Styles ===
 
 style ctm_field_label:
-    font "DejaVuSans.ttf"
-    color "#5A7080"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#7A8A99"
     size 15
     bold True
 
 style ctm_field_value:
-    font "DejaVuSans.ttf"
-    color "#B8C8D8"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
     size 16
 
 style ctm_threat is button:
-    background Solid("#1A1018")
-    hover_background Solid("#2A1420")
+    background Solid("#1A0A10")
+    hover_background Solid("#2A0A15")
     padding (8, 4)
 
 style ctm_threat_text is button_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 16
-    color "#FF3355"
+    color "#FF2D55"
     hover_color "#FF6680"
 
 style ctm_cleaned_text:
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 16
     color "#00FF88"
 
 style ctm_body_text:
-    font "DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 16
-    color "#B8C8D8"
+    color "#E8E8E8"
     line_spacing 4
 
 style ctm_scanner_label:
-    font "DejaVuSans.ttf"
-    color "#5A7080"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#7A8A99"
     size 14
     bold True
 
 style ctm_scanner_value:
-    font "DejaVuSans.ttf"
-    color "#D8E4F0"
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
     size 14
 
 # === Cover Your Tracks — Minigame 4 Terminal Styles ===
 
 style ct_panel_title:
     color "#00FFD1"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 14
     bold True
 
 style ct_text:
     color "#E8E8E8"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 15
 
 style ct_text_dim:
     color "#7A8A99"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 13
 
 style ct_danger:
     color "#FF2D55"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 15
     bold True
 
 style ct_success:
     color "#00FF88"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 15
     bold True
 
 style ct_cmd:
-    color "#A8FF78"
-    font "DejaVuSans.ttf"
+    color "#00FF88"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 16
 
 style ct_prompt:
     color "#00FFD1"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 16
     bold True
 
 style ct_execute_btn is button:
-    background Solid("#003A2A")
-    hover_background Solid("#005A40")
+    background Solid("#003A3A")
+    hover_background Solid("#00FFD1")
     padding (30, 14)
     xalign 0.5
 
 style ct_execute_btn_text is button_text:
     color "#00FFD1"
-    font "DejaVuSans.ttf"
+    hover_color "#0D1117"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 18
     bold True
 
@@ -562,42 +612,43 @@ style ct_hint_btn is button:
 
 style ct_hint_btn_text is button_text:
     color "#FFD700"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 14
 
 style ct_token_btn is button:
-    background Solid("#1A2A2A")
-    hover_background Solid("#2A3A3A")
+    background Solid("#0A1A1A")
+    hover_background Solid("#0D2A2A")
     padding (10, 6)
 
 style ct_token_btn_text is button_text:
-    color "#A8FF78"
-    font "DejaVuSans.ttf"
+    color "#00FF88"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 15
 
 style ct_breakdown_key:
     color "#00FFD1"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 14
     bold True
 
 style ct_breakdown_val:
     color "#7A8A99"
-    font "DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 14
 
 style ct_learn_title:
     color "#FFD700"
-    font "DejaVuSans.ttf"
+    font "fonts/ShareTechMono-Regular.ttf"
     size 14
     bold True
 
 style ct_learn_body:
-    color "#CCCCCC"
-    font "DejaVuSans.ttf"
+    color "#E8E8E8"
+    font "fonts/Rajdhani-Regular.ttf"
     size 16
     line_leading 5
 
+<<<<<<< HEAD
 # === Minigame 3 (Brute Force) Terminal Styles ===
 
 style terminal_screen_bg:
@@ -628,3 +679,209 @@ style terminal_learn_line:
     font FONT_MONO
     size 17
     color "#ffffff"
+=======
+################################################################################
+## CLASSIFIED BRIEFING, CHAPTER SELECT, GAME OVER
+################################################################################
+
+# === Classified Briefing Screen ===
+style classified_briefing_title:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
+    size 28
+    bold True
+    text_align 0.5
+    xalign 0.5
+
+style classified_briefing_label:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#7A8A99"
+    size 15
+    text_align 0.0
+
+style classified_briefing_value:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
+    size 17
+    text_align 0.0
+
+style classified_briefing_value_accent:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
+    size 17
+    bold True
+    text_align 0.0
+
+style classified_briefing_body:
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#E8E8E8"
+    size 17
+    text_align 0.5
+    xalign 0.5
+    line_leading 6
+
+style classified_briefing_muted:
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
+    size 15
+    text_align 0.5
+    xalign 0.5
+    line_leading 6
+    italic True
+
+style classified_briefing_btn is button:
+    background Solid("#003A3A")
+    hover_background Solid("#00FFD1")
+    insensitive_background Solid("#003A3A")
+    xsize 280
+    ysize 48
+    padding (30, 14)
+    xalign 0.5
+
+style classified_briefing_btn_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
+    hover_color "#0D1117"
+    size 17
+    bold True
+    text_align 0.5
+    xalign 0.5
+
+# === Chapter Select Screen ===
+style chapter_select_title:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
+    size 28
+    bold True
+    text_align 0.5
+    xalign 0.5
+
+style chapter_select_chapter_num:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
+    size 17
+    bold True
+    text_align 0.0
+
+style chapter_select_chapter_num_locked:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#3A4A55"
+    size 17
+    bold True
+    text_align 0.0
+
+style chapter_select_codename:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
+    size 17
+    text_align 0.0
+
+style chapter_select_description:
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#7A8A99"
+    size 15
+    text_align 0.0
+    line_leading 4
+
+style chapter_select_locked_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#FF2D55"
+    size 15
+    text_align 0.0
+
+style chapter_select_btn is button:
+    background Solid("#003A3A")
+    hover_background Solid("#00FFD1")
+    insensitive_background Solid("#003A3A")
+    xsize 280
+    ysize 48
+    padding (30, 14)
+    xalign 0.5
+
+style chapter_select_btn_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#00FFD1"
+    hover_color "#0D1117"
+    size 17
+    bold True
+    text_align 0.5
+    xalign 0.5
+
+# === Game Over Screen ===
+style game_over_title:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#FF2D55"
+    size 28
+    bold True
+    text_align 0.5
+    xalign 0.5
+
+style game_over_status:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#FF2D55"
+    size 36
+    bold True
+    text_align 0.5
+    xalign 0.5
+
+style game_over_body:
+    font "fonts/Rajdhani-Regular.ttf"
+    color "#E8E8E8"
+    size 17
+    text_align 0.5
+    xalign 0.5
+    line_leading 6
+
+style game_over_label:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#7A8A99"
+    size 15
+    text_align 0.0
+
+style game_over_score_value:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E8E8E8"
+    size 17
+    bold True
+    text_align 0.0
+
+style game_over_score_danger:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#FF2D55"
+    size 17
+    bold True
+    text_align 0.0
+
+style game_over_btn_primary is button:
+    background Solid("#003A3A")
+    hover_background Solid("#00FFD1")
+    insensitive_background Solid("#003A3A")
+    xsize 280
+    ysize 48
+    padding (30, 14)
+    xalign 0.5
+
+style game_over_btn_secondary is button:
+    background Solid("#3A0010")
+    hover_background Solid("#FF2D55")
+    insensitive_background Solid("#3A0010")
+    xsize 280
+    ysize 48
+    padding (30, 14)
+    xalign 0.5
+
+style game_over_btn_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    bold True
+    text_align 0.5
+    xalign 0.5
+
+style game_over_btn_primary_text is game_over_btn_text:
+    color "#00FFD1"
+    hover_color "#0D1117"
+
+style game_over_btn_secondary_text is game_over_btn_text:
+    color "#FF2D55"
+    hover_color "#0D1117"
+>>>>>>> b487fec (added the proper UI for the input menu, fixed some visual bugs that were occuring before)

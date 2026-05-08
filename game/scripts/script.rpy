@@ -382,14 +382,24 @@ label chapter_2:
 
     # --- Question Segment 2: Text Input ---
 
-    call screen text_input_question_screen(
-        question=t("Type the codename of the surveillance program you found:"),
-        correct_answer="PRISM",
-        hint=t("It's named after a glass object that splits light into a spectrum..."),
-        explanation=t("PRISM was the codename for the NSA program that collected user data from major tech platforms."),
-        accepted_answers=["PRISM"],
-        helper_text=t("You just saw the codename in the scene above, so trust your memory more than your IT knowledge.")
+    $ tiq_reset()
+    $ tiq_result = renpy.call_screen(
+        "text_input_question",
+        chapter_num    = "02",
+        chapter_name   = t("The PRISM Revelation"),
+        question_text  = t("Type the codename of the surveillance\nprogram you found:"),
+        hint_text      = t("It's named after a glass object that splits light into a spectrum..."),
+        check_type     = "Text Input",
+        difficulty     = "Easy",
+        reward_label   = "+1 Knowledge",
+        reward_color   = "green",
+        correct_answer = "PRISM",
+        explanation    = t("PRISM was the codename for the NSA program that collected user data from major tech platforms."),
+        allow_skip     = True
     )
+    if tiq_result == "continue" and tiq_is_correct:
+        $ knowledge_score += 1
+        $ renpy.notify(t("Knowledge +1"))
 
     # --- Minigame 2: Decrypt the Message — Learning Section ---
     # (Structured as a self-contained briefing — can be branched into the story tree later)
@@ -892,14 +902,24 @@ label chapter_4:
 
     # --- Question Segment 4: Text Input ---
 
-    call screen text_input_question_screen(
-        question=t("Type the 3-letter privacy tool that hides your route online:"),
-        correct_answer="TOR",
-        hint=t("It's the same tool mentioned in the safer option above."),
-        explanation=t("Tor wraps your traffic in several layers and sends it through relays, which helps hide where it started."),
-        accepted_answers=["TOR", "THE ONION ROUTER"],
-        helper_text=t("Short answer is fine.")
+    $ tiq_reset()
+    $ tiq_result = renpy.call_screen(
+        "text_input_question",
+        chapter_num    = "04",
+        chapter_name   = t("The Escape"),
+        question_text  = t("Type the 3-letter privacy tool that\nhides your route online:"),
+        hint_text      = t("It's the same tool mentioned in the safer option above."),
+        check_type     = "Text Input",
+        difficulty     = "Easy",
+        reward_label   = "+1 Knowledge",
+        reward_color   = "green",
+        correct_answer = "TOR",
+        explanation    = t("Tor wraps your traffic in several layers and sends it through relays, which helps hide where it started."),
+        allow_skip     = True
     )
+    if tiq_result == "continue" and tiq_is_correct:
+        $ knowledge_score += 1
+        $ renpy.notify(t("Knowledge +1"))
 
     # --- Minigame 4: Trace the Route — Learning Section ---
     # (Structured as a self-contained briefing — can be branched into the story tree later)
@@ -1165,14 +1185,24 @@ label chapter_5:
     im "PGP — Pretty Good Privacy. It's the asymmetric encryption system that made the whole operation possible. I publish a public key that anyone can use to encrypt a message to me, but only my private key can decrypt it. Without PGP, every email to the journalists would have been an open letter to the NSA."
 
     # Text Input
-    call screen text_input_question_screen(
-        question=t("Type the 3-letter encryption tool you used to message journalists:"),
-        correct_answer="PGP",
-        hint=t("It stands for 'Pretty Good' something, and the short version is enough."),
-        explanation=t("PGP lets one key lock a message and another key unlock it, which is why you pushed journalists to learn it."),
-        accepted_answers=["PGP", "PRETTY GOOD PRIVACY"],
-        helper_text=t("Just the 3-letter version works.")
+    $ tiq_reset()
+    $ tiq_result = renpy.call_screen(
+        "text_input_question",
+        chapter_num    = "05",
+        chapter_name   = t("The Aftermath"),
+        question_text  = t("Type the 3-letter encryption tool you\nused to message journalists:"),
+        hint_text      = t("It stands for 'Pretty Good' something, and the short version is enough."),
+        check_type     = "Text Input",
+        difficulty     = "Easy",
+        reward_label   = "+1 Knowledge",
+        reward_color   = "green",
+        correct_answer = "PGP",
+        explanation    = t("PGP lets one key lock a message and another key unlock it, which is why you pushed journalists to learn it."),
+        allow_skip     = True
     )
+    if tiq_result == "continue" and tiq_is_correct:
+        $ knowledge_score += 1
+        $ renpy.notify(t("Knowledge +1"))
 
     im "The scariest attack is one you never see — a man-in-the-middle. An attacker secretly positions themselves between you and the person you're talking to, intercepting every message. Both sides think they're communicating directly, but the attacker sees everything."
 
