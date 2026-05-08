@@ -140,10 +140,10 @@ screen story_tree():
                 yalign 0.5
                 spacing 3
 
-                text "BRANCH NETWORK":
+                text t("BRANCH NETWORK"):
                     style "tree_hud_kicker"
 
-                text "STORY TREE":
+                text t("STORY TREE"):
                     color "#EAF4F1"
                     size 32
                     bold True
@@ -158,12 +158,12 @@ screen story_tree():
                 yalign 0.5
                 spacing 4
 
-                text "VISUAL ANALYSIS":
+                text t("VISUAL ANALYSIS"):
                     color "#8B8FCC"
                     size 14
                     bold True
 
-                text "Track every major choice, risk, and ending route in one cinematic branch web.":
+                text t("Track every major choice, risk, and ending route in one cinematic branch web."):
                     color "#AAB0D6"
                     size 16
 
@@ -182,20 +182,20 @@ screen story_tree():
 
                     vbox:
                         spacing 3
-                        text "CHAPTERS":
+                        text t("CHAPTERS"):
                             style "tree_hud_kicker"
-                        text "[_ch()]/5":
+                        text t("[_ch()]/5"):
                             style "tree_hud_value"
-                        text "Unlocked nodes by chapter":
+                        text t("Unlocked nodes by chapter"):
                             style "tree_hud_meta"
 
                     vbox:
                         spacing 3
-                        text "BRANCHES":
+                        text t("BRANCHES"):
                             style "tree_hud_kicker"
-                        text "[picked_count()]/[tree_total_choice_count()]":
+                        text t("[picked_count()]/[tree_total_choice_count()]"):
                             style "tree_hud_value"
-                        text "Discovered across all runs":
+                        text t("Discovered across all runs"):
                             style "tree_hud_meta"
 
     ## ── Legend ──────────────────────────────────────────────────────────────
@@ -214,9 +214,9 @@ screen story_tree():
 
                 vbox:
                     spacing 3
-                    text "NETWORK LEGEND":
+                    text t("NETWORK LEGEND"):
                         style "tree_hud_kicker"
-                    text "[progress_pct()]% reconstructed":
+                    text t("[progress_pct()]% reconstructed"):
                         color "#EAF4F1"
                         size 22
                         bold True
@@ -243,7 +243,7 @@ screen story_tree():
                         ysize 14
                         background "#006654"
                         yalign 0.5
-                    text "CURRENT RUN":
+                    text t("CURRENT RUN"):
                         color "#EAF4F1"
                         size 13
                         yalign 0.5
@@ -255,7 +255,7 @@ screen story_tree():
                         ysize 14
                         background "#191C31"
                         yalign 0.5
-                    text "DISCOVERED BRANCH":
+                    text t("DISCOVERED BRANCH"):
                         color "#AAB0D6"
                         size 13
                         yalign 0.5
@@ -267,7 +267,7 @@ screen story_tree():
                         ysize 14
                         background "#131421"
                         yalign 0.5
-                    text "LOCKED":
+                    text t("LOCKED"):
                         color "#6A719A"
                         size 13
                         yalign 0.5
@@ -283,10 +283,10 @@ screen story_tree():
         vbox:
             spacing 10
 
-            text "ENDING FORECAST":
+            text t("ENDING FORECAST"):
                 style "tree_hud_kicker"
 
-            text "[ending_label()]":
+            text t("[ending_label()]"):
                 color (ending_color() if _ch() >= 5 else "#EAF4F1")
                 size 24
                 bold True
@@ -335,13 +335,13 @@ screen story_tree():
                         yalign 0.5
                         spacing 14
 
-                        text "CH.01":
+                        text t("CH.01"):
                             color ("#4D518655" if not _finished(1) else "#8B8FCC")
                             size 13
                             bold True
                             yalign 0.5
 
-                        text "INSIDE THE MACHINE":
+                        text t("INSIDE THE MACHINE"):
                             color chc(1)
                             size 19
                             bold True
@@ -394,7 +394,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(1), Start("chapter_1"), NullAction())
 
-                    text "Follow Protocol":
+                    text t("Follow Protocol"):
                         color ntc('choice_ch1_1', 'protocol', 1)
                         size 16
                         bold (nbd('choice_ch1_1', 'protocol', 1))
@@ -412,7 +412,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(1), Start("chapter_1"), NullAction())
 
-                    text "Explore Restricted Files":
+                    text t("Explore Restricted Files"):
                         color ntc('choice_ch1_1', 'explore', 1)
                         size 15
                         bold (nbd('choice_ch1_1', 'explore', 1))
@@ -495,7 +495,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(1), Start("chapter_1"), NullAction())
 
-                    text "Report to Inspector General":
+                    text t("Report to Inspector General"):
                         color ntc('choice_ch1_2', 'report', 1)
                         size 14
                         bold (nbd('choice_ch1_2', 'report', 1))
@@ -513,7 +513,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(1), Start("chapter_1"), NullAction())
 
-                    text "Stay Silent":
+                    text t("Stay Silent"):
                         color ntc('choice_ch1_2', 'silent', 1)
                         size 16
                         bold (nbd('choice_ch1_2', 'silent', 1))
@@ -576,13 +576,13 @@ screen story_tree():
                         yalign 0.5
                         spacing 14
 
-                        text "CH.02":
+                        text t("CH.02"):
                             color ("#4D518655" if not _finished(2) else "#8B8FCC")
                             size 13
                             bold True
                             yalign 0.5
 
-                        text "THE PRISM REVELATION":
+                        text t("THE PRISM REVELATION"):
                             color chc(2)
                             size 19
                             bold True
@@ -632,7 +632,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(2), Start("chapter_2"), NullAction())
 
-                    text "Trust the Colleague":
+                    text t("Trust the Colleague"):
                         color ntc('choice_ch2_1', 'trust', 2)
                         size 16
                         bold (nbd('choice_ch2_1', 'trust', 2))
@@ -650,7 +650,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(2), Start("chapter_2"), NullAction())
 
-                    text "Work Alone":
+                    text t("Work Alone"):
                         color ntc('choice_ch2_1', 'alone', 2)
                         size 16
                         bold (nbd('choice_ch2_1', 'alone', 2))
@@ -730,7 +730,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(2), Start("chapter_2"), NullAction())
 
-                    text "Copy Files to Drive":
+                    text t("Copy Files to Drive"):
                         color ntc('choice_ch2_2', 'copy', 2)
                         size 16
                         bold (nbd('choice_ch2_2', 'copy', 2))
@@ -748,7 +748,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(2), Start("chapter_2"), NullAction())
 
-                    text "Take Notes Only":
+                    text t("Take Notes Only"):
                         color ntc('choice_ch2_2', 'notes', 2)
                         size 16
                         bold (nbd('choice_ch2_2', 'notes', 2))
@@ -812,13 +812,13 @@ screen story_tree():
                         yalign 0.5
                         spacing 14
 
-                        text "CH.03":
+                        text t("CH.03"):
                             color ("#4D518655" if not _finished(3) else "#8B8FCC")
                             size 13
                             bold True
                             yalign 0.5
 
-                        text "THE CONTACT":
+                        text t("THE CONTACT"):
                             color chc(3)
                             size 19
                             bold True
@@ -874,7 +874,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(3), Start("chapter_3"), NullAction())
 
-                    text "PGP + Tor\nSecure Channel":
+                    text t("PGP + Tor\nSecure Channel"):
                         color ntc('choice_ch3_1', 'pgp', 3)
                         size 14
                         bold (nbd('choice_ch3_1', 'pgp', 3))
@@ -893,7 +893,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(3), Start("chapter_3"), NullAction())
 
-                    text "Public Email\n(Greenwald)":
+                    text t("Public Email\n(Greenwald)"):
                         color ntc('choice_ch3_1', 'email', 3)
                         size 14
                         bold (nbd('choice_ch3_1', 'email', 3))
@@ -912,7 +912,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(3), Start("chapter_3"), NullAction())
 
-                    text "Wait for\nSafer Moment":
+                    text t("Wait for\nSafer Moment"):
                         color ntc('choice_ch3_1', 'wait', 3)
                         size 14
                         bold (nbd('choice_ch3_1', 'wait', 3))
@@ -1005,7 +1005,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(3), Start("chapter_3"), NullAction())
 
-                    text "Tell Everything":
+                    text t("Tell Everything"):
                         color ntc('choice_ch3_2', 'full', 3)
                         size 15
                         bold (nbd('choice_ch3_2', 'full', 3))
@@ -1023,7 +1023,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(3), Start("chapter_3"), NullAction())
 
-                    text "Share Partially":
+                    text t("Share Partially"):
                         color ntc('choice_ch3_2', 'partial', 3)
                         size 15
                         bold (nbd('choice_ch3_2', 'partial', 3))
@@ -1041,7 +1041,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(3), Start("chapter_3"), NullAction())
 
-                    text "Be Vague":
+                    text t("Be Vague"):
                         color ntc('choice_ch3_2', 'vague', 3)
                         size 15
                         bold (nbd('choice_ch3_2', 'vague', 3))
@@ -1110,13 +1110,13 @@ screen story_tree():
                         yalign 0.5
                         spacing 14
 
-                        text "CH.04":
+                        text t("CH.04"):
                             color ("#4D518655" if not _finished(4) else "#8B8FCC")
                             size 13
                             bold True
                             yalign 0.5
 
-                        text "THE ESCAPE":
+                        text t("THE ESCAPE"):
                             color chc(4)
                             size 19
                             bold True
@@ -1166,7 +1166,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(4), Start("chapter_4"), NullAction())
 
-                    text "Hotel Wi-Fi\nFast but exposed":
+                    text t("Hotel Wi-Fi\nFast but exposed"):
                         color ntc('choice_ch4_1', 'hotel', 4)
                         size 13
                         bold (nbd('choice_ch4_1', 'hotel', 4))
@@ -1185,7 +1185,7 @@ screen story_tree():
                     padding (10, 5)
                     action If(_finished(4), Start("chapter_4"), NullAction())
 
-                    text "Mobile hotspot\nSlower but safer":
+                    text t("Mobile hotspot\nSlower but safer"):
                         color ntc('choice_ch4_1', 'mobile', 4)
                         size 13
                         bold (nbd('choice_ch4_1', 'mobile', 4))
@@ -1242,7 +1242,7 @@ screen story_tree():
                     background "#171B31"
                     padding (12, 0)
 
-                    text "ESCAPE ROUTE DECISION":
+                    text t("ESCAPE ROUTE DECISION"):
                         color chc(4)
                         size 15
                         bold True
@@ -1312,7 +1312,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(4), Start("chapter_4"), NullAction())
 
-                    text "Airport dash\nFast but messy":
+                    text t("Airport dash\nFast but messy"):
                         color ntc('choice_ch4_2', 'airport', 4)
                         size 13
                         bold (nbd('choice_ch4_2', 'airport', 4))
@@ -1331,7 +1331,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(4), Start("chapter_4"), NullAction())
 
-                    text "Russian consulate\nShelter with strings":
+                    text t("Russian consulate\nShelter with strings"):
                         color ntc('choice_ch4_2', 'russia', 4)
                         size 12
                         bold (nbd('choice_ch4_2', 'russia', 4))
@@ -1350,7 +1350,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(4), Start("chapter_4"), NullAction())
 
-                    text "Ecuador via Moscow\nStrong asylum play":
+                    text t("Ecuador via Moscow\nStrong asylum play"):
                         color ntc('choice_ch4_2', 'ecuador', 4)
                         size 12
                         bold (nbd('choice_ch4_2', 'ecuador', 4))
@@ -1369,7 +1369,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(4), Start("chapter_4"), NullAction())
 
-                    text "European embassy\nLegal, but unlikely":
+                    text t("European embassy\nLegal, but unlikely"):
                         color ntc('choice_ch4_2', 'embassy', 4)
                         size 12
                         bold (nbd('choice_ch4_2', 'embassy', 4))
@@ -1388,7 +1388,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(4), Start("chapter_4"), NullAction())
 
-                    text "Stay in Hong Kong\nPrincipled, but risky":
+                    text t("Stay in Hong Kong\nPrincipled, but risky"):
                         color ntc('choice_ch4_2', 'stay', 4)
                         size 12
                         bold (nbd('choice_ch4_2', 'stay', 4))
@@ -1435,13 +1435,13 @@ screen story_tree():
                         yalign 0.5
                         spacing 14
 
-                        text "CH.05":
+                        text t("CH.05"):
                             color ("#4D518655" if not _finished(5) else "#8B8FCC")
                             size 13
                             bold True
                             yalign 0.5
 
-                        text "PERMANENT RECORD":
+                        text t("PERMANENT RECORD"):
                             color chc(5)
                             size 19
                             bold True
@@ -1497,7 +1497,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(5), Start("chapter_5"), NullAction())
 
-                    text "Encourage\nNew Leak":
+                    text t("Encourage\nNew Leak"):
                         color ntc('choice_ch5_1', 'encourage', 5)
                         size 14
                         bold (nbd('choice_ch5_1', 'encourage', 5))
@@ -1516,7 +1516,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(5), Start("chapter_5"), NullAction())
 
-                    text "Advise Caution\n(Official Channels)":
+                    text t("Advise Caution\n(Official Channels)"):
                         color ntc('choice_ch5_1', 'caution', 5)
                         size 13
                         bold (nbd('choice_ch5_1', 'caution', 5))
@@ -1535,7 +1535,7 @@ screen story_tree():
                     padding (8, 5)
                     action If(_finished(5), Start("chapter_5"), NullAction())
 
-                    text "Refuse —\nToo High a Price":
+                    text t("Refuse —\nToo High a Price"):
                         color ntc('choice_ch5_1', 'refuse', 5)
                         size 13
                         bold (nbd('choice_ch5_1', 'refuse', 5))
@@ -1605,7 +1605,7 @@ screen story_tree():
                         yalign 0.5
                         spacing 20
 
-                        text "// ENDING:":
+                        text t("// ENDING:"):
                             color ("#8B8FCC" if _ch() >= 5 else "#40466D")
                             size 18
                             bold True
@@ -1617,7 +1617,7 @@ screen story_tree():
                             bold True
                             yalign 0.5
 
-                        text "//":
+                        text t("//"):
                             color ("#8B8FCC" if _ch() >= 5 else "#40466D")
                             size 18
                             bold True
@@ -1633,7 +1633,7 @@ screen story_tree():
         yoffset -24
         spacing 18
 
-        textbutton "RETURN":
+        textbutton t("RETURN"):
             background "#002922"
             hover_background "#006654"
             text_color "#EAF4F1"
@@ -1645,7 +1645,7 @@ screen story_tree():
             text_xalign 0.5
             action If(main_menu, true=ShowMenu("main_menu"), false=ShowMenu("pause_hub"))
 
-        textbutton "MOD MENU":
+        textbutton t("MOD MENU"):
             background "#171B31"
             hover_background "#4D5186"
             text_color "#EAF4F1"

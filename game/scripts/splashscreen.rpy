@@ -27,6 +27,9 @@ label splashscreen:
     return
 
 label show_loading_screen:
+    $ show_hud = False
+    $ quick_menu = False
+    window hide
     # This label can be called between chapters
     scene black
     with dissolve

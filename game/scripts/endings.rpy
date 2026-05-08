@@ -69,9 +69,9 @@ label ending_hero:
     narrator_voice "In boardrooms and bedrooms, in parliaments and classrooms, people are asking the question he wanted them to ask: {i}Who is watching the watchers?{/i}"
 
     call screen ending_screen(
-        title="// ENDING 1: THE HERO //",
+        title=t("// ENDING 1: THE HERO //"),
         color="#00FFD1",
-        description="You successfully leaked all documents, escaped to safety, and your disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed.",
+        description=t("You successfully leaked all documents, escaped to safety, and your disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed."),
         lessons=[
             "Strong encryption (AES-256, PGP) is the foundation of digital privacy. Without it, no communication is truly private.",
             "Operational Security (OpSec) is not optional — every step in the chain must be secured, from encrypted channels to physical device security.",
@@ -109,9 +109,9 @@ label ending_fugitive:
     narrator_voice "You will never eat at your favorite diner again. Never see your family without a screen between you. The price of partial truth."
 
     call screen ending_screen(
-        title="// ENDING 2: THE FUGITIVE //",
+        title=t("// ENDING 2: THE FUGITIVE //"),
         color="#FFD700",
-        description="You leaked crucial files and escaped, but live in permanent exile. The truth reached the public, but gaps in your operational security meant some evidence was lost. The surveillance debate continues, but reform is slow.",
+        description=t("You leaked crucial files and escaped, but live in permanent exile. The truth reached the public, but gaps in your operational security meant some evidence was lost. The surveillance debate continues, but reform is slow."),
         lessons=[
             "VPNs encrypt your traffic, but they don't make you invisible. Your VPN provider can still see your activity — trust matters.",
             "Metadata (who you contacted, when, from where) can be as revealing as message content. Stripping metadata from files before sharing is essential.",
@@ -149,9 +149,9 @@ label ending_imprisoned:
     narrator_voice "The truth dies in a cell. And the machine keeps running."
 
     call screen ending_screen(
-        title="// ENDING 3: IMPRISONED //",
+        title=t("// ENDING 3: IMPRISONED //"),
         color="#FF2D55",
-        description="Your identity was exposed before you could escape. You were arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed.",
+        description=t("Your identity was exposed before you could escape. You were arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed."),
         lessons=[
             "IP tracking and digital forensics can identify you in minutes if you leave traces. Always use Tor and VPNs together on untrusted networks.",
             "The Espionage Act of 1917 doesn't distinguish between whistleblowers and spies — legal protections for digital whistleblowers remain weak.",
@@ -189,9 +189,9 @@ label ending_silenced:
     narrator_voice "The greatest surveillance apparatus in history continues to grow, invisible and unchallenged."
 
     call screen ending_screen(
-        title="// ENDING 4: SILENCED //",
+        title=t("// ENDING 4: SILENCED //"),
         color="#FF2D55",
-        description="NSA internal monitors detected your suspicious behavior before you could act. Your clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret.",
+        description=t("NSA internal monitors detected your suspicious behavior before you could act. Your clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret."),
         lessons=[
             "Network monitoring tools like intrusion detection systems (IDS) track access patterns. Unusual behavior triggers automated alerts.",
             "Insider threat programs use behavioral analytics to detect anomalies — accessing files outside your clearance level is immediately flagged.",
@@ -229,9 +229,9 @@ label ending_betrayed:
     narrator_voice "It was as if you never existed at all."
 
     call screen ending_screen(
-        title="// ENDING 5: BETRAYED //",
+        title=t("// ENDING 5: BETRAYED //"),
         color="#FF2D55",
-        description="Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. You vanished without a trace.",
+        description=t("Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. You vanished without a trace."),
         lessons=[
             "Man-in-the-middle attacks can compromise even encrypted channels if you don't verify the other party's identity through key fingerprints.",
             "Trust verification is critical — in cryptography, you must independently verify public keys through a separate channel, not just accept them.",
@@ -300,7 +300,7 @@ screen ending_screen(title, color, description, lessons):
             vbox:
                 xalign 0.5
                 spacing 10
-                text "// MISSION COMPLETE //" color "#7A8A99" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
+                text t("// MISSION COMPLETE //") color "#7A8A99" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
                 text title:
                     color color
                     size 72
@@ -342,8 +342,8 @@ screen ending_screen(title, color, description, lessons):
                         spacing 15
                         hbox:
                             xfill True
-                            text "MISSION METRICS" color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
-                            text "[config.version]" color "#3A4A55" size 12 font "DejaVuSans.ttf" xalign 1.0
+                            text t("MISSION METRICS") color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
+                            text t("[config.version]") color "#3A4A55" size 12 font "DejaVuSans.ttf" xalign 1.0
                         
                         null height 10
                         
@@ -352,8 +352,8 @@ screen ending_screen(title, color, description, lessons):
                             spacing 4
                             hbox:
                                 xfill True
-                                text "OPERATIONAL KNOWLEDGE" color "#7A8A99" size 12 font "DejaVuSans.ttf"
-                                text "[knowledge_score]/10" color "#00FFD1" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("OPERATIONAL KNOWLEDGE") color "#7A8A99" size 12 font "DejaVuSans.ttf"
+                                text t("[knowledge_score]/10") color "#00FFD1" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
                             frame:
                                 xfill True ysize 8
                                 background "#1A2530"
@@ -366,8 +366,8 @@ screen ending_screen(title, color, description, lessons):
                             spacing 4
                             hbox:
                                 xfill True
-                                text "NSA SUSPICION LEVEL" color "#7A8A99" size 12 font "DejaVuSans.ttf"
-                                text "[suspicion_level]/5" color "#FF2D55" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("NSA SUSPICION LEVEL") color "#7A8A99" size 12 font "DejaVuSans.ttf"
+                                text t("[suspicion_level]/5") color "#FF2D55" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
                             frame:
                                 xfill True ysize 8
                                 background "#1A2530"
@@ -384,32 +384,32 @@ screen ending_screen(title, color, description, lessons):
                         # Toggle Stats
                         hbox:
                             xfill True
-                            text "IDENTITY STATUS:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("IDENTITY STATUS:") color "#7A8A99" size 14 font "DejaVuSans.ttf"
                             if identity_exposed:
-                                text "EXPOSED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("EXPOSED") color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
                             else:
-                                text "SECURE" color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("SECURE") color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
                         
                         hbox:
                             xfill True
-                            text "EVIDENCE STATUS:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("EVIDENCE STATUS:") color "#7A8A99" size 14 font "DejaVuSans.ttf"
                             if evidence_secured:
-                                text "ENCRYPTED & SENT" color "#00FFD1" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("ENCRYPTED & SENT") color "#00FFD1" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
                             else:
-                                text "LOST/RECOVERED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("LOST/RECOVERED") color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
 
                         hbox:
                             xfill True
-                            text "ESCAPE ROUTE:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("ESCAPE ROUTE:") color "#7A8A99" size 14 font "DejaVuSans.ttf"
                             if escape_successful:
-                                text "SUCCESSFUL" color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("SUCCESSFUL") color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
                             else:
-                                text "COMPROMISED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("COMPROMISED") color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
 
                         hbox:
                             xfill True
-                            text "CONTACTS SECURED:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
-                            text "[contacts_secured]" color "#FFD700" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                            text t("CONTACTS SECURED:") color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("[contacts_secured]") color "#FFD700" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
 
                 # Right Side: Post-Mortem Analysis
                 frame:
@@ -420,7 +420,7 @@ screen ending_screen(title, color, description, lessons):
                     
                     vbox:
                         spacing 15
-                        text "POST-MORTEM ANALYSIS" color "#FFD700" size 14 bold True font "DejaVuSans.ttf"
+                        text t("POST-MORTEM ANALYSIS") color "#FFD700" size 14 bold True font "DejaVuSans.ttf"
                         
                         null height 5
                         
@@ -442,7 +442,7 @@ screen ending_screen(title, color, description, lessons):
                 spacing 60
                 at slide_up_delay(1.6)
                 
-                textbutton "> REBOOT SYSTEM (RESTART)":
+                textbutton t("> REBOOT SYSTEM (RESTART)"):
                     background "#1A2530"
                     hover_background "#00FFD1"
                     text_color "#00FFD1"
@@ -453,7 +453,7 @@ screen ending_screen(title, color, description, lessons):
                     padding (40, 16)
                     action [Return("restart")]
 
-                textbutton "> TERMINATE SESSION (EXIT)":
+                textbutton t("> TERMINATE SESSION (EXIT)"):
                     background "#251A20"
                     hover_background "#FF2D55"
                     text_color "#FF2D55"
