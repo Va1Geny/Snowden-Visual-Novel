@@ -603,7 +603,7 @@ style ct_learn_body:
     line_leading 5
 
 style terminal_screen_bg:
-    background "#1a1a2e"
+    background "bg_kali_net"
 
 style terminal_text:
     font FONT_MONO

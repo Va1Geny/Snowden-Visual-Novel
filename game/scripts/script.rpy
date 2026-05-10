@@ -1474,7 +1474,7 @@ label chapter_5:
     $ current_chapter = 5
     $ persistent.tree_ch_reached = max(getattr(persistent, 'tree_ch_reached', 0), 5)
 
-    call screen chapter_transition(chapter_num=5, codename="NO WAY BACK", location="Sheremetyevo Airport, Moscow", date="June 23, 2013", time_str="18:05 MSK", clearance="DECLASSIFIED // PUBLIC RECORD", description="The documents are published. The world knows.\nSnowden's passport has been revoked mid-flight.\nStranded in transit. The final choice:\nasylum, silence, or surrender.", status="ACTIVE", bg_image="bg_moscow_airport")
+    call screen chapter_transition(chapter_num=5, codename="NO WAY BACK", location="Sheremetyevo Airport, Moscow", date="June 23, 2013", time_str="18:05 MSK", clearance="DECLASSIFIED // PUBLIC RECORD", description="The documents are published. The world knows.\nSnowden's passport has been revoked mid-flight.\nStranded in transit. The final choice:\nasylum, silence, or surrender.", status="ACTIVE", bg_image="bg_hk_airport")
     $ show_hud = True
     $ quick_menu = True
 

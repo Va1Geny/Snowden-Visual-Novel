@@ -656,6 +656,10 @@ image bg_hong_kong_terminal:
     "backgrounds/chapter_3/bg_hong_kong_terminal.png"
     xysize (1920, 1080)
 
+image bg_kali_net:
+    "backgrounds/chapter_3/kali-net.jpg"
+    xysize (1920, 1080)
+
 image bg_hk_airport:
     "backgrounds/chapter_4/bg_hk_airport.png"
     xysize (1920, 1080)
