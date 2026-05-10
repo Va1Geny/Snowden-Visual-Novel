@@ -35,12 +35,19 @@ init python:
             self.text = {}
             self.templates = {}
 
+        def _sync_voice_mixer(self, lang):
+            try:
+                preferences.set_mute("voice", lang is not None)
+            except Exception:
+                pass
+
         def current_language(self):
             if not store.translation_language_initialized:
                 if not hasattr(persistent, "translation_language"):
                     persistent.translation_language = None
                 store.translation_language = persistent.translation_language
                 store.translation_language_initialized = True
+                self._sync_voice_mixer(store.translation_language)
             return store.translation_language
 
         def revision(self):
@@ -53,7 +60,11 @@ init python:
             persistent.translation_language = lang
             renpy.save_persistent()
             self.preload_language(lang, force=True)
+            self._sync_voice_mixer(lang)
             renpy.restart_interaction()
+
+        def english_voice_enabled(self):
+            return self.current_language() is None
 
         def preload_language(self, lang, force=False):
             if not lang:
@@ -255,5 +266,8 @@ init python:
 
     def set_translation_language(lang):
         return translation_service.set_language(lang)
+
+    def should_play_english_voice():
+        return translation_service.english_voice_enabled()
 
     config.say_menu_text_filter = translation_service.say_menu_text_filter

@@ -1,11 +1,78 @@
 import argparse
 import asyncio
+import hashlib
+import importlib.util
 import json
 import re
+import site
+import sys
 from collections import defaultdict
 from pathlib import Path
 
-import edge_tts
+TOOLS_DIR = Path(__file__).resolve().parent
+if str(TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(TOOLS_DIR))
+
+USER_SITE_DIR = Path(r"C:\Users\Богдан\AppData\Roaming\Python\Python314\site-packages")
+if USER_SITE_DIR.exists() and str(USER_SITE_DIR) not in sys.path:
+    sys.path.insert(0, str(USER_SITE_DIR))
+
+
+def load_edge_tts():
+    try:
+        import edge_tts as module
+        if hasattr(module, "Communicate") and hasattr(module, "list_voices"):
+            return module
+    except Exception:
+        pass
+
+    vendor_init = TOOLS_DIR / "vendor_edge_tts" / "__init__.py"
+    if vendor_init.exists():
+        spec = importlib.util.spec_from_file_location(
+            "edge_tts",
+            vendor_init,
+            submodule_search_locations=[str(vendor_init.parent)],
+        )
+        if spec and spec.loader:
+            module = importlib.util.module_from_spec(spec)
+            sys.modules["edge_tts"] = module
+            spec.loader.exec_module(module)
+            if hasattr(module, "Communicate") and hasattr(module, "list_voices"):
+                return module
+
+    candidate_roots = []
+    try:
+        candidate_roots.extend(site.getsitepackages())
+    except Exception:
+        pass
+    try:
+        candidate_roots.append(site.getusersitepackages())
+    except Exception:
+        pass
+
+    for root in candidate_roots:
+        init_path = Path(root) / "edge_tts" / "__init__.py"
+        if not init_path.exists():
+            continue
+
+        spec = importlib.util.spec_from_file_location(
+            "edge_tts",
+            init_path,
+            submodule_search_locations=[str(init_path.parent)],
+        )
+        if not spec or not spec.loader:
+            continue
+
+        module = importlib.util.module_from_spec(spec)
+        sys.modules["edge_tts"] = module
+        spec.loader.exec_module(module)
+        if hasattr(module, "Communicate") and hasattr(module, "list_voices"):
+            return module
+
+    raise ImportError("Unable to load edge_tts with Communicate/list_voices.")
+
+
+edge_tts = load_edge_tts()
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -21,15 +88,20 @@ SOURCE_FILES = [
 VOICE_PROFILES = {
     "centered": {"voice": "en-US-BrianNeural", "tag": "narration"},
     "narrator_voice": {"voice": "en-US-BrianNeural", "tag": "narration"},
-    "im": {"voice": "en-US-AndrewNeural", "tag": "internal_monologue", "rate": "-8%"},
-    "e": {"voice": "en-US-GuyNeural", "tag": "edward"},
-    "greenwald": {"voice": "en-US-ChristopherNeural", "tag": "greenwald"},
-    "poitras": {"voice": "en-US-JennyNeural", "tag": "poitras"},
-    "nsa_chief": {"voice": "en-US-BrianNeural", "tag": "nsa_chief", "pitch": "-4Hz"},
-    "supervisor": {"voice": "en-US-AndrewNeural", "tag": "supervisor"},
-    "colleague": {"voice": "en-US-EricNeural", "tag": "colleague"},
-    "russian_official": {"voice": "en-US-RogerNeural", "tag": "russian_official", "pitch": "-6Hz"},
-    "sys": {"voice": "en-US-SteffanNeural", "tag": "system", "rate": "-12%"},
+    "im": {
+        "voice": "en-US-AndrewMultilingualNeural",
+        "tag": "internal_monologue",
+        "rate": "-4%",
+        "pitch": "-6Hz",
+        "volume": "-18%",
+    },
+    "e": {"voice": "en-US-BrianMultilingualNeural", "tag": "edward"},
+    "greenwald": {"voice": "en-US-AndrewNeural", "tag": "greenwald", "rate": "-2%"},
+    "poitras": {"voice": "en-US-EmmaMultilingualNeural", "tag": "poitras"},
+    "nsa_chief": {"voice": "en-GB-ThomasNeural", "tag": "nsa_chief", "pitch": "-4Hz"},
+    "supervisor": {"voice": "en-GB-RyanNeural", "tag": "supervisor", "pitch": "-2Hz", "rate": "-3%"},
+    "colleague": {"voice": "en-US-BrianNeural", "tag": "colleague", "rate": "+2%"},
+    "russian_official": {"voice": "ru-RU-DmitryNeural", "tag": "russian_official", "pitch": "+1Hz", "rate": "+2%"},
 }
 
 TAG_RE = re.compile(r"\{[^}]*\}")
@@ -41,11 +113,64 @@ def clean_text(text: str) -> str:
     text = TAG_RE.sub("", text)
     text = text.replace("[[", "[").replace("]]", "]")
     text = text.replace("\\\"", "\"")
+    text = text.replace("\\n", " ")
     text = text.replace("\n", " ")
     text = text.replace("—", " - ")
     text = text.replace("–", " - ")
     text = WHITESPACE_RE.sub(" ", text).strip()
     return text
+
+
+def adjust_percent(value: str, delta: int) -> str:
+    number = int(value.rstrip("%"))
+    updated = number + delta
+    return "{:+d}%".format(updated)
+
+
+def adjust_hz(value: str, delta: int) -> str:
+    number = int(value.rstrip("Hz"))
+    updated = number + delta
+    return "{:+d}Hz".format(updated)
+
+
+def apply_emotion(profile: dict, text: str, speaker: str) -> tuple[str, str, str]:
+    rate = profile.get("rate", "+0%")
+    pitch = profile.get("pitch", "+0Hz")
+    volume = profile.get("volume", "+0%")
+
+    if speaker in {"centered", "narrator_voice"}:
+        return rate, pitch, volume
+
+    exclamations = text.count("!")
+    questions = text.count("?")
+    trailing_ellipsis = "..." in text
+    upper_ratio = 0.0
+
+    letters = [ch for ch in text if ch.isalpha()]
+    if letters:
+        upper_ratio = sum(1 for ch in letters if ch.isupper()) / float(len(letters))
+
+    if exclamations:
+        rate = adjust_percent(rate, min(8, exclamations * 3))
+        pitch = adjust_hz(pitch, min(8, exclamations * 2))
+        volume = adjust_percent(volume, min(8, exclamations * 2))
+
+    if questions:
+        pitch = adjust_hz(pitch, min(6, questions * 2))
+        rate = adjust_percent(rate, min(4, questions * 1))
+
+    if trailing_ellipsis:
+        rate = adjust_percent(rate, -4)
+        volume = adjust_percent(volume, -4)
+
+    if upper_ratio > 0.55 or "WARNING:" in text or "ALERT:" in text:
+        pitch = adjust_hz(pitch, -2)
+        volume = adjust_percent(volume, 6)
+
+    if len(text.split()) <= 5 and not exclamations and not questions:
+        rate = adjust_percent(rate, 2)
+
+    return rate, pitch, volume
 
 
 def build_entries():
@@ -70,9 +195,22 @@ def build_entries():
             if not text:
                 continue
 
-            base_name = f"{file_path.stem}_{line_number:04d}_{speaker}.mp3"
-            rel_path = Path("audio") / "voice" / "en" / base_name
             profile = VOICE_PROFILES[speaker]
+            rate, pitch, volume = apply_emotion(profile, text, speaker)
+            signature = hashlib.sha1(
+                "|".join(
+                    [
+                        speaker,
+                        profile["voice"],
+                        rate,
+                        pitch,
+                        volume,
+                        text,
+                    ]
+                ).encode("utf-8")
+            ).hexdigest()[:10]
+            base_name = f"{file_path.stem}_{line_number:04d}_{speaker}_{signature}.mp3"
+            rel_path = Path("audio") / "voice" / "en" / base_name
 
             entries.append(
                 {
@@ -82,8 +220,9 @@ def build_entries():
                     "text": text,
                     "voice": profile["voice"],
                     "tag": profile["tag"],
-                    "rate": profile.get("rate", "+0%"),
-                    "pitch": profile.get("pitch", "+0Hz"),
+                    "rate": rate,
+                    "pitch": pitch,
+                    "volume": volume,
                     "relative_audio_path": rel_path.as_posix(),
                     "absolute_audio_path": str((GAME_DIR / rel_path).resolve()),
                 }
@@ -102,6 +241,7 @@ async def synthesize_entry(entry, force=False):
         text=entry["text"],
         voice=entry["voice"],
         rate=entry["rate"],
+        volume=entry["volume"],
         pitch=entry["pitch"],
     )
     await communicate.save(str(out_path))
@@ -137,7 +277,10 @@ def cleanup_stale_audio(entries):
 
     for path in VOICE_DIR.glob("*.mp3"):
         if path.resolve() not in expected:
-            path.unlink()
+            try:
+                path.unlink()
+            except PermissionError:
+                print(f"Skipping locked stale audio: {path.name}")
 
 
 def inject_voice_calls(entries):
@@ -163,8 +306,9 @@ def inject_voice_calls(entries):
                 entry = src_entries[entry_index]
 
                 if speaker == entry["speaker"] and source_text == entry["text"]:
-                    helper = f'{match.group("indent")}voice "{entry["relative_audio_path"]}"  {AUTO_MARKER}'
-                    rebuilt.append(helper)
+                    indent = match.group("indent")
+                    rebuilt.append(f"{indent}if should_play_english_voice():  {AUTO_MARKER}")
+                    rebuilt.append(f'{indent}    voice "{entry["relative_audio_path"]}"  {AUTO_MARKER}')
                     entry_index += 1
 
             rebuilt.append(line)
