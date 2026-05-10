@@ -8,7 +8,6 @@ label splashscreen:
     with dissolve
     return
 
-
 label show_loading_screen:
     $ show_hud = False
     $ quick_menu = False

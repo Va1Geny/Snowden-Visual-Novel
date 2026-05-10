@@ -1,10 +1,5 @@
-################################################################################
-## MASTER PROMPT IMPLEMENTATION — CHAPTER TRANSITION & PRE-MINIGAME SCREENS
-## Project: "Classified: The Snowden Files"
-################################################################################
-
 init python:
-    # ── DESIGN SYSTEM CONSTANTS ─────────────────────────────────────────────
+
     FONT_MONO  = "fonts/ShareTechMono-Regular.ttf"
     FONT_BODY  = "fonts/Rajdhani-Regular.ttf"
 
@@ -17,13 +12,9 @@ init python:
     TEXT_PRIMARY = "#E8E8E8"
     TEXT_DIM     = "#7A8A99"
 
-    # Fallback to default if fonts not found (since they weren't in fonts/ dir)
     if not renpy.loadable(FONT_MONO): FONT_MONO = "DejaVuSans.ttf"
     if not renpy.loadable(FONT_BODY): FONT_BODY = "DejaVuSans.ttf"
 
-    # ── SHARED COMPONENTS ────────────────────────────────────────────────────
-    
-    # Minimal ScanlineOverlay in case it isn't defined globally
     if not "ScanlineOverlay" in globals():
         class ScanlineOverlay(renpy.Displayable):
             def __init__(self, **kwargs):
@@ -32,7 +23,6 @@ init python:
                 rv = renpy.Render(width, height)
                 return rv
 
-# ── TRANSFORMS ────────────────────────────────────────────────────────────
 transform trans_fade_in(t):
     alpha 0.0
     linear t alpha 1.0
@@ -49,7 +39,6 @@ transform trans_slide_fade(xoff, end_xoff, t):
     parallel:
         linear t alpha 1.0
 
-# ── STYLES ────────────────────────────────────────────────────────────────
 style transition_btn is button:
     background Solid("#003A3A")
     hover_background Solid("#00FFD1")
@@ -72,18 +61,17 @@ style transition_btn_left is transition_btn:
 style transition_btn_left_text is transition_btn_text:
     xalign 0.5
 
-# ── SHARED SCREENS ────────────────────────────────────────────────────────
 screen CornerBrackets(screen_w, screen_h, bracket_size, c_color, margin):
-    # Top Left
+
     add Solid(c_color) xpos margin ypos margin xsize bracket_size ysize 1
     add Solid(c_color) xpos margin ypos margin xsize 1 ysize bracket_size
-    # Top Right
+
     add Solid(c_color) xpos screen_w-margin-bracket_size ypos margin xsize bracket_size ysize 1
     add Solid(c_color) xpos screen_w-margin-1 ypos margin xsize 1 ysize bracket_size
-    # Bottom Left
+
     add Solid(c_color) xpos margin ypos screen_h-margin-1 xsize bracket_size ysize 1
     add Solid(c_color) xpos margin ypos screen_h-margin-bracket_size xsize 1 ysize bracket_size
-    # Bottom Right
+
     add Solid(c_color) xpos screen_w-margin-bracket_size ypos screen_h-margin-1 xsize bracket_size ysize 1
     add Solid(c_color) xpos screen_w-margin-1 ypos screen_h-margin-bracket_size xsize 1 ysize bracket_size
 
@@ -97,10 +85,6 @@ screen DifficultyBar(level, max_level=5):
             else:
                 add Solid("#1A2A3A") xsize 28 ysize 10
 
-
-################################################################################
-## SCREEN 1: CHAPTER TRANSITION
-################################################################################
 screen chapter_transition(chapter_num, codename, location, date, time_str, clearance, description, status, bg_image):
     default t_bg = renpy.variant("reduces_motion")
     default t_deco = renpy.variant("reduces_motion")
@@ -126,21 +110,19 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
             else:
                 if not t_div_bot:
                     timer 0.01 action SetScreenVariable("t_div_bot", True)
-                
+
         if t_div_bot:
             timer 0.3 action SetScreenVariable("t_meta", True)
             timer 0.5 action SetScreenVariable("t_desc", True)
             timer 0.7 action SetScreenVariable("t_btn", True)
 
-    # Layer 1
     if t_bg:
         fixed:
             at trans_fade_in(0.6)
             add bg_image
-            add Solid("#000000B8") # 0.72 alpha
+            add Solid("#000000B8")
             add ScanlineOverlay()
 
-    # Layer 2
     if t_deco:
         fixed:
             at trans_fade_in(0.4)
@@ -167,13 +149,12 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
 
             use CornerBrackets(1920, 1080, 40, "#00FFD166", 24)
 
-    # Layer 3
     vbox:
         xalign 0.5
         yalign 0.48
         xsize 900
         spacing 24
-            
+
         if t_chap:
             hbox:
                 xalign 0.5
@@ -184,7 +165,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                     size 14
                     color TEXT_DIM
                     yalign 0.5
-                
+
                 frame:
                     yalign 0.5
                     padding (10, 4)
@@ -194,7 +175,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                         background Solid("#FFD70022")
                     else:
                         background Solid("#3A4A5522")
-                        
+
                     text status:
                         font FONT_MONO
                         size 12
@@ -241,7 +222,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                 spacing 120
                 xalign 0.5
                 at trans_fade_in(0.3)
-                
+
                 vbox:
                     spacing 16
                     vbox:
@@ -266,7 +247,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                             size 16
                             color TEXT_PRIMARY
                             xalign 0.5 text_align 0.5
-                            
+
                 vbox:
                     spacing 16
                     vbox:
@@ -315,15 +296,11 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
         else:
             null height 60
 
-
-################################################################################
-## SCREEN 2: MINIGAME BRIEFING
-################################################################################
 screen minigame_briefing(challenge_title, subtitle, mission_id, classification, challenge_type, estimated_time, difficulty, difficulty_label, succeed_reward, fail_penalty, learn_concept, briefing_text, controls):
     modal True
     on "show" action [SetVariable("quick_menu", False), SetVariable("show_hud", False)]
     on "hide" action [SetVariable("quick_menu", True), SetVariable("show_hud", True)]
-    
+
     default t_left = renpy.variant("reduces_motion")
     default t_right = renpy.variant("reduces_motion")
     default t_content = renpy.variant("reduces_motion")
@@ -345,7 +322,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
             else:
                 if not t_sub:
                     timer 0.01 action SetScreenVariable("t_sub", True)
-                    
+
         if t_sub:
             timer 0.2 action SetScreenVariable("t_brief", True)
             timer 0.5 action SetScreenVariable("t_btn", True)
@@ -374,12 +351,12 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                     size 13
                     color CYAN
                 null height 16
-                
+
                 if t_content:
                     vbox:
                         spacing 12
                         at trans_fade_in(0.2)
-                        
+
                         vbox:
                             text "MISSION ID":
                                 font FONT_MONO
@@ -389,7 +366,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 font FONT_MONO
                                 size 15
                                 color TEXT_PRIMARY
-                        
+
                         vbox:
                             text "CLASSIFICATION":
                                 font FONT_MONO
@@ -503,14 +480,14 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                         at trans_fade_in(0.2)
                 else:
                     null height 22
-                    
+
                 null height 24
-                
+
                 if t_sub:
                     add Solid("#3A4A55") xsize 840 ysize 1
                 else:
                     null height 1
-                    
+
                 null height 24
 
                 if t_sub:
@@ -535,12 +512,12 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                     null height 200
 
                 null height 24
-                
+
                 if t_brief:
                     add Solid("#1A2A3A") xsize 840 ysize 1
                 else:
                     null height 1
-                    
+
                 null height 20
 
                 if t_btn:
@@ -564,7 +541,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                     hbox:
                         spacing 20
                         at trans_fade_in(0.3)
-                        
+
                         textbutton "[[ BEGIN CHALLENGE ]":
                             xsize 340
                             style "transition_btn_left"

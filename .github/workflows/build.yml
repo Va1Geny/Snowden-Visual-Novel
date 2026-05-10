@@ -1,11 +1,5 @@
 on:
   workflow_dispatch:
-    # Disabled until RenPy project is initialized
-    # To re-enable, replace with:
-    # pull_request:
-    #   branches: [main, develop]
-    # push:
-    #   branches: [develop]
 
 jobs:
   build:

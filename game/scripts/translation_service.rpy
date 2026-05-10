@@ -1,8 +1,3 @@
-################################################################################
-## TRANSLATION_SERVICE.RPY - Runtime JSON Translation Layer
-## Classified: The Snowden Files
-################################################################################
-
 init offset = -2
 
 default translation_language = None
@@ -180,7 +175,6 @@ init python:
             if not source:
                 return source
 
-            # Read the revision so Ren'Py screens re-evaluate this function after language changes.
             self.revision()
 
             if lang is None:

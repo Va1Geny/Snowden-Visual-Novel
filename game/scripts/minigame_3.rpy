@@ -1,6 +1,6 @@
 init python:
     import time
-    
+
     class TerminalLine:
         def __init__(self, text, color="#ffffff"):
             self.text = text
@@ -11,11 +11,11 @@ init python:
     class TerminalInputValue(InputValue):
         def get_text(self):
             return pw_game_state["current_input"]
-            
+
         def set_text(self, s):
             pw_game_state["current_input"] = s
             renpy.restart_interaction()
-            
+
         def enter(self):
             res = pw_check_command()
             if res == "EXIT":
@@ -30,12 +30,12 @@ init python:
         "wrong_attempts": 0,
         "score": 0,
         "tab_hint_used": False,
-        "status": "intro", # intro, playing, outputting, learning, report
+        "status": "intro",
         "queued_output": [],
     }
-    
+
     rounds_data = [
-        # Round 1
+
         {
             "intro": [
                 "[*] NSA internal system hash intercepted.",
@@ -83,7 +83,7 @@ init python:
                 "[press ENTER to continue]"
             ]
         },
-        # Round 2
+
         {
             "intro": [
                 "[*] Second hash obtained from same database.",
@@ -137,7 +137,7 @@ init python:
                 "[press ENTER to continue]"
             ]
         },
-        # Round 3
+
         {
             "intro": [
                 "[*] Third hash obtained. This one is different.",
@@ -204,7 +204,7 @@ init python:
 
     def pw_add_line(text, color="#ffffff"):
         pw_game_state["lines"].append(TerminalLine(text, color=color))
-        
+
     def pw_add_line_queued():
         if pw_game_state["queued_output"]:
             pw_add_line(pw_game_state["queued_output"].pop(0))
@@ -226,13 +226,13 @@ init python:
         pw_game_state["tab_hint_used"] = False
         pw_game_state["status"] = "playing"
         pw_game_state["queued_output"] = []
-        
+
         pw_add_line("Initializing hash analysis environment...")
         pw_add_line("Loading wordlists... done.")
         pw_add_line("Loading john the ripper... done.")
         pw_add_line("Session started. Good luck, Snowden.")
         pw_add_line("")
-        
+
         pw_next_round()
 
     def pw_next_round():
@@ -269,7 +269,7 @@ init python:
     def pw_check_command():
         inp = pw_game_state["current_input"].strip()
         pw_game_state["current_input"] = ""
-        
+
         if pw_game_state["status"] == "report":
             if inp.lower() == "exit" or inp == "":
                 return "EXIT"
@@ -280,83 +280,83 @@ init python:
                 pw_add_line("> type 'exit' to continue mission")
                 pw_add_prompt()
             return
-            
+
         if pw_game_state["status"] == "learning":
             pw_game_state["round"] += 1
             pw_game_state["status"] = "playing"
             pw_add_line("")
             pw_next_round()
             return
-            
+
         if pw_game_state["status"] != "playing":
             return
-            
+
         r = pw_game_state["round"]
         if r >= 3:
             return
-            
+
         if inp == "":
             pw_add_line("└─$ ")
             pw_add_prompt()
             return
-            
+
         rd = rounds_data[r]
         variants = rd["acceptable_variants"] + [rd["correct_command"]]
-        
+
         norm_inp = " ".join(inp.split())
-        
+
         is_correct = False
         for var in variants:
             if norm_inp == " ".join(var.split()):
                 is_correct = True
                 break
-                
+
         pw_add_line("└─$ " + inp, color="#00ff00" if is_correct else "#ffffff")
-        
+
         if is_correct:
             if pw_game_state["wrong_attempts"] < 3:
                 pw_game_state["score"] += 1
-                
+
             pw_game_state["status"] = "outputting"
             pw_game_state["queued_output"] = list(rd["success_output"])
         else:
             pw_game_state["wrong_attempts"] += 1
             cmd_base = norm_inp.split()[0] if norm_inp else ""
-            
+
             if cmd_base == "hashcat":
                 pw_add_line("hashcat: command not found. Try john the ripper.", color="#ff0000")
             elif cmd_base == "crack":
                 pw_add_line("crack: command not found.", color="#ff0000")
             else:
                 pw_add_line(f"command not found: {inp}", color="#ff0000")
-                
+
             wa = pw_game_state["wrong_attempts"]
-            
+
             if wa == 2:
                 correct_first_word = rd["correct_command"].split()[0]
                 pw_add_line(f"HINT: try '{correct_first_word} ...'")
             elif wa >= 3:
                 pw_add_line(f"# suggested: {rd['correct_command']}")
-                
+
             pw_add_line("")
             pw_add_prompt()
 
     def pw_autocomplete():
         if pw_game_state["status"] not in ["playing", "report"]:
             return
-            
+
         inp = pw_game_state["current_input"]
         if pw_game_state["status"] == "report":
             if "exit".startswith(inp.lower()) and len(inp) >= 1:
                 pw_game_state["current_input"] = "exit"
             renpy.restart_interaction()
             return
-            
+
         r = pw_game_state["round"]
         if r >= 3: return
-        
+
         target = rounds_data[r]["correct_command"]
-        
+
         if target.startswith(inp) and len(inp) >= 3:
             pw_game_state["current_input"] = target
             pw_game_state["tab_hint_used"] = True
@@ -403,14 +403,14 @@ transform blink_underscore:
 
 screen minigame_3_main():
     style_prefix "terminal"
-    
+
     frame:
         style "terminal_screen_bg"
         xfill True
         yfill True
-        
+
         add "gui/logo.png" alpha 0.07 xalign 0.5 yalign 0.5 zoom 1.0
-        
+
         if pw_game_state["status"] == "outputting":
             timer 0.08 repeat True action If(
                 len(pw_game_state["queued_output"]) > 0,
@@ -420,23 +420,23 @@ screen minigame_3_main():
                     Function(pw_add_learning_lines)
                 ]
             )
-            
+
         timer 0.1 repeat True action Function(pw_refresh_if_needed)
-        
+
         vbox:
             xfill True
             yfill True
-            
+
             viewport id "terminal_vp":
                 yfill True
                 xfill True
                 yinitial 1.0
                 mousewheel True
-                
+
                 vbox:
                     xfill True
                     yalign 1.0
-                    
+
                     for line in pw_game_state["lines"]:
                         if line.color == "#00ff00" and not line.expired:
                             text line.text style "terminal_correct_line" substitute False
@@ -444,7 +444,7 @@ screen minigame_3_main():
                             text line.text style "terminal_error_line" substitute False
                         else:
                             text line.text style "terminal_text" substitute False
-                            
+
                     if pw_game_state["status"] in ["playing", "report"]:
                         hbox:
                             text "└─$ " style "terminal_text"
@@ -456,26 +456,26 @@ screen minigame_3_main():
                     elif pw_game_state["status"] == "outputting":
                         hbox:
                             text "└─$ " style "terminal_text"
-                            
+
         if pw_game_state["status"] in ["playing", "report"]:
             key "K_TAB" action Function(pw_autocomplete)
-            
+
             if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
                 text "Press TAB to autocomplete" xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
-                
+
         if pw_game_state["status"] == "learning":
             key "K_RETURN" action Function(pw_check_command)
             key "K_KP_ENTER" action Function(pw_check_command)
-            
+
     use block_shortcuts_and_skip("SKIP")
 
 label minigame_3_brute_force:
     python:
         pw_reset()
-        
+
     call screen minigame_3_main
-    
+
     if _return == "SKIP":
         return "SKIP"
-        
+
     return pw_game_state["score"]

@@ -9,7 +9,7 @@ current_char = ""
 image_block_indent = "    "
 
 char_tags = [
-    "edward", "supervisor", "colleague", "greenwald", 
+    "edward", "supervisor", "colleague", "greenwald",
     "poitras", "journalist", "editor", "nsa_chief", "russian_official"
 ]
 
@@ -20,7 +20,7 @@ for i, line in enumerate(lines):
         in_image_block = True
         new_lines.append(line)
         continue
-    
+
     if in_image_block:
         if line.strip() == "" or line.startswith(" ") or line.startswith("\t"):
             new_lines.append(line)

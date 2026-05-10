@@ -1,31 +1,4 @@
-################################################################################
-## STYLES.RPY — Design System for Classified: The Snowden Files
-##
-## Color Palette:
-##   BG_DEEP        = #080C10    fullscreen backgrounds
-##   BG_PANEL       = #0D1117    card / panel fills
-##   BG_PANEL_ALT   = #111720    hover state / alternate panels
-##   CYAN           = #00FFD1    primary accent
-##   RED            = #FF2D55    danger / errors
-##   GOLD           = #FFD700    warnings / highlights
-##   GREEN          = #00FF88    success / confirmed
-##   ORANGE         = #FF8C00    high threat / caution
-##   TEXT_PRIMARY   = #E8E8E8    main body text
-##   TEXT_DIM       = #7A8A99    secondary / muted
-##   TEXT_FAINT     = #3A4A55    decorative / inactive
-##   TEXT_INVERSE   = #0D1117    text on bright backgrounds
-##
-## Typography:
-##   FONT_MONO      = fonts/ShareTechMono-Regular.ttf  (system/UI)
-##   FONT_BODY      = fonts/Rajdhani-Regular.ttf       (narrative)
-##   FONT_BODY_BOLD = fonts/Rajdhani-SemiBold.ttf      (narrative bold)
-################################################################################
-
 init offset = -1
-
-################################################################################
-## FONT & COLOR TOKENS (for use in screens directly)
-################################################################################
 
 init python:
     FONT_MONO = "fonts/ShareTechMono-Regular.ttf"
@@ -60,11 +33,6 @@ init python:
     SIZE_XL = 32
     SIZE_2XL = 41
 
-################################################################################
-## CUSTOM STYLES
-################################################################################
-
-# === Chapter Title Card Styles ===
 style sys_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
@@ -89,7 +57,6 @@ style chapter_subtitle_text:
     xalign 0.5
     italic True
 
-# === HUD Styles ===
 style hud_text:
     font "fonts/ShareTechMono-Regular.ttf"
     size 15
@@ -105,7 +72,6 @@ style hud_suspicion_text:
     size 15
     color "#FF2D55"
 
-# === Minigame Styles ===
 style minigame_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
@@ -135,7 +101,6 @@ style minigame_score:
     text_align 0.5
     xalign 0.5
 
-# === Question Screen Styles ===
 style question_text:
     font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
@@ -156,7 +121,6 @@ style answer_button_text:
     text_align 0.0
     xalign 0.0
 
-# === Ending Styles ===
 style ending_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
@@ -191,7 +155,6 @@ style ending_lesson_text:
     size 21
     text_align 0.0
 
-# === Briefing Screen Styles ===
 style briefing_header:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#FF2D55"
@@ -215,7 +178,6 @@ style briefing_warning:
     text_align 0.5
     xalign 0.5
 
-# === Main Menu Custom Styles ===
 style menu_title_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
@@ -253,7 +215,6 @@ style menu_version:
     text_align 0.5
     xalign 0.5
 
-# === Dossier / Glossary Styles ===
 style dossier_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
@@ -273,7 +234,6 @@ style dossier_definition:
     color "#7A8A99"
     size 21
 
-# === Chapter Summary Styles ===
 style summary_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
@@ -293,7 +253,6 @@ style summary_stat_value:
     size 23
     bold True
 
-# === Pause Hub / Story Tree HUD Styles ===
 style pause_title_text:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
@@ -337,7 +296,6 @@ style tree_hud_meta:
     color "#7A8A99"
     size 17
 
-# === Decrypt Minigame Styles ===
 style cipher_tile is button:
     xsize 84
     ysize 84
@@ -505,8 +463,6 @@ style stage_badge is frame:
     left_padding 14
     right_padding 14
 
-# === Clean the Message Minigame Styles ===
-
 style ctm_field_label:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#7A8A99"
@@ -550,8 +506,6 @@ style ctm_scanner_value:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#E8E8E8"
     size 16
-
-# === Cover Your Tracks — Minigame 4 Terminal Styles ===
 
 style ct_panel_title:
     color "#00FFD1"
@@ -648,8 +602,6 @@ style ct_learn_body:
     size 18
     line_leading 5
 
-# === Minigame 3 (Brute Force) Terminal Styles ===
-
 style terminal_screen_bg:
     background "#1a1a2e"
 
@@ -679,11 +631,6 @@ style terminal_learn_line:
     size 20
     color "#ffffff"
 
-################################################################################
-## CLASSIFIED BRIEFING, CHAPTER SELECT, GAME OVER
-################################################################################
-
-# === Classified Briefing Screen ===
 style classified_briefing_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
@@ -746,7 +693,6 @@ style classified_briefing_btn_text is button_text:
     text_align 0.5
     xalign 0.5
 
-# === Chapter Select Screen ===
 style chapter_select_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#00FFD1"
@@ -806,7 +752,6 @@ style chapter_select_btn_text is button_text:
     text_align 0.5
     xalign 0.5
 
-# === Game Over Screen ===
 style game_over_title:
     font "fonts/ShareTechMono-Regular.ttf"
     color "#FF2D55"
@@ -883,4 +828,3 @@ style game_over_btn_primary_text is game_over_btn_text:
 style game_over_btn_secondary_text is game_over_btn_text:
     color "#FF2D55"
     hover_color "#0D1117"
-
