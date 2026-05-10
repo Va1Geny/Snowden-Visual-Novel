@@ -96,16 +96,94 @@ VOICE_PROFILES = {
         "volume": "-18%",
     },
     "e": {"voice": "en-US-BrianMultilingualNeural", "tag": "edward"},
-    "greenwald": {"voice": "en-US-AndrewNeural", "tag": "greenwald", "rate": "-2%"},
+    "greenwald": {"voice": "en-US-AndrewMultilingualNeural", "tag": "greenwald", "rate": "-1%"},
     "poitras": {"voice": "en-US-EmmaMultilingualNeural", "tag": "poitras"},
-    "nsa_chief": {"voice": "en-GB-ThomasNeural", "tag": "nsa_chief", "pitch": "-4Hz"},
-    "supervisor": {"voice": "en-GB-RyanNeural", "tag": "supervisor", "pitch": "-2Hz", "rate": "-3%"},
-    "colleague": {"voice": "en-US-BrianNeural", "tag": "colleague", "rate": "+2%"},
+    "nsa_chief": {"voice": "en-US-AndrewNeural", "tag": "nsa_chief", "pitch": "-5Hz", "rate": "-4%"},
+    "supervisor": {"voice": "en-US-AndrewNeural", "tag": "supervisor", "pitch": "-3Hz", "rate": "-3%"},
+    "colleague": {"voice": "en-US-BrianNeural", "tag": "colleague", "rate": "+1%"},
     "russian_official": {"voice": "ru-RU-DmitryNeural", "tag": "russian_official", "pitch": "+1Hz", "rate": "+2%"},
 }
 
 TAG_RE = re.compile(r"\{[^}]*\}")
 WHITESPACE_RE = re.compile(r"\s+")
+
+EMOTION_PRESETS = {
+    "neutral": {"rate": 0, "pitch": 0, "volume": 0},
+    "reflective": {"rate": -6, "pitch": -1, "volume": -5},
+    "tense": {"rate": 4, "pitch": 2, "volume": 3},
+    "urgent": {"rate": 7, "pitch": 4, "volume": 5},
+    "warm": {"rate": 2, "pitch": 2, "volume": 2},
+    "cold": {"rate": -4, "pitch": -2, "volume": -1},
+    "suspicious": {"rate": -2, "pitch": -1, "volume": -2},
+    "resolute": {"rate": 2, "pitch": -1, "volume": 1},
+    "vulnerable": {"rate": -5, "pitch": 1, "volume": -4},
+    "conspiratorial": {"rate": -4, "pitch": -1, "volume": -6},
+}
+
+CHARACTER_BASE_MODES = {
+    "e": "reflective",
+    "im": "conspiratorial",
+    "greenwald": "suspicious",
+    "poitras": "warm",
+    "supervisor": "cold",
+    "nsa_chief": "cold",
+    "colleague": "warm",
+    "russian_official": "cold",
+}
+
+TENSE_KEYWORDS = (
+    "careful",
+    "warning",
+    "risk",
+    "flagged",
+    "monitored",
+    "danger",
+    "audit",
+    "caught",
+    "threat",
+    "compromised",
+)
+WARM_KEYWORDS = (
+    "thank",
+    "help",
+    "trust",
+    "glad",
+    "good",
+    "safe",
+    "together",
+    "friend",
+)
+RESOLUTE_KEYWORDS = (
+    "i need",
+    "we need",
+    "must",
+    "have to",
+    "i will",
+    "we will",
+    "focus",
+    "decide",
+    "truth",
+)
+VULNERABLE_KEYWORDS = (
+    "maybe",
+    "i think",
+    "i know",
+    "never",
+    "alone",
+    "afraid",
+    "doubt",
+    "wrong",
+)
+CONSPIRATORIAL_KEYWORDS = (
+    "quiet",
+    "listen",
+    "nobody",
+    "walls have ears",
+    "keep this",
+    "off the record",
+    "they monitor",
+    "don't use",
+)
 
 
 def clean_text(text: str) -> str:
@@ -115,8 +193,9 @@ def clean_text(text: str) -> str:
     text = text.replace("\\\"", "\"")
     text = text.replace("\\n", " ")
     text = text.replace("\n", " ")
-    text = text.replace("—", " - ")
-    text = text.replace("–", " - ")
+    text = text.replace("—", ", ")
+    text = text.replace("–", ", ")
+    text = text.replace(";", ", ")
     text = WHITESPACE_RE.sub(" ", text).strip()
     return text
 
@@ -133,13 +212,58 @@ def adjust_hz(value: str, delta: int) -> str:
     return "{:+d}Hz".format(updated)
 
 
-def apply_emotion(profile: dict, text: str, speaker: str) -> tuple[str, str, str]:
+def clamp(value: int, minimum: int, maximum: int) -> int:
+    return max(minimum, min(maximum, value))
+
+
+def extract_numeric_percent(value: str) -> int:
+    return int(value.rstrip("%"))
+
+
+def extract_numeric_hz(value: str) -> int:
+    return int(value.rstrip("Hz"))
+
+
+def infer_emotion_mode(text: str, speaker: str) -> str:
+    lowered = text.lower()
+    exclamations = text.count("!")
+    questions = text.count("?")
+
+    if exclamations >= 2 or "ALERT:" in text or "WARNING:" in text:
+        return "urgent"
+
+    if any(keyword in lowered for keyword in CONSPIRATORIAL_KEYWORDS):
+        return "conspiratorial"
+
+    if any(keyword in lowered for keyword in TENSE_KEYWORDS):
+        return "tense"
+
+    if questions and speaker in {"greenwald", "supervisor", "nsa_chief"}:
+        return "suspicious"
+
+    if any(keyword in lowered for keyword in RESOLUTE_KEYWORDS):
+        return "resolute"
+
+    if any(keyword in lowered for keyword in WARM_KEYWORDS):
+        return "warm"
+
+    if "..." in text or any(keyword in lowered for keyword in VULNERABLE_KEYWORDS):
+        return "vulnerable"
+
+    if speaker in CHARACTER_BASE_MODES:
+        return CHARACTER_BASE_MODES[speaker]
+
+    return "neutral"
+
+
+def apply_emotion(profile: dict, text: str, speaker: str) -> tuple[str, str, str, str]:
     rate = profile.get("rate", "+0%")
     pitch = profile.get("pitch", "+0Hz")
     volume = profile.get("volume", "+0%")
+    mode = infer_emotion_mode(text, speaker)
 
     if speaker in {"centered", "narrator_voice"}:
-        return rate, pitch, volume
+        return rate, pitch, volume, "neutral"
 
     exclamations = text.count("!")
     questions = text.count("?")
@@ -170,7 +294,21 @@ def apply_emotion(profile: dict, text: str, speaker: str) -> tuple[str, str, str
     if len(text.split()) <= 5 and not exclamations and not questions:
         rate = adjust_percent(rate, 2)
 
-    return rate, pitch, volume
+    preset = EMOTION_PRESETS.get(mode, EMOTION_PRESETS["neutral"])
+    rate_value = clamp(extract_numeric_percent(rate) + preset["rate"], -18, 12)
+    pitch_value = clamp(extract_numeric_hz(pitch) + preset["pitch"], -8, 8)
+    volume_value = clamp(extract_numeric_percent(volume) + preset["volume"], -24, 10)
+
+    if speaker == "russian_official":
+        pitch_value = clamp(pitch_value, -2, 4)
+        rate_value = clamp(rate_value, -6, 6)
+
+    return (
+        "{:+d}%".format(rate_value),
+        "{:+d}Hz".format(pitch_value),
+        "{:+d}%".format(volume_value),
+        mode,
+    )
 
 
 def build_entries():
@@ -196,7 +334,7 @@ def build_entries():
                 continue
 
             profile = VOICE_PROFILES[speaker]
-            rate, pitch, volume = apply_emotion(profile, text, speaker)
+            rate, pitch, volume, mode = apply_emotion(profile, text, speaker)
             signature = hashlib.sha1(
                 "|".join(
                     [
@@ -223,6 +361,7 @@ def build_entries():
                     "rate": rate,
                     "pitch": pitch,
                     "volume": volume,
+                    "emotion_mode": mode,
                     "relative_audio_path": rel_path.as_posix(),
                     "absolute_audio_path": str((GAME_DIR / rel_path).resolve()),
                 }
@@ -237,14 +376,24 @@ async def synthesize_entry(entry, force=False):
         return False
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    communicate = edge_tts.Communicate(
-        text=entry["text"],
-        voice=entry["voice"],
-        rate=entry["rate"],
-        volume=entry["volume"],
-        pitch=entry["pitch"],
-    )
-    await communicate.save(str(out_path))
+    attempts = 4
+
+    for attempt in range(1, attempts + 1):
+        try:
+            communicate = edge_tts.Communicate(
+                text=entry["text"],
+                voice=entry["voice"],
+                rate=entry["rate"],
+                volume=entry["volume"],
+                pitch=entry["pitch"],
+            )
+            await communicate.save(str(out_path))
+            break
+        except Exception:
+            if attempt == attempts:
+                raise
+            await asyncio.sleep(2 * attempt)
+
     return True
 
 

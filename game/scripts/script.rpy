@@ -38,7 +38,7 @@ label intro:
     $ renpy.pause(0.5)
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0040_centered_498fd4e029.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0040_centered_b2e91c2074.mp3"  # edge-tts-auto
     centered "{i}\"The greatest fear I have regarding the outcome of these disclosures\nis that nothing will change.\"{/i}\n\n— Edward Snowden"
 
     $ renpy.pause(3.0)
@@ -56,11 +56,11 @@ label intro:
     narrator_voice "The United States government operates the most sophisticated surveillance network in human history."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0052_narrator_voice_9033272771.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0052_narrator_voice_0514bcc733.mp3"  # edge-tts-auto
     narrator_voice "Billions of phone calls, emails, and internet sessions are collected, analyzed, and stored — all in the name of national security."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0054_narrator_voice_e8cd561b81.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0054_narrator_voice_e2cd9c5f7e.mp3"  # edge-tts-auto
     narrator_voice "You are an NSA contractor, a former CIA employee — and the person about to make the most consequential decision of your life."
 
     if should_play_english_voice():  # edge-tts-auto
@@ -72,7 +72,7 @@ label intro:
     narrator_voice "Along the way, your knowledge of network security will be tested. Every correct answer moves you closer to the truth."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0060_narrator_voice_a83d33ea70.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0060_narrator_voice_280f9cef5e.mp3"  # edge-tts-auto
     narrator_voice "Pay attention. Think carefully. The skills you learn here are real — and in the digital age, they matter."
 
 
@@ -104,7 +104,7 @@ label chapter_1:
     # --- Scene: Arriving at the NSA ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0090_narrator_voice_ee56538242.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0090_narrator_voice_730bbdeb62.mp3"  # edge-tts-auto
     narrator_voice "The Tunnel. That's what they call it — the underground NSA facility beneath a pineapple field in Oahu, Hawaii."
 
     scene bg_nsa_checkpoint at parallax with dissolve
@@ -117,55 +117,55 @@ label chapter_1:
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0099_im_11a04abf8d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0099_im_6b61024b7f.mp3"  # edge-tts-auto
     im "Another day inside the machine. Rows of monitors tracking billions of data points. Every packet, every connection, every digital breath."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0101_im_59a24c7f78.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0101_im_ebcb5237fc.mp3"  # edge-tts-auto
     im "I'm a systems administrator — I keep this infrastructure running. The irony is, the more access I have to maintain the system, the more I see what the system actually does."
 
     show supervisor neutral at enter_right
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0106_supervisor_5785c8bc75.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0106_supervisor_e79ba05711.mp3"  # edge-tts-auto
     supervisor "Morning. We've got a batch of flagged selectors to process. XKeyscore caught some interesting traffic overnight."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0108_im_e0aa67074b.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0108_im_82ac04ca10.mp3"  # edge-tts-auto
     im "XKeyscore — the NSA's most powerful search tool. It can search virtually anything a person does on the internet: emails, browsing history, chat sessions, even webcam feeds. All in near real time, all without a warrant."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0110_e_3bdec1ed93.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0110_e_4e0609bf0c.mp3"  # edge-tts-auto
     e "Yes sir. I'll pull up the queue."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0112_supervisor_770fb54ab3.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0112_supervisor_f938148bc0.mp3"  # edge-tts-auto
     supervisor "And don't overthink the 'why.' If the system flags a packet, it's because the math says they're a threat. Your job is to verify the handshake, not question the person."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0114_im_94aaa1c8af.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0114_im_8674c5c462.mp3"  # edge-tts-auto
     im "Verify the handshake. That's NSA-speak for confirming the network connection is legitimate — checking that the source and destination match the selector criteria. But nobody asks whether the criteria themselves are legitimate."
 
     show colleague casual at enter_left
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0119_colleague_4a9f75415d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0119_colleague_04b64ab687.mp3"  # edge-tts-auto
     colleague "Hey Ed. Check this out — I can watch this guy's webcam feed in real time. He's just eating cereal. It's wild what we can access without even a targeted request."
 
     show edward concerned
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0123_e_26204e54a6.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0123_e_274a3d437d.mp3"  # edge-tts-auto
     e "That's... that's a lot of access for an unflagged individual."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0125_colleague_015681c759.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0125_colleague_bbe95df67f.mp3"  # edge-tts-auto
     colleague "Welcome to the NSA, man. Everything is accessible. Everything."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0127_im_781b92a2f0.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0127_im_1b9db96e27.mp3"  # edge-tts-auto
     im "The scale of it is staggering. This isn't targeted surveillance. This is a vacuum cleaner, sucking up everything. Emails, phone records, browsing histories — all stored, all searchable, all belonging to ordinary people who've done nothing wrong."
 
     # --- Choice 1: Follow protocol or explore restricted files? ---
@@ -176,7 +176,7 @@ label chapter_1:
         "Follow protocol. Process the flagged selectors as assigned.":
             $ tree_record_choice("choice_ch1_1", "protocol")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0136_e_9d17450c4f.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0136_e_2a2ed285bb.mp3"  # edge-tts-auto
             e "Alright, let's focus on the assignment. Processing the flagged selectors now."
             $ trust_score += 1
             $ renpy.notify(t("Trust +1"))
@@ -185,7 +185,7 @@ label chapter_1:
             with dissolve
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0143_im_307dd592a0.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0143_im_b6beac96b3.mp3"  # edge-tts-auto
             im "Stay in your lane. Do your job. Don't attract attention."
 
             if should_play_english_voice():  # edge-tts-auto
@@ -195,7 +195,7 @@ label chapter_1:
         "Explore the restricted directories. Something doesn't add up.":
             $ tree_record_choice("choice_ch1_1", "explore")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0149_e_fe84e14588.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0149_e_28ce7bd45d.mp3"  # edge-tts-auto
             e "I need to check something first..."
             $ suspicion_level += 1
             $ renpy.notify(t("Suspicion +1"))
@@ -204,7 +204,7 @@ label chapter_1:
             with dissolve
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0156_im_d1d64d862c.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0156_im_0d6c45c0a5.mp3"  # edge-tts-auto
             im "These directories shouldn't be this easy to access. Why does a systems administrator have read access to raw intelligence feeds?"
 
             if should_play_english_voice():  # edge-tts-auto
@@ -219,25 +219,25 @@ label chapter_1:
     narrator_voice "On your screen, you see the tools of the trade: network monitoring dashboards tracking millions of connections in real time."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0165_im_5f6eec9a80.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0165_im_88a9681d41.mp3"  # edge-tts-auto
     im "Every network has a firewall — a security system that monitors all incoming and outgoing traffic and decides what gets through based on predefined rules. Think of it as a barrier between trusted and untrusted networks."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0167_im_e694910cf2.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0167_im_c3fd13aeda.mp3"  # edge-tts-auto
     im "The firewall inspects each packet for three things: the source IP address, the destination port number, and the protocol. Get those right and you can tell the difference between normal traffic and an intrusion attempt."
 
     # --- IP Addresses: Internal vs External ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0171_im_eec84f98f6.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0171_im_2013b1f408.mp3"  # edge-tts-auto
     im "First, IP addresses. Every device on a network has one — it's like a street address for computers. But not all addresses are equal."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0173_im_f94577b410.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0173_im_edf8b3a762.mp3"  # edge-tts-auto
     im "Private IP ranges — 192.168.x.x, 10.0.x.x, and 172.16.x.x — belong to your own internal network. Traffic from these addresses is usually safe because it's coming from inside the building."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0175_im_929840e763.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0175_im_796675d30e.mp3"  # edge-tts-auto
     im "But an IP like 45.33.32.1 or 89.248.174.5? That's an external address — someone on the internet reaching into our network. External IPs demand much more scrutiny."
 
     sys "// SYSTEM NOTE: Private IPs (192.168.x.x, 10.0.x.x, 172.16.x.x) = internal/trusted. Public IPs = external/unknown — verify before allowing. //"
@@ -245,23 +245,23 @@ label chapter_1:
     # --- Ports: The Doors Into a Network ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0181_im_8e6ca2bb8d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0181_im_d3aa9c6d0f.mp3"  # edge-tts-auto
     im "Next, ports. If an IP address is the building's street address, a port is a specific door. Every network service listens on a numbered port, and knowing which port does what is fundamental."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0183_im_cf2680b6e9.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0183_im_0e6a89781b.mp3"  # edge-tts-auto
     im "Port 80 is HTTP — standard, unencrypted web traffic. Port 443 is HTTPS — the same thing but encrypted with TLS. These are the two most common ports on the internet, and traffic on them is usually legitimate."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0185_im_ec0d361e61.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0185_im_2d2267f668.mp3"  # edge-tts-auto
     im "Port 53 is DNS — the Domain Name System. It's how computers translate website names like 'google.com' into IP addresses. Without DNS, nothing works. It's the phone book of the internet."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0187_im_b44bfa8559.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0187_im_aacc2024d6.mp3"  # edge-tts-auto
     im "Port 22 is SSH — Secure Shell. It's used for remote administration, letting an authorised user log into a server from another location. From an internal IP, it's normal. From an external IP, it needs careful review."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0189_im_d51eb3475e.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0189_im_895740dd12.mp3"  # edge-tts-auto
     im "Port 3389 is RDP — Remote Desktop Protocol. It lets someone control a computer's desktop remotely. Like SSH, it's fine from a trusted internal source, but dangerous if exposed to the outside."
 
     sys "// SAFE PORTS (common services): 80 = HTTP | 443 = HTTPS | 53 = DNS | 22 = SSH | 3389 = RDP //"
@@ -269,15 +269,15 @@ label chapter_1:
     # --- Dangerous Ports and Protocols ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0195_im_59a0b4431d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0195_im_54ee849d2d.mp3"  # edge-tts-auto
     im "Then there are the ports that should set off alarm bells. Port 23 is Telnet — an ancient protocol that sends everything in plain text, including passwords. It has no encryption at all. Telnet should never be used; SSH replaced it decades ago."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0197_im_78673241bd.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0197_im_9b9f20b60c.mp3"  # edge-tts-auto
     im "Port 31337 — pronounced 'elite' in hacker culture — is historically associated with the Back Orifice trojan. If you see traffic on port 31337 from an unknown external IP, it's almost certainly malicious."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0199_im_1589427d72.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0199_im_9200dbe497.mp3"  # edge-tts-auto
     im "And port 4444 — the default listener for Metasploit, one of the most widely used hacking frameworks. An external IP connecting on port 4444 usually means someone is trying to establish a reverse shell — giving themselves remote control of the target machine."
 
     sys "// DANGER PORTS: 23 = Telnet (unencrypted!) | 31337 = Known hacker port | 4444 = Metasploit reverse shell //"
@@ -285,7 +285,7 @@ label chapter_1:
     # --- Putting It Together ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0205_im_0f61e81ff3.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0205_im_7d99182ac5.mp3"  # edge-tts-auto
     im "So the logic is straightforward: check the IP, check the port, check the protocol. Internal IP on a standard port? Probably safe. External IP on a suspicious port with no encryption? Block it immediately."
 
     sys "// FIREWALL RULE: ALLOW = internal IPs on standard ports | BLOCK = external IPs on suspicious ports or unencrypted protocols. When in doubt, block. //"
@@ -318,11 +318,11 @@ label chapter_1:
     # --- Question Segment 1: MCQ ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0236_im_9f416f5605.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0236_im_551dbc9b15.mp3"  # edge-tts-auto
     im "Working here, I've learned how critical a VPN is. A VPN — Virtual Private Network — creates an encrypted tunnel between your device and a remote server. Anyone watching the local network sees only scrambled data, not what you're actually doing."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0238_im_e268013e05.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0238_im_f19aee1fb7.mp3"  # edge-tts-auto
     im "On untrusted networks like public Wi-Fi, a VPN is essential. Without one, your browsing history, login credentials, and private messages are all visible to anyone sniffing the network."
 
     call screen mcq_question(
@@ -341,41 +341,41 @@ label chapter_1:
     narrator_voice "While processing selectors, you discover domestic IP addresses mixed in with foreign intelligence targets."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0253_e_1e7f8f2b05.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0253_e_920d6dda17.mp3"  # edge-tts-auto
     e "Sir, I'm seeing domestic addresses in the foreign intelligence queue. These are American citizens."
 
     if suspicion_level >= 2:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_0256_supervisor_05ac64240d.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_0256_supervisor_4f94ab31cb.mp3"  # edge-tts-auto
         supervisor "I've noticed you've been poking around where you shouldn't. Are you having second thoughts about your oath?"
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_0257_e_167b303c30.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_0257_e_e164b6aaa5.mp3"  # edge-tts-auto
         e "No sir. Just doing my due diligence."
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_0258_supervisor_342fa5812b.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_0258_supervisor_eaf33e4822.mp3"  # edge-tts-auto
         supervisor "Your 'due diligence' is noted. Logged and noted."
         $ suspicion_level += 1
         $ renpy.notify(t("Suspicion +1"))
     else:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_0262_supervisor_bc271075e7.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_0262_supervisor_fe38e0aa8f.mp3"  # edge-tts-auto
         supervisor "Those addresses were flagged by the FISA court authorization. Everything is legal. Don't make waves."
 
     menu:
         "Report the anomaly to the Inspector General's office.":
             $ tree_record_choice("choice_ch1_2", "report")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0267_e_4192d53a49.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0267_e_29b9cdba6a.mp3"  # edge-tts-auto
             e "I should file a formal concern with the IG office."
             $ trust_score += 2
             $ renpy.notify(t("Trust +2"))
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0271_supervisor_76a55fc4a9.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0271_supervisor_974b128c9d.mp3"  # edge-tts-auto
             supervisor "Do what you have to do. But I'm telling you, this goes nowhere."
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0273_im_033822e349.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0273_im_2fa34f15b6.mp3"  # edge-tts-auto
             im "I filed the report. I used the proper channels. And nothing happened. Nothing."
 
             if should_play_english_voice():  # edge-tts-auto
@@ -386,7 +386,7 @@ label chapter_1:
             $ tree_record_choice("choice_ch1_2", "silent")
             scene bg_1 at parallax with dissolve
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0280_im_a4e52f8225.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0280_im_c8fb179fad.mp3"  # edge-tts-auto
             im "Not yet. I need to understand the full scope before I act. If I report one anomaly, they'll lock me out. I need to see the whole picture."
             $ trust_score -= 1
             $ renpy.notify(t("Trust -1"))
@@ -438,27 +438,27 @@ label chapter_2:
     # --- Snowden discovers PRISM ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0328_im_2e326eef4c.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0328_im_467385a3d7.mp3"  # edge-tts-auto
     im "I found it. Hidden in the classified briefing materials — a program so vast it makes everything else look like a hobby project."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0330_im_efcc95c2c6.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0330_im_a3ba63fb1d.mp3"  # edge-tts-auto
     im "They call it PRISM — a direct pipeline into the servers of every major tech company. Google. Facebook. Apple. Microsoft. Yahoo. All of them. Nine companies in total, handing over user data on demand."
 
     sys "// CLASSIFIED: PRISM — Planning Tool for Resource Integration, Synchronization, and Management. Direct server access to 9 major internet service providers. //"
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0334_im_f1251797b7.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0334_im_96b271d7d3.mp3"  # edge-tts-auto
     im "We aren't looking for needles in haystacks. We're just stealing the whole field. Every email, every photo, every chat message — all vacuumed up and stored in data centres the size of small cities."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0336_narrator_voice_77b9d8c1a0.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0336_narrator_voice_fc3d2e8786.mp3"  # edge-tts-auto
     narrator_voice "The PRISM program gave the NSA direct access to user data from the world's largest tech companies. Emails, chat logs, file transfers, photos — all accessible without individual warrants. The legal basis? A secret interpretation of the FISA Amendments Act that no court had publicly reviewed."
 
     sys "// SYSTEM NOTE: PRISM worked by collecting data 'upstream' — directly from fiber-optic cables and company servers, bypassing traditional warrant requirements through the FISA Amendments Act. //"
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0340_im_f2d4656586.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0340_im_568527215f.mp3"  # edge-tts-auto
     im "And there's more. Boundless Informant — a tool that counts and visualises exactly how much data the NSA collects from each country. In one month alone, 97 billion pieces of intelligence were gathered worldwide. The American public has no idea."
 
     # --- Internal conflict with colleague ---
@@ -466,23 +466,23 @@ label chapter_2:
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0346_colleague_b6eacc1adb.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0346_colleague_602d053b33.mp3"  # edge-tts-auto
     colleague "Ed, you look like you've seen a ghost. What's wrong?"
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0348_e_fc376f119c.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0348_e_b847e376d8.mp3"  # edge-tts-auto
     e "Have you ever looked at what we're actually collecting? Not the reports. The raw feeds."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0350_colleague_8ed56be35f.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0350_colleague_bf202e732b.mp3"  # edge-tts-auto
     colleague "I try not to think about it too much. We've got clearance, we've got authorization. That's enough for me."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0352_e_6883e365b6.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0352_e_1d3fd0f3e3.mp3"  # edge-tts-auto
     e "Is it? Because what I'm seeing goes way beyond foreign intelligence. This is domestic surveillance on a massive scale."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0354_colleague_dc0f12e44e.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0354_colleague_c369741ea3.mp3"  # edge-tts-auto
     colleague "Ed... be very careful what you say next. The walls have ears. Literally."
 
     scene bg_prism1 at parallax with dissolve
@@ -493,38 +493,38 @@ label chapter_2:
         "Trust the colleague. Share what you've found.":
             $ tree_record_choice("choice_ch2_1", "trust")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0363_e_d29c3890ed.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0363_e_da3c043e07.mp3"  # edge-tts-auto
             e "Look, I need someone I can trust. What I've found... it's bigger than both of us."
             $ trust_score += 1
             $ renpy.notify(t("Trust +1"))
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0367_colleague_b1f728ff19.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0367_colleague_289c36e68a.mp3"  # edge-tts-auto
             colleague "I... I've had my own doubts. But Ed, if you're thinking what I think you're thinking, you need to be incredibly careful."
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0369_colleague_01dcec4037.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0369_colleague_26c573ed79.mp3"  # edge-tts-auto
             colleague "Whatever you do, don't use the internal network. They monitor everything. Every keystroke."
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0371_im_ff23c552ab.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0371_im_60f0d439b8.mp3"  # edge-tts-auto
             im "At least I'm not completely alone in this."
 
         "Work alone. Trust no one inside the NSA.":
             $ tree_record_choice("choice_ch2_1", "alone")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0375_e_9c4b8c1014.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0375_e_0d3f8c6717.mp3"  # edge-tts-auto
             e "Never mind. Forget I said anything. Just tired."
             $ suspicion_level += 0
             $ trust_score -= 1
             $ renpy.notify(t("Trust -1"))
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0380_colleague_bf883e00f9.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0380_colleague_226beaacca.mp3"  # edge-tts-auto
             colleague "Sure, man. Get some rest."
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0382_im_f7cbf9244c.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0382_im_8f40e62992.mp3"  # edge-tts-auto
             im "I can't trust anyone here. One wrong word and I'm done. I need to do this alone."
 
     hide colleague neutral with dissolve
@@ -554,17 +554,17 @@ label chapter_2:
     # (Structured as a self-contained briefing — can be branched into the story tree later)
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0410_im_0a77ab4f24.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0410_im_cb95095d5b.mp3"  # edge-tts-auto
     im "Some of these classified filenames are encoded with a Caesar cipher — one of the oldest encryption methods in history. It's a simple substitution cipher where each letter is shifted by a fixed number of positions in the alphabet."
 
     # --- How Caesar Cipher Works ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0414_im_3f7e89cc2a.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0414_im_6ab3b8c889.mp3"  # edge-tts-auto
     im "Here's how it works. The alphabet is a loop: A B C D E F... all the way to Z, and then it wraps back to A. A Caesar cipher shifts every letter forward by a fixed number — the key."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0416_im_2b8351cefd.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0416_im_31bfb4d9be.mp3"  # edge-tts-auto
     im "With ROT-3 — a rotation of 3 — the letter A becomes D, B becomes E, C becomes F. The word 'CAT' encrypts to 'FDW'. Every letter moves exactly three places forward."
 
     sys "// SYSTEM NOTE: Caesar Cipher encryption with ROT-3: A→D, B→E, C→F, D→G ... X→A, Y→B, Z→C //"
@@ -572,11 +572,11 @@ label chapter_2:
     # --- Decryption: Reversing the Shift ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0422_im_335222a36b.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0422_im_c3de04e0ce.mp3"  # edge-tts-auto
     im "To decrypt, you do the reverse — shift each letter back by the same number. So D becomes A, E becomes B, F becomes C. Decryption undoes the encryption."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0424_im_8491dde7a2.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0424_im_f7c0216c52.mp3"  # edge-tts-auto
     im "Let me work through an example. If I see the letter 'S', I count back 3: S... R... Q... P. So S decrypts to P. If I see 'U', count back 3: U... T... S... R. So U becomes R."
 
     sys "// DECRYPTION RULE: Take each letter → count backwards by the key number → that's your plaintext letter. ROT-3 decryption: D→A, E→B, F→C, G→D ... //"
@@ -584,11 +584,11 @@ label chapter_2:
     # --- Why It Matters ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0430_im_5e140eee7d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0430_im_4c4c03d967.mp3"  # edge-tts-auto
     im "The Caesar cipher is trivially easy to break — there are only 25 possible shifts, so you can try them all in seconds. But it teaches the fundamental principle behind all encryption: transform readable data into unreadable data using a key, and reverse the process with the same key."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0432_im_605e2d296e.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0432_im_f5f1fdab3a.mp3"  # edge-tts-auto
     im "Modern encryption like AES-256 uses the same concept — just with keys that are billions of times more complex, making brute-force attacks effectively impossible."
 
     sys "// CHALLENGE PREP: You'll see an encrypted word. Shift each letter back by 3 to reveal the name of a classified NSA program. //"
@@ -601,7 +601,7 @@ label chapter_2:
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0443_im_684edc309d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0443_im_09c3298c5f.mp3"  # edge-tts-auto
     im "I have access to everything. The question is: what do I do with it?"
 
     if should_play_english_voice():  # edge-tts-auto
@@ -609,25 +609,25 @@ label chapter_2:
     narrator_voice "You stare at your screen. The classified documents are right there. Proof of mass surveillance. Proof of constitutional violations. But taking them means crossing a line there's no coming back from."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0447_im_9fe9075e74.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0447_im_dd410947fd.mp3"  # edge-tts-auto
     im "If I copy these files, I'm committing espionage under the law. If I don't, no one will ever know this is happening. The proper channels have already failed me — my report to the Inspector General disappeared into a black hole."
 
     menu:
         "Copy the files to an encrypted drive. This evidence needs to survive.":
             $ tree_record_choice("choice_ch2_2", "copy")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0452_im_cf7e96c150.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0452_im_5d1c8c9aa6.mp3"  # edge-tts-auto
             im "I need the original documents. Notes won't be enough. Journalists need primary sources — verifiable proof that can't be denied or dismissed."
             $ evidence_secured = True
             $ suspicion_level += 1
             $ renpy.notify(t("Evidence Secured! | Suspicion +1"))
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0457_narrator_voice_dcd9171040.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0457_narrator_voice_475a96d3e3.mp3"  # edge-tts-auto
             narrator_voice "You carefully copy selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk — the NSA logs all data movement, and an unusual transfer could trigger an automated alert."
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0459_im_266772a259.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0459_im_3ad87dffe3.mp3"  # edge-tts-auto
             im "The files are protected with AES-256 encryption — the Advanced Encryption Standard with a 256-bit key. It's the same encryption the US government uses to protect its own top-secret data. Effectively impossible to brute-force with any existing hardware."
 
             sys "// DATA TRANSFER INITIATED. ENCRYPTION: AES-256. CONTAINER: VERACRYPT HIDDEN VOLUME. //"
@@ -635,7 +635,7 @@ label chapter_2:
         "Take detailed notes only. Digital evidence is too risky.":
             $ tree_record_choice("choice_ch2_2", "notes")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0465_im_0b30966268.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0465_im_6e0732e0f1.mp3"  # edge-tts-auto
             im "If they catch me with files, it's espionage. Notes are deniable."
             $ trust_score -= 1
             $ renpy.notify(t("Trust -1"))
@@ -649,11 +649,11 @@ label chapter_2:
     # --- MCQ Question ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0475_im_5c8629f9f5.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0475_im_0cfcfeb477.mp3"  # edge-tts-auto
     im "When transferring these documents, the protocol matters. Standard HTTP sends everything in plain text — anyone on the network can read it. But HTTPS adds a layer of TLS/SSL encryption, securing the data between your browser and the web server."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0477_im_164d2c4b13.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0477_im_e48dbc264f.mp3"  # edge-tts-auto
     im "That padlock icon in your browser's address bar? That's HTTPS at work. It's the difference between shouting your secrets across a room and whispering them through a sealed envelope."
 
     call screen mcq_question(
@@ -704,21 +704,21 @@ label chapter_3:
     # --- Snowden must contact journalists ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0526_im_2af3641301.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0526_im_a1f3b0cd16.mp3"  # edge-tts-auto
     im "I have the evidence. Now I need someone to publish it. But one wrong email, one unencrypted message, and the NSA will know before the ink is dry."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0528_narrator_voice_1c10ffdb91.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0528_narrator_voice_bf90d38e91.mp3"  # edge-tts-auto
     narrator_voice "You need to contact journalists who can responsibly publish the classified documents. But the NSA monitors virtually all electronic communication — the very programs you plan to expose are the ones hunting for people like you."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0530_im_f82178ec5b.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0530_im_907ef704f9.mp3"  # edge-tts-auto
     im "The NSA doesn't just collect data in bulk. They have tools that flag specific patterns: a new email address contacting a known journalist, an encrypted connection from a government network, a Tor exit node accessing a news site. Any of these could trigger an alert."
 
     sys "// SYSTEM NOTE: OpSec (Operational Security) is the practice of protecting critical information from adversaries. Every digital action leaves traces. //"
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0534_im_07dbd272ca.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0534_im_c4dda3676a.mp3"  # edge-tts-auto
     im "I can't use my work email. I can't use my personal email. I need a completely new identity, on a completely separate network. And I need to make contact without anyone inside the NSA knowing I've reached out."
 
     # --- Snowball Effect Check ---
@@ -736,7 +736,7 @@ label chapter_3:
                 $ renpy.notify(t("Suspicion +1"))
 
                 if should_play_english_voice():  # edge-tts-auto
-                    voice "audio/voice/en/script_0548_im_52d32e4674.mp3"  # edge-tts-auto
+                    voice "audio/voice/en/script_0548_im_cbda80472a.mp3"  # edge-tts-auto
                 im "I told them I was running diagnostic tests on the archival system. They seemed to buy it... for now."
 
                 if should_play_english_voice():  # edge-tts-auto
@@ -749,7 +749,7 @@ label chapter_3:
                 $ renpy.notify(t("Trust -1"))
 
                 if should_play_english_voice():  # edge-tts-auto
-                    voice "audio/voice/en/script_0557_im_b77fbfd1a5.mp3"  # edge-tts-auto
+                    voice "audio/voice/en/script_0557_im_8e4992e8c5.mp3"  # edge-tts-auto
                 im "No more waiting. If I don't move now, I won't get another chance."
 
                 jump ch3_contact_unsafe
@@ -757,11 +757,11 @@ label chapter_3:
     # --- Choice 1: Secure channel or personal email? ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0563_im_e641cbfc21.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0563_im_9b856234a5.mp3"  # edge-tts-auto
     im "I've identified two journalists who might have the courage to publish: Leah Portman, a documentary filmmaker who's been investigating NSA surveillance for years, and Grayson Wardell, a constitutional lawyer turned journalist at The Guardian."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0565_im_de4a500529.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0565_im_0976dace9c.mp3"  # edge-tts-auto
     im "The challenge is reaching them securely. PGP encryption with Tor would make my messages virtually untraceable — but it requires technical knowledge to set up correctly. One mistake in the key exchange and the whole channel is compromised."
 
     if should_play_english_voice():  # edge-tts-auto
@@ -790,7 +790,7 @@ label chapter_3:
 
 label ch3_secure_success:
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0590_im_52b20f96da.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0590_im_87da0b6702.mp3"  # edge-tts-auto
     im "I know how PGP works. Public key, private key. I generate a key pair, publish my public key, and any message encrypted with it can only be read by me."
 
     sys "// PGP KEY PAIR GENERATED. RSA-4096. FINGERPRINT VERIFIED THROUGH SEPARATE CHANNEL. //"
@@ -809,27 +809,27 @@ label ch3_secure_success:
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0605_poitras_fdef4d576d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0605_poitras_f96af47c05.mp3"  # edge-tts-auto
     poitras "I received your encrypted message. The fingerprint checks out. Who are you?"
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0607_e_5e1760be50.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0607_e_7b666f57e5.mp3"  # edge-tts-auto
     e "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA."
 
     show poitras cautious
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0610_poitras_faa0fe73be.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0610_poitras_48d170a87b.mp3"  # edge-tts-auto
     poitras "Can you prove it?"
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0612_e_109e59ac6d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0612_e_6cd0011cd2.mp3"  # edge-tts-auto
     e "I can prove everything. But we need to meet in person. I'll also reach out to Grayson Wardell — together, you can publish the full story."
 
     jump ch3_continue
 
 label ch3_secure_fail:
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0617_im_ca45b5c746.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0617_im_2f3ed2294a.mp3"  # edge-tts-auto
     im "I know I need to use PGP, but I'm not confident in the setup. If I make a mistake with the key exchange..."
 
     sys "// WARNING: INSUFFICIENT KNOWLEDGE TO ESTABLISH SECURE CHANNEL. PROCEEDING WITH PARTIAL ENCRYPTION. //"
@@ -854,25 +854,25 @@ label ch3_greenwald_contact:
     narrator_voice "You reach out to Grayson Wardell through his public contact information. It's faster, but less secure."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0636_e_9331997bd9.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0636_e_a446fe8fb9.mp3"  # edge-tts-auto
     e "Mr. Wardell, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
 
     show greenwald skeptical
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0639_greenwald_330eca30ef.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0639_greenwald_c70b3f1894.mp3"  # edge-tts-auto
     greenwald "I get messages like this every week. Can you give me more details?"
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0641_e_6697848307.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0641_e_3ca18f646e.mp3"  # edge-tts-auto
     e "Not over this channel. You need to set up PGP encryption. I'll send you instructions."
 
     show greenwald confused
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0644_greenwald_4a6482d32d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0644_greenwald_c2437be411.mp3"  # edge-tts-auto
     greenwald "PGP? I've never used it. Can't we just talk on the phone?"
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0646_im_4c5743d6b5.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0646_im_b631248db8.mp3"  # edge-tts-auto
     im "This is the problem. The people who need to publish this information don't know the first thing about security."
 
     $ suspicion_level += 1
@@ -886,7 +886,7 @@ label ch3_wait:
     narrator_voice "You decide to wait for a safer window. But there may not be one."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0656_im_ea0105827a.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0656_im_0210df48a3.mp3"  # edge-tts-auto
     im "Every day I wait is another day they could catch me. But rushing makes mistakes. Mistakes get you caught."
 
     $ suspicion_level += 1
@@ -908,7 +908,7 @@ label ch3_contact_unsafe:
     $ renpy.notify(t("Suspicion +1 | Contacts +1"))
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0672_im_55c347446f.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0672_im_6aa5038206.mp3"  # edge-tts-auto
     im "No time for perfect OpSec. I just need to get the message out."
 
     jump ch3_continue
@@ -922,11 +922,11 @@ label ch3_continue:
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0684_im_dd547c12c6.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0684_im_aab8cbfb6a.mp3"  # edge-tts-auto
     im "Everything I've done to contact journalists relies on one tool above all others: Tor — The Onion Router. It's an anonymization network that routes your traffic through multiple relay nodes around the world, each encrypting another layer."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0686_im_59b14bccbb.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0686_im_c108062c3a.mp3"  # edge-tts-auto
     im "By the time your traffic reaches its destination, tracing it back to the source is nearly impossible. That's what makes Tor the tool of choice for anyone who needs to communicate without being tracked."
 
     call screen mcq_question(
@@ -941,17 +941,17 @@ label ch3_continue:
     # (Structured as a self-contained briefing — can be branched into the story tree later)
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0699_im_b322b94141.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0699_im_3d8d0f8b94.mp3"  # edge-tts-auto
     im "But technology alone isn't enough. OpSec — Operational Security — is the practice of thinking like your adversary. What can they learn from your actions? Every digital footprint, every unguarded conversation, every pattern of behaviour is a piece of the puzzle they're assembling."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0701_im_b36c7534d1.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0701_im_3c26d4cba7.mp3"  # edge-tts-auto
     im "Good OpSec means denying the adversary those pieces. It means asking yourself before every action: could this reveal my identity, my location, or my intent?"
 
     # --- IP Address Exposure ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0705_im_9136e48dd3.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0705_im_43bea91758.mp3"  # edge-tts-auto
     im "The most basic OpSec failure is IP exposure. Your home IP address is assigned by your Internet Service Provider and tied directly to your name and physical address. If you log into a secure service from your home IP without a VPN, you've just stamped your real identity on the connection."
 
     sys "// OPSEC RULE #1: Never access sensitive services from a traceable IP address. Use a VPN or Tor to mask your connection. //"
@@ -959,7 +959,7 @@ label ch3_continue:
     # --- Anonymous Communication Tools ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0711_im_ea5b414976.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0711_im_f603d0f2ef.mp3"  # edge-tts-auto
     im "The right tools make anonymity possible. Tor anonymizes your connection through multiple relay nodes. SecureDrop — an open-source platform used by major newsrooms — lets whistleblowers submit documents anonymously. Burner email accounts, created from public locations like libraries, add another layer of separation between your real identity and your actions."
 
     sys "// SAFE PRACTICE: Tor + SecureDrop + burner accounts from public locations = maximum anonymity //"
@@ -967,7 +967,7 @@ label ch3_continue:
     # --- Work Email and Monitored Channels ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0717_im_875676bfee.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0717_im_27caff8d87.mp3"  # edge-tts-auto
     im "The biggest mistake an insider can make is using work infrastructure for anything sensitive. Work email, work Wi-Fi, work devices — all of these are monitored, logged, and directly tied to your employee identity. Sending classified documents via work email is essentially confessing."
 
     sys "// OPSEC RULE #2: Work infrastructure is monitored. Never use work email, devices, or networks for sensitive communication. //"
@@ -975,7 +975,7 @@ label ch3_continue:
     # --- Password Hygiene ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0723_im_4f64fd4622.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0723_im_15c85c6e8c.mp3"  # edge-tts-auto
     im "And then there's password reuse — the silent killer. If you use your personal Facebook password for an encrypted file container, you've created a bridge between your public identity and your secret activity. When one account is compromised, every account sharing that password falls."
 
     sys "// OPSEC RULE #3: Never reuse passwords. Every service gets a unique, strong password. Use a password manager. //"
@@ -983,7 +983,7 @@ label ch3_continue:
     # --- Putting It Together ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0729_im_fca9c08baf.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0729_im_a6cb2cedfa.mp3"  # edge-tts-auto
     im "Now it's time to put that knowledge into practice. I've intercepted an encrypted password hash from the internal NSA directory. Before I can access the PRISM architecture files, I need to crack it. One mistake, and the system locks down."
 
     sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Weak passwords can be cracked instantly using dictionary attacks and rule-based mutations. //"
@@ -1021,14 +1021,14 @@ label ch3_continue:
     narrator_voice "The journalist asks for more details about the scope of the leaks."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0763_greenwald_604e7a534c.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0763_greenwald_8b32bc7026.mp3"  # edge-tts-auto
     greenwald "I need to know what we're dealing with. How big is this?"
 
     menu:
         "Tell everything. Full transparency builds trust.":
             $ tree_record_choice("choice_ch3_2", "full")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0768_e_cc47cfec45.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0768_e_d0a24ec501.mp3"  # edge-tts-auto
             e "It's everything. PRISM, XKeyscore, Boundless Informant, upstream collection — the NSA is collecting data on hundreds of millions of people. American citizens included."
             $ trust_score += 2
             $ contacts_secured += 1
@@ -1036,31 +1036,31 @@ label ch3_continue:
 
             show greenwald shocked
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0774_greenwald_952456c22e.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0774_greenwald_0602aec18d.mp3"  # edge-tts-auto
             greenwald "My God. If this is true... this is the biggest intelligence leak in history."
 
         "Share only what's necessary. Protect sources and methods.":
             $ tree_record_choice("choice_ch3_2", "partial")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0778_e_4b7bf703aa.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0778_e_dd5fb197c0.mp3"  # edge-tts-auto
             e "I can confirm the NSA is conducting mass domestic surveillance. I'll share the details when we meet in person."
             $ trust_score += 1
             $ renpy.notify(t("Trust +1"))
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0782_greenwald_d98ee4013e.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0782_greenwald_236a5dbfee.mp3"  # edge-tts-auto
             greenwald "Fair enough. Where do we meet?"
 
         "Be vague. Don't reveal the scope until you're safe.":
             $ tree_record_choice("choice_ch3_2", "vague")
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0786_e_0a5429a12e.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0786_e_60a26c0348.mp3"  # edge-tts-auto
             e "It's significant. That's all I can say right now."
             $ trust_score -= 1
             $ renpy.notify(t("Trust -1"))
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0790_greenwald_d729d0286d.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0790_greenwald_475a58f9be.mp3"  # edge-tts-auto
             greenwald "You're asking me to fly halfway around the world on a vague tip?"
 
     hide greenwald
@@ -1112,16 +1112,16 @@ label chapter_4:
     narrator_voice "You arrive in Hong Kong with a laptop full of classified documents and a plan that's already falling apart."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0838_im_472a6ffe85.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0838_im_f9cb777112.mp3"  # edge-tts-auto
     im "I chose Hong Kong deliberately. It has its own legal system, independent from mainland China. Extradition would take time — time I need to get the story published before the government can suppress it."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0840_im_60836f14dd.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0840_im_36f6d47aac.mp3"  # edge-tts-auto
     im "I told my employer I needed medical leave for epilepsy treatment. They didn't question it. That bought me a few weeks."
 
     show edward tense
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0843_im_f430eaaa7d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0843_im_3e19aa6dbc.mp3"  # edge-tts-auto
     im "Now I'm in a hotel room in Hong Kong, waiting for journalists who might not come, hunted by an agency that can find anyone. I've wedged pillows against the door, piled cushions against the window. Even the smoke detector might have a camera."
 
     sys "// LOCATION: MIRA HOTEL, HONG KONG. STATUS: UNDETECTED — FOR NOW. //"
@@ -1133,16 +1133,16 @@ label chapter_4:
 
     show greenwald serious
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0853_greenwald_f202aea11b.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0853_greenwald_5382c3a548.mp3"  # edge-tts-auto
     greenwald "You do realize what you're asking me to do? If we publish this, both our lives change forever."
 
     show edward determined
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0856_e_42ff138980.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0856_e_e8a42759c0.mp3"  # edge-tts-auto
     e "My life changed the moment I read those documents. I can't unread them. I can't unknow what the government is doing to its own people."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0858_im_e07a1f6a0a.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0858_im_ec87f9b69a.mp3"  # edge-tts-auto
     im "Greenwald flew here from Rio de Janeiro. Poitras from Berlin. They left their lives behind on the strength of encrypted emails from a stranger. That took courage."
 
     if suspicion_level >= 3:
@@ -1150,26 +1150,26 @@ label chapter_4:
 
         show edward tense
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_0864_im_9fba6b0453.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_0864_im_1bb62c6667.mp3"  # edge-tts-auto
         im "They know something is wrong. I can feel it. The clock is ticking."
 
     show greenwald resolved
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0867_greenwald_856184a386.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0867_greenwald_9415e885fe.mp3"  # edge-tts-auto
     greenwald "The documents check out. Laura and I have verified them. We're ready to publish."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0869_e_a0ffd41a0f.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0869_e_13806b9fc0.mp3"  # edge-tts-auto
     e "Publish everything. The world needs to see this."
 
     hide greenwald with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0873_im_1a82afa0b8.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0873_im_f87c5e50be.mp3"  # edge-tts-auto
     im "What scares me most isn't just the surveillance — it's the NSA's offensive capabilities. They stockpile zero-day exploits — vulnerabilities in software that the vendor doesn't even know about. Called 'zero-day' because there are zero days of notice before they're exploited. No patch exists yet."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0875_im_cc4bad65ef.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0875_im_833e8fb56e.mp3"  # edge-tts-auto
     im "If the NSA wants into your laptop, they don't need your password. They use a zero-day to bypass everything — your firewall, your encryption, your operating system. And the vendor can't fix what they don't know is broken."
 
     sys "// SYSTEM NOTE: A zero-day exploit targets an unknown software vulnerability. Because no patch exists, even fully updated systems are at risk. Intelligence agencies hoard zero-days as offensive weapons. //"
@@ -1181,7 +1181,7 @@ label chapter_4:
     narrator_voice "You need to send final instructions to the publication team, but the hotel network is compromised. Every network connection is a potential leak."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0883_im_f274f9723a.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0883_im_2c235d6245.mp3"  # edge-tts-auto
     im "The hotel Wi-Fi is managed by the hotel — they can see every device that connects, every connection made. Intelligence agencies routinely request hotel network logs. I need to decide how to send this last message."
 
     menu:
@@ -1191,7 +1191,7 @@ label chapter_4:
             $ renpy.notify(t("Suspicion +1"))
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0891_im_4221fa3f97.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0891_im_436f937719.mp3"  # edge-tts-auto
             im "The VPN encrypts my traffic, but the hotel's network logs will show my room connected to a VPN. That alone is a red flag for anyone watching."
 
             sys "// WARNING: VPN CONNECTION DETECTED ON LOCAL NETWORK. COMMERCIAL VPN IPs ARE CATALOGUED BY INTELLIGENCE AGENCIES. //"
@@ -1203,7 +1203,7 @@ label chapter_4:
             $ renpy.notify(t("Trust +1"))
 
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_0901_im_b74b8a3db4.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_0901_im_c25ed56dd0.mp3"  # edge-tts-auto
             im "A mobile hotspot bypasses the hotel network entirely. With Tor on top of it, my traffic is encrypted and anonymized through multiple relay nodes."
 
             sys "// SECURE CONNECTION ESTABLISHED. TRAFFIC ROUTED THROUGH 3 TOR RELAY NODES. //"
@@ -1234,27 +1234,27 @@ label chapter_4:
     # (Structured as a self-contained briefing — can be branched into the story tree later)
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0930_im_7009517a2f.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0930_im_b9bfd3fea0.mp3"  # edge-tts-auto
     im "When you route traffic through Tor, you're building a chain of relay nodes. Each node only knows the hop before it and the hop after it — never the full path. Pick the right nodes and your trail goes cold."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0932_im_7ba07d3870.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0932_im_625d8484b9.mp3"  # edge-tts-auto
     im "But if even one node in the chain is compromised — a monitored relay, a hostile exit point — the entire route is exposed and your identity with it. So understanding what each type of node does is critical."
 
     # --- The Starting Point: Your Device ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0936_im_c80174f51a.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0936_im_e48c94ea65.mp3"  # edge-tts-auto
     im "It all starts at your device — your laptop, your phone. This is where traffic originates. Right now, it carries your real IP address and your real identity. The goal is to strip that identity away before the traffic reaches its destination."
 
     # --- ISP Router ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0940_im_aa0fa0fdd0.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0940_im_35a43a03f9.mp3"  # edge-tts-auto
     im "The first hop is usually your ISP router — the Internet Service Provider that connects you to the internet. Your ISP can see every website you visit, every connection you make. They log this data and, in many countries, hand it over to law enforcement on request."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0942_im_fb3ec2252d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0942_im_f62459a507.mp3"  # edge-tts-auto
     im "Going through the ISP is unavoidable — it's your on-ramp to the internet. But it's a chokepoint. If someone is watching at this level, they see everything unless you've already encrypted your traffic."
 
     sys "// NODE TYPE: ISP ROUTER — Your gateway to the internet. Sees all unencrypted traffic. A surveillance chokepoint. //"
@@ -1262,11 +1262,11 @@ label chapter_4:
     # --- VPN Server ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0948_im_42ad12653d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0948_im_54aebd2657.mp3"  # edge-tts-auto
     im "A VPN server is your first line of defence. It creates an encrypted tunnel between your device and the VPN server. Your ISP can see that you've connected to a VPN, but they can't see what you're doing through it."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0950_im_466ce82f6e.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0950_im_83b66655ee.mp3"  # edge-tts-auto
     im "Starting your route through a VPN before entering the Tor network is called 'VPN over Tor' — it hides the fact that you're using Tor from your ISP, adding an extra layer of protection."
 
     sys "// NODE TYPE: VPN SERVER — Encrypts your traffic before it hits the internet. Hides your activity from your ISP. Safe opening move. //"
@@ -1274,11 +1274,11 @@ label chapter_4:
     # --- Tor Nodes ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0956_im_7907a52d1f.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0956_im_b1edda6959.mp3"  # edge-tts-auto
     im "Tor nodes are the backbone of anonymous routing. Each Tor relay adds a layer of encryption — like nesting your message inside multiple sealed envelopes. The first relay knows who you are but not where you're going. The last relay knows where you're going but not who you are."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0958_im_0276497936.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0958_im_f22a75b396.mp3"  # edge-tts-auto
     im "The more Tor nodes you route through, the harder it is to trace the connection back to you. But each hop adds latency — there's a trade-off between anonymity and speed."
 
     sys "// NODE TYPE: TOR NODE — Adds encryption layers and anonymity. Multiple Tor hops = harder to trace. Safe nodes. //"
@@ -1286,11 +1286,11 @@ label chapter_4:
     # --- Government Monitor (Danger!) ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0964_im_409d291a67.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0964_im_bc6a5cae97.mp3"  # edge-tts-auto
     im "The one node you must avoid at all costs is the government monitoring point. Intelligence agencies like the NSA operate surveillance nodes that intercept and log all traffic passing through them. If your route goes through a government monitor, the entire chain is compromised."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0966_im_496c65dfb7.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0966_im_a92f31da76.mp3"  # edge-tts-auto
     im "It doesn't matter how many Tor nodes you've used — if even one hop routes through a known surveillance point, the adversary can correlate timing data to identify you. This is called a 'traffic correlation attack'."
 
     sys "// NODE TYPE: GOV MONITOR — Intercepts all traffic. If your route hits this node, your identity is exposed. AVOID AT ALL COSTS. //"
@@ -1298,11 +1298,11 @@ label chapter_4:
     # --- CDN Server vs Secure Relay ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0972_im_fd788aa107.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0972_im_c8683a1aae.mp3"  # edge-tts-auto
     im "Near the end of the route, you'll see two types of final relay. A CDN — Content Delivery Network — is standard internet infrastructure. It's fast but not designed for privacy. Your traffic is delivered efficiently, but CDN logs can be subpoenaed."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0974_im_6e88ca9d7f.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0974_im_62714fef2f.mp3"  # edge-tts-auto
     im "A secure relay, on the other hand, is specifically designed for private communication. It doesn't log traffic, strips metadata, and forwards your message with minimal exposure. When anonymity matters, always prefer the secure relay."
 
     sys "// NODE TYPE: CDN SERVER — Fast but logs traffic. SECURE RELAY — Private, no logs. Choose secure relay for maximum anonymity. //"
@@ -1310,7 +1310,7 @@ label chapter_4:
     # --- Route Strategy ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0980_im_32fabfd8ab.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0980_im_6941e4b3e3.mp3"  # edge-tts-auto
     im "So the optimal route is: start with a VPN to hide your Tor usage, chain through Tor nodes for anonymity, avoid the government monitor completely, and exit through a secure relay to reach the destination without leaving a trail."
 
     sys "// ROUTE STRATEGY: VPN → Tor nodes → Secure relay → Destination. Avoid GOV MONITOR. Fewer hops = less exposure time. //"
@@ -1318,11 +1318,11 @@ label chapter_4:
     window hide
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0986_im_52b6f1e4e0.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0986_im_6e485d9b67.mp3"  # edge-tts-auto
     im "But before I can run, I need to wipe everything. Every file, every log, every trace. If I leave even one digital breadcrumb, it's over."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_0988_im_024564f07a.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_0988_im_059dc00155.mp3"  # edge-tts-auto
     im "I have 90 seconds before NSA agents reach my room. 8 digital traces that prove I copied the PRISM files. Each one needs a different command to destroy."
 
     sys "// ALERT: NSA RESPONSE TEAM EN ROUTE. ESTIMATED ARRIVAL: 90 SECONDS. BEGIN DIGITAL EVIDENCE ELIMINATION. //"
@@ -1338,17 +1338,17 @@ label chapter_4:
 
     if escape_successful and evidence_secured:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1002_im_3859372be7.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1002_im_28df0547ea.mp3"  # edge-tts-auto
         im "Clean. Not a single trace left on this machine. When they get here, they'll find nothing but a blank hard drive and an empty hotel room."
         sys "// ALL DIGITAL EVIDENCE ELIMINATED. DEVICE IS FORENSICALLY CLEAN. //"
     elif escape_successful:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1005_im_5ac4855d9a.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1005_im_829e5d201c.mp3"  # edge-tts-auto
         im "Most of it is gone, but I'm not sure I got everything. Some fragments might still be recoverable. I need to move — now."
         sys "// PARTIAL EVIDENCE REMAINS. FORENSIC RECOVERY POSSIBLE. //"
     else:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1008_im_a3ca16af5c.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1008_im_48e4d51bf3.mp3"  # edge-tts-auto
         im "I ran out of time. They'll find everything — the files, the history, the logs. My identity is compromised."
         sys "// WARNING: FORENSIC EVIDENCE RECOVERED. IDENTITY COMPROMISED. //"
 
@@ -1361,7 +1361,7 @@ label chapter_4:
     narrator_voice "The first stories are published. The world erupts. And now, you are the most wanted person on Earth."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1017_im_7cb44a3b64.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1017_im_2e0d97358d.mp3"  # edge-tts-auto
     im "The US government has revoked my passport. I need to move. Now."
 
     if suspicion_level >= 4:
@@ -1376,7 +1376,7 @@ label chapter_4:
                 $ renpy.notify(t("Escape initiated!"))
 
                 if should_play_english_voice():  # edge-tts-auto
-                    voice "audio/voice/en/script_1028_im_373a108d92.mp3"  # edge-tts-auto
+                    voice "audio/voice/en/script_1028_im_71e6faaa30.mp3"  # edge-tts-auto
                 im "No time to plan. The passport might still work for a few hours before the revocation hits every system."
                 sys "// ROUTE REVIEW: Best for immediate movement, worst for preparation. Good if you need speed more than certainty. //"
 
@@ -1387,7 +1387,7 @@ label chapter_4:
                 $ renpy.notify(t("Escape to Russia | Trust -1"))
 
                 if should_play_english_voice():  # edge-tts-auto
-                    voice "audio/voice/en/script_1037_im_c20739e1c7.mp3"  # edge-tts-auto
+                    voice "audio/voice/en/script_1037_im_3630118336.mp3"  # edge-tts-auto
                 im "Russia isn't ideal, but beggars can't be choosers. They have their own reasons for helping me."
                 sys "// ROUTE REVIEW: Good for immediate shelter, bad for independence. Help comes with political strings attached. //"
 
@@ -1399,7 +1399,7 @@ label chapter_4:
                 $ renpy.notify(t("Escape route planned!"))
 
                 if should_play_english_voice():  # edge-tts-auto
-                    voice "audio/voice/en/script_1047_im_85f41313ab.mp3"  # edge-tts-auto
+                    voice "audio/voice/en/script_1047_im_13f8ccf5d4.mp3"  # edge-tts-auto
                 im "Ecuador has a history of granting asylum to people the US wants. WikiLeaks arranged the route through Moscow."
 
                 if should_play_english_voice():  # edge-tts-auto
@@ -1424,7 +1424,7 @@ label chapter_4:
                     $ escape_successful = False
 
                 if should_play_english_voice():  # edge-tts-auto
-                    voice "audio/voice/en/script_1064_im_0fb2aafd5a.mp3"  # edge-tts-auto
+                    voice "audio/voice/en/script_1064_im_affcf3bdba.mp3"  # edge-tts-auto
                 im "No one will help. Not officially. Moscow may be my only option."
                 sys "// ROUTE REVIEW: Good legal optics, but embassies rarely want the diplomatic fallout. Good principle, poor odds. //"
 
@@ -1434,7 +1434,7 @@ label chapter_4:
                 $ renpy.notify(t("Escape abandoned."))
 
                 if should_play_english_voice():  # edge-tts-auto
-                    voice "audio/voice/en/script_1072_im_fbcbda69c0.mp3"  # edge-tts-auto
+                    voice "audio/voice/en/script_1072_im_fc5a5dc374.mp3"  # edge-tts-auto
                 im "If I stay, Hong Kong will extradite me. The US legal system won't give me a fair trial under the Espionage Act."
                 sys "// ROUTE REVIEW: Good if you want to make a stand, bad if your goal is to stay free long enough to keep the story alive. //"
 
@@ -1498,27 +1498,27 @@ label chapter_5:
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1128_russian_official_fee2762ea4.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1128_russian_official_5de4a348f9.mp3"  # edge-tts-auto
     russian_official "The transit zone is a strange place, yes? You are not in Russia, but you are certainly not in America."
 
     show russian_official smug
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1131_russian_official_e29c939a2c.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1131_russian_official_a53360cbb5.mp3"  # edge-tts-auto
     russian_official "You are... nowhere. We can offer you 'somewhere.' Russia can grant you temporary asylum."
 
     show edward defiant
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1134_e_9f4e22a159.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1134_e_f8262dbd27.mp3"  # edge-tts-auto
     e "I don't want to be a pawn in anyone's geopolitical chess game."
 
     show russian_official calculating
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1137_russian_official_d81ac75c59.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1137_russian_official_1a6014bf55.mp3"  # edge-tts-auto
     russian_official "You became a pawn the moment you took those files. The only question is which board you want to play on."
 
     show edward sad
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1140_im_d1a179943d.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1140_im_cab42c105f.mp3"  # edge-tts-auto
     im "He's right. I have no leverage. The US government pressured every ally to refuse me. Bolivia's presidential plane was even forced to land in Austria because they suspected I was on board. That's how far they'll go."
 
     # --- Reflection Dialogue ---
@@ -1530,11 +1530,11 @@ label chapter_5:
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1150_im_4240c79da5.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1150_im_cc807ea41d.mp3"  # edge-tts-auto
     im "I'm an exile in the physical world, but I've never been more active in the digital one."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1152_im_cc1fba4c7c.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1152_im_d4346e345f.mp3"  # edge-tts-auto
     im "From this small apartment in Moscow, I can still connect to the world. I use encrypted video calls to speak at conferences, secure messaging to coordinate with press freedom organisations. The irony of a surveillance whistleblower living in the surveillance capital of the East is not lost on me."
 
     if should_play_english_voice():  # edge-tts-auto
@@ -1542,45 +1542,45 @@ label chapter_5:
     narrator_voice "From Moscow, you continue to advocate for digital privacy. You develop tools to help journalists protect their sources, speak to millions through encrypted channels, and become the face of the global privacy debate."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1156_im_7316c421bf.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1156_im_87b75174eb.mp3"  # edge-tts-auto
     im "SecureDrop — an open-source whistleblowing platform — was adopted by dozens of major news organizations after the leaks. It allows anonymous document submission, protecting sources the way I wish I had been protected. The tools I helped popularise are now standard practice in investigative journalism."
 
     # --- Dialogue based on accumulated flags ---
 
     if trust_score >= 4:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1161_im_df1100e896.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1161_im_a3aa20ccb1.mp3"  # edge-tts-auto
         im "I trusted the right people. Greenwald, Poitras, the editors — they did what journalists are supposed to do. They told the truth."
     elif trust_score >= 1:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1163_im_2e2396c773.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1163_im_3effeb54fb.mp3"  # edge-tts-auto
         im "Trust is a calculation, not a feeling. I chose carefully, but not perfectly. Some bridges burned that didn't need to."
     else:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1165_im_c0c3f62357.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1165_im_a0f7c5aa3c.mp3"  # edge-tts-auto
         im "I trusted no one fully, and it cost me. Some stories never got published. Some evidence was lost. Half-measures half-worked."
 
     if knowledge_score >= 7:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1168_im_64be99ee0e.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1168_im_d3d44d07f6.mp3"  # edge-tts-auto
         im "My technical knowledge kept me alive. Every encryption key, every secure channel, every OpSec decision mattered."
     elif knowledge_score >= 4:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1170_im_0781209f41.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1170_im_340634d39d.mp3"  # edge-tts-auto
         im "I knew enough to be dangerous, but not enough to be safe. There were gaps in my knowledge that almost got me caught."
     else:
         if should_play_english_voice():  # edge-tts-auto
-            voice "audio/voice/en/script_1172_im_2d88396276.mp3"  # edge-tts-auto
+            voice "audio/voice/en/script_1172_im_c547d1f041.mp3"  # edge-tts-auto
         im "Looking back, there's so much I didn't know. So many security mistakes I made. I survived on luck as much as skill."
 
     # --- Question Segment 5: Final Knowledge Test ---
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1176_im_d00c37afd4.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1176_im_48b084225f.mp3"  # edge-tts-auto
     im "People think metadata is harmless — it's just 'data about data.' Who you called, when, for how long, from where. Not the content of the message itself."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1178_im_d82b159bee.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1178_im_b92206868f.mp3"  # edge-tts-auto
     im "But metadata reveals patterns of life. Call a doctor at midnight, a divorce lawyer the next morning, and a locksmith that afternoon — the content doesn't matter. The pattern tells the whole story. Intelligence agencies consider metadata even more valuable than content in many cases."
 
     # MCQ
@@ -1592,7 +1592,7 @@ label chapter_5:
     )
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1188_im_ebcfa0ea2a.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1188_im_46c2c7688b.mp3"  # edge-tts-auto
     im "PGP — Pretty Good Privacy. It's the asymmetric encryption system that made the whole operation possible. I publish a public key that anyone can use to encrypt a message to me, but only my private key can decrypt it. Without PGP, every email to the journalists would have been an open letter to the NSA."
 
     # Text Input
@@ -1616,11 +1616,11 @@ label chapter_5:
         $ renpy.notify(t("Knowledge +1"))
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1210_im_5a4fbdff18.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1210_im_39e8e483ff.mp3"  # edge-tts-auto
     im "The scariest attack is one you never see — a man-in-the-middle. An attacker secretly positions themselves between you and the person you're talking to, intercepting every message. Both sides think they're communicating directly, but the attacker sees everything."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1212_im_f82ce3a470.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1212_im_cedff0ede3.mp3"  # edge-tts-auto
     im "The only defence is key verification — confirming encryption fingerprints through a separate, trusted channel. If you skip that step, you could be handing your secrets directly to the adversary."
 
     # MCQ
@@ -1637,7 +1637,7 @@ label chapter_5:
     with dissolve
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1227_narrator_voice_063805e805.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1227_narrator_voice_08a8526fb3.mp3"  # edge-tts-auto
     narrator_voice "Years have passed. The world has changed — partly because of what you did, and partly in spite of it."
 
     if should_play_english_voice():  # edge-tts-auto
@@ -1646,7 +1646,7 @@ label chapter_5:
 
     show edward thoughtful
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1232_im_9a65e09fb1.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1232_im_6841c8ac3d.mp3"  # edge-tts-auto
     im "Another person on the inside, seeing what I saw, feeling what I felt. They're asking me what to do."
 
     menu:
@@ -1654,7 +1654,7 @@ label chapter_5:
             $ tree_record_choice("choice_ch5_1", "encourage")
             show edward determined
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_1238_e_4ec97c4fc2.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_1238_e_4f4a602c3f.mp3"  # edge-tts-auto
             e "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
             $ trust_score += 2
             $ renpy.notify(t("Trust +2"))
@@ -1667,7 +1667,7 @@ label chapter_5:
             $ tree_record_choice("choice_ch5_1", "caution")
             show edward concerned
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_1247_e_d9a1a08964.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_1247_e_b72bcc09af.mp3"  # edge-tts-auto
             e "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
             $ trust_score += 1
             $ knowledge_score += 1
@@ -1681,7 +1681,7 @@ label chapter_5:
             $ tree_record_choice("choice_ch5_1", "refuse")
             show edward sad
             if should_play_english_voice():  # edge-tts-auto
-                voice "audio/voice/en/script_1257_e_51bf152075.mp3"  # edge-tts-auto
+                voice "audio/voice/en/script_1257_e_016930bf79.mp3"  # edge-tts-auto
             e "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
             $ trust_score -= 1
             $ renpy.notify(t("Trust -1"))
@@ -1709,7 +1709,7 @@ label chapter_5:
     narrator_voice "But mass surveillance continues in new forms. The debate between security and privacy is far from over."
 
     if should_play_english_voice():  # edge-tts-auto
-        voice "audio/voice/en/script_1275_narrator_voice_42db98009f.mp3"  # edge-tts-auto
+        voice "audio/voice/en/script_1275_narrator_voice_8f7fbf11a4.mp3"  # edge-tts-auto
     narrator_voice "The tools you used — encryption, Tor, secure communication — are the same tools available to everyone."
 
     if should_play_english_voice():  # edge-tts-auto
