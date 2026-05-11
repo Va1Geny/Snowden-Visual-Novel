@@ -2287,35 +2287,17 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                     spacing 0
 
                     hbox:
-                        spacing 8
-                        xfill True
+                        spacing 6
+                        
+                        # Circular markers
+                        add Frame(Solid("#FF5F57"), 4, 4) xsize 8 ysize 8 yalign 0.5
+                        add Frame(Solid("#FEBC2E"), 4, 4) xsize 8 ysize 8 yalign 0.5
+                        add Frame(Solid("#28C840"), 4, 4) xsize 8 ysize 8 yalign 0.5
 
-                        frame:
-                            xsize 10
-                            ysize 10
-                            yalign 0.5
-                            background Solid("#FF5F57")
-                            padding (0, 0)
-
-                        frame:
-                            xsize 10
-                            ysize 10
-                            yalign 0.5
-                            background Solid("#FEBC2E")
-                            padding (0, 0)
-
-                        frame:
-                            xsize 10
-                            ysize 10
-                            yalign 0.5
-                            background Solid("#28C840")
-                            padding (0, 0)
-
-                        null width 8
+                        null width 12
 
                         text t("SNOWDEN_TERMINAL - KNOWLEDGE_CHECK.sh"):
                             style "mcq_terminal_header"
-                            xalign 0.0
                             yalign 0.5
 
                     null height 20
@@ -2323,7 +2305,7 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                     frame:
                         xfill True
                         ysize 1
-                        background Solid("#00FFD114")
+                        background Solid("#00FFD120")
                         padding (0, 0)
 
                     null height 24
@@ -2351,24 +2333,24 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                     null height 24
 
                     vbox:
-                        spacing 4
+                        spacing 2
                         xfill True
 
                         for i, answer in enumerate(answers):
                             $ option_num = str(i + 1)
                             $ is_correct = answered and i == correct_index
                             $ is_wrong = answered and i == selected and selected != correct_index
-                            $ opt_bar = "#00FF88" if is_correct else "#FF2D55" if is_wrong else "#00FFD1"
-                            $ opt_bg = "#00FF880A" if is_correct else "#FF2D550A" if is_wrong else "#04081000"
+                            $ opt_bar = "#00FF88" if is_correct else "#FF2D55" if is_wrong else "#00FFD120"
+                            $ opt_bg = "#00FF880A" if is_correct else "#FF2D550A" if is_wrong else "#00000000"
                             $ num_color = "#00FF88" if is_correct else "#FF2D55" if is_wrong else "#00FFD180"
-                            $ text_color = "#E8E8E8" if is_correct or is_wrong else "#7A8A99"
+                            $ text_color = "#E8E8E8" if is_correct or is_wrong else "#C8D0D8"
 
                             button:
                                 xfill True
-                                yminimum 42
+                                yminimum 46
                                 background Solid(opt_bg)
                                 hover_background Solid("#00FFD108" if not answered else opt_bg)
-                                padding (0, 0)
+                                padding (0, 6)
                                 action If(
                                     not answered,
                                     [SetScreenVariable("selected", i), SetScreenVariable("answered", True)],
@@ -2376,14 +2358,13 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                                 )
 
                                 hbox:
-                                    xfill True
                                     spacing 14
                                     yalign 0.5
 
                                     frame:
                                         xsize 2
-                                        ysize 34
-                                        background Solid(opt_bar if (is_correct or is_wrong) else "#00000000")
+                                        ysize 30
+                                        background Solid(opt_bar)
                                         padding (0, 0)
 
                                     text "[{}]".format(option_num):
@@ -2396,29 +2377,26 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                                         style "mcq_option_text"
                                         color text_color
                                         yalign 0.5
-                                        xfill True
 
                     if answered:
-                        null height 24
+                        null height 10
 
                         frame:
-                            xfill True
                             background Solid("#00FF8808" if selected == correct_index else "#FF2D5508")
-                            padding (14, 12)
+                            padding (10, 4)
+                            xmaximum 700 # Ensure it doesn't grow too large
 
                             hbox:
                                 spacing 12
-                                xfill True
 
                                 frame:
                                     xsize 2
-                                    yfill True
+                                    ysize 60 # Set a reasonable height that fits the header
                                     background Solid("#00FF8880" if selected == correct_index else "#FF2D5580")
                                     padding (0, 0)
 
                                 vbox:
-                                    spacing 6
-                                    xfill True
+                                    spacing 2
 
                                     if selected == correct_index:
                                         text t("CORRECT - MATCH CONFIRMED"):
@@ -2432,9 +2410,15 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                                             color "#FF2D55"
                                             substitute False
 
-                                    text explanation:
-                                        style "mcq_result_text"
-                                        xmaximum 1100
+                                    viewport:
+                                        ymaximum 140 # Lowered to match the red line in example.png
+                                        mousewheel True
+                                        scrollbars "vertical"
+                                        
+                                        vbox:
+                                            text explanation:
+                                                style "mcq_result_text"
+                                                xmaximum 580
 
                     null height 24
 
@@ -2457,16 +2441,25 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                             background Solid("#00FFD1")
                             padding (0, 0)
 
-                        textbutton t("EXECUTE: CONTINUE"):
-                            style "mcq_terminal_continue"
-                            text_style "mcq_terminal_continue_text"
-                            sensitive answered
-                            if answered and selected == correct_index:
-                                action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
-                            elif answered:
-                                action Return()
-                            else:
-                                action NullAction()
+                        frame:
+                            background Solid("#00FFD160") # Border color
+                            padding (1, 1) # Border thickness
+                            
+                            frame:
+                                background Solid("#040810") # Match window background
+                                xpadding 10
+                                ypadding 5
+                                
+                                textbutton t("EXECUTE: CONTINUE"):
+                                    style "mcq_terminal_continue"
+                                    text_style "mcq_terminal_continue_text"
+                                    sensitive answered
+                                    if answered and selected == correct_index:
+                                        action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+                                    elif answered:
+                                        action Return()
+                                    else:
+                                        action NullAction()
 
 screen navigation():
     vbox:

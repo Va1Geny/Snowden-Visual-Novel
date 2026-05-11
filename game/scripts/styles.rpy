@@ -600,6 +600,7 @@ style mcq_option_text:
     font "fonts/ShareTechMono-Regular.ttf"
     size 17
     text_align 0.0
+    xfill False
 
 style mcq_result_line:
     font "fonts/ShareTechMono-Regular.ttf"
@@ -611,14 +612,14 @@ style mcq_result_text:
     font "fonts/Rajdhani-Regular.ttf"
     size 17
     color "#7A8A99"
-    line_leading 5
+    line_leading 2
     text_align 0.0
 
 style mcq_terminal_continue is button:
-    background Solid("#00000000")
+    background None
     hover_background Solid("#00FFD114")
     insensitive_background Solid("#00000000")
-    padding (20, 8)
+    padding (10, 5)
 
 style mcq_terminal_continue_text is button_text:
     font "fonts/ShareTechMono-Regular.ttf"
