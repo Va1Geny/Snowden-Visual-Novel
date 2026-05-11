@@ -941,3 +941,288 @@ style game_over_btn_primary_text is game_over_btn_text:
 style game_over_btn_secondary_text is game_over_btn_text:
     color "#FF2D55"
     hover_color "#0D1117"
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# PART 6 — STYLES REFERENCE (preferences screen)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+style pref_header_row is frame:
+    xfill True
+    padding (32, 22)
+    background Solid("#00FFD10f")
+
+style pref_header_label is text:
+    font FONT_MONO
+    size 10
+    color "#00FFD18c"
+    kerning 2
+
+style pref_header_chapter is text:
+    font FONT_MONO
+    size 10
+    color "#ffffff2e"
+    kerning 1
+
+style pref_kbd_chip is frame:
+    padding (7, 5)
+    background Solid("#ffffff0a")
+
+style pref_kbd_chip_text is text:
+    font FONT_MONO
+    size 10
+    color TEXT_DIM
+
+style pref_tab_bar is frame:
+    xfill True
+    background Null()
+    padding (0, 0)
+
+style pref_tab is button:
+    padding (22, 14)
+    background Null()
+    
+style pref_tab_active is button:
+    padding (22, 14)
+    background Solid("#00FFD10f")
+
+style pref_tab_text is button_text:
+    font FONT_MONO
+    size 12
+    color TEXT_DIM
+    kerning 1.4
+
+style pref_tab_text_active is button_text:
+    font FONT_MONO
+    size 12
+    color CYAN
+    kerning 1.4
+
+style pref_body_layout is hbox:
+    spacing 16
+    padding (32, 28)
+
+style pref_left_col is frame:
+    xsize 740
+    background Null()
+    padding (0, 0)
+
+style pref_side_col is frame:
+    xsize 260
+    background Solid("#00FFD108")
+    padding (20, 22)
+
+style pref_tab_content is vbox:
+    spacing 10
+    xfill True
+
+style pref_label is text:
+    font FONT_MONO
+    size 10
+    color "#00FFD166"
+    kerning 1.8
+
+style pref_section_heading is frame:
+    background Null()
+    padding (0, 0, 0, 10)
+    top_margin 8
+
+style pref_row_frame is frame:
+    xfill True
+    background Solid("#ffffff05")
+    padding (18, 16)
+
+style pref_row_button is button:
+    xfill True
+    background Solid("#ffffff05")
+    hover_background Solid("#00FFD10a")
+    padding (18, 16)
+
+style pref_row is hbox:
+    xfill True
+    spacing 14
+
+style pref_icon_frame is frame:
+    xsize 38 ysize 38
+    background Solid("#00FFD10f")
+    padding (0, 0)
+
+style pref_icon_text is text:
+    font FONT_MONO
+    size 12
+    color CYAN
+    xalign 0.5 yalign 0.5
+
+style pref_content_block is vbox:
+    xsize 420
+
+style pref_title is text:
+    font "fonts/Rajdhani-SemiBold.ttf"
+    size 20
+    color TEXT_PRIMARY
+
+style pref_desc is text:
+    font FONT_BODY
+    size 15
+    color TEXT_DIM
+
+style pref_toggle_control is hbox:
+    xalign 1.0 yalign 0.5
+    spacing 8
+
+style pref_slider_control is hbox:
+    xalign 1.0 yalign 0.5
+    spacing 12
+
+style pref_stepper_control is hbox:
+    xalign 1.0 yalign 0.5
+    spacing 0
+
+style pref_slider is bar:
+    xsize 200 ysize 6
+    left_bar Solid("#00FFD1")
+    right_bar Solid("#ffffff14")
+    thumb Solid("#00FFD1")
+    thumb_offset 8
+    yalign 0.5
+
+style pref_slider_val is text:
+    font FONT_MONO
+    size 11
+    color TEXT_DIM
+    yalign 0.5
+
+style pref_stepper_chip is button:
+    padding (10, 14)
+    background Null()
+    
+style pref_stepper_chip_active is button:
+    padding (10, 14)
+    background Solid("#00FFD114")
+
+style pref_stepper_chip_text is button_text:
+    font FONT_MONO
+    size 12
+    color TEXT_DIM
+
+style pref_stepper_chip_text_active is button_text:
+    font FONT_MONO
+    size 12
+    color CYAN
+
+style pref_toggle_frame_off is frame:
+    xsize 64 ysize 32
+    background Solid("#ffffff14")
+    padding (4, 4)
+
+style pref_toggle_frame_on is frame:
+    xsize 64 ysize 32
+    background Solid("#00FF8822")
+    padding (4, 4)
+
+style pref_toggle_knob_off is frame:
+    xsize 22 ysize 22
+    background Solid("#CBD5E1")
+    xalign 0.0 yalign 0.5
+
+style pref_toggle_knob_on is frame:
+    xsize 22 ysize 22
+    background Solid("#00FF88")
+    xalign 1.0 yalign 0.5
+
+style pref_toggle_label_off is text:
+    font FONT_MONO
+    size 10
+    color TEXT_FAINT
+    yalign 0.5
+
+style pref_toggle_label_on is text:
+    font FONT_MONO
+    size 10
+    color CYAN
+    yalign 0.5
+
+style pref_side_card is frame:
+    xfill True
+    background Solid("#ffffff05")
+    padding (14, 12)
+
+style pref_side_card_dark is frame:
+    xfill True
+    background Solid("#00000033")
+    padding (14, 14)
+
+style pref_side_card_title is text:
+    font FONT_MONO
+    size 10
+    color "#00FFD166"
+
+style pref_side_card_value is text:
+    font "fonts/Rajdhani-SemiBold.ttf"
+    size 22
+    color TEXT_PRIMARY
+
+style pref_hotkey_val is text:
+    font FONT_MONO
+    size 10
+    color TEXT_DIM
+    yalign 0.5
+
+style pref_preset_chip is button:
+    padding (12, 10)
+    background Null()
+
+style pref_preset_chip_active is button:
+    padding (12, 10)
+    background Solid("#00FFD10a")
+
+style pref_preset_chip_text is text:
+    font FONT_MONO
+    size 12
+    color TEXT_DIM
+
+style pref_preset_chip_active_text is text:
+    font FONT_MONO
+    size 12
+    color CYAN
+
+style pref_btn_apply is button:
+    xfill True
+    background Solid("#00FFD1")
+    hover_background Solid("#66B3FF")
+    padding (0, 12)
+
+style pref_btn_apply_text is button_text:
+    font FONT_MONO
+    size 13
+    color "#040810"
+    kerning 1.4
+    xalign 0.5
+
+style pref_btn_ghost is button:
+    xfill True
+    background Null()
+    padding (0, 12)
+
+style pref_btn_ghost_text is button_text:
+    font FONT_MONO
+    size 12
+    color TEXT_DIM
+    hover_color CYAN
+    xalign 0.5
+
+style pref_footer_strip is frame:
+    xfill True
+    ysize 36
+    background Solid("#00000033")
+    yalign 1.0
+
+style pref_footer_center is text:
+    font FONT_MONO
+    size 10
+    color TEXT_FAINT
+    kerning 1.4
+
+style pref_footer_right is text:
+    font FONT_MONO
+    size 10
+    color TEXT_FAINT

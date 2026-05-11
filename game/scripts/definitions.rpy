@@ -1,5 +1,6 @@
 init offset = -1
 
+define config.default_fullscreen = True
 define e = Character("You",
     image="edward",
     color="#00FFD1",
