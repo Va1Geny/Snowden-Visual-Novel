@@ -1,5 +1,5 @@
 ################################################################################
-## ENDINGS.RPY â€” All 5 Ending Sequences
+## ENDINGS.RPY — All 5 Ending Sequences
 ## Classified: The Snowden Files
 ################################################################################
 
@@ -88,7 +88,7 @@ label ending_hero:
         description=t("You successfully leaked all documents, escaped to safety, and your disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed."),
         lessons=[
             "Strong encryption (AES-256, PGP) is the foundation of digital privacy. Without it, no communication is truly private.",
-            "Operational Security (OpSec) is not optional â€” every step in the chain must be secured, from encrypted channels to physical device security.",
+            "Operational Security (OpSec) is not optional — every step in the chain must be secured, from encrypted channels to physical device security.",
             "Whistleblowing platforms like SecureDrop exist to protect sources. Technology can be a shield for truth."
         ]
     )
@@ -122,7 +122,7 @@ label ending_fugitive:
 
     if should_play_english_voice():  # edge-tts-auto
         voice "audio/voice/en/endings_0103_narrator_voice_0346288cdc.mp3"  # edge-tts-auto
-    narrator_voice "Russia grants you asylum â€” not out of kindness, but politics."
+    narrator_voice "Russia grants you asylum — not out of kindness, but politics."
 
     if should_play_english_voice():  # edge-tts-auto
         voice "audio/voice/en/endings_0105_narrator_voice_0bf3a1bd1c.mp3"  # edge-tts-auto
@@ -141,9 +141,9 @@ label ending_fugitive:
         color="#FFD700",
         description=t("You leaked crucial files and escaped, but live in permanent exile. The truth reached the public, but gaps in your operational security meant some evidence was lost. The surveillance debate continues, but reform is slow."),
         lessons=[
-            "VPNs encrypt your traffic, but they don't make you invisible. Your VPN provider can still see your activity â€” trust matters.",
+            "VPNs encrypt your traffic, but they don't make you invisible. Your VPN provider can still see your activity — trust matters.",
             "Metadata (who you contacted, when, from where) can be as revealing as message content. Stripping metadata from files before sharing is essential.",
-            "Digital security requires constant vigilance â€” one mistake can compromise months of careful planning."
+            "Digital security requires constant vigilance — one mistake can compromise months of careful planning."
         ]
     )
     if _return == "restart":
@@ -196,7 +196,7 @@ label ending_imprisoned:
         description=t("Your identity was exposed before you could escape. You were arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed."),
         lessons=[
             "IP tracking and digital forensics can identify you in minutes if you leave traces. Always use Tor and VPNs together on untrusted networks.",
-            "The Espionage Act of 1917 doesn't distinguish between whistleblowers and spies â€” legal protections for digital whistleblowers remain weak.",
+            "The Espionage Act of 1917 doesn't distinguish between whistleblowers and spies — legal protections for digital whistleblowers remain weak.",
             "Physical security is as important as digital security. Cameras, keyloggers, and 'evil maid' attacks can bypass the strongest encryption."
         ]
     )
@@ -250,7 +250,7 @@ label ending_silenced:
         description=t("NSA internal monitors detected your suspicious behavior before you could act. Your clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret."),
         lessons=[
             "Network monitoring tools like intrusion detection systems (IDS) track access patterns. Unusual behavior triggers automated alerts.",
-            "Insider threat programs use behavioral analytics to detect anomalies â€” accessing files outside your clearance level is immediately flagged.",
+            "Insider threat programs use behavioral analytics to detect anomalies — accessing files outside your clearance level is immediately flagged.",
             "Firewalls work both ways: they keep threats out, but they also monitor what goes out. Data Loss Prevention (DLP) systems watch for unauthorized transfers."
         ]
     )
@@ -276,7 +276,7 @@ label ending_betrayed:
 
     if should_play_english_voice():  # edge-tts-auto
         voice "audio/voice/en/endings_0219_narrator_voice_e7fec6a74b.mp3"  # edge-tts-auto
-    narrator_voice "What you thought was a secure PGP channel was actually a honeypot â€” a man-in-the-middle operation run by the very agency you were trying to expose."
+    narrator_voice "What you thought was a secure PGP channel was actually a honeypot — a man-in-the-middle operation run by the very agency you were trying to expose."
 
     if should_play_english_voice():  # edge-tts-auto
         voice "audio/voice/en/endings_0221_narrator_voice_59ed008334.mp3"  # edge-tts-auto
@@ -304,7 +304,7 @@ label ending_betrayed:
         description=t("Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. You vanished without a trace."),
         lessons=[
             "Man-in-the-middle attacks can compromise even encrypted channels if you don't verify the other party's identity through key fingerprints.",
-            "Trust verification is critical â€” in cryptography, you must independently verify public keys through a separate channel, not just accept them.",
+            "Trust verification is critical — in cryptography, you must independently verify public keys through a separate channel, not just accept them.",
             "Zero-day exploits can break any system. Defense in depth (multiple layers of security) is the only way to mitigate unknown vulnerabilities."
         ]
     )
@@ -334,7 +334,7 @@ transform slide_up_delay(d):
 screen ending_screen(title, color, description, lessons):
     modal True
     
-    # â”€â”€ Background Layer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ── Background Layer ──────────────────────────────────────────────
     add "#080C10"
     
     add Solid("#00FFD105")
@@ -346,7 +346,7 @@ screen ending_screen(title, color, description, lessons):
         fit "contain"
         xsize 1000 ysize 1000
 
-    # â”€â”€ Main Content Viewport â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ── Main Content Viewport ──────────────────────────────────────────
     # NOTE: scrollbars on a viewport steal width from the inner content area,
     # which shifts xalign 0.5 off-center on a 1920px stage. We pin the column
     # at xpos 360 (= (1920 - 1200) / 2) so it sits at true visual center.
@@ -366,7 +366,7 @@ screen ending_screen(title, color, description, lessons):
 
             null height 80
             
-            # â”€â”€ HEADER: ENDING TITLE â”€â”€
+            # ── HEADER: ENDING TITLE ──
             vbox:
                 xalign 0.5
                 spacing 10
@@ -382,7 +382,7 @@ screen ending_screen(title, color, description, lessons):
                     xalign 0.5 xsize 400 ysize 2
                     background color
             
-            # â”€â”€ DESCRIPTION CARD â”€â”€
+            # ── DESCRIPTION CARD ──
             frame:
                 xalign 0.5 xsize 1000
                 background "#0D1117F0"
@@ -396,7 +396,7 @@ screen ending_screen(title, color, description, lessons):
                     line_spacing 6
                     font "fonts/ShareTechMono-Regular.ttf"
             
-            # â”€â”€ METRICS & LOGS â”€â”€
+            # ── METRICS & LOGS ──
             hbox:
                 xalign 0.5
                 spacing 30
@@ -506,7 +506,7 @@ screen ending_screen(title, color, description, lessons):
                                         text str(i+1) color "#FFD700" size 14 bold True font "fonts/ShareTechMono-Regular.ttf" xsize 20
                                         text lesson color "#B8C8D8" size 14 font "fonts/ShareTechMono-Regular.ttf" line_spacing 4
 
-            # â”€â”€ ACTION BUTTONS â”€â”€
+            # ── ACTION BUTTONS ──
             hbox:
                 xalign 0.5
                 spacing 60

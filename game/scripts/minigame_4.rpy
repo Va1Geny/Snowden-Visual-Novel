@@ -139,16 +139,16 @@ init python:
 
     ct_traces = [
         {
-            "id": 1, "name": "Browser History", "icon": "ðŸŒ", "phase": 1,
+            "id": 1, "name": "Browser History", "icon": "🌐", "phase": 1,
             "danger_title": "YOUR BROWSING PROVES INTENT",
             "danger_text": "Every URL you visited is stored locally with timestamps. NSA forensics will find your searches for WikiLeaks and journalist contacts.",
             "file_type": "SQLite Database", "file_size": "4.2 MB", "risk_level": "CRITICAL",
             "forensic_note": "Recoverable with Autopsy or DB Browser",
             "correct_command": "rm -rf ~/.config/chromium/Default/History",
             "command_breakdown": [
-                ("rm", "remove â€” deletes a file or directory"),
-                ("-r", "recursive â€” removes all contents inside"),
-                ("-f", "force â€” no confirmation prompts"),
+                ("rm", "remove — deletes a file or directory"),
+                ("-r", "recursive — removes all contents inside"),
+                ("-f", "force — no confirmation prompts"),
                 ("~/.config/chromium/Default/History", "exact path to Chromium browser history database"),
             ],
             "tokens": [], "options": [],
@@ -161,11 +161,11 @@ init python:
                 "[[  OK  ] Browser history: PERMANENTLY DELETED",
                 "[[  OK  ] Trace 1/8 eliminated.",
             ],
-            "success_feedback": "Browser history destroyed. Forensic tools like Autopsy can no longer recover your search history. Normal deletion (Recycle Bin) only hides the file â€” rm -rf removes it from the filesystem entirely.",
+            "success_feedback": "Browser history destroyed. Forensic tools like Autopsy can no longer recover your search history. Normal deletion (Recycle Bin) only hides the file — rm -rf removes it from the filesystem entirely.",
             "learn_text": "Browsers store every URL in a local database file called History. Forensics investigators always look here first. Even incognito mode only hides history from other users, not from investigators with physical access.",
         },
         {
-            "id": 2, "name": "Session Tokens", "icon": "ðŸ”‘", "phase": 1,
+            "id": 2, "name": "Session Tokens", "icon": "🔑", "phase": 1,
             "danger_title": "SAVED LOGINS REVEAL YOUR IDENTITY",
             "danger_text": "Your browser stored authentication tokens for 3 classified NSA systems. These tokens prove you had active sessions during document exfiltration.",
             "file_type": "JSON / SQLite cookies", "file_size": "892 KB", "risk_level": "CRITICAL",
@@ -193,7 +193,7 @@ init python:
             "learn_text": "When you log into a website, the server sends a session token stored in Cookies. This token acts like a temporary ID card. Investigators use tokens to prove you were logged into specific systems at specific times.",
         },
         {
-            "id": 3, "name": "GPS Photo Metadata", "icon": "ðŸ“¸", "phase": 2,
+            "id": 3, "name": "GPS Photo Metadata", "icon": "📸", "phase": 2,
             "danger_title": "YOUR PHOTOS CONTAIN HIDDEN LOCATION DATA",
             "danger_text": "3 photos contain EXIF metadata with GPS coordinates placing you at NSA HQ during the exfiltration window.",
             "file_type": "JPEG EXIF Metadata", "file_size": "3 x embedded GPS", "risk_level": "CRITICAL",
@@ -221,9 +221,9 @@ init python:
             "learn_text": "Every photo contains hidden EXIF metadata: GPS coordinates (accurate to meters), time/date, camera model and serial number. Journalists and whistleblowers ALWAYS strip EXIF data. Tools: exiftool, MAT2, ExifCleaner.",
         },
         {
-            "id": 4, "name": "Downloaded PRISM Files", "icon": "ðŸ“", "phase": 2,
+            "id": 4, "name": "Downloaded PRISM Files", "icon": "📁", "phase": 2,
             "danger_title": "56,000 CLASSIFIED DOCUMENTS ON DISK",
-            "danger_text": "The NSA files are still on your hard drive. Standard DELETE will not work â€” forensic tools recover deleted files in seconds. You need secure overwrite.",
+            "danger_text": "The NSA files are still on your hard drive. Standard DELETE will not work — forensic tools recover deleted files in seconds. You need secure overwrite.",
             "file_type": "Classified PDF / DOCX", "file_size": "2.3 GB", "risk_level": "CRITICAL",
             "forensic_note": "Standard rm recoverable with Recuva/PhotoRec",
             "correct_command": "shred -vzu -n 7 ~/documents/nsa_files/*",
@@ -248,17 +248,17 @@ init python:
                 "[[  OK  ] Data unrecoverable. Trace 4/8 eliminated.",
             ],
             "success_feedback": "Files securely overwritten 7 times then deleted. Unlike rm, shred overwrites the actual disk sectors with random data, making forensic recovery impossible.",
-            "learn_text": "Normal deletion only removes the file's address from the index â€” the data stays on disk. shred overwrites actual disk sectors multiple times. The DoD 5220.22-M standard requires 7 passes.",
+            "learn_text": "Normal deletion only removes the file's address from the index — the data stays on disk. shred overwrites actual disk sectors multiple times. The DoD 5220.22-M standard requires 7 passes.",
         },
         {
-            "id": 5, "name": "Hotel WiFi Record", "icon": "ðŸ“¡", "phase": 2,
+            "id": 5, "name": "Hotel WiFi Record", "icon": "📡", "phase": 2,
             "danger_title": "YOUR DEVICE IS FINGERPRINTED ON THIS NETWORK",
-            "danger_text": "The Mira Hotel router logged your MAC address â€” a unique hardware ID identifying your specific laptop at this location.",
+            "danger_text": "The Mira Hotel router logged your MAC address — a unique hardware ID identifying your specific laptop at this location.",
             "file_type": "Network Interface ID", "file_size": "Hardware level", "risk_level": "HIGH",
             "forensic_note": "MAC logged by hotel for 90 days minimum",
             "correct_command": "sudo macchanger -r wlan0",
             "command_breakdown": [
-                ("sudo", "superuser do â€” run with admin privileges"),
+                ("sudo", "superuser do — run with admin privileges"),
                 ("macchanger", "tool for changing MAC address"),
                 ("-r", "random: assign a completely random MAC"),
                 ("wlan0", "your wireless network interface name"),
@@ -276,10 +276,10 @@ init python:
                 "[[  OK  ] Trace 5/8 eliminated.",
             ],
             "success_feedback": "MAC address randomized. The hotel log now points to a hardware ID that no longer exists on any device. Future connections use a different fingerprint.",
-            "learn_text": "Every network device has a MAC address â€” a unique hardware ID. Hotels and public WiFi log MACs to track devices. MAC spoofing broadcasts a fake ID, breaking the link between your device and the log.",
+            "learn_text": "Every network device has a MAC address — a unique hardware ID. Hotels and public WiFi log MACs to track devices. MAC spoofing broadcasts a fake ID, breaking the link between your device and the log.",
         },
         {
-            "id": 6, "name": "USB Device History", "icon": "ðŸ’¾", "phase": 3,
+            "id": 6, "name": "USB Device History", "icon": "💾", "phase": 3,
             "danger_title": "LINUX LOGGED EVERY USB DEVICE YOU CONNECTED",
             "danger_text": "The kernel logged the serial number, model, and connection time of the USB drive used to copy PRISM files.",
             "file_type": "Kernel syslog / udev journal", "file_size": "Log entries", "risk_level": "HIGH",
@@ -312,18 +312,18 @@ init python:
             "learn_text": "Linux keeps detailed logs of every USB device connected. The systemd journal stores device model, serial number, and timestamp. journalctl manages these logs. The rotate + vacuum trick is a real anti-forensics technique.",
         },
         {
-            "id": 7, "name": "Bash Command History", "icon": "âŒ¨", "phase": 3,
+            "id": 7, "name": "Bash Command History", "icon": "⌨", "phase": 3,
             "danger_title": "EVERY COMMAND YOU TYPED IS RECORDED",
             "danger_text": "Your terminal history contains the exact commands used to copy PRISM files to USB. Timestamped evidence of exfiltration.",
             "file_type": ".bash_history plaintext", "file_size": "12 KB", "risk_level": "CRITICAL",
             "forensic_note": "Readable with any text editor",
             "correct_command": "cat /dev/null > ~/.bash_history && history -c && exit",
             "command_breakdown": [
-                ("cat /dev/null", "reads from /dev/null â€” always empty"),
+                ("cat /dev/null", "reads from /dev/null — always empty"),
                 (">", "redirect output INTO the file (overwrites)"),
                 ("~/.bash_history", "your terminal history file"),
                 ("history -c", "clear current session's in-memory history"),
-                ("exit", "close terminal â€” writes empty history to disk"),
+                ("exit", "close terminal — writes empty history to disk"),
             ],
             "tokens": [],
             "options": [
@@ -348,10 +348,10 @@ init python:
             "learn_text": "Every command typed in a Linux terminal is saved to ~/.bash_history. The correct technique requires THREE steps: (1) overwrite file with /dev/null, (2) clear in-memory history, (3) exit so bash writes empty history.",
         },
         {
-            "id": 8, "name": "Cloud Backup Sync", "icon": "â˜", "phase": 3,
+            "id": 8, "name": "Cloud Backup Sync", "icon": "☁", "phase": 3,
             "danger_title": "YOUR FILES ARE ON A REMOTE SERVER",
             "danger_text": "A background sync process uploaded copies of your documents to a cloud server. The NSA can subpoena those files in minutes.",
-            "file_type": "Cloud sync daemon", "file_size": "Remote â€” 2.3 GB", "risk_level": "CRITICAL",
+            "file_type": "Cloud sync daemon", "file_size": "Remote — 2.3 GB", "risk_level": "CRITICAL",
             "forensic_note": "Subpoena to provider takes < 2 hours",
             "correct_command": "pkill -f dropbox && rm -rf ~/.dropbox && rm -rf ~/Dropbox",
             "command_breakdown": [
@@ -1060,7 +1060,7 @@ label minigame_4_cover_tracks:
         $ knowledge_score += 3
         $ escape_successful = True
         $ evidence_secured = True
-        $ renpy.notify(t("PERFECT â€” Digital Forensics Expert! +3"))
+        $ renpy.notify(t("PERFECT — Digital Forensics Expert! +3"))
     elif cover_wiped >= 6:
         $ knowledge_score += 2
         $ escape_successful = True

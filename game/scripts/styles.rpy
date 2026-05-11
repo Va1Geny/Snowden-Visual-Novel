@@ -518,6 +518,119 @@ style ct_text:
     font "fonts/ShareTechMono-Regular.ttf"
     size 17
 
+style choice_terminal_header:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 12
+    bold True
+    kerning 2
+
+style choice_index_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 13
+    bold True
+    text_align 0.5
+    xalign 0.5
+
+style choice_caption_text:
+    font "fonts/Rajdhani-SemiBold.ttf"
+    size 18
+    bold True
+    line_leading 2
+    xmaximum 680
+    xalign 0.0
+    text_align 0.0
+
+style choice_tag_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 10
+    bold True
+    kerning 1
+    text_align 0.5
+    xalign 0.5
+
+style choice_key_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 10
+    color "#7A8A99"
+    text_align 0.5
+    xalign 0.5
+
+style choice_key_label_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 10
+    color "#2A3A45"
+    text_align 0.0
+    xalign 0.0
+
+style mcq_terminal_header:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 11
+    color "#00FFD14D"
+    kerning 2
+    text_align 0.0
+
+style mcq_prompt_arrow:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 18
+    color "#00FFD1"
+    bold True
+    yoffset -1
+
+style mcq_question_terminal:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 21
+    color "#E8E8E8"
+    line_leading 5
+    text_align 0.0
+
+style mcq_helper_terminal:
+    font "fonts/Rajdhani-Regular.ttf"
+    size 17
+    color "#7A8A99"
+    line_leading 4
+    text_align 0.0
+
+style mcq_option_num:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 15
+    text_align 0.0
+    min_width 34
+
+style mcq_option_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    text_align 0.0
+
+style mcq_result_line:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 15
+    bold True
+    text_align 0.0
+
+style mcq_result_text:
+    font "fonts/Rajdhani-Regular.ttf"
+    size 17
+    color "#7A8A99"
+    line_leading 5
+    text_align 0.0
+
+style mcq_terminal_continue is button:
+    background Solid("#00000000")
+    hover_background Solid("#00FFD114")
+    insensitive_background Solid("#00000000")
+    padding (20, 8)
+
+style mcq_terminal_continue_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 13
+    bold True
+    color "#00FFD1"
+    hover_color "#E8E8E8"
+    insensitive_color "#2A3A45"
+    kerning 2
+    text_align 0.5
+    xalign 0.5
+
 style ct_text_dim:
     color "#7A8A99"
     font "fonts/ShareTechMono-Regular.ttf"

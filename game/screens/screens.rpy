@@ -28,6 +28,63 @@ init python:
     def all_audio_muted():
         return all(preferences.get_mute(mixer) for mixer in ("music", "sfx", "voice"))
 
+    def _hex_to_rgba(value, alpha=255):
+        value = value.lstrip("#")
+        return (
+            int(value[0:2], 16),
+            int(value[2:4], 16),
+            int(value[4:6], 16),
+            int(alpha)
+        )
+
+    class VerticalFade(renpy.Displayable):
+        def __init__(self, top_color="#0A0F1A", bottom_color="#0A0F1A", top_alpha=0, bottom_alpha=247, **kwargs):
+            super(VerticalFade, self).__init__(**kwargs)
+            self.top_color = top_color
+            self.bottom_color = bottom_color
+            self.top_alpha = top_alpha
+            self.bottom_alpha = bottom_alpha
+
+        def render(self, width, height, st, at):
+            width = int(width or config.screen_width)
+            height = int(height or 260)
+            render = renpy.Render(width, height)
+            canvas = render.canvas()
+            top = _hex_to_rgba(self.top_color, self.top_alpha)
+            bottom = _hex_to_rgba(self.bottom_color, self.bottom_alpha)
+
+            for y in range(height):
+                mix = y / float(max(1, height - 1))
+                color = tuple(int(top[i] + (bottom[i] - top[i]) * mix) for i in range(4))
+                canvas.line(color, (0, y), (width, y))
+
+            return render
+
+        def visit(self):
+            return []
+
+    class HorizontalSignalLine(renpy.Displayable):
+        def __init__(self, color="#00FFD1", **kwargs):
+            super(HorizontalSignalLine, self).__init__(**kwargs)
+            self.color = color
+
+        def render(self, width, height, st, at):
+            width = int(width or config.screen_width)
+            render = renpy.Render(width, 1)
+            canvas = render.canvas()
+            rgb = _hex_to_rgba(self.color, 255)[:3]
+
+            for x in range(width):
+                distance = abs((x / float(max(1, width - 1))) - 0.5) * 2.0
+                alpha = int(max(0, 255 * (1.0 - distance)))
+                if alpha:
+                    canvas.line(rgb + (alpha,), (x, 0), (x, 1))
+
+            return render
+
+        def visit(self):
+            return []
+
 default quick_menu = True
 
 style default:
@@ -309,16 +366,322 @@ style input:
     size 30
     xmaximum 1544
 
+transform choice_hover:
+    yoffset 0
+    linear 0.1 yoffset -2
+
+transform bar_slide:
+    xoffset -3
+    linear 0.12 xoffset 0
+
+transform pulse_dot:
+    zoom 1.0 alpha 1.0
+    linear 0.7 zoom 0.6 alpha 0.3
+    linear 0.7 zoom 1.0 alpha 1.0
+    repeat
+
+transform choice_appear(delay=0.0):
+    alpha 0.0
+    xoffset 16
+    pause delay
+    parallel:
+        linear 0.18 alpha 1.0
+        linear 0.18 xoffset 0
+
+transform panel_rise:
+    yoffset 24
+    alpha 0.0
+    linear 0.22 yoffset 0 alpha 1.0
+
 screen choice(items):
-    style_prefix "choice"
+    default choice_hovered = -1
 
-    vbox:
-        xalign 0.5
+    if len(items) > 0:
+        key "K_1" action items[0].action
+        key "K_KP1" action items[0].action
+    if len(items) > 1:
+        key "K_2" action items[1].action
+        key "K_KP2" action items[1].action
+
+    fixed at panel_rise:
+        xfill True
+        yalign 1.0
+        ysize 270
+
+        add VerticalFade("#0A0F1A", "#0A0F1A", 0, 247) xsize config.screen_width ysize 270
+
+        frame:
+            xfill True
+            ysize 8
+            ypos 18
+            background Solid("#00FFD10A")
+            padding (0, 0)
+
+        add HorizontalSignalLine("#00FFD1") xsize config.screen_width ysize 1 ypos 26
+
+        vbox:
+            xfill True
+            yalign 1.0
+            yoffset -24
+            spacing 14
+
+            frame:
+                xalign 0.5
+                background Solid("#0A0F1ACC")
+                padding (18, 6)
+
+                hbox:
+                    spacing 16
+
+                    hbox:
+                        spacing 6
+                        yalign 0.5
+
+                        frame at pulse_dot:
+                            xsize 5
+                            ysize 5
+                            yalign 0.5
+                            background Solid("#00FFD1")
+                            padding (0, 0)
+
+                        text t("// DECISION REQUIRED"):
+                            style "choice_terminal_header"
+                            color "#00FFD1"
+                            yalign 0.5
+
+                    frame:
+                        xsize 1
+                        ysize 14
+                        yalign 0.5
+                        background Solid("#FFFFFF14")
+                        padding (0, 0)
+
+                    text t("SELECT ACTION  [1] [2]"):
+                        style "choice_terminal_header"
+                        color "#E8E8E8AA"
+                        yalign 0.5
+                        substitute False
+
+            vbox:
+                xalign 0.5
+                xmaximum 860
+                spacing 10
+
+                for index, item in enumerate(items):
+                    $ is_hovered = choice_hovered == index
+                    $ accent_idle = "#00FFD1" if index == 0 else "#FFD700" if index == 1 else "#00FF88"
+                    $ accent = "#00FFD1" if index == 0 else "#FF2D55" if index == 1 and is_hovered else accent_idle
+                    $ label_text = "[ SECURE ]" if index == 0 else "[ RISK ]" if index == 1 else "[ OPTION ]"
+                    $ appear_delay = 0.06 + min(index, 5) * 0.08
+
+                    hbox at choice_appear(appear_delay):
+                        xfill True
+                        ysize 74
+                        spacing 0
+
+                        frame:
+                            xsize 3
+                            ysize 74
+                            background Solid(accent if is_hovered else accent_idle + "40")
+                            padding (0, 0)
+                            at bar_slide
+
+                        button:
+                            action item.action
+                            hovered SetScreenVariable("choice_hovered", index)
+                            unhovered SetScreenVariable("choice_hovered", -1)
+                            xfill True
+                            ysize 74
+                            background Solid("#111827" if is_hovered else "#0D1320")
+                            hover_background Solid("#111827")
+                            padding (20, 12)
+
+                            fixed:
+                                xfill True
+                                yfill True
+
+                                frame:
+                                    xfill True
+                                    ysize 1
+                                    ypos 0
+                                    background Solid(accent + "40" if is_hovered else "#FFFFFF0D")
+                                    padding (0, 0)
+
+                                frame:
+                                    xfill True
+                                    ysize 1
+                                    yalign 1.0
+                                    background Solid(accent + "40" if is_hovered else "#FFFFFF0D")
+                                    padding (0, 0)
+
+                                frame:
+                                    xsize 1
+                                    yfill True
+                                    xalign 1.0
+                                    background Solid(accent + "40" if is_hovered else "#FFFFFF0D")
+                                    padding (0, 0)
+
+                                hbox:
+                                    xfill True
+                                    yalign 0.5
+                                    spacing 16
+
+                                    frame:
+                                        xsize 28
+                                        ysize 28
+                                        yalign 0.5
+                                        background Solid(accent + "2E" if is_hovered else accent_idle + "14")
+                                        padding (0, 0)
+
+                                        fixed:
+                                            xfill True
+                                            yfill True
+
+                                            frame:
+                                                xfill True
+                                                ysize 1
+                                                ypos 0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "33")
+                                                padding (0, 0)
+                                            frame:
+                                                xfill True
+                                                ysize 1
+                                                yalign 1.0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "33")
+                                                padding (0, 0)
+                                            frame:
+                                                xsize 1
+                                                yfill True
+                                                xpos 0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "33")
+                                                padding (0, 0)
+                                            frame:
+                                                xsize 1
+                                                yfill True
+                                                xalign 1.0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "33")
+                                                padding (0, 0)
+
+                                            text "[index + 1]":
+                                                style "choice_index_text"
+                                                color accent
+                                                xalign 0.5
+                                                yalign 0.5
+
+                                    text t(item.caption):
+                                        style "choice_caption_text"
+                                        color ("#FFFFFF" if is_hovered else "#E8E8E8")
+                                        xfill True
+                                        yalign 0.5
+                                        substitute False
+
+                                    frame:
+                                        yalign 0.5
+                                        background Solid(accent + "24" if is_hovered else accent_idle + "0F")
+                                        padding (10, 6)
+
+                                        fixed:
+                                            xsize (76 if index < 2 else 82)
+                                            ysize 16
+
+                                            frame:
+                                                xfill True
+                                                ysize 1
+                                                ypos 0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "26")
+                                                padding (0, 0)
+                                            frame:
+                                                xfill True
+                                                ysize 1
+                                                yalign 1.0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "26")
+                                                padding (0, 0)
+                                            frame:
+                                                xsize 1
+                                                yfill True
+                                                xpos 0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "26")
+                                                padding (0, 0)
+                                            frame:
+                                                xsize 1
+                                                yfill True
+                                                xalign 1.0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "26")
+                                                padding (0, 0)
+
+                                            text t(label_text):
+                                                style "choice_tag_text"
+                                                color (accent if is_hovered else accent_idle + "B3")
+                                                xalign 0.5
+                                                yalign 0.5
+                                                substitute False
+
+            hbox:
+                xalign 0.5
+                spacing 20
+
+                hbox:
+                    spacing 8
+                    use choice_key_hint("1", "SECURE ACTION")
+
+                hbox:
+                    spacing 8
+                    use choice_key_hint("2", "RISKY ACTION")
+
+                frame:
+                    xsize 1
+                    ysize 16
+                    yalign 0.5
+                    background Solid("#FFFFFF12")
+                    padding (0, 0)
+
+                hbox:
+                    spacing 8
+                    use choice_key_hint("UP/DN", "NAVIGATE")
+
+screen choice_key_hint(key_label, action_label):
+    frame:
         yalign 0.5
-        spacing 14
+        background Solid("#FFFFFF0A")
+        padding (6, 4)
 
-        for i in items:
-            textbutton t(i.caption) action i.action
+        fixed:
+            xsize (30 if len(key_label) <= 1 else 44)
+            ysize 14
+
+            frame:
+                xfill True
+                ysize 1
+                ypos 0
+                background Solid("#FFFFFF1A")
+                padding (0, 0)
+            frame:
+                xfill True
+                ysize 2
+                yalign 1.0
+                background Solid("#FFFFFF26")
+                padding (0, 0)
+            frame:
+                xsize 1
+                yfill True
+                xpos 0
+                background Solid("#FFFFFF1A")
+                padding (0, 0)
+            frame:
+                xsize 1
+                yfill True
+                xalign 1.0
+                background Solid("#FFFFFF1A")
+                padding (0, 0)
+
+            text t(key_label):
+                style "choice_key_text"
+                xalign 0.5
+                yalign 0.5
+
+    text t(action_label):
+        style "choice_key_label_text"
+        yalign 0.5
 
 screen quick_menu():
     zorder 100
@@ -1424,22 +1787,22 @@ screen dossier():
                         xmaximum 1400
                         substitute False
 
-                    hbox:
-                        spacing 12
+                    fixed:
                         xfill True
+                        ysize 74
 
                         textbutton t("EXPORT TXT"):
                             style "modal_action_button"
                             xsize 220
+                            xalign 0.0
                             background Solid("#244C2F")
                             hover_background Solid("#3A7A58")
                             action Function(export_dossier_txt)
 
-                        null xfill True
-
                         textbutton t("RETURN"):
                             style "modal_action_button"
-                            xsize 240
+                            xsize 220
+                            xalign 1.0
                             action Return()
 
     key "game_menu" action Return()
@@ -1868,141 +2231,241 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
     default selected = -1
     default answered = False
 
-    use ui_backdrop
-    add "logo_watermark"
+    key "game_menu" action NullAction()
+    key "hide_windows" action NullAction()
+    key "rollback" action NullAction()
+    key "rollforward" action NullAction()
+    key "skip" action NullAction()
+    key "toggle_skip" action NullAction()
+
+    if not answered:
+        if len(answers) > 0:
+            key "K_1" action [SetScreenVariable("selected", 0), SetScreenVariable("answered", True)]
+            key "K_KP1" action [SetScreenVariable("selected", 0), SetScreenVariable("answered", True)]
+        if len(answers) > 1:
+            key "K_2" action [SetScreenVariable("selected", 1), SetScreenVariable("answered", True)]
+            key "K_KP2" action [SetScreenVariable("selected", 1), SetScreenVariable("answered", True)]
+        if len(answers) > 2:
+            key "K_3" action [SetScreenVariable("selected", 2), SetScreenVariable("answered", True)]
+            key "K_KP3" action [SetScreenVariable("selected", 2), SetScreenVariable("answered", True)]
+        if len(answers) > 3:
+            key "K_4" action [SetScreenVariable("selected", 3), SetScreenVariable("answered", True)]
+            key "K_KP4" action [SetScreenVariable("selected", 3), SetScreenVariable("answered", True)]
+    else:
+        if selected == correct_index:
+            key "K_RETURN" action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+            key "K_KP_ENTER" action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+        else:
+            key "K_RETURN" action Return()
+            key "K_KP_ENTER" action Return()
+
+    add Solid("#040810", xysize=(1920, 1080))
+    add Solid("#001E3212", xysize=(1500, 780)) xalign 0.5 yalign 0.5
+    add ScanlineOverlay(1920, 1080)
 
     frame:
         xalign 0.5
         yalign 0.5
-        xsize 1160
-        background Solid("#0E1321F0")
+        xsize 1260
+        background Solid("#00FFD114")
         padding (0, 0)
 
-        vbox:
-            spacing 0
+        frame:
+            xfill True
+            background Solid("#040810")
+            padding (36, 32)
 
-            frame:
+            fixed:
                 xfill True
-                ysize 76
-                background Solid("#171C30")
-                padding (28, 0)
+                yfit True
+
+                add ScanlineOverlay(1260, 720, line_spacing=3, line_width=1)
 
                 vbox:
-                    xalign 0.5
-                    yalign 0.5
-                    spacing 2
-
-                    text t("KNOWLEDGE CHECK"):
-                        color "#E8E8E8"
-                        size 24
-                        bold True
-                        xalign 0.5
-
-                    text t("Pick the best answer. Every right call boosts your field knowledge."):
-                        color "#7A8A99"
-                        size 15
-                        xalign 0.5
-
-            frame:
-                xfill True
-                background Solid("#101523")
-                padding (34, 28)
-
-                vbox:
-                    spacing 18
-
-                    text question:
-                        color "#E8E8E8"
-                        size 25
-                        xalign 0.5
-                        text_align 0.5
-                        xmaximum 980
-
-                    if helper_text:
-                        frame:
-                            xfill True
-                            background Solid("#171C30")
-                            padding (18, 14)
-
-                            text helper_text:
-                                color "#7A8A99"
-                                size 18
-                                italic True
-                                xalign 0.5
-                                text_align 0.5
-                                xmaximum 920
-
-                    for i, answer in enumerate(answers):
-                        $ letter = ["A", "B", "C", "D"][i]
-
-                        if not answered:
-                            textbutton t("[letter].  [answer]"):
-                                style "choice_button"
-                                xalign 0.5
-                                action [
-                                    SetScreenVariable("selected", i),
-                                    SetScreenVariable("answered", True)
-                                ]
-                        elif i == correct_index:
-                            textbutton t("[letter].  [answer]"):
-                                style "choice_button"
-                                xalign 0.5
-                                background Solid("#001A1A")
-                                hover_background Solid("#001A1A")
-                                action NullAction()
-                        elif i == selected:
-                            textbutton t("[letter].  [answer]"):
-                                style "choice_button"
-                                xalign 0.5
-                                background Solid("#241926")
-                                hover_background Solid("#241926")
-                                action NullAction()
-                        else:
-                            textbutton t("[letter].  [answer]"):
-                                style "choice_button"
-                                xalign 0.5
-                                background Solid("#0D1117")
-                                hover_background Solid("#0D1117")
-                                action NullAction()
-
-            if answered:
-                frame:
                     xfill True
-                    background Solid("#111720")
-                    padding (26, 24)
+                    spacing 0
+
+                    hbox:
+                        spacing 8
+                        xfill True
+
+                        frame:
+                            xsize 10
+                            ysize 10
+                            yalign 0.5
+                            background Solid("#FF5F57")
+                            padding (0, 0)
+
+                        frame:
+                            xsize 10
+                            ysize 10
+                            yalign 0.5
+                            background Solid("#FEBC2E")
+                            padding (0, 0)
+
+                        frame:
+                            xsize 10
+                            ysize 10
+                            yalign 0.5
+                            background Solid("#28C840")
+                            padding (0, 0)
+
+                        null width 8
+
+                        text t("SNOWDEN_TERMINAL - KNOWLEDGE_CHECK.sh"):
+                            style "mcq_terminal_header"
+                            xalign 0.0
+                            yalign 0.5
+
+                    null height 20
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00FFD114")
+                        padding (0, 0)
+
+                    null height 24
+
+                    hbox:
+                        spacing 12
+                        xfill True
+
+                        text ">":
+                            style "mcq_prompt_arrow"
+
+                        vbox:
+                            spacing 10
+                            xfill True
+
+                            text question:
+                                style "mcq_question_terminal"
+                                xmaximum 1080
+
+                            if helper_text:
+                                text helper_text:
+                                    style "mcq_helper_terminal"
+                                    xmaximum 1080
+
+                    null height 24
 
                     vbox:
-                        spacing 12
-                        xalign 0.5
+                        spacing 4
+                        xfill True
 
-                        if selected == correct_index:
-                            text t("Correct - Nice catch"):
-                                color "#00FF88"
-                                size 24
-                                bold True
-                                xalign 0.5
-                        else:
-                            $ correct_letter = ["A", "B", "C", "D"][correct_index]
-                            text t("Not quite - Correct answer: [correct_letter]"):
-                                color "#E8E8E8"
-                                size 24
-                                bold True
-                                xalign 0.5
+                        for i, answer in enumerate(answers):
+                            $ option_num = str(i + 1)
+                            $ is_correct = answered and i == correct_index
+                            $ is_wrong = answered and i == selected and selected != correct_index
+                            $ opt_bar = "#00FF88" if is_correct else "#FF2D55" if is_wrong else "#00FFD1"
+                            $ opt_bg = "#00FF880A" if is_correct else "#FF2D550A" if is_wrong else "#04081000"
+                            $ num_color = "#00FF88" if is_correct else "#FF2D55" if is_wrong else "#00FFD180"
+                            $ text_color = "#E8E8E8" if is_correct or is_wrong else "#7A8A99"
 
-                        text explanation:
-                            color "#7A8A99"
-                            size 18
-                            xalign 0.5
-                            text_align 0.5
-                            xmaximum 920
+                            button:
+                                xfill True
+                                yminimum 42
+                                background Solid(opt_bg)
+                                hover_background Solid("#00FFD108" if not answered else opt_bg)
+                                padding (0, 0)
+                                action If(
+                                    not answered,
+                                    [SetScreenVariable("selected", i), SetScreenVariable("answered", True)],
+                                    NullAction()
+                                )
 
-                        textbutton t("CONTINUE"):
-                            style "modal_action_button"
-                            xalign 0.5
-                            if selected == correct_index:
+                                hbox:
+                                    xfill True
+                                    spacing 14
+                                    yalign 0.5
+
+                                    frame:
+                                        xsize 2
+                                        ysize 34
+                                        background Solid(opt_bar if (is_correct or is_wrong) else "#00000000")
+                                        padding (0, 0)
+
+                                    text "[{}]".format(option_num):
+                                        style "mcq_option_num"
+                                        color num_color
+                                        yalign 0.5
+                                        substitute False
+
+                                    text answer:
+                                        style "mcq_option_text"
+                                        color text_color
+                                        yalign 0.5
+                                        xfill True
+
+                    if answered:
+                        null height 24
+
+                        frame:
+                            xfill True
+                            background Solid("#00FF8808" if selected == correct_index else "#FF2D5508")
+                            padding (14, 12)
+
+                            hbox:
+                                spacing 12
+                                xfill True
+
+                                frame:
+                                    xsize 2
+                                    yfill True
+                                    background Solid("#00FF8880" if selected == correct_index else "#FF2D5580")
+                                    padding (0, 0)
+
+                                vbox:
+                                    spacing 6
+                                    xfill True
+
+                                    if selected == correct_index:
+                                        text t("CORRECT - MATCH CONFIRMED"):
+                                            style "mcq_result_line"
+                                            color "#00FF88"
+                                    else:
+                                        $ correct_number = correct_index + 1
+                                        $ correct_answer = answers[correct_index]
+                                        text "INCORRECT - Correct answer: [{}] {}".format(correct_number, correct_answer):
+                                            style "mcq_result_line"
+                                            color "#FF2D55"
+                                            substitute False
+
+                                    text explanation:
+                                        style "mcq_result_text"
+                                        xmaximum 1100
+
+                    null height 24
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00FFD114")
+                        padding (0, 0)
+
+                    null height 16
+
+                    hbox:
+                        spacing 16
+                        yalign 0.5
+
+                        frame at blink_cursor:
+                            xsize 8
+                            ysize 18
+                            yalign 0.5
+                            background Solid("#00FFD1")
+                            padding (0, 0)
+
+                        textbutton t("EXECUTE: CONTINUE"):
+                            style "mcq_terminal_continue"
+                            text_style "mcq_terminal_continue_text"
+                            sensitive answered
+                            if answered and selected == correct_index:
                                 action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
-                            else:
+                            elif answered:
                                 action Return()
+                            else:
+                                action NullAction()
 
 screen navigation():
     vbox:
@@ -2501,13 +2964,13 @@ screen preferences():
                         selected current_translation_language() == "dutch"
                         action language_change_action("dutch")
 
-                    textbutton t("FranÃ§ais"):
+                    textbutton t("Français"):
                         style "shell_nav_button"
                         xsize 312
                         selected current_translation_language() == "french"
                         action language_change_action("french")
 
-                    textbutton t("УкраїнÑька"):
+                    textbutton t("Українська"):
                         style "shell_nav_button"
                         xsize 312
                         selected current_translation_language() == "ukrainian"

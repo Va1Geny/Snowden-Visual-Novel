@@ -92,13 +92,13 @@ init python:
                 "source_ip": "192.168.1.10", "port": 80, "protocol": "HTTP",
                 "description": "Web Browser Request", "correct": "ALLOW",
                 "risk_level": "LOW",
-                "explanation": "Port 80 is standard HTTP web traffic from an internal IP. This is normal network activity â€” safe to allow."
+                "explanation": "Port 80 is standard HTTP web traffic from an internal IP. This is normal network activity — safe to allow."
             },
             {
                 "source_ip": "10.0.0.5", "port": 443, "protocol": "HTTPS",
                 "description": "Encrypted Web Traffic", "correct": "ALLOW",
                 "risk_level": "LOW",
-                "explanation": "Port 443 is HTTPS â€” secure, encrypted web traffic. Standard and safe."
+                "explanation": "Port 443 is HTTPS — secure, encrypted web traffic. Standard and safe."
             },
             {
                 "source_ip": "45.33.32.1", "port": 31337, "protocol": "TCP",
@@ -108,7 +108,7 @@ init python:
             },
             {
                 "source_ip": "172.16.0.1", "port": 22, "protocol": "SSH",
-                "description": "Remote Login â€” Internal", "correct": "ALLOW",
+                "description": "Remote Login — Internal", "correct": "ALLOW",
                 "risk_level": "MEDIUM",
                 "explanation": "SSH on port 22 from a known internal IP (172.16.x.x is a private range) is a legitimate remote administration session."
             },
@@ -116,23 +116,23 @@ init python:
                 "source_ip": "89.248.174.5", "port": 4444, "protocol": "TCP",
                 "description": "Suspicious Inbound", "correct": "BLOCK",
                 "risk_level": "CRITICAL",
-                "explanation": "Port 4444 is the default listener port for Metasploit â€” a common hacking framework. Foreign IP + port 4444 = almost certainly a reverse shell attempt. Block immediately."
+                "explanation": "Port 4444 is the default listener port for Metasploit — a common hacking framework. Foreign IP + port 4444 = almost certainly a reverse shell attempt. Block immediately."
             },
             {
                 "source_ip": "10.0.0.12", "port": 53, "protocol": "DNS",
                 "description": "Domain Name Lookup", "correct": "ALLOW",
                 "risk_level": "LOW",
-                "explanation": "DNS on port 53 from an internal IP is completely normal â€” computers need DNS to look up domain names and connect to websites."
+                "explanation": "DNS on port 53 from an internal IP is completely normal — computers need DNS to look up domain names and connect to websites."
             },
             {
                 "source_ip": "203.0.113.99", "port": 23, "protocol": "Telnet",
                 "description": "Legacy Protocol Connection", "correct": "BLOCK",
                 "risk_level": "HIGH",
-                "explanation": "Telnet sends ALL data in plain text â€” no encryption at all. It's outdated and dangerous. From a foreign IP, this is a clear intrusion attempt. Use SSH instead."
+                "explanation": "Telnet sends ALL data in plain text — no encryption at all. It's outdated and dangerous. From a foreign IP, this is a clear intrusion attempt. Use SSH instead."
             },
             {
                 "source_ip": "192.168.1.1", "port": 3389, "protocol": "RDP",
-                "description": "Remote Desktop â€” Router", "correct": "ALLOW",
+                "description": "Remote Desktop — Router", "correct": "ALLOW",
                 "risk_level": "MEDIUM",
                 "explanation": "RDP on port 3389 from the internal router IP (192.168.1.1) is internal remote desktop. Acceptable from a trusted internal source."
             },
@@ -440,13 +440,13 @@ screen minigame_firewall():
 
                             $ _dot_ans = fw_state["answers"][_dot_i] if _dot_i < len(fw_state["answers"]) else None
                             if _dot_ans and _dot_ans["is_correct"]:
-                                text t("â—") color "#00FFD1" size 18
+                                text t("●") color "#00FFD1" size 18
                             else:
-                                text t("â—") color "#FF2D55" size 18
+                                text t("●") color "#FF2D55" size 18
                         elif _dot_i == _fw_idx:
-                            text t("â—†") color "#FFD700" size 18
+                            text t("◆") color "#FFD700" size 18
                         else:
-                            text t("â—‹") color "#555555" size 18
+                            text t("○") color "#555555" size 18
 
                     null width 20
                     text t("PACKET [_fw_num] / 8") color "#888888" size 14 yalign 0.5
@@ -488,10 +488,10 @@ screen minigame_firewall():
                     add Solid("#00FFD120"):
                         xsize 1 ysize 280 xpos 819 ypos 0
 
-                    text t("â—¢") color "#00FFD140" size 14 xpos 6 ypos 2
-                    text t("â—£") color "#00FFD140" size 14 xpos 798 ypos 2
-                    text t("â—¤") color "#00FFD140" size 14 xpos 6 ypos 258
-                    text t("â—¥") color "#00FFD140" size 14 xpos 798 ypos 258
+                    text t("◢") color "#00FFD140" size 14 xpos 6 ypos 2
+                    text t("◣") color "#00FFD140" size 14 xpos 798 ypos 2
+                    text t("◤") color "#00FFD140" size 14 xpos 6 ypos 258
+                    text t("◥") color "#00FFD140" size 14 xpos 798 ypos 258
 
                     vbox:
                         pos(0, 0)
@@ -559,9 +559,9 @@ screen minigame_firewall():
                             hbox:
                                 xoffset 30
                                 if fw_state["last_correct"]:
-                                    text t("âœ“ CORRECT ANALYSIS") color "#00FF88" size 16 bold True
+                                    text t("✓ CORRECT ANALYSIS") color "#00FF88" size 16 bold True
                                 else:
-                                    text t("âœ— INCORRECT ANALYSIS") color "#FF2D55" size 16 bold True
+                                    text t("✗ INCORRECT ANALYSIS") color "#FF2D55" size 16 bold True
 
         if fw_state["phase"] == "incoming":
             hbox at fw_fade_in:
@@ -582,7 +582,7 @@ screen minigame_firewall():
                     add Solid("#00FFD140"):
                         xsize 1 ysize 70 xpos 219 ypos 0
 
-                    textbutton t("âœ“  ALLOW"):
+                    textbutton t("✓  ALLOW"):
                         xalign 0.5 yalign 0.5
                         text_color "#00FFD1"
                         text_hover_color "#FFFFFF"
@@ -604,7 +604,7 @@ screen minigame_firewall():
                     add Solid("#FF2D5540"):
                         xsize 1 ysize 70 xpos 219 ypos 0
 
-                    textbutton t("âœ—  BLOCK"):
+                    textbutton t("✗  BLOCK"):
                         xalign 0.5 yalign 0.5
                         text_color "#FF2D55"
                         text_hover_color "#FFFFFF"
@@ -631,15 +631,15 @@ screen minigame_firewall():
                         text t("> ANALYSIS TERMINAL <") color "#00FFD180" size 14 bold True xalign 0.5
 
                         if fw_state["timed_out"]:
-                            text t("{cps=40}âš  TIME OUT â€” Packet auto-blocked{/cps}") color "#FFD700" size 16 bold True xalign 0.5
+                            text t("{cps=40}⚠ TIME OUT — Packet auto-blocked{/cps}") color "#FFD700" size 16 bold True xalign 0.5
                         elif fw_state["last_correct"]:
                             $ _fb_choice = fw_state["answers"][-1]["choice"]
                             if _fb_choice == "ALLOW":
-                                text t("{cps=40}âœ“ AUTHORIZATION GRANTED{/cps}") color "#00FF88" size 18 bold True xalign 0.5
+                                text t("{cps=40}✓ AUTHORIZATION GRANTED{/cps}") color "#00FF88" size 18 bold True xalign 0.5
                             else:
-                                text t("{cps=40}âœ— PACKET REJECTED{/cps}") color "#00FFD1" size 18 bold True xalign 0.5
+                                text t("{cps=40}✗ PACKET REJECTED{/cps}") color "#00FFD1" size 18 bold True xalign 0.5
                         else:
-                            text t("{cps=40}âš  INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
+                            text t("{cps=40}⚠ INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
 
                         text t("{cps=30}[_fw_explanation]{/cps}") color "#AAAAAA" size 15 text_align 0.5 xalign 0.5 justify True
 
@@ -649,7 +649,7 @@ screen minigame_firewall():
                         null height 5
 
                         if fw_state["show_continue"]:
-                            textbutton t("> CONTINUE â†’"):
+                            textbutton t("> CONTINUE →"):
                                 xalign 0.5
                                 text_color "#00FFD1"
                                 text_hover_color "#FFFFFF"
@@ -744,7 +744,7 @@ screen minigame_firewall():
 
                         vbox:
                             spacing 4
-                            text t("â”€â”€â”€ PACKET LOG â”€â”€â”€") color "#00FFD160" size 12 bold True
+                            text t("─── PACKET LOG ───") color "#00FFD160" size 12 bold True
 
                             $ _r_pkts = get_fw_packets()
                             for _ri in range(8):
@@ -754,9 +754,9 @@ screen minigame_firewall():
                                 hbox:
                                     spacing 8
                                     if _rans and _rans["is_correct"]:
-                                        text t("âœ“") color "#00FF88" size 13 yalign 0.5
+                                        text t("✓") color "#00FF88" size 13 yalign 0.5
                                     else:
-                                        text t("âœ—") color "#FF2D55" size 13 yalign 0.5
+                                        text t("✗") color "#FF2D55" size 13 yalign 0.5
 
                                     $ _r_ip = _rpkt["source_ip"]
                                     $ _r_pt = str(_rpkt["port"])
@@ -797,6 +797,7 @@ screen minigame_firewall():
 init python:
     import random
     import time
+    import math as decrypt_math
 
     caesar_map = {
         "A": "X", "B": "Y", "C": "Z",
@@ -831,7 +832,7 @@ init python:
             "headline": "PGP CHANNEL ANALYSIS",
             "context": [
                 "> To protect your communications, you used",
-                "  ENCRYPTION â€” the process of scrambling data",
+                "  ENCRYPTION — the process of scrambling data",
                 "  so only the intended recipient can read it.",
                 "  PGP encryption was his primary tool."
             ],
@@ -845,10 +846,10 @@ init python:
             "context": [
                 "> The NSA's mass program monitored the",
                 "  phone calls, emails, and internet activity",
-                "  of millions of people â€” most of whom were",
+                "  of millions of people — most of whom were",
                 "  never suspected of any crime."
             ],
-            "hint": "Watching, monitoring, and tracking people's activities â€” what the NSA was doing."
+            "hint": "Watching, monitoring, and tracking people's activities — what the NSA was doing."
         }
     ]
 
@@ -876,11 +877,11 @@ init python:
 
     def decrypt_score_stars(score):
         return {
-            3: u"â˜…â˜…â˜…",
-            2: u"â˜…â˜…â˜†",
-            1: u"â˜…â˜†â˜†",
-            0: u"â˜†â˜†â˜†"
-        }.get(score, u"â˜†â˜†â˜†")
+            3: "3/3",
+            2: "2/3",
+            1: "1/3",
+            0: "0/3"
+        }.get(score, "0/3")
 
     def decrypt_stage_rating(score):
         return {
@@ -892,12 +893,12 @@ init python:
 
     def decrypt_clearance_title(total):
         if total >= 8:
-            return "LEVEL 3 â€” MASTER CRYPTOGRAPHER"
+            return "LEVEL 3 — MASTER CRYPTOGRAPHER"
         elif total >= 6:
-            return "LEVEL 2 â€” CRYPTOGRAPHER"
+            return "LEVEL 2 — CRYPTOGRAPHER"
         elif total >= 4:
-            return "LEVEL 1 â€” CIPHER ANALYST"
-        return "UNCLEARED â€” Further training required"
+            return "LEVEL 1 — CIPHER ANALYST"
+        return "UNCLEARED — Further training required"
 
     def decrypt_log(message, reset=False):
         if reset:
@@ -1100,7 +1101,7 @@ init python:
         decrypt_state["selected_position"] = hint_index
         decrypt_state["wrong_position"] = None
         decrypt_state["last_input_at"] = time.time()
-        decrypt_log("> Hint activated â€” one letter revealed")
+        decrypt_log("> Hint activated — one letter revealed")
         renpy.notify(t("Hint activated"))
         renpy.restart_interaction()
         decrypt_check_word()
@@ -1146,7 +1147,7 @@ init python:
         decrypt_state["phase"] = "word_complete"
         decrypt_state["wrong_position"] = None
         decrypt_state["word_complete_serial"] += 1
-        decrypt_log("> " + puzzle["word"] + " â€” DECRYPTION SUCCESSFUL")
+        decrypt_log("> " + puzzle["word"] + " — DECRYPTION SUCCESSFUL")
         renpy.notify(t("Encryption cracked! +1"))
         renpy.restart_interaction()
         return True
@@ -1170,6 +1171,96 @@ init python:
             decrypt_state["cursor_visible"] = not decrypt_state.get(
                 "cursor_visible", True)
             renpy.restart_interaction()
+
+    class CipherGlobeDisplay(renpy.Displayable):
+        def __init__(self, w=190, h=190, **kwargs):
+            super(CipherGlobeDisplay, self).__init__(**kwargs)
+            self.w = int(w)
+            self.h = int(h)
+
+        def _ellipse_points(self, cx, cy, rx, ry, start=0.0, end=None, steps=96):
+            if end is None:
+                end = decrypt_math.pi * 2.0
+            return [
+                (
+                    int(cx + decrypt_math.cos(start + (end - start) * i / float(steps)) * rx),
+                    int(cy + decrypt_math.sin(start + (end - start) * i / float(steps)) * ry)
+                )
+                for i in range(steps + 1)
+            ]
+
+        def _draw_polyline(self, canvas, color, points, width=1):
+            for i in range(len(points) - 1):
+                canvas.line(color, points[i], points[i + 1], width)
+
+        def render(self, width, height, st, at):
+            r = renpy.Render(self.w, self.h)
+            c = r.canvas()
+            cx = self.w // 2
+            cy = self.h // 2
+            radius = min(self.w, self.h) // 2 - 24
+            phase = st * 0.95
+
+            # Soft terminal-style glow behind the globe.
+            for glow_i in range(5, 0, -1):
+                glow_r = radius + glow_i * 6
+                glow = self._ellipse_points(cx, cy, glow_r, glow_r, steps=128)
+                self._draw_polyline(c, (0, 255, 209, 10 + glow_i * 5), glow, 1)
+
+            outer = self._ellipse_points(cx, cy, radius, radius, steps=128)
+            self._draw_polyline(c, (0, 255, 209, 210), outer, 2)
+
+            inner = self._ellipse_points(cx, cy, radius - 5, radius - 5, steps=128)
+            self._draw_polyline(c, (57, 255, 20, 55), inner, 1)
+
+            for lat in (-55, -32, -12, 12, 32, 55):
+                lat_rad = decrypt_math.radians(lat)
+                y = cy + decrypt_math.sin(lat_rad) * radius * 0.74
+                rx = radius * decrypt_math.cos(lat_rad)
+                ry = max(4, radius * 0.13 * decrypt_math.cos(lat_rad))
+                alpha = 105 if abs(lat) == 12 else 72
+                self._draw_polyline(c, (57, 255, 20, alpha), self._ellipse_points(cx, y, rx, ry, steps=96), 1)
+
+            for meridian in range(8):
+                theta = phase + meridian * decrypt_math.pi / 8.0
+                pts = []
+                for step in range(97):
+                    phi = -decrypt_math.pi / 2.0 + decrypt_math.pi * step / 96.0
+                    x = cx + radius * 0.94 * decrypt_math.sin(theta) * decrypt_math.cos(phi)
+                    y = cy + radius * decrypt_math.sin(phi)
+                    pts.append((int(x), int(y)))
+                alpha = 45 + int(95 * abs(decrypt_math.cos(theta)))
+                self._draw_polyline(c, (0, 255, 209, alpha), pts, 1)
+
+            scan_x = cx + decrypt_math.sin(phase * 1.45) * radius * 0.82
+            scan_half = int(decrypt_math.sqrt(max(0, radius * radius - (scan_x - cx) * (scan_x - cx))))
+            c.line((255, 215, 0, 225), (int(scan_x), cy - scan_half), (int(scan_x), cy + scan_half), 2)
+            c.line((255, 215, 0, 70), (int(scan_x) - 6, cy - scan_half + 6), (int(scan_x) - 6, cy + scan_half - 6), 1)
+            c.line((255, 215, 0, 70), (int(scan_x) + 6, cy - scan_half + 6), (int(scan_x) + 6, cy + scan_half - 6), 1)
+
+            orbit = self._ellipse_points(cx, cy, radius + 13, radius * 0.34, start=phase * 0.9, steps=128)
+            self._draw_polyline(c, (255, 215, 0, 85), orbit, 1)
+
+            for dot_i in range(5):
+                a = phase * 1.25 + dot_i * decrypt_math.pi * 0.4
+                x = cx + decrypt_math.cos(a) * radius * 0.70
+                y = cy + decrypt_math.sin(a * 0.82) * radius * 0.44
+                c.rect((255, 215, 0, 210), (int(x) - 2, int(y) - 2, 4, 4))
+
+            c.line((0, 255, 209, 85), (cx - radius - 12, cy), (cx - radius - 2, cy), 1)
+            c.line((0, 255, 209, 85), (cx + radius + 2, cy), (cx + radius + 12, cy), 1)
+            c.line((0, 255, 209, 85), (cx, cy - radius - 12), (cx, cy - radius - 2), 1)
+            c.line((0, 255, 209, 85), (cx, cy + radius + 2), (cx, cy + radius + 12), 1)
+
+            c.rect((0, 255, 209, 160), (cx - 2, cy - 2, 4, 4))
+            renpy.redraw(self, 0.033)
+            return r
+
+        def event(self, ev, x, y, st):
+            pass
+
+        def visit(self):
+            return []
 
 transform letter_reveal:
     alpha 0.0
@@ -1234,32 +1325,47 @@ screen decrypt_alphabet_panel():
         vbox:
             spacing 10
 
-            text t("â¬¡  CAESAR CIPHER REFERENCE â€” SHIFT: 3  â¬¡"):
+            text t("⬡  CAESAR CIPHER REFERENCE — SHIFT: 3  ⬡"):
                 color "#00FFD1"
                 size 20
                 bold True
                 font "fonts/ShareTechMono-Regular.ttf"
 
             for row_start in (0, 13):
+                $ row_letters = alphabet[row_start:row_start + 13]
+
                 hbox:
                     spacing 6
 
                     vbox:
-                        spacing 18
+                        spacing 0
                         yalign 0.5
 
-                        text("CIPHER â†’" if row_start == 0 else ""):
-                            color "#607080"
-                            size 14
-                            font "fonts/ShareTechMono-Regular.ttf"
+                        fixed:
+                            xsize 82
+                            ysize 42
 
-                        text("PLAIN  â†’" if row_start == 0 else ""):
-                            color "#607080"
-                            size 14
-                            font "fonts/ShareTechMono-Regular.ttf"
+                            text t("ALPHABET"):
+                                color "#607080"
+                                size 14
+                                font "fonts/ShareTechMono-Regular.ttf"
+                                xalign 0.5
+                                yalign 0.5
 
-                    for idx in range(row_start, row_start + 13):
-                        $ cipher_letter = alphabet[idx]
+                        null height 18
+
+                        fixed:
+                            xsize 82
+                            ysize 42
+
+                            text t("DECODED"):
+                                color "#607080"
+                                size 14
+                                font "fonts/ShareTechMono-Regular.ttf"
+                                xalign 0.5
+                                yalign 0.5
+
+                    for cipher_letter in row_letters:
                         $ plain_letter = caesar_map[cipher_letter]
                         $ is_focus = decrypt_state.get("hover_letter") == cipher_letter or decrypt_state.get("hint_flash_letter") == cipher_letter
                         $ appears_here = cipher_letter in puzzle["encrypted"]
@@ -1268,8 +1374,8 @@ screen decrypt_alphabet_panel():
                         $ plain_color = "#00FFD1" if is_focus else "#A4B8C5"
 
                         vbox:
-                            spacing 1
-                            xalign 0.5
+                            spacing 0
+                            xsize 50
 
                             button:
                                 style(
@@ -1287,11 +1393,14 @@ screen decrypt_alphabet_panel():
                                     xalign 0.5
                                     yalign 0.5
 
-                            text t("â”‚"):
-                                xalign 0.5
-                                color connector_color
-                                size 16
-                                font "fonts/ShareTechMono-Regular.ttf"
+                            fixed:
+                                xsize 50
+                                ysize 18
+
+                                add Solid(connector_color):
+                                    xsize 2
+                                    ysize 18
+                                    xalign 0.5
 
                             frame:
                                 xsize 50
@@ -1320,7 +1429,7 @@ screen decrypt_word_display():
             spacing 18
             xalign 0.5
 
-            text t("â¬¡  INTERCEPTED TRANSMISSION  â¬¡"):
+            text t("⬡  INTERCEPTED TRANSMISSION  ⬡"):
                 color "#00FFD1"
                 size 24
                 bold True
@@ -1328,7 +1437,7 @@ screen decrypt_word_display():
                 xalign 0.5
                 text_align 0.5
 
-            text t("âš¡ ENCRYPTED MESSAGE DETECTED â€” [puzzle['headline']]"):
+            text t("⚡ ENCRYPTED MESSAGE DETECTED — [puzzle['headline']]"):
                 color "#E8E8E8"
                 size 18
                 font "fonts/ShareTechMono-Regular.ttf"
@@ -1464,7 +1573,7 @@ screen decrypt_word_display():
                 text_align 0.5
 
             if decrypt_state["phase"] == "word_complete":
-                text t("ðŸ”’ WORD LOCKED â€” READY FOR NEXT TRANSMISSION"):
+                text t("🔒 WORD LOCKED — READY FOR NEXT TRANSMISSION"):
                     color "#39FF14"
                     size 18
                     bold True
@@ -1482,7 +1591,7 @@ screen decrypt_keyboard():
         vbox:
             spacing 16
 
-            text t("â¬¡  KEYBOARD INPUT  â¬¡"):
+            text t("⬡  KEYBOARD INPUT  ⬡"):
                 color "#00FFD1"
                 size 22
                 bold True
@@ -1510,13 +1619,13 @@ screen decrypt_keyboard():
                     font "fonts/ShareTechMono-Regular.ttf"
                     yalign 0.5
 
-                textbutton t("âŒ« DELETE"):
+                textbutton t("⌫ DELETE"):
                     style "keyboard_key"
                     text_style "keyboard_key_text"
                     action Function(decrypt_delete_letter)
 
                 if "" not in decrypt_state["letters_placed"]:
-                    textbutton t("âœ“ CONFIRM"):
+                    textbutton t("✓ CONFIRM"):
                         style "keyboard_key"
                         text_style "keyboard_key_text"
                         action Function(decrypt_confirm_word)
@@ -1531,109 +1640,9 @@ screen decrypt_cipher_wheel():
             ysize 190
             xalign 0.5
 
-            text t("â—Œ"):
-                xalign 0.5
-                yalign 0.5
-                size 180
-                color "#00FFD140"
-                font "fonts/ShareTechMono-Regular.ttf"
+            add CipherGlobeDisplay(190, 190)
 
-            text t("â—Œ"):
-                xalign 0.5
-                yalign 0.5
-                size 134
-                color "#39FF1440"
-                font "fonts/ShareTechMono-Regular.ttf"
-
-            fixed at wheel_spin:
-                xalign 0.5
-                yalign 0.5
-                xsize 160
-                ysize 160
-
-                text t("A B C D E F G"):
-                    xpos 34
-                    ypos 12
-                    size 11
-                    color "#FFD700"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-                text t("H I J K L M"):
-                    xpos 88
-                    ypos 46
-                    size 11
-                    color "#FFD700"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-                text t("N O P Q R"):
-                    xpos 96
-                    ypos 88
-                    size 11
-                    color "#FFD700"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-                text t("S T U V W"):
-                    xpos 18
-                    ypos 126
-                    size 11
-                    color "#FFD700"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-                text t("X Y Z"):
-                    xpos 12
-                    ypos 66
-                    size 11
-                    color "#FFD700"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-            fixed at wheel_snap_to(decrypt_state.get("wheel_angle", 0.0)):
-                xalign 0.5
-                yalign 0.5
-                xsize 126
-                ysize 126
-
-                text t("X Y Z A B C"):
-                    xpos 22
-                    ypos 15
-                    size 10
-                    color "#00FFD1"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-                text t("D E F G H"):
-                    xpos 70
-                    ypos 42
-                    size 10
-                    color "#00FFD1"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-                text t("I J K L M"):
-                    xpos 76
-                    ypos 78
-                    size 10
-                    color "#00FFD1"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-                text t("N O P Q R"):
-                    xpos 14
-                    ypos 94
-                    size 10
-                    color "#00FFD1"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-                text t("S T U V W"):
-                    xpos 4
-                    ypos 58
-                    size 10
-                    color "#00FFD1"
-                    font "fonts/ShareTechMono-Regular.ttf"
-
-            add Solid("#00FFD160"):
-                xsize 6
-                ysize 6
-                xalign 0.5
-                yalign 0.5
-
-        text t("ROT-3  â—†  SHIFT 3"):
+        text t("ROT-3  |  SHIFT 3"):
             xalign 0.5
             size 13
             bold True
@@ -1714,22 +1723,22 @@ screen decrypt_game():
         fixed:
             xfill True
             yfill True
-            text t("â¬¡"):
+            text t("⬡"):
                 xpos 12
                 ypos 8
                 color "#607080"
                 size 18
-            text t("â¬¡"):
+            text t("⬡"):
                 xpos 1786
                 ypos 8
                 color "#607080"
                 size 18
-            text t("â¬¡"):
+            text t("⬡"):
                 xpos 12
                 ypos 310
                 color "#607080"
                 size 18
-            text t("â¬¡"):
+            text t("⬡"):
                 xpos 1786
                 ypos 310
                 color "#607080"
@@ -1748,7 +1757,7 @@ screen decrypt_game():
             spacing 8
             xalign 0.5
 
-            text t("â¬¡  STAGE PROGRESS  â¬¡"):
+            text t("⬡  STAGE PROGRESS  ⬡"):
                 color "#00FFD1"
                 size 20
                 bold True
@@ -1849,7 +1858,7 @@ screen decrypt_game():
             xalign 0.5
             $ hint_color = "#FFD700" if decrypt_state["hints_used"][stage_index] else "#607080"
 
-            text t("â¬¡  CIPHER WHEEL  â¬¡"):
+            text t("⬡  CIPHER WHEEL  ⬡"):
                 color "#00FFD1"
                 size 20
                 bold True
@@ -1885,7 +1894,7 @@ screen decrypt_game():
         vbox:
             spacing 10
 
-            text t("â¬¡  ANALYSIS LOG  â¬¡"):
+            text t("⬡  ANALYSIS LOG  ⬡"):
                 color "#00FFD1"
                 size 20
                 bold True
@@ -1916,12 +1925,12 @@ screen decrypt_game():
         fixed:
             xfill True
             yfill True
-            text t("â¬¡"):
+            text t("⬡"):
                 xpos 12
                 ypos 8
                 color "#607080"
                 size 18
-            text t("â¬¡"):
+            text t("⬡"):
                 xpos 1400
                 ypos 8
                 color "#607080"
@@ -1939,7 +1948,7 @@ screen decrypt_game():
         vbox:
             spacing 10
 
-            text t("â¬¡  CONTROLS  â¬¡"):
+            text t("⬡  CONTROLS  ⬡"):
                 color "#00FFD1"
                 size 18
                 bold True
@@ -1964,7 +1973,7 @@ screen decrypt_game():
 
             hbox:
                 spacing 8
-                text t("âŒ«"):
+                text t("⌫"):
                     color "#FFD700"
                     size 14
                     bold True
@@ -2012,7 +2021,7 @@ screen decrypt_game():
 
             null height 2
 
-            text t("ðŸ’¡ Hints auto-reveal after 25s of inactivity"):
+            text t("💡 Hints auto-reveal after 25s of inactivity"):
                 color "#607080"
                 size 12
                 font "fonts/ShareTechMono-Regular.ttf"
@@ -2042,7 +2051,7 @@ screen decrypt_game():
                     xalign 0.5
                     font "fonts/ShareTechMono-Regular.ttf"
 
-                text t("[puzzle['word']]  [decrypt_score_stars(decrypt_state['stage_scores'][stage_index])]"):
+                text t("[puzzle['word']]  [stage_index + 1]/[len(decrypt_puzzles)]"):
                     color "#E8E8E8"
                     size 28
                     bold True
@@ -2105,7 +2114,7 @@ screen decrypt_stage_transition(word, score, stars):
                 xalign 0.5
                 font "fonts/ShareTechMono-Regular.ttf"
 
-            text t("Stars: [stars]   Rating: [decrypt_stage_rating(score)]"):
+            text t("Stage: [decrypt_state['current_stage'] + 1] / [len(decrypt_puzzles)]   Rating: [decrypt_stage_rating(score)]"):
                 color "#FFD700"
                 size 22
                 xalign 0.5
@@ -2203,13 +2212,13 @@ screen decrypt_result():
         vbox:
             spacing 18
 
-            text t("â¬¡  WHAT YOU LEARNED  â¬¡"):
+            text t("⬡  WHAT YOU LEARNED  ⬡"):
                 color "#00FFD1"
                 size 28
                 bold True
                 font "fonts/ShareTechMono-Regular.ttf"
 
-            text t("A Caesar cipher is one of the oldest encryption methods â€” used by Julius Caesar in 58 BC."):
+            text t("A Caesar cipher is one of the oldest encryption methods — used by Julius Caesar in 58 BC."):
                 color "#E8E8E8"
                 size 22
 
