@@ -4,8 +4,8 @@ define e = Character("You",
     image="edward",
     color="#00FFD1",
     what_color="#E8E8E8",
-    who_size=22,
-    what_size=20,
+    who_size=26,
+    what_size=26,
     who_bold=True)
 
 define greenwald = Character("Grayson Wardell",
@@ -13,68 +13,68 @@ define greenwald = Character("Grayson Wardell",
     color="#FFD700",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define poitras = Character("Leah Portman",
     image="poitras",
     color="#FF69B4",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define nsa_chief = Character("Director Marcus Hale",
     image="nsa_chief",
     color="#FF2D55",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define supervisor = Character("Supervisor Daniel Cross",
     image="supervisor",
     color="#FF6B35",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
     image="colleague",
     color="#888888",
     what_color="#CCCCCC",
     who_bold=False,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define russian_official = Character("Agent Viktor Malenkov",
     image="russian_official",
     color="#CC2222",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define sys = Character("// SYSTEM //",
     color="#00FF00",
     what_color="#00FF00",
     who_bold=True,
-    who_size=20,
-    what_size=18)
+    who_size=24,
+    what_size=24)
 
 define narrator_voice = Character(None,
     what_color="#AAAAAA",
     what_italic=True,
-    what_size=22)
+    what_size=28)
 
 define im = Character("INTERNAL MONOLOGUE",
     what_prefix="*",
     what_suffix="*",
     color="#888888",
     what_color="#AAAAAA",
-    who_size=18,
-    what_size=20)
+    who_size=24,
+    what_size=27)
 
 default trust_score = 0
 default knowledge_score = 0
@@ -242,6 +242,29 @@ init python:
         width, height = current_viewport_size()
         return renpy.variant("touch") or width <= 1600 or height <= 900
 
+    def localized_text_font(semibold=False, mono=False):
+        if current_translation_language() == "ukrainian":
+            return "fonts/DejaVuSans.ttf"
+        if mono:
+            return "fonts/DejaVuSans.ttf"
+        if semibold:
+            return "fonts/DejaVuSans.ttf"
+        return "fonts/DejaVuSans.ttf"
+
+    def voice_for_current_language(english_path):
+        lang = current_translation_language()
+        if lang is None:
+            return english_path
+        if lang == "french":
+            french_path = english_path.replace("audio/voice/en/", "audio/voice/fr/")
+            if renpy.loadable(french_path):
+                return french_path
+        if lang == "dutch":
+            dutch_path = english_path.replace("audio/voice/en/", "audio/voice/nl/")
+            if renpy.loadable(dutch_path):
+                return dutch_path
+        return None
+
     def notebook_entry_count():
         return len(store.notebook_entries)
 
@@ -376,19 +399,27 @@ init python:
         return header + "\n\n".join(lines)
 
     def export_dossier_txt():
-        export_dir = get_notebook_export_dir()
-        if not export_dir:
-            renpy.notify(t("Could not determine a writable export location."))
+        default_filename = datetime.now().strftime("dossier_%Y%m%d_%H%M%S.txt")
+        path = choose_notebook_export_path(default_filename)
+
+        if path == "":
+            renpy.notify(t("Dossier export canceled."))
             return
 
-        filename = datetime.now().strftime("dossier_%Y%m%d_%H%M%S.txt")
-        path = os.path.join(export_dir, filename)
+        if path is None:
+            export_dir = get_notebook_export_dir()
+            if not export_dir:
+                renpy.notify(t("Could not determine a writable export location."))
+                return
+
+            path = os.path.join(export_dir, default_filename)
+            renpy.notify(t("Could not open a save dialog. Exporting to the default exports folder."))
 
         try:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(get_dossier_export_text())
 
-            renpy.notify(t("Dossier exported to ") + export_dir)
+            renpy.notify(t("Dossier exported to ") + path)
         except Exception as exc:
             renpy.notify(f"Failed to export dossier: {exc}")
 
@@ -405,8 +436,14 @@ init python:
     )
 
     def _strip_speaker_state(at_list):
+        if not at_list:
+            return []
 
-        return at_list[:1] if at_list else []
+        return [
+            transform
+            for transform in at_list
+            if transform is not active_char and transform is not inactive_char
+        ]
 
     def speaker_dimmer(event, interact=True, **kwargs):
         if not interact or event != "begin":
@@ -423,13 +460,9 @@ init python:
             except Exception:
                 current = None
 
-            position_transforms = _strip_speaker_state(list(current or ()))
-
-            if not position_transforms:
-                continue
-
+            base_transforms = _strip_speaker_state(list(current or ()))
             new_state = active_char if tag == speaker_tag else inactive_char
-            renpy.show(tag, at_list=position_transforms + [new_state])
+            renpy.show(tag, at_list=base_transforms + [new_state])
 
     config.character_callback = speaker_dimmer
 
@@ -705,10 +738,10 @@ image bg_sheremetyevo:
     xysize (1920, 1080)
 
 transform active_char:
-    ease 0.3 matrixcolor SaturationMatrix(1.0) alpha 1.0 zoom 1.02
+    ease 0.2 matrixcolor SaturationMatrix(1.0) alpha 1.0
 
 transform inactive_char:
-    ease 0.3 matrixcolor SaturationMatrix(0.35) alpha 0.8 zoom 0.97
+    ease 0.2 matrixcolor SaturationMatrix(0.45) alpha 0.82
 
 transform enter_left:
     xanchor 0.5

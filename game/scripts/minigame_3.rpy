@@ -447,21 +447,21 @@ screen minigame_3_main():
 
                     if pw_game_state["status"] in ["playing", "report"]:
                         hbox:
-                            text "└─$ " style "terminal_text"
+                            text t("└─$ ") style "terminal_text"
                             input value TerminalInputValue() style "terminal_input_text" caret "terminal_caret"
                     elif pw_game_state["status"] == "learning":
                         hbox:
-                            text "└─$ " style "terminal_text"
+                            text t("└─$ ") style "terminal_text"
                             add "terminal_caret" yalign 1.0
                     elif pw_game_state["status"] == "outputting":
                         hbox:
-                            text "└─$ " style "terminal_text"
+                            text t("└─$ ") style "terminal_text"
 
         if pw_game_state["status"] in ["playing", "report"]:
             key "K_TAB" action Function(pw_autocomplete)
 
             if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
-                text "Press TAB to autocomplete" xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
+                text t("Press TAB to autocomplete") xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
 
         if pw_game_state["status"] == "learning":
             key "K_RETURN" action Function(pw_check_command)

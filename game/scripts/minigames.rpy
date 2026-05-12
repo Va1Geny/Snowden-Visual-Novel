@@ -34,8 +34,8 @@ screen minigame_intro(title, description):
             spacing 30
 
             text t("// SYSTEM CHALLENGE INITIATED //") style "sys_text"
-            text title style "minigame_title"
-            text description style "minigame_instruction"
+            text t(title) style "minigame_title"
+            text t(description) style "minigame_instruction"
 
             null height 20
 
@@ -68,13 +68,13 @@ screen minigame_result(passed, title, explanation):
 
             if passed:
                 text t("// CHALLENGE PASSED //") color "#00FFD1" size 28 bold True xalign 0.5
-                text title color "#00FFD1" size 36 bold True xalign 0.5
+                text t(title) color "#00FFD1" size 36 bold True xalign 0.5
             else:
                 text t("// CHALLENGE FAILED //") color "#FF2D55" size 28 bold True xalign 0.5
-                text title color "#FF2D55" size 36 bold True xalign 0.5
+                text t(title) color "#FF2D55" size 36 bold True xalign 0.5
 
             null height 10
-            text explanation color "#CCCCCC" size 20 xalign 0.5 text_align 0.5
+            text t(explanation) color "#CCCCCC" size 20 xalign 0.5 text_align 0.5
 
             null height 20
 
@@ -444,9 +444,9 @@ screen minigame_firewall():
                             else:
                                 text t("●") color "#FF2D55" size 18
                         elif _dot_i == _fw_idx:
-                            text t("◆") color "#FFD700" size 18
+                            text t("â—†") color "#FFD700" size 18
                         else:
-                            text t("○") color "#555555" size 18
+                            text t("â—‹") color "#555555" size 18
 
                     null width 20
                     text t("PACKET [_fw_num] / 8") color "#888888" size 14 yalign 0.5
@@ -488,10 +488,10 @@ screen minigame_firewall():
                     add Solid("#00FFD120"):
                         xsize 1 ysize 280 xpos 819 ypos 0
 
-                    text t("◢") color "#00FFD140" size 14 xpos 6 ypos 2
-                    text t("◣") color "#00FFD140" size 14 xpos 798 ypos 2
-                    text t("◤") color "#00FFD140" size 14 xpos 6 ypos 258
-                    text t("◥") color "#00FFD140" size 14 xpos 798 ypos 258
+                    text t("â—¢") color "#00FFD140" size 14 xpos 6 ypos 2
+                    text t("â—£") color "#00FFD140" size 14 xpos 798 ypos 2
+                    text t("â—¤") color "#00FFD140" size 14 xpos 6 ypos 258
+                    text t("â—¥") color "#00FFD140" size 14 xpos 798 ypos 258
 
                     vbox:
                         pos(0, 0)
@@ -639,7 +639,7 @@ screen minigame_firewall():
                             else:
                                 text t("{cps=40}✗ PACKET REJECTED{/cps}") color "#00FFD1" size 18 bold True xalign 0.5
                         else:
-                            text t("{cps=40}⚠ INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
+                            text t("{cps=40}âš  INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
 
                         text t("{cps=30}[_fw_explanation]{/cps}") color "#AAAAAA" size 15 text_align 0.5 xalign 0.5 justify True
 
@@ -1329,7 +1329,7 @@ screen decrypt_alphabet_panel():
                 color "#00FFD1"
                 size 20
                 bold True
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             for row_start in (0, 13):
                 $ row_letters = alphabet[row_start:row_start + 13]
@@ -1348,7 +1348,7 @@ screen decrypt_alphabet_panel():
                             text t("ALPHABET"):
                                 color "#607080"
                                 size 14
-                                font "fonts/ShareTechMono-Regular.ttf"
+                                font "fonts/DejaVuSans.ttf"
                                 xalign 0.5
                                 yalign 0.5
 
@@ -1361,7 +1361,7 @@ screen decrypt_alphabet_panel():
                             text t("DECODED"):
                                 color "#607080"
                                 size 14
-                                font "fonts/ShareTechMono-Regular.ttf"
+                                font "fonts/DejaVuSans.ttf"
                                 xalign 0.5
                                 yalign 0.5
 
@@ -1386,7 +1386,7 @@ screen decrypt_alphabet_panel():
                                 action Function(decrypt_use_cipher_letter, cipher_letter)
 
                                 text t("[cipher_letter]"):
-                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    font "fonts/DejaVuSans.ttf"
                                     size 20
                                     bold True
                                     color cipher_color
@@ -1409,7 +1409,7 @@ screen decrypt_alphabet_panel():
                                 padding(0, 0)
 
                                 text t("[plain_letter]"):
-                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    font "fonts/DejaVuSans.ttf"
                                     size 20
                                     bold True
                                     color plain_color
@@ -1433,14 +1433,14 @@ screen decrypt_word_display():
                 color "#00FFD1"
                 size 24
                 bold True
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 xalign 0.5
                 text_align 0.5
 
             text t("⚡ ENCRYPTED MESSAGE DETECTED — [puzzle['headline']]"):
                 color "#E8E8E8"
                 size 18
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 xalign 0.5
                 text_align 0.5
 
@@ -1463,7 +1463,7 @@ screen decrypt_word_display():
                                 action Function(decrypt_select_position, idx)
 
                                 text t("[letter]"):
-                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    font "fonts/DejaVuSans.ttf"
                                     size 38
                                     bold True
                                     color "#FFD700"
@@ -1480,7 +1480,7 @@ screen decrypt_word_display():
                                 at letter_reveal
 
                                 text t("[letter]"):
-                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    font "fonts/DejaVuSans.ttf"
                                     size 34
                                     bold True
                                     color "#39FF14"
@@ -1501,7 +1501,7 @@ screen decrypt_word_display():
                             action Function(decrypt_select_position, idx)
 
                             text t("[letter]"):
-                                font "fonts/ShareTechMono-Regular.ttf"
+                                font "fonts/DejaVuSans.ttf"
                                 size 38
                                 bold True
                                 color "#FFD700"
@@ -1529,7 +1529,7 @@ screen decrypt_word_display():
 
                                 if letter:
                                     text t("[letter]"):
-                                        font "fonts/ShareTechMono-Regular.ttf"
+                                        font "fonts/DejaVuSans.ttf"
                                         size 34
                                         bold True
                                         color decoded_color
@@ -1538,7 +1538,7 @@ screen decrypt_word_display():
                                         at letter_reveal
                                 else:
                                     text("_" if is_selected and decrypt_state.get("cursor_visible", True) else ""):
-                                        font "fonts/ShareTechMono-Regular.ttf"
+                                        font "fonts/DejaVuSans.ttf"
                                         size 30
                                         color empty_color
                                         xalign 0.5
@@ -1551,7 +1551,7 @@ screen decrypt_word_display():
 
                                 if letter:
                                     text t("[letter]"):
-                                        font "fonts/ShareTechMono-Regular.ttf"
+                                        font "fonts/DejaVuSans.ttf"
                                         size 34
                                         bold True
                                         color decoded_color
@@ -1560,7 +1560,7 @@ screen decrypt_word_display():
                                         at letter_reveal
                                 else:
                                     text("_" if is_selected and decrypt_state.get("cursor_visible", True) else ""):
-                                        font "fonts/ShareTechMono-Regular.ttf"
+                                        font "fonts/DejaVuSans.ttf"
                                         size 30
                                         color empty_color
                                         xalign 0.5
@@ -1578,7 +1578,7 @@ screen decrypt_word_display():
                     size 18
                     bold True
                     xalign 0.5
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
 
 screen decrypt_keyboard():
     $ selected = decrypt_get_selected_position()
@@ -1595,7 +1595,7 @@ screen decrypt_keyboard():
                 color "#00FFD1"
                 size 22
                 bold True
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             text t("Type A-Z on your physical keyboard. Use Backspace to clear and Enter to confirm."):
                 color "#E8E8E8"
@@ -1610,13 +1610,13 @@ screen decrypt_keyboard():
                 text t("Selected cell: [selected + 1] / [len(decrypt_state['letters_placed'])]"):
                     color "#607080"
                     size 18
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
 
                 text t("Cipher hint: [decrypt_puzzles[decrypt_state['current_stage']]['encrypted'][selected]] -> [mapped_hint]"):
                     color "#FFD700"
                     size 18
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
 
                 textbutton t("⌫ DELETE"):
@@ -1647,7 +1647,7 @@ screen decrypt_cipher_wheel():
             size 13
             bold True
             color "#8B8FCC"
-            font "fonts/ShareTechMono-Regular.ttf"
+            font "fonts/DejaVuSans.ttf"
 
 screen decrypt_game():
     modal True
@@ -1683,7 +1683,7 @@ screen decrypt_game():
                 color "#2A3A4A10"
                 size 18
                 line_spacing 2
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 at bg_scroll_down(idx * 0.25)
 
     frame:
@@ -1701,14 +1701,14 @@ screen decrypt_game():
                 color "#E8E8E8"
                 size 20
                 bold True
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 yalign 0.5
 
             text t("[decrypt_score_stars(decrypt_state['stage_scores'][0])] [decrypt_score_stars(decrypt_state['stage_scores'][1])] [decrypt_score_stars(decrypt_state['stage_scores'][2])]  Score: [decrypt_state['total_score']]/9"):
                 color "#00FFD1"
                 size 18
                 bold True
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 xalign 1.0
                 yalign 0.5
 
@@ -1762,7 +1762,7 @@ screen decrypt_game():
                 size 20
                 bold True
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             null height 6
 
@@ -1784,13 +1784,13 @@ screen decrypt_game():
                         color("#FFD700" if _active else "#607080")
                         size 16
                         bold _active
-                        font "fonts/ShareTechMono-Regular.ttf"
+                        font "fonts/DejaVuSans.ttf"
                         yalign 0.5
 
                     text t("[_sd]"):
                         color("#8B8FCC" if _active else "#4D5186")
                         size 14
-                        font "fonts/ShareTechMono-Regular.ttf"
+                        font "fonts/DejaVuSans.ttf"
                         yalign 0.5
 
                     if _done:
@@ -1798,20 +1798,20 @@ screen decrypt_game():
                             color "#39FF14"
                             size 16
                             bold True
-                            font "fonts/ShareTechMono-Regular.ttf"
+                            font "fonts/DejaVuSans.ttf"
                             yalign 0.5
 
                         text t("[_st]"):
                             color "#FFD700"
                             size 16
-                            font "fonts/ShareTechMono-Regular.ttf"
+                            font "fonts/DejaVuSans.ttf"
                             xalign 1.0
                             yalign 0.5
 
                         text t("[_sr]"):
                             color "#00FFD1"
                             size 14
-                            font "fonts/ShareTechMono-Regular.ttf"
+                            font "fonts/DejaVuSans.ttf"
                             xalign 1.0
                             yalign 0.5
                     elif _active:
@@ -1819,13 +1819,13 @@ screen decrypt_game():
                             color "#FFD700"
                             size 14
                             italic True
-                            font "fonts/ShareTechMono-Regular.ttf"
+                            font "fonts/DejaVuSans.ttf"
                             yalign 0.5
                     else:
                         text t("LOCKED"):
                             color "#333840"
                             size 14
-                            font "fonts/ShareTechMono-Regular.ttf"
+                            font "fonts/DejaVuSans.ttf"
                             yalign 0.5
 
             null height 4
@@ -1835,13 +1835,13 @@ screen decrypt_game():
                 text t("Total Score:"):
                     color "#888888"
                     size 16
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
                 text t("[decrypt_state['total_score']] / 9"):
                     color "#00FFD1"
                     size 18
                     bold True
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     xalign 1.0
                     yalign 0.5
 
@@ -1863,7 +1863,7 @@ screen decrypt_game():
                 size 20
                 bold True
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             use decrypt_cipher_wheel
 
@@ -1874,13 +1874,13 @@ screen decrypt_game():
                 text t("Elapsed: [decrypt_elapsed()]s"):
                     color "#E8E8E8"
                     size 15
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
 
                 text t("Hints: [decrypt_state['hints_used'][stage_index]] / 2"):
                     color hint_color
                     size 15
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
 
     frame:
@@ -1898,7 +1898,7 @@ screen decrypt_game():
                 color "#00FFD1"
                 size 20
                 bold True
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             text t("[puzzle['hint']]"):
                 color "#FFD700"
@@ -1910,7 +1910,7 @@ screen decrypt_game():
             text t("[log_text]"):
                 color "#E8E8E8"
                 size 14
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 text_align 0.0
                 line_spacing 2
 
@@ -1952,7 +1952,7 @@ screen decrypt_game():
                 color "#00FFD1"
                 size 18
                 bold True
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 xalign 0.5
 
             null height 4
@@ -1963,12 +1963,12 @@ screen decrypt_game():
                     color "#FFD700"
                     size 14
                     bold True
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
                 text t("Type decoded letter"):
                     color "#AAB0D6"
                     size 13
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
 
             hbox:
@@ -1977,12 +1977,12 @@ screen decrypt_game():
                     color "#FFD700"
                     size 14
                     bold True
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
                 text t("Clear selected cell"):
                     color "#AAB0D6"
                     size 13
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
 
             hbox:
@@ -1991,12 +1991,12 @@ screen decrypt_game():
                     color "#FFD700"
                     size 14
                     bold True
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
                 text t("Confirm full word"):
                     color "#AAB0D6"
                     size 13
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
 
             hbox:
@@ -2005,12 +2005,12 @@ screen decrypt_game():
                     color "#FFD700"
                     size 14
                     bold True
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
                 text t("Select cipher tile"):
                     color "#AAB0D6"
                     size 13
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     yalign 0.5
 
             null height 4
@@ -2024,7 +2024,7 @@ screen decrypt_game():
             text t("💡 Hints auto-reveal after 25s of inactivity"):
                 color "#607080"
                 size 12
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 text_align 0.5
                 xalign 0.5
 
@@ -2049,21 +2049,21 @@ screen decrypt_game():
                     size 30
                     bold True
                     xalign 0.5
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
 
                 text t("[puzzle['word']]  [stage_index + 1]/[len(decrypt_puzzles)]"):
                     color "#E8E8E8"
                     size 28
                     bold True
                     xalign 0.5
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     at star_earn
 
                 text t("Time: [decrypt_state['stage_times'][stage_index]]s   Rating: [decrypt_stage_rating(decrypt_state['stage_scores'][stage_index])]"):
                     color "#00FFD1"
                     size 18
                     xalign 0.5
-                    font "fonts/ShareTechMono-Regular.ttf"
+                    font "fonts/DejaVuSans.ttf"
 
                 textbutton t("[next_cta]"):
                     style "modal_action_button"
@@ -2100,31 +2100,31 @@ screen decrypt_stage_transition(word, score, stars):
                 size 30
                 bold True
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             text t("Word: [word]"):
                 color "#E8E8E8"
                 size 28
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             text t("Time: [decrypt_state['stage_times'][decrypt_state['current_stage']]]s"):
                 color "#00FFD1"
                 size 20
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             text t("Stage: [decrypt_state['current_stage'] + 1] / [len(decrypt_puzzles)]   Rating: [decrypt_stage_rating(score)]"):
                 color "#FFD700"
                 size 22
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             text t("Loading next transmission..."):
                 color "#607080"
                 size 18
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             bar:
                 value AnimatedValue(0.0, 1.0, 1.7)
@@ -2150,7 +2150,7 @@ screen decrypt_result():
                 color "#2A3A4A0F"
                 size 18
                 line_spacing 2
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
                 at bg_scroll_down(idx * 0.25)
 
     frame:
@@ -2169,7 +2169,7 @@ screen decrypt_result():
                 size 34
                 bold True
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             for idx, puzzle in enumerate(decrypt_puzzles):
                 hbox:
@@ -2178,7 +2178,7 @@ screen decrypt_result():
                     text t("[puzzle['word']] [decrypt_score_stars(decrypt_state['stage_scores'][idx])]"):
                         color "#E8E8E8"
                         size 25
-                        font "fonts/ShareTechMono-Regular.ttf"
+                        font "fonts/DejaVuSans.ttf"
 
                     text t("Decoded in [decrypt_state['stage_times'][idx]]s ([decrypt_stage_rating(decrypt_state['stage_scores'][idx])])"):
                         color "#607080"
@@ -2192,14 +2192,14 @@ screen decrypt_result():
                 size 30
                 bold True
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             text t("CLEARANCE: [decrypt_clearance_title(total)]"):
                 color clearance_color
                 size 26
                 bold True
                 xalign 0.5
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
     frame:
         xalign 0.5
@@ -2216,7 +2216,7 @@ screen decrypt_result():
                 color "#00FFD1"
                 size 28
                 bold True
-                font "fonts/ShareTechMono-Regular.ttf"
+                font "fonts/DejaVuSans.ttf"
 
             text t("A Caesar cipher is one of the oldest encryption methods — used by Julius Caesar in 58 BC."):
                 color "#E8E8E8"

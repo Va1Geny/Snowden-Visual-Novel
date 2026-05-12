@@ -17,7 +17,7 @@ screen chapter_select():
         vbox:
             spacing 24
 
-            text "MISSION SELECT" style "chapter_select_title"
+            text t("MISSION SELECT") style "chapter_select_title"
 
             frame:
                 background "#00FFD144"
@@ -55,10 +55,10 @@ screen chapter_select():
 
                                     hbox:
                                         spacing 20
-                                        text "CHAPTER 01" style "chapter_select_chapter_num"
-                                        text "[INFILTRATION]" style "chapter_select_codename"
+                                        text t("CHAPTER 01") style "chapter_select_chapter_num"
+                                        text t("[INFILTRATION]") style "chapter_select_codename"
 
-                                    text "Assume your identity as NSA contractor." style "chapter_select_description"
+                                    text t("Assume your identity as NSA contractor.") style "chapter_select_description"
 
                     button:
                         action Jump("chapter_2")
@@ -82,10 +82,10 @@ screen chapter_select():
 
                                     hbox:
                                         spacing 20
-                                        text "CHAPTER 02" style "chapter_select_chapter_num"
-                                        text "[DISCOVERY]" style "chapter_select_codename"
+                                        text t("CHAPTER 02") style "chapter_select_chapter_num"
+                                        text t("[DISCOVERY]") style "chapter_select_codename"
 
-                                    text "Access classified PRISM files." style "chapter_select_description"
+                                    text t("Access classified PRISM files.") style "chapter_select_description"
 
                     button:
                         action Jump("chapter_3")
@@ -109,37 +109,10 @@ screen chapter_select():
 
                                     hbox:
                                         spacing 20
-                                        text "CHAPTER 03" style "chapter_select_chapter_num"
-                                        text "[DECISION]" style "chapter_select_codename"
+                                        text t("CHAPTER 03") style "chapter_select_chapter_num"
+                                        text t("[DECISION]") style "chapter_select_codename"
 
-                                    text "Choose between personal conscience and duty." style "chapter_select_description"
-
-                    button:
-                        action NullAction()
-                        xysize (780, 100)
-                        background Solid("#0D0D0D")
-                        hover_background Solid("#0D0D0D")
-                        padding (20, 16)
-
-                        vbox:
-                            spacing 4
-
-                            hbox:
-                                spacing 20
-
-                                frame:
-                                    background "#3A4A55"
-                                    xysize (4, 60)
-
-                                vbox:
-                                    spacing 2
-
-                                    hbox:
-                                        spacing 20
-                                        text "CHAPTER 04" style "chapter_select_chapter_num_locked"
-                                        text "[EXFILTRATION]" style "chapter_select_codename"
-
-                                    text "[CLASSIFIED]" style "chapter_select_locked_text"
+                                    text t("Choose between personal conscience and duty.") style "chapter_select_description"
 
                     button:
                         action NullAction()
@@ -163,10 +136,37 @@ screen chapter_select():
 
                                     hbox:
                                         spacing 20
-                                        text "CHAPTER 05" style "chapter_select_chapter_num_locked"
-                                        text "[AFTERMATH]" style "chapter_select_codename"
+                                        text t("CHAPTER 04") style "chapter_select_chapter_num_locked"
+                                        text t("[EXFILTRATION]") style "chapter_select_codename"
 
-                                    text "[CLASSIFIED]" style "chapter_select_locked_text"
+                                    text t("[CLASSIFIED]") style "chapter_select_locked_text"
+
+                    button:
+                        action NullAction()
+                        xysize (780, 100)
+                        background Solid("#0D0D0D")
+                        hover_background Solid("#0D0D0D")
+                        padding (20, 16)
+
+                        vbox:
+                            spacing 4
+
+                            hbox:
+                                spacing 20
+
+                                frame:
+                                    background "#3A4A55"
+                                    xysize (4, 60)
+
+                                vbox:
+                                    spacing 2
+
+                                    hbox:
+                                        spacing 20
+                                        text t("CHAPTER 05") style "chapter_select_chapter_num_locked"
+                                        text t("[AFTERMATH]") style "chapter_select_codename"
+
+                                    text t("[CLASSIFIED]") style "chapter_select_locked_text"
 
             frame:
                 background "#00FFD144"
@@ -176,4 +176,4 @@ screen chapter_select():
             button:
                 action Return()
                 style "chapter_select_btn"
-                text "[ RETURN ]" style "chapter_select_btn_text"
+                text t("[ RETURN ]") style "chapter_select_btn_text"

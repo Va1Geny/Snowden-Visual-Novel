@@ -1,7 +1,7 @@
 init python:
 
-    FONT_MONO  = "fonts/ShareTechMono-Regular.ttf"
-    FONT_BODY  = "fonts/Rajdhani-Regular.ttf"
+    FONT_MONO  = "fonts/DejaVuSans.ttf"
+    FONT_BODY  = "fonts/DejaVuSans.ttf"
 
     BG_DEEP    = "#080C10"
     BG_PANEL   = "#0D1117"
@@ -126,7 +126,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
     if t_deco:
         fixed:
             at trans_fade_in(0.4)
-            text "CLASSIFIED // TS/SCI // " + codename:
+            text t("CLASSIFIED // TS/SCI // ") + codename:
                 font FONT_MONO
                 size 12
                 color "#3A4A55"
@@ -160,7 +160,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                 xalign 0.5
                 spacing 40
                 at trans_fade_in(0.2)
-                text "CHAPTER %02d" % int(chapter_num):
+                text t("CHAPTER %02d") % int(chapter_num):
                     font FONT_MONO
                     size 14
                     color TEXT_DIM
@@ -226,7 +226,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                 vbox:
                     spacing 16
                     vbox:
-                        text "LOCATION":
+                        text t("LOCATION"):
                             font FONT_MONO
                             size 12
                             color TEXT_DIM
@@ -237,7 +237,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                             color TEXT_PRIMARY
                             xalign 0.5 text_align 0.5
                     vbox:
-                        text "TIME":
+                        text t("TIME"):
                             font FONT_MONO
                             size 12
                             color TEXT_DIM
@@ -251,7 +251,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                 vbox:
                     spacing 16
                     vbox:
-                        text "DATE":
+                        text t("DATE"):
                             font FONT_MONO
                             size 12
                             color TEXT_DIM
@@ -262,7 +262,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                             color TEXT_PRIMARY
                             xalign 0.5 text_align 0.5
                     vbox:
-                        text "CLEARANCE":
+                        text t("CLEARANCE"):
                             font FONT_MONO
                             size 12
                             color TEXT_DIM
@@ -289,7 +289,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
             null height 80
 
         if t_btn:
-            textbutton "[[ ENTER CHAPTER ]":
+            textbutton t("[[ ENTER CHAPTER ]"):
                 style "transition_btn"
                 action Return()
                 at trans_fade_in(0.3)
@@ -346,7 +346,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                 spacing 0
                 add Solid(CYAN) xsize 496 ysize 2
                 null height 8
-                text "// CHALLENGE INITIATED //":
+                text t("// CHALLENGE INITIATED //"):
                     font FONT_MONO
                     size 13
                     color CYAN
@@ -358,7 +358,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                         at trans_fade_in(0.2)
 
                         vbox:
-                            text "MISSION ID":
+                            text t("MISSION ID"):
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
@@ -368,7 +368,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 color TEXT_PRIMARY
 
                         vbox:
-                            text "CLASSIFICATION":
+                            text t("CLASSIFICATION"):
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
@@ -378,7 +378,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 color CYAN
 
                         vbox:
-                            text "CHALLENGE TYPE":
+                            text t("CHALLENGE TYPE"):
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
@@ -388,7 +388,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 color TEXT_PRIMARY
 
                         vbox:
-                            text "ESTIMATED TIME":
+                            text t("ESTIMATED TIME"):
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
@@ -398,7 +398,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 color TEXT_PRIMARY
 
                         vbox:
-                            text "DIFFICULTY":
+                            text t("DIFFICULTY"):
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
@@ -413,7 +413,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                         null height 8
 
                         vbox:
-                            text "IF YOU SUCCEED":
+                            text t("IF YOU SUCCEED"):
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
@@ -422,7 +422,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 size 14
                                 color GREEN
                             null height 8
-                            text "IF YOU FAIL":
+                            text t("IF YOU FAIL"):
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
@@ -436,7 +436,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                         null height 8
 
                         vbox:
-                            text "YOU WILL LEARN":
+                            text t("YOU WILL LEARN"):
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
@@ -472,7 +472,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                 null height 8
 
                 if t_sub:
-                    text subtitle:
+                    text t(subtitle):
                         font FONT_BODY
                         size 18
                         color TEXT_DIM
@@ -491,7 +491,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                 null height 24
 
                 if t_sub:
-                    text "M I S S I O N   B R I E F I N G":
+                    text t("M I S S I O N   B R I E F I N G"):
                         font FONT_MONO
                         size 13
                         color GOLD
@@ -527,7 +527,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                         for k, desc in controls:
                             hbox:
                                 spacing 8
-                                text "[[ " + k + " ]":
+                                text t("[[ ") + k + " ]":
                                     font FONT_MONO
                                     size 14
                                     color GOLD
@@ -542,12 +542,12 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                         spacing 20
                         at trans_fade_in(0.3)
 
-                        textbutton "[[ BEGIN CHALLENGE ]":
+                        textbutton t("[[ BEGIN CHALLENGE ]"):
                             xsize 340
                             style "transition_btn_left"
                             action Return()
 
-                        textbutton "[[ SKIP MINIGAME ]":
+                        textbutton t("[[ SKIP MINIGAME ]"):
                             xsize 340
                             style "transition_btn_left"
                             text_color "#ff4444"
