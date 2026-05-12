@@ -117,8 +117,8 @@ init python:
 
             for src, tr in data.items():
                 if "[" in src and "]" in src:
-                    placeholders = re.findall(r"(\[[^\]]+\])", src)
-                    parts = re.split(r"(\[[^\]]+\])", src)
+                    placeholders = re.findall(r"(\[(?:[^\[\]]|\[[^\[\]]*\])*\])", src)
+                    parts = re.split(r"(\[(?:[^\[\]]|\[[^\[\]]*\])*\])", src)
                     pattern = "^"
 
                     for part in parts:
