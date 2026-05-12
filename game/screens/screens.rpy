@@ -1174,15 +1174,15 @@ screen pause_hub():
 
                             vbox:
                                 spacing 8
-                                text title:
+                                text t(title):
                                     color "#7A8A99"
                                     size 16
                                     bold True
-                                text value:
+                                text t(value):
                                     color "#E8E8E8"
                                     size 34
                                     bold True
-                                text body:
+                                text t(body):
                                     color "#7A8A99"
                                     size 17
     else:
@@ -1431,6 +1431,8 @@ screen dossier():
                         textbutton t("EXPORT TXT"):
                             style "modal_action_button"
                             xsize 220
+                            text_xalign 0.5
+                            text_text_align 0.5
                             background Solid("#244C2F")
                             hover_background Solid("#3A7A58")
                             action Function(export_dossier_txt)
@@ -2062,26 +2064,31 @@ screen navigation():
                 hover_background Solid("#3A4A55")
                 action Quit(confirm=not main_menu)
 
-screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
+screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, show_header=True, header_kicker=None, header_body=None):
     tag menu
 
     $ compact = is_compact_layout()
+    $ menu_header_kicker = header_kicker if header_kicker is not None else "ARCHIVE INTERFACE"
+    $ menu_header_body = header_body if header_body is not None else "A single menu grid now drives save, load, settings, history, help, and reference screens."
+    $ compact_ypos = 188 if show_header else 120
+    $ standard_ypos = 214 if show_header else 146
 
     use ui_backdrop
-    use shell_header(
-        "ARCHIVE INTERFACE",
-        "[title]",
-        "A single menu grid now drives save, load, settings, history, help, and reference screens."
-    )
+    if show_header:
+        use shell_header(
+            menu_header_kicker,
+            "[title]",
+            menu_header_body
+        )
 
     if compact:
         frame:
             xpos 24
-            ypos 188
+            ypos compact_ypos
             xsize 1872
-            ysize 844
+            ysize (912 if not show_header else 844)
             background Solid("#0E1321EE")
-            padding (20, 20)
+            padding (20, 24 if not show_header else 20)
 
             viewport:
                 xfill True
@@ -2154,14 +2161,14 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
     else:
         hbox:
             xpos 72
-            ypos 214
+            ypos standard_ypos
             spacing 20
 
             frame:
                 xsize 360
-                ysize 770
+                ysize (838 if not show_header else 770)
                 background Solid("#0E1321EE")
-                padding (20, 20)
+                padding (20, 24 if not show_header else 20)
 
                 vbox:
                     spacing 18
@@ -2180,9 +2187,9 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
             frame:
                 xsize 1396
-                ysize 770
+                ysize (838 if not show_header else 770)
                 background Solid("#0E1321EE")
-                padding (24, 24)
+                padding (24, 28 if not show_header else 24)
 
                 if scroll == "viewport":
                     viewport:
@@ -2381,13 +2388,16 @@ screen file_slots(title):
 screen preferences():
     tag menu
 
-    use game_menu(t("Preferences"), scroll="viewport", spacing=18):
+    use game_menu(t("Preferences"), scroll="viewport", spacing=18, show_header=False):
         hbox:
             spacing 18
+            box_wrap True
+            box_wrap_spacing 18
             xfill True
 
             frame:
-                xsize 655
+                xfill True
+                xminimum 620
                 background Solid("#171C30")
                 padding (24, 22)
 
@@ -2423,7 +2433,8 @@ screen preferences():
                         action InvertSelected(Preference("transitions", "toggle"))
 
             frame:
-                xsize 655
+                xfill True
+                xminimum 620
                 background Solid("#171C30")
                 padding (24, 22)
 
@@ -2487,29 +2498,35 @@ screen preferences():
 
                 hbox:
                     spacing 14
+                    box_wrap True
+                    box_wrap_spacing 14
                     xfill True
 
-                    textbutton t("English"):
+                    textbutton language_self_name(None):
                         style "shell_nav_button"
-                        xsize 312
+                        xfill True
+                        xminimum 300
                         selected current_translation_language() is None
                         action language_change_action(None)
 
-                    textbutton t("Nederlands"):
+                    textbutton language_self_name("dutch"):
                         style "shell_nav_button"
-                        xsize 312
+                        xfill True
+                        xminimum 300
                         selected current_translation_language() == "dutch"
                         action language_change_action("dutch")
 
-                    textbutton t("FranÃ§ais"):
+                    textbutton language_self_name("french"):
                         style "shell_nav_button"
-                        xsize 312
+                        xfill True
+                        xminimum 300
                         selected current_translation_language() == "french"
                         action language_change_action("french")
 
-                    textbutton t("УкраїнÑька"):
+                    textbutton language_self_name("ukrainian"):
                         style "shell_nav_button"
-                        xsize 312
+                        xfill True
+                        xminimum 300
                         selected current_translation_language() == "ukrainian"
                         action language_change_action("ukrainian")
 

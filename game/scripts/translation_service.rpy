@@ -77,6 +77,9 @@ init python:
             name = self.LANGUAGES.get(lang, self.LANGUAGES[None])
             return self.ui(name) if localized else name
 
+        def language_self_name(self, lang=None):
+            return self.language_name(lang, localized=False)
+
         def _translation_path(self, lang, filename):
             return os.path.join(config.gamedir, "tl", lang, filename)
 
@@ -251,6 +254,9 @@ init python:
 
     def localized_language_name(lang):
         return translation_service.language_name(lang)
+
+    def language_self_name(lang):
+        return translation_service.language_self_name(lang)
 
     def language_change_action(target_lang):
         return translation_service.change_language_action(target_lang)

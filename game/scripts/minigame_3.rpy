@@ -461,7 +461,7 @@ screen minigame_3_main():
             key "K_TAB" action Function(pw_autocomplete)
 
             if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
-                text "Press TAB to autocomplete" xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
+                text t("Press TAB to autocomplete") xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
 
         if pw_game_state["status"] == "learning":
             key "K_RETURN" action Function(pw_check_command)
