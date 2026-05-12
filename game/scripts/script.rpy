@@ -980,13 +980,19 @@ label ch3_continue:
 
     sys "// OPSEC RULE #3: Never reuse passwords. Every service gets a unique, strong password. Use a password manager. //"
 
-    # --- Putting It Together ---
+    # --- Password Cracking and Cryptanalysis ---
 
     if should_play_english_voice():  # edge-tts-auto
         voice "audio/voice/en/script_0729_im_a6cb2cedfa.mp3"  # edge-tts-auto
-    im "Now it's time to put that knowledge into practice. I've intercepted an encrypted password hash from the internal NSA directory. Before I can access the PRISM architecture files, I need to crack it. One mistake, and the system locks down."
+    im "Now it's time to put that knowledge into practice. I've intercepted an encrypted password hash from the internal NSA directory. Before I can access the PRISM architecture files, I need to crack it."
 
-    sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Weak passwords can be cracked instantly using dictionary attacks and rule-based mutations. //"
+    im "A hash is a one-way mathematical function — you can't just 'decrypt' it. You have to guess the password, hash your guess, and see if it matches. To do this, we use tools like 'John the Ripper' and a massive list of known passwords, like the 'rockyou.txt' wordlist. This is called a dictionary attack."
+
+    im "But what if the password has substitutions, like 'M0nk3y!' instead of 'monkey'? That's where rule-based mutations come in. By applying rules, the cracking tool automatically tests thousands of variations for every word in the dictionary."
+
+    sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Fast algorithms like MD5 can be cracked instantly using dictionary attacks. Strong algorithms like bcrypt use a computational cost factor to make guessing intentionally slow. //"
+
+    im "If these hashes use MD5, they'll break in seconds. If they use bcrypt... we might be here for a century. Let's find out."
 
     window hide
     $ mg_intro3 = renpy.call_screen("minigame_briefing", challenge_title="BRUTE FORCE", subtitle="Passwords are only as strong as their entropy.\nTime to crack the hashes.", mission_id="OPS-03-09-2013", classification="TOP SECRET // EYES ONLY", challenge_type="CRYPTANALYSIS", estimated_time="120 SECONDS", difficulty=3, difficulty_label="OPERATIVE", succeed_reward="access_granted +1", fail_penalty="suspicion_level +1", learn_concept="Dictionary attacks and rule-based mutations\ncan break weak passwords instantly.", briefing_text="You intercepted an NSA internal system hash.\nYour task is to run a dictionary attack against this hash using John the Ripper.\n\nThe rockyou wordlist is available at /usr/share/wordlists/rockyou.txt\n\nType the correct terminal commands to crack the hashes.", controls=[("TAB", "Autocomplete command"),("ENTER", "Execute operation")])
@@ -1321,9 +1327,15 @@ label chapter_4:
         voice "audio/voice/en/script_0986_im_6e485d9b67.mp3"  # edge-tts-auto
     im "But before I can run, I need to wipe everything. Every file, every log, every trace. If I leave even one digital breadcrumb, it's over."
 
+    im "Digital forensics is relentless. When you delete a file normally, the operating system just removes the pointer — the actual data remains on the disk until it's overwritten. To truly destroy it, I have to use secure deletion tools like 'shred' to overwrite the disk sectors with random data."
+
+    im "And it's not just the files. My browser history and session tokens prove what I accessed. My photos have hidden EXIF metadata containing the exact GPS coordinates. My terminal history recorded every command I typed. Even my laptop's hardware MAC address was logged by the hotel's network."
+
     if should_play_english_voice():  # edge-tts-auto
         voice "audio/voice/en/script_0988_im_059dc00155.mp3"  # edge-tts-auto
     im "I have 90 seconds before NSA agents reach my room. 8 digital traces that prove I copied the PRISM files. Each one needs a different command to destroy."
+
+    sys "// FORENSICS ALERT: Normal deletion is insufficient. Use 'shred' to overwrite files, 'macchanger' to randomize hardware IDs, and 'exiftool' to strip metadata. //"
 
     sys "// ALERT: NSA RESPONSE TEAM EN ROUTE. ESTIMATED ARRIVAL: 90 SECONDS. BEGIN DIGITAL EVIDENCE ELIMINATION. //"
 
