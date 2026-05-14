@@ -13,3 +13,11 @@ desktop.ini
 *.txt
 .vscode/
 .env
+.vs
+out/
+launcher/out/
+*.dll
+*.ilk
+*.pdb
+*.obj
+CMakeSettings.json
