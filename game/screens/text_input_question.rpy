@@ -95,6 +95,13 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
     $ _typed_set = set(tiq_current_answer.upper())
     $ _progress = min(1.0, len(tiq_current_answer) / float(max(len(correct_answer), 1)))
     $ _bar_w = int(480 * _progress)
+    $ _panel_width = 1380
+    $ _panel_height = 744
+    $ _left_panel_width = 460
+    $ _right_panel_width = 919
+    $ _keyboard_gap = 8
+    $ _keyboard_unit = int((_right_panel_width - 80 - (_keyboard_gap * 9)) / 10.0)
+    $ _keyboard_rows = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O"], ["A", "S", "D", "F", "G", "H", "J", "K", "L"], ["P", "Z", "X", "C", "V", "B", "N", "M"]]
 
     if not tiq_show_result:
         for _k in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
@@ -110,7 +117,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
         key "K_RETURN" action Return("continue")
         key "K_KP_ENTER" action Return("continue")
 
-    add Solid("#03070E", xysize=(1920, 1080))
+    add Solid("#040810", xysize=(1920, 1080))
 
     add Solid("#001E3208", xysize=(1200, 800)) xalign 0.5 yalign 0.5
     add Solid("#001E3212", xysize=(800, 500)) xalign 0.5 yalign 0.5
@@ -130,7 +137,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
             vbox:
                 spacing 2
                 text t("INPUT - IN PROGRESS"):
-                    font "fonts/DejaVuSans.ttf"
+                    font "fonts/ShareTechMono-Regular.ttf"
                     size 9
                     color "#00FFD1"
                 if not tiq_show_result:
@@ -151,7 +158,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
             vbox:
                 spacing 2
                 text t("INPUT > CORRECT"):
-                    font "fonts/DejaVuSans.ttf"
+                    font "fonts/ShareTechMono-Regular.ttf"
                     size 9
                     color "#2A3A45"
                 frame:
@@ -161,7 +168,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
             vbox:
                 spacing 2
                 text t("INPUT > EXTRA"):
-                    font "fonts/DejaVuSans.ttf"
+                    font "fonts/ShareTechMono-Regular.ttf"
                     size 9
                     color "#2A3A45"
                 frame:
@@ -171,12 +178,12 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
     frame:
         xalign 0.5 yalign 0.5
-        xsize 1108 ysize 668
+        xsize (_panel_width + 8) ysize (_panel_height + 8)
         background Solid("#00FFD108")
         padding (0,0)
     frame:
         xalign 0.5 yalign 0.5
-        xsize 1104 ysize 664
+        xsize (_panel_width + 4) ysize (_panel_height + 4)
         background Solid("#00FFD112")
         padding (0,0)
 
@@ -193,15 +200,15 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
     frame:
         xalign 0.5 yalign 0.5
-        xsize 1100 ysize 660
-        background Solid("#07101AF4")
+        xsize _panel_width ysize _panel_height
+        background Solid("#06090F")
         padding (0, 0)
         hbox:
             spacing 0
 
             frame:
-                xsize 460
-                ysize 660
+                xsize _left_panel_width
+                ysize _panel_height
                 background Solid("#080F1A")
                 padding (44, 44)
 
@@ -227,7 +234,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                             xsize 28 ysize 1
                             background "#00FFD1B0"
                         text t("CHAPTER [chapter_num] - [chapter_name]"):
-                            font "fonts/DejaVuSans.ttf"
+                            font "fonts/ShareTechMono-Regular.ttf"
                             size 10
                             color "#00FFD1C0"
                             yalign 0.5
@@ -235,16 +242,16 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                     null height 8
 
                     text t("// MISSION QUESTION"):
-                        font "fonts/DejaVuSans.ttf"
+                        font "fonts/ShareTechMono-Regular.ttf"
                         size 9
                         color "#00FFD130"
                         xalign 0.0
 
                     null height 6
 
-                    text question_text:
-                        font localized_text_font(semibold=True)
-                        size 25
+                    text t(question_text):
+                        font "fonts/Rajdhani-SemiBold.ttf"
+                        size 21
                         color "#E8E8E8"
                         text_align 0.0
                         xalign 0.0
@@ -276,11 +283,11 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                         hbox:
                                             spacing 6
                                             xalign 0.0
-                                            text t("{font=fonts/DejaVuSans.ttf}{size=10}{color=#00FFD180}FIELD HINT{/color}{/size}{/font}"):
+                                            text t("{font=fonts/ShareTechMono-Regular.ttf}{size=10}{color=#00FFD180}FIELD HINT{/color}{/size}{/font}"):
                                                 yalign 0.5
-                                        text hint_text:
-                                            font localized_text_font()
-                                            size 18
+                                        text t(hint_text):
+                                            font "fonts/Rajdhani-Regular.ttf"
+                                            size 15
                                             italic True
                                             color "#00FFD18C"
                                             text_align 0.0
@@ -307,12 +314,12 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     vbox:
                                         spacing 4
                                         text t("CHECK TYPE"):
-                                            font "fonts/DejaVuSans.ttf"
+                                            font "fonts/ShareTechMono-Regular.ttf"
                                             size 9
                                             color "#2A3A45"
-                                        text check_type:
-                                            font "fonts/DejaVuSans.ttf"
-                                            size 16
+                                        text t(check_type):
+                                            font "fonts/ShareTechMono-Regular.ttf"
+                                            size 14
                                             color "#00FFD1"
 
                             frame:
@@ -326,12 +333,12 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     vbox:
                                         spacing 4
                                         text t("REWARD"):
-                                            font "fonts/DejaVuSans.ttf"
+                                            font "fonts/ShareTechMono-Regular.ttf"
                                             size 9
                                             color "#2A3A45"
-                                        text reward_label:
-                                            font "fonts/DejaVuSans.ttf"
-                                            size 16
+                                        text t(reward_label):
+                                            font "fonts/ShareTechMono-Regular.ttf"
+                                            size 14
                                             color _rc
 
                         vbox:
@@ -348,12 +355,12 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     vbox:
                                         spacing 4
                                         text t("DIFFICULTY"):
-                                            font "fonts/DejaVuSans.ttf"
+                                            font "fonts/ShareTechMono-Regular.ttf"
                                             size 9
                                             color "#2A3A45"
-                                        text difficulty:
-                                            font "fonts/DejaVuSans.ttf"
-                                            size 16
+                                        text t(difficulty):
+                                            font "fonts/ShareTechMono-Regular.ttf"
+                                            size 14
                                             color "#7A8A99"
 
                             frame:
@@ -367,12 +374,12 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     vbox:
                                         spacing 4
                                         text t("ATTEMPTS"):
-                                            font "fonts/DejaVuSans.ttf"
+                                            font "fonts/ShareTechMono-Regular.ttf"
                                             size 9
                                             color "#2A3A45"
                                         text t("Unlimited"):
-                                            font "fonts/DejaVuSans.ttf"
-                                            size 16
+                                            font "fonts/ShareTechMono-Regular.ttf"
+                                            size 14
                                             color "#7A8A99"
 
                     null height 14
@@ -394,17 +401,17 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                             background "#00FFD118"
                                 null width 8
                                 text t("[tiq_attempts] attempts used"):
-                                    font "fonts/DejaVuSans.ttf"
+                                    font "fonts/ShareTechMono-Regular.ttf"
                                     size 10
                                     color "#2A3A45"
                                     yalign 0.5
 
             frame:
-                xsize 1 ysize 660
+                xsize 1 ysize _panel_height
                 background "#00FFD115"
 
             frame:
-                xsize 639 ysize 660
+                xsize _right_panel_width ysize _panel_height
                 background Solid("#06090F")
                 padding (40, 32, 40, 24)
 
@@ -415,7 +422,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                     hbox:
                         xfill True
                         text t("// ENTER ANSWER"):
-                            font "fonts/DejaVuSans.ttf"
+                            font "fonts/ShareTechMono-Regular.ttf"
                             size 10
                             color "#7A8A99"
                             yalign 0.5
@@ -430,7 +437,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     yalign 0.5
                                     at pulse_dot
                                 text t("INPUT ACTIVE"):
-                                    font "fonts/DejaVuSans.ttf"
+                                    font "fonts/ShareTechMono-Regular.ttf"
                                     size 9
                                     color "#00FFD160"
                                     yalign 0.5
@@ -440,7 +447,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     background "#00FF88"
                                     yalign 0.5
                                 text t("MATCH FOUND"):
-                                    font "fonts/DejaVuSans.ttf"
+                                    font "fonts/ShareTechMono-Regular.ttf"
                                     size 9
                                     color "#00FF8899"
                                     yalign 0.5
@@ -451,7 +458,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     yalign 0.5
                                     at pulse_dot
                                 text t("MISMATCH"):
-                                    font "fonts/DejaVuSans.ttf"
+                                    font "fonts/ShareTechMono-Regular.ttf"
                                     size 9
                                     color "#FF2D5599"
                                     yalign 0.5
@@ -482,7 +489,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                         else:
                                             background Solid("#00FFD106")
                                         text tiq_current_answer[_i]:
-                                            font "fonts/DejaVuSans.ttf"
+                                            font "fonts/ShareTechMono-Regular.ttf"
                                             size 22
                                             if tiq_show_result and tiq_is_correct:
                                                 color "#00FF88"
@@ -554,21 +561,21 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     hbox:
                                         spacing 10
                                         text t("X"):
-                                            font "fonts/DejaVuSans.ttf"
+                                            font "fonts/ShareTechMono-Regular.ttf"
                                             size 14 color "#FF2D55" bold True yalign 0.5
                                         text t("INCORRECT - TRY AGAIN"):
-                                            font "fonts/DejaVuSans.ttf"
+                                            font "fonts/ShareTechMono-Regular.ttf"
                                             size 11 color "#FF2D55" yalign 0.5
                         null height 12
 
                     if not (tiq_show_result and tiq_is_correct):
-                        for _row in [["Q","W","E","R","T","Y","U","I","O"], ["A","S","D","F","G","H","J","K","L"], ["P","Z","X","C","V","B","N","M"]]:
+                        for _row in _keyboard_rows:
                             hbox:
-                                spacing 4
+                                spacing _keyboard_gap
                                 xalign 0.0
                                 for _k in _row:
                                     button:
-                                        xsize 46 ysize 44
+                                        xsize _keyboard_unit ysize 54
                                         if _k in _typed_set:
                                             background Solid("#00FFD122")
                                         else:
@@ -577,8 +584,8 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                         action Function(tiq_add_char, _k)
                                         padding (0, 0, 0, 2)
                                         text _k:
-                                            font "fonts/DejaVuSans.ttf"
-                                            size 13
+                                            font "fonts/ShareTechMono-Regular.ttf"
+                                            size 16
                                             if _k in _typed_set:
                                                 color "#00FFD1"
                                             else:
@@ -588,30 +595,30 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
 
                                 if _row[0] == "P":
                                     button:
-                                        xsize 88 ysize 44
+                                        xsize ((_keyboard_unit * 2) + _keyboard_gap) ysize 54
                                         background Solid("#FF2D5510")
                                         hover_background Solid("#FF2D5522")
                                         action Function(tiq_delete_char)
                                         padding (0, 0, 0, 2)
                                         text t("DEL"):
-                                            font "fonts/DejaVuSans.ttf"
-                                            size 11
+                                            font "fonts/ShareTechMono-Regular.ttf"
+                                            size 13
                                             color "#FF2D55C0"
                                             hover_color "#FF2D55"
                                             xalign 0.5 yalign 0.5
-                            null height 4
+                            null height 8
 
                         hbox:
-                            spacing 4
+                            spacing _keyboard_gap
                             xalign 0.0
                             button:
-                                xsize 120 ysize 44
+                                xsize ((_keyboard_unit * 3) + (_keyboard_gap * 2)) ysize 54
                                 background Solid("#ffffff05")
                                 hover_background Solid("#ffffff0A")
                                 action Function(tiq_add_space)
                                 text t("SPACE"):
-                                    font "fonts/DejaVuSans.ttf"
-                                    size 10
+                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    size 13
                                     color "#2A3A45"
                                     hover_color "#7A8A99"
                                     xalign 0.5 yalign 0.5
@@ -622,7 +629,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     hover_background Solid("#FF2D55")
                                     action Function(tiq_retry)
                                     text t("RETRY >"):
-                                        font "fonts/DejaVuSans.ttf"
+                                        font "fonts/ShareTechMono-Regular.ttf"
                                         size 13
                                         color "#040810"
                                         bold True
@@ -634,7 +641,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                     hover_background Solid("#33FFE0")
                                     action Function(tiq_check_answer, correct_answer)
                                     text t("SUBMIT >"):
-                                        font "fonts/DejaVuSans.ttf"
+                                        font "fonts/ShareTechMono-Regular.ttf"
                                         size 13
                                         color "#040810"
                                         bold True
@@ -661,7 +668,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                         hbox:
                                             spacing 10
                                             text t("CORRECT - INTELLIGENCE CONFIRMED"):
-                                                font "fonts/DejaVuSans.ttf"
+                                                font "fonts/ShareTechMono-Regular.ttf"
                                                 size 11
                                                 color "#00FF88"
                                                 bold True
@@ -670,8 +677,8 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                                 background Solid("#00FF8818")
                                                 padding (8, 4)
                                                 yalign 0.5
-                                                text reward_label:
-                                                    font "fonts/DejaVuSans.ttf"
+                                                text t(reward_label):
+                                                    font "fonts/ShareTechMono-Regular.ttf"
                                                     size 10
                                                     color _rc
                                                     bold True
@@ -679,9 +686,9 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                             xfill True ysize 1
                                             background "#00FF8818"
                                         if explanation:
-                                            text explanation:
-                                                font localized_text_font()
-                                                size 19
+                                            text t(explanation):
+                                                font "fonts/Rajdhani-Regular.ttf"
+                                                size 16
                                                 color "#7A8A99"
                                                 text_align 0.5
                                                 xalign 0.5
@@ -700,7 +707,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                 hover_background Solid("#ffffff0F")
                                 action Return("skip")
                                 text t("SKIP"):
-                                    font "fonts/DejaVuSans.ttf"
+                                    font "fonts/ShareTechMono-Regular.ttf"
                                     size 11
                                     color "#2A3A45"
                                     hover_color "#7A8A99"
@@ -712,7 +719,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                 hover_background Solid("#ffffff0F")
                                 action Return("skip")
                                 text t("SKIP"):
-                                    font "fonts/DejaVuSans.ttf"
+                                    font "fonts/ShareTechMono-Regular.ttf"
                                     size 11
                                     color "#2A3A45"
                                     hover_color "#7A8A99"
@@ -723,7 +730,7 @@ screen text_input_question(chapter_num="01", chapter_name="Mission", question_te
                                 hover_background Solid("#33FFE0")
                                 action Return("continue")
                                 text t("CONTINUE MISSION >"):
-                                    font "fonts/DejaVuSans.ttf"
+                                    font "fonts/ShareTechMono-Regular.ttf"
                                     size 11
                                     color "#040810"
                                     bold True

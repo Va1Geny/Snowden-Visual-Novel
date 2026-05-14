@@ -1,7 +1,7 @@
 init python:
 
-    FONT_MONO  = "fonts/DejaVuSans.ttf"
-    FONT_BODY  = "fonts/DejaVuSans.ttf"
+    FONT_MONO  = "fonts/ShareTechMono-Regular.ttf"
+    FONT_BODY  = "fonts/Rajdhani-Regular.ttf"
 
     BG_DEEP    = "#080C10"
     BG_PANEL   = "#0D1117"
@@ -126,7 +126,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
     if t_deco:
         fixed:
             at trans_fade_in(0.4)
-            text t("CLASSIFIED // TS/SCI // ") + codename:
+            text t("CLASSIFIED // TS/SCI // [codename]"):
                 font FONT_MONO
                 size 12
                 color "#3A4A55"
@@ -134,7 +134,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                 yalign 0.5
                 at transform:
                     rotate -90
-            text date + " // NSA // EYES ONLY":
+            text t("[date] // NSA // EYES ONLY"):
                 font FONT_MONO
                 size 12
                 color "#3A4A55"
@@ -160,7 +160,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                 xalign 0.5
                 spacing 40
                 at trans_fade_in(0.2)
-                text t("CHAPTER %02d") % int(chapter_num):
+                text t("CHAPTER %02d" % int(chapter_num)):
                     font FONT_MONO
                     size 14
                     color TEXT_DIM
@@ -176,7 +176,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                     else:
                         background Solid("#3A4A5522")
 
-                    text status:
+                    text t(status):
                         font FONT_MONO
                         size 12
                         bold True
@@ -199,7 +199,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
             null height 1
 
         if t_typing:
-            text codename[:typing_idx] + ("_" if typing_idx < len(codename) else ""):
+            text t(codename[:typing_idx] + ("_" if typing_idx < len(codename) else "")):
                 font FONT_MONO
                 size 42
                 color TEXT_PRIMARY
@@ -231,7 +231,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                             size 12
                             color TEXT_DIM
                             xalign 0.5 text_align 0.5
-                        text location:
+                        text t(location):
                             font FONT_MONO
                             size 16
                             color TEXT_PRIMARY
@@ -242,7 +242,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                             size 12
                             color TEXT_DIM
                             xalign 0.5 text_align 0.5
-                        text time_str:
+                        text t(time_str):
                             font FONT_MONO
                             size 16
                             color TEXT_PRIMARY
@@ -256,7 +256,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                             size 12
                             color TEXT_DIM
                             xalign 0.5 text_align 0.5
-                        text date:
+                        text t(date):
                             font FONT_MONO
                             size 16
                             color TEXT_PRIMARY
@@ -267,7 +267,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                             size 12
                             color TEXT_DIM
                             xalign 0.5 text_align 0.5
-                        text clearance:
+                        text t(clearance):
                             font FONT_MONO
                             size 16
                             color CYAN
@@ -276,7 +276,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
             null height 100
 
         if t_desc:
-            text description:
+            text t(description):
                 font FONT_BODY
                 size 17
                 color TEXT_DIM
@@ -362,7 +362,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
-                            text mission_id:
+                            text t(mission_id):
                                 font FONT_MONO
                                 size 15
                                 color TEXT_PRIMARY
@@ -372,7 +372,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
-                            text classification:
+                            text t(classification):
                                 font FONT_MONO
                                 size 15
                                 color CYAN
@@ -382,7 +382,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
-                            text challenge_type:
+                            text t(challenge_type):
                                 font FONT_MONO
                                 size 15
                                 color TEXT_PRIMARY
@@ -392,7 +392,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
-                            text estimated_time:
+                            text t(estimated_time):
                                 font FONT_MONO
                                 size 15
                                 color TEXT_PRIMARY
@@ -403,7 +403,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 size 11
                                 color TEXT_DIM
                             use DifficultyBar(difficulty)
-                            text difficulty_label:
+                            text t(difficulty_label):
                                 font FONT_MONO
                                 size 13
                                 color (GREEN if difficulty <=2 else GOLD if difficulty==3 else "#FF8C00" if difficulty==4 else RED)
@@ -417,7 +417,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
-                            text succeed_reward:
+                            text t(succeed_reward):
                                 font FONT_MONO
                                 size 14
                                 color GREEN
@@ -426,7 +426,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
-                            text fail_penalty:
+                            text t(fail_penalty):
                                 font FONT_MONO
                                 size 14
                                 color RED
@@ -440,7 +440,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                                 font FONT_MONO
                                 size 11
                                 color TEXT_DIM
-                            text learn_concept:
+                            text t(learn_concept):
                                 font FONT_BODY
                                 size 15
                                 color TEXT_DIM
@@ -461,7 +461,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                 null height 16
 
                 if t_typing:
-                    text challenge_title[:typing_idx] + ("_" if typing_idx < len(challenge_title) else ""):
+                    text t(challenge_title[:typing_idx] + ("_" if typing_idx < len(challenge_title) else "")):
                         font FONT_MONO
                         size 36
                         color TEXT_PRIMARY
@@ -501,7 +501,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                 null height 16
 
                 if t_brief:
-                    text briefing_text:
+                    text t(briefing_text):
                         font FONT_BODY
                         size 17
                         color TEXT_PRIMARY
@@ -527,11 +527,11 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
                         for k, desc in controls:
                             hbox:
                                 spacing 8
-                                text t("[[ ") + k + " ]":
+                                text t("[[ [k] ]"):
                                     font FONT_MONO
                                     size 14
                                     color GOLD
-                                text desc:
+                                text t(desc):
                                     font FONT_MONO
                                     size 14
                                     color TEXT_DIM

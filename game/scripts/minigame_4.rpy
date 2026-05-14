@@ -1029,6 +1029,7 @@ screen screen_cover_tracks():
     add ct_scanlines
 
     key "K_RETURN" action Function(ct_execute)
+    key "K_KP_ENTER" action Function(ct_execute)
     key "K_BACKSPACE" action NullAction()
     key "mouseup_3" action NullAction()
 

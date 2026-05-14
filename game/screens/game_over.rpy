@@ -27,7 +27,7 @@ screen game_over(narrative_text=""):
             text t("IDENTITY EXPOSED") style "game_over_status"
 
             if narrative_text:
-                text narrative_text style "game_over_body"
+                text t(narrative_text) style "game_over_body"
 
             frame:
                 background "#FF2D5533"
