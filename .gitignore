@@ -21,3 +21,4 @@ launcher/out/
 *.pdb
 *.obj
 CMakeSettings.json
+launcher/assets/config.ini
