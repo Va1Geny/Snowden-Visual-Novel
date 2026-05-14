@@ -3157,7 +3157,7 @@ screen pref_tab_accessibility():
         
         use pref_row_slider("FS", "Font Size Adjustment", "Scale all dialogue and UI text globally.", Preference("font size"))
         
-        use pref_row_toggle("HC", "High Contrast Mode", "Boost text contrast for dark background scenes.", renpy.toggle_high_contrast())
+        use pref_row_toggle("HC", "High Contrast Mode", "Boost text contrast for dark background scenes.", ToggleHighContrast())
 
 default persistent.theme_preset = "TERMINAL"
 default persistent.dummy_renderer = "Auto"
@@ -3185,6 +3185,14 @@ init python:
             renpy.restart_interaction()
         def get_selected(self):
             return getattr(persistent, "dummy_font", "Standard") == self.val
+
+    class ToggleHighContrast(Action):
+        def __call__(self):
+            _preferences.high_contrast = not getattr(_preferences, "high_contrast", False)
+            renpy.free_memory()
+            renpy.restart_interaction()
+        def get_selected(self):
+            return getattr(_preferences, "high_contrast", False)
 
 
     class ToggleTransitions(Action):
