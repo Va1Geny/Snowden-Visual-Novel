@@ -23,11 +23,11 @@ define gui.hover_muted_color = '#111720'
 define gui.text_color = '#E8E8E8'
 define gui.interface_text_color = '#E8E8E8'
 
-define gui.text_font = "fonts/Rajdhani-Regular.ttf"
+define gui.text_font = "fonts/DejaVuSans.ttf"
 
-define gui.name_text_font = "fonts/ShareTechMono-Regular.ttf"
+define gui.name_text_font = "fonts/DejaVuSans.ttf"
 
-define gui.interface_text_font = "fonts/ShareTechMono-Regular.ttf"
+define gui.interface_text_font = "fonts/DejaVuSans.ttf"
 
 define gui.text_size = 38
 

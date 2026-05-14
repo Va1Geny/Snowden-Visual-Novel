@@ -11,7 +11,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0040_centered_b2e91c2074.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0040_centered_b2e91c2074.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0040_centered_b2e91c2074.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -25,7 +25,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0048_narrator_voice_60d854ee2d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0048_narrator_voice_60d854ee2d.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0048_narrator_voice_60d854ee2d.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -39,7 +39,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0050_narrator_voice_3d785b1c36.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0050_narrator_voice_3d785b1c36.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0050_narrator_voice_3d785b1c36.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -53,7 +53,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0052_narrator_voice_0514bcc733.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0052_narrator_voice_0514bcc733.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0052_narrator_voice_0514bcc733.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -67,7 +67,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0054_narrator_voice_e2cd9c5f7e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0054_narrator_voice_e2cd9c5f7e.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0054_narrator_voice_e2cd9c5f7e.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -81,7 +81,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0056_narrator_voice_f2819080db.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0056_narrator_voice_f2819080db.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0056_narrator_voice_f2819080db.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -95,7 +95,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0058_narrator_voice_07620b7385.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0058_narrator_voice_07620b7385.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0058_narrator_voice_07620b7385.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -109,7 +109,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0060_narrator_voice_280f9cef5e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0060_narrator_voice_280f9cef5e.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0060_narrator_voice_280f9cef5e.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -123,7 +123,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0090_narrator_voice_730bbdeb62.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0090_narrator_voice_730bbdeb62.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0090_narrator_voice_730bbdeb62.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -137,7 +137,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0093_narrator_voice_75301c64a2.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0093_narrator_voice_75301c64a2.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0093_narrator_voice_75301c64a2.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -151,7 +151,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0099_im_6b61024b7f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0099_im_6b61024b7f.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0099_im_6b61024b7f.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -165,7 +165,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0101_im_ebcb5237fc.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0101_im_ebcb5237fc.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0101_im_ebcb5237fc.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -179,7 +179,7 @@
     "volume": "+3%",
     "emotion_mode": "tense",
     "relative_audio_path": "audio/voice/en/script_0106_supervisor_e79ba05711.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0106_supervisor_e79ba05711.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0106_supervisor_e79ba05711.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -193,7 +193,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0108_im_82ac04ca10.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0108_im_82ac04ca10.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0108_im_82ac04ca10.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -207,7 +207,7 @@
     "volume": "-5%",
     "emotion_mode": "reflective",
     "relative_audio_path": "audio/voice/en/script_0110_e_4e0609bf0c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0110_e_4e0609bf0c.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0110_e_4e0609bf0c.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -221,7 +221,7 @@
     "volume": "+3%",
     "emotion_mode": "tense",
     "relative_audio_path": "audio/voice/en/script_0112_supervisor_f938148bc0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0112_supervisor_f938148bc0.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0112_supervisor_f938148bc0.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -235,21 +235,21 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0114_im_8674c5c462.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0114_im_8674c5c462.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0114_im_8674c5c462.mp3"
   },
   {
     "src": "scripts/script.rpy",
     "line": 119,
     "speaker": "colleague",
     "text": "Hey Ed. Check this out , I can watch this guy's webcam feed in real time. He's just eating cereal. It's wild what we can access without even a targeted request.",
-    "voice": "en-US-BrianNeural",
+    "voice": "en-US-RogerNeural",
     "tag": "colleague",
-    "rate": "+3%",
-    "pitch": "+2Hz",
+    "rate": "+4%",
+    "pitch": "+4Hz",
     "volume": "+2%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_0119_colleague_04b64ab687.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0119_colleague_04b64ab687.mp3"
+    "relative_audio_path": "audio/voice/en/script_0119_colleague_123e1203e7.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0119_colleague_123e1203e7.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -263,21 +263,21 @@
     "volume": "-1%",
     "emotion_mode": "tense",
     "relative_audio_path": "audio/voice/en/script_0123_e_274a3d437d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0123_e_274a3d437d.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0123_e_274a3d437d.mp3"
   },
   {
     "src": "scripts/script.rpy",
     "line": 125,
     "speaker": "colleague",
     "text": "Welcome to the NSA, man. Everything is accessible. Everything.",
-    "voice": "en-US-BrianNeural",
+    "voice": "en-US-RogerNeural",
     "tag": "colleague",
-    "rate": "+3%",
-    "pitch": "+2Hz",
+    "rate": "+4%",
+    "pitch": "+4Hz",
     "volume": "+2%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_0125_colleague_bbe95df67f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0125_colleague_bbe95df67f.mp3"
+    "relative_audio_path": "audio/voice/en/script_0125_colleague_d5cd461592.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0125_colleague_d5cd461592.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -291,7 +291,7 @@
     "volume": "-22%",
     "emotion_mode": "vulnerable",
     "relative_audio_path": "audio/voice/en/script_0127_im_1b9db96e27.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0127_im_1b9db96e27.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0127_im_1b9db96e27.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -305,7 +305,7 @@
     "volume": "+3%",
     "emotion_mode": "tense",
     "relative_audio_path": "audio/voice/en/script_0136_e_2a2ed285bb.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0136_e_2a2ed285bb.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0136_e_2a2ed285bb.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -319,7 +319,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0143_im_b6beac96b3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0143_im_b6beac96b3.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0143_im_b6beac96b3.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -333,7 +333,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0145_narrator_voice_7527edd93e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0145_narrator_voice_7527edd93e.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0145_narrator_voice_7527edd93e.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -347,7 +347,7 @@
     "volume": "-3%",
     "emotion_mode": "resolute",
     "relative_audio_path": "audio/voice/en/script_0149_e_28ce7bd45d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0149_e_28ce7bd45d.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0149_e_28ce7bd45d.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -361,7 +361,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0156_im_0d6c45c0a5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0156_im_0d6c45c0a5.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0156_im_0d6c45c0a5.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -375,7 +375,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0158_narrator_voice_0f4ff8ada0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0158_narrator_voice_0f4ff8ada0.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0158_narrator_voice_0f4ff8ada0.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -389,7 +389,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0163_narrator_voice_55e820c9e1.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0163_narrator_voice_55e820c9e1.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0163_narrator_voice_55e820c9e1.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -403,7 +403,7 @@
     "volume": "-17%",
     "emotion_mode": "resolute",
     "relative_audio_path": "audio/voice/en/script_0165_im_88a9681d41.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0165_im_88a9681d41.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0165_im_88a9681d41.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -417,7 +417,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0167_im_c3fd13aeda.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0167_im_c3fd13aeda.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0167_im_c3fd13aeda.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -431,7 +431,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0171_im_2013b1f408.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0171_im_2013b1f408.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0171_im_2013b1f408.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -445,7 +445,7 @@
     "volume": "-16%",
     "emotion_mode": "warm",
     "relative_audio_path": "audio/voice/en/script_0173_im_edf8b3a762.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0173_im_edf8b3a762.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0173_im_edf8b3a762.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -459,7 +459,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0175_im_796675d30e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0175_im_796675d30e.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0175_im_796675d30e.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -473,7 +473,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0181_im_d3aa9c6d0f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0181_im_d3aa9c6d0f.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0181_im_d3aa9c6d0f.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -487,7 +487,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0183_im_0e6a89781b.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0183_im_0e6a89781b.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0183_im_0e6a89781b.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -501,7 +501,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0185_im_2d2267f668.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0185_im_2d2267f668.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0185_im_2d2267f668.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -515,7 +515,7 @@
     "volume": "-15%",
     "emotion_mode": "tense",
     "relative_audio_path": "audio/voice/en/script_0187_im_aacc2024d6.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0187_im_aacc2024d6.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0187_im_aacc2024d6.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -529,7 +529,7 @@
     "volume": "-15%",
     "emotion_mode": "tense",
     "relative_audio_path": "audio/voice/en/script_0189_im_895740dd12.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0189_im_895740dd12.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0189_im_895740dd12.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -543,7 +543,7 @@
     "volume": "-22%",
     "emotion_mode": "vulnerable",
     "relative_audio_path": "audio/voice/en/script_0195_im_54ee849d2d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0195_im_54ee849d2d.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0195_im_54ee849d2d.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -557,7 +557,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0197_im_9b9f20b60c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0197_im_9b9f20b60c.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0197_im_9b9f20b60c.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -571,7 +571,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0199_im_9200dbe497.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0199_im_9200dbe497.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0199_im_9200dbe497.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -585,7 +585,7 @@
     "volume": "-16%",
     "emotion_mode": "warm",
     "relative_audio_path": "audio/voice/en/script_0205_im_7d99182ac5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0205_im_7d99182ac5.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0205_im_7d99182ac5.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -599,7 +599,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0236_im_551dbc9b15.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0236_im_551dbc9b15.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0236_im_551dbc9b15.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -613,7 +613,7 @@
     "volume": "-16%",
     "emotion_mode": "warm",
     "relative_audio_path": "audio/voice/en/script_0238_im_f19aee1fb7.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0238_im_f19aee1fb7.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0238_im_f19aee1fb7.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -627,7 +627,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0251_narrator_voice_b4f3cc6714.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0251_narrator_voice_b4f3cc6714.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0251_narrator_voice_b4f3cc6714.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -641,7 +641,7 @@
     "volume": "-5%",
     "emotion_mode": "reflective",
     "relative_audio_path": "audio/voice/en/script_0253_e_920d6dda17.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0253_e_920d6dda17.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0253_e_920d6dda17.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -655,7 +655,7 @@
     "volume": "-2%",
     "emotion_mode": "suspicious",
     "relative_audio_path": "audio/voice/en/script_0256_supervisor_4f94ab31cb.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0256_supervisor_4f94ab31cb.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0256_supervisor_4f94ab31cb.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -669,7 +669,7 @@
     "volume": "-5%",
     "emotion_mode": "reflective",
     "relative_audio_path": "audio/voice/en/script_0257_e_e164b6aaa5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0257_e_e164b6aaa5.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0257_e_e164b6aaa5.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -683,7 +683,7 @@
     "volume": "-1%",
     "emotion_mode": "cold",
     "relative_audio_path": "audio/voice/en/script_0258_supervisor_eaf33e4822.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0258_supervisor_eaf33e4822.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0258_supervisor_eaf33e4822.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -697,7 +697,7 @@
     "volume": "+3%",
     "emotion_mode": "tense",
     "relative_audio_path": "audio/voice/en/script_0262_supervisor_fe38e0aa8f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0262_supervisor_fe38e0aa8f.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0262_supervisor_fe38e0aa8f.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -711,7 +711,7 @@
     "volume": "-5%",
     "emotion_mode": "reflective",
     "relative_audio_path": "audio/voice/en/script_0267_e_29b9cdba6a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0267_e_29b9cdba6a.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0267_e_29b9cdba6a.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -725,7 +725,7 @@
     "volume": "+1%",
     "emotion_mode": "resolute",
     "relative_audio_path": "audio/voice/en/script_0271_supervisor_974b128c9d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0271_supervisor_974b128c9d.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0271_supervisor_974b128c9d.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -739,7 +739,7 @@
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
     "relative_audio_path": "audio/voice/en/script_0273_im_2fa34f15b6.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0273_im_2fa34f15b6.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0273_im_2fa34f15b6.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -753,7 +753,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0275_narrator_voice_3199460e04.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0275_narrator_voice_3199460e04.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0275_narrator_voice_3199460e04.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -767,7 +767,7 @@
     "volume": "-17%",
     "emotion_mode": "resolute",
     "relative_audio_path": "audio/voice/en/script_0280_im_c8fb179fad.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0280_im_c8fb179fad.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0280_im_c8fb179fad.mp3"
   },
   {
     "src": "scripts/script.rpy",
@@ -781,11 +781,11 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/script_0284_narrator_voice_6162d06c6d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0284_narrator_voice_6162d06c6d.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0284_narrator_voice_6162d06c6d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 328,
+    "line": 327,
     "speaker": "im",
     "text": "I found it. Hidden in the classified briefing materials , a program so vast it makes everything else look like a hobby project.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -794,12 +794,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0328_im_467385a3d7.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0328_im_467385a3d7.mp3"
+    "relative_audio_path": "audio/voice/en/script_0327_im_467385a3d7.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0327_im_467385a3d7.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 330,
+    "line": 329,
     "speaker": "im",
     "text": "They call it PRISM , a direct pipeline into the servers of every major tech company. Google. Facebook. Apple. Microsoft. Yahoo. All of them. Nine companies in total, handing over user data on demand.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -808,12 +808,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0330_im_a3ba63fb1d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0330_im_a3ba63fb1d.mp3"
+    "relative_audio_path": "audio/voice/en/script_0329_im_a3ba63fb1d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0329_im_a3ba63fb1d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 334,
+    "line": 333,
     "speaker": "im",
     "text": "We aren't looking for needles in haystacks. We're just stealing the whole field. Every email, every photo, every chat message , all vacuumed up and stored in data centres the size of small cities.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -822,12 +822,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0334_im_96b271d7d3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0334_im_96b271d7d3.mp3"
+    "relative_audio_path": "audio/voice/en/script_0333_im_96b271d7d3.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0333_im_96b271d7d3.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 336,
+    "line": 335,
     "speaker": "narrator_voice",
     "text": "The PRISM program gave the NSA direct access to user data from the world's largest tech companies. Emails, chat logs, file transfers, photos , all accessible without individual warrants. The legal basis? A secret interpretation of the FISA Amendments Act that no court had publicly reviewed.",
     "voice": "en-US-BrianNeural",
@@ -836,12 +836,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0336_narrator_voice_fc3d2e8786.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0336_narrator_voice_fc3d2e8786.mp3"
+    "relative_audio_path": "audio/voice/en/script_0335_narrator_voice_fc3d2e8786.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0335_narrator_voice_fc3d2e8786.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 340,
+    "line": 339,
     "speaker": "im",
     "text": "And there's more. Boundless Informant , a tool that counts and visualises exactly how much data the NSA collects from each country. In one month alone, 97 billion pieces of intelligence were gathered worldwide. The American public has no idea.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -850,26 +850,26 @@
     "pitch": "-5Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0340_im_568527215f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0340_im_568527215f.mp3"
+    "relative_audio_path": "audio/voice/en/script_0339_im_568527215f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0339_im_568527215f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 346,
+    "line": 345,
     "speaker": "colleague",
     "text": "Ed, you look like you've seen a ghost. What's wrong?",
-    "voice": "en-US-BrianNeural",
+    "voice": "en-US-RogerNeural",
     "tag": "colleague",
-    "rate": "-3%",
-    "pitch": "+3Hz",
+    "rate": "-2%",
+    "pitch": "+5Hz",
     "volume": "-4%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0346_colleague_602d053b33.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0346_colleague_602d053b33.mp3"
+    "relative_audio_path": "audio/voice/en/script_0345_colleague_5d696f38ce.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0345_colleague_5d696f38ce.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 348,
+    "line": 347,
     "speaker": "e",
     "text": "Have you ever looked at what we're actually collecting? Not the reports. The raw feeds.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -878,26 +878,26 @@
     "pitch": "+1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0348_e_b847e376d8.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0348_e_b847e376d8.mp3"
+    "relative_audio_path": "audio/voice/en/script_0347_e_b847e376d8.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0347_e_b847e376d8.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 350,
+    "line": 349,
     "speaker": "colleague",
     "text": "I try not to think about it too much. We've got clearance, we've got authorization. That's enough for me.",
-    "voice": "en-US-BrianNeural",
+    "voice": "en-US-RogerNeural",
     "tag": "colleague",
-    "rate": "+3%",
-    "pitch": "+2Hz",
+    "rate": "+4%",
+    "pitch": "+4Hz",
     "volume": "+2%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_0350_colleague_bf202e732b.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0350_colleague_bf202e732b.mp3"
+    "relative_audio_path": "audio/voice/en/script_0349_colleague_ee118b8d6e.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0349_colleague_ee118b8d6e.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 352,
+    "line": 351,
     "speaker": "e",
     "text": "Is it? Because what I'm seeing goes way beyond foreign intelligence. This is domestic surveillance on a massive scale.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -906,26 +906,26 @@
     "pitch": "+1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0352_e_1d3fd0f3e3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0352_e_1d3fd0f3e3.mp3"
+    "relative_audio_path": "audio/voice/en/script_0351_e_1d3fd0f3e3.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0351_e_1d3fd0f3e3.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 354,
+    "line": 353,
     "speaker": "colleague",
     "text": "Ed... be very careful what you say next. The walls have ears. Literally.",
-    "voice": "en-US-BrianNeural",
+    "voice": "en-US-RogerNeural",
     "tag": "colleague",
-    "rate": "-7%",
-    "pitch": "-1Hz",
+    "rate": "-6%",
+    "pitch": "+1Hz",
     "volume": "-10%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0354_colleague_c369741ea3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0354_colleague_c369741ea3.mp3"
+    "relative_audio_path": "audio/voice/en/script_0353_colleague_f68db9361d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0353_colleague_f68db9361d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 363,
+    "line": 362,
     "speaker": "e",
     "text": "Look, I need someone I can trust. What I've found... it's bigger than both of us.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -934,40 +934,40 @@
     "pitch": "-1Hz",
     "volume": "-3%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0363_e_da3c043e07.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0363_e_da3c043e07.mp3"
+    "relative_audio_path": "audio/voice/en/script_0362_e_da3c043e07.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0362_e_da3c043e07.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 367,
+    "line": 366,
     "speaker": "colleague",
     "text": "I... I've had my own doubts. But Ed, if you're thinking what I think you're thinking, you need to be incredibly careful.",
-    "voice": "en-US-BrianNeural",
+    "voice": "en-US-RogerNeural",
     "tag": "colleague",
-    "rate": "+1%",
-    "pitch": "+2Hz",
+    "rate": "+2%",
+    "pitch": "+4Hz",
     "volume": "-1%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_0367_colleague_289c36e68a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0367_colleague_289c36e68a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0366_colleague_dd16107ec9.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0366_colleague_dd16107ec9.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 369,
+    "line": 368,
     "speaker": "colleague",
     "text": "Whatever you do, don't use the internal network. They monitor everything. Every keystroke.",
-    "voice": "en-US-BrianNeural",
+    "voice": "en-US-RogerNeural",
     "tag": "colleague",
-    "rate": "-3%",
-    "pitch": "-1Hz",
+    "rate": "-2%",
+    "pitch": "+1Hz",
     "volume": "-6%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0369_colleague_26c573ed79.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0369_colleague_26c573ed79.mp3"
+    "relative_audio_path": "audio/voice/en/script_0368_colleague_5298fbaa8d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0368_colleague_5298fbaa8d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 371,
+    "line": 370,
     "speaker": "im",
     "text": "At least I'm not completely alone in this.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -976,12 +976,12 @@
     "pitch": "-5Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0371_im_60f0d439b8.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0371_im_60f0d439b8.mp3"
+    "relative_audio_path": "audio/voice/en/script_0370_im_60f0d439b8.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0370_im_60f0d439b8.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 375,
+    "line": 374,
     "speaker": "e",
     "text": "Never mind. Forget I said anything. Just tired.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -990,26 +990,26 @@
     "pitch": "+1Hz",
     "volume": "-4%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0375_e_0d3f8c6717.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0375_e_0d3f8c6717.mp3"
+    "relative_audio_path": "audio/voice/en/script_0374_e_0d3f8c6717.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0374_e_0d3f8c6717.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 380,
+    "line": 379,
     "speaker": "colleague",
     "text": "Sure, man. Get some rest.",
-    "voice": "en-US-BrianNeural",
+    "voice": "en-US-RogerNeural",
     "tag": "colleague",
-    "rate": "+5%",
-    "pitch": "+2Hz",
+    "rate": "+6%",
+    "pitch": "+4Hz",
     "volume": "+2%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_0380_colleague_226beaacca.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0380_colleague_226beaacca.mp3"
+    "relative_audio_path": "audio/voice/en/script_0379_colleague_f0450ba0a8.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0379_colleague_f0450ba0a8.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 382,
+    "line": 381,
     "speaker": "im",
     "text": "I can't trust anyone here. One wrong word and I'm done. I need to do this alone.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1018,12 +1018,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0382_im_8f40e62992.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0382_im_8f40e62992.mp3"
+    "relative_audio_path": "audio/voice/en/script_0381_im_8f40e62992.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0381_im_8f40e62992.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 410,
+    "line": 409,
     "speaker": "im",
     "text": "Some of these classified filenames are encoded with a Caesar cipher , one of the oldest encryption methods in history. It's a simple substitution cipher where each letter is shifted by a fixed number of positions in the alphabet.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1032,12 +1032,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0410_im_cb95095d5b.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0410_im_cb95095d5b.mp3"
+    "relative_audio_path": "audio/voice/en/script_0409_im_cb95095d5b.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0409_im_cb95095d5b.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 414,
+    "line": 413,
     "speaker": "im",
     "text": "Here's how it works. The alphabet is a loop: A B C D E F... all the way to Z, and then it wraps back to A. A Caesar cipher shifts every letter forward by a fixed number , the key.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1046,12 +1046,12 @@
     "pitch": "-5Hz",
     "volume": "-24%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0414_im_6ab3b8c889.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0414_im_6ab3b8c889.mp3"
+    "relative_audio_path": "audio/voice/en/script_0413_im_6ab3b8c889.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0413_im_6ab3b8c889.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 416,
+    "line": 415,
     "speaker": "im",
     "text": "With ROT-3 , a rotation of 3 , the letter A becomes D, B becomes E, C becomes F. The word 'CAT' encrypts to 'FDW'. Every letter moves exactly three places forward.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1060,12 +1060,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0416_im_31bfb4d9be.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0416_im_31bfb4d9be.mp3"
+    "relative_audio_path": "audio/voice/en/script_0415_im_31bfb4d9be.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0415_im_31bfb4d9be.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 422,
+    "line": 421,
     "speaker": "im",
     "text": "To decrypt, you do the reverse , shift each letter back by the same number. So D becomes A, E becomes B, F becomes C. Decryption undoes the encryption.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1074,12 +1074,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0422_im_c3de04e0ce.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0422_im_c3de04e0ce.mp3"
+    "relative_audio_path": "audio/voice/en/script_0421_im_c3de04e0ce.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0421_im_c3de04e0ce.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 424,
+    "line": 423,
     "speaker": "im",
     "text": "Let me work through an example. If I see the letter 'S', I count back 3: S... R... Q... P. So S decrypts to P. If I see 'U', count back 3: U... T... S... R. So U becomes R.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1088,12 +1088,12 @@
     "pitch": "-5Hz",
     "volume": "-24%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0424_im_f7c0216c52.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0424_im_f7c0216c52.mp3"
+    "relative_audio_path": "audio/voice/en/script_0423_im_f7c0216c52.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0423_im_f7c0216c52.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 430,
+    "line": 429,
     "speaker": "im",
     "text": "The Caesar cipher is trivially easy to break , there are only 25 possible shifts, so you can try them all in seconds. But it teaches the fundamental principle behind all encryption: transform readable data into unreadable data using a key, and reverse the process with the same key.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1102,26 +1102,26 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0430_im_4c4c03d967.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0430_im_4c4c03d967.mp3"
+    "relative_audio_path": "audio/voice/en/script_0429_im_4c4c03d967.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0429_im_4c4c03d967.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 432,
+    "line": 431,
     "speaker": "im",
-    "text": "Modern encryption like AES-256 uses the same concept , just with keys that are billions of times more complex, making brute-force attacks effectively impossible.",
+    "text": "Modern encryption like A E S two fifty six uses the same concept , just with keys that are billions of times more complex, making brute-force attacks effectively impossible.",
     "voice": "en-US-AndrewMultilingualNeural",
     "tag": "internal_monologue",
     "rate": "-8%",
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0432_im_f5f1fdab3a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0432_im_f5f1fdab3a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0431_im_208e917f23.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0431_im_208e917f23.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 443,
+    "line": 442,
     "speaker": "im",
     "text": "I have access to everything. The question is: what do I do with it?",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1130,12 +1130,12 @@
     "pitch": "-5Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0443_im_09c3298c5f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0443_im_09c3298c5f.mp3"
+    "relative_audio_path": "audio/voice/en/script_0442_im_09c3298c5f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0442_im_09c3298c5f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 445,
+    "line": 444,
     "speaker": "narrator_voice",
     "text": "You stare at your screen. The classified documents are right there. Proof of mass surveillance. Proof of constitutional violations. But taking them means crossing a line there's no coming back from.",
     "voice": "en-US-BrianNeural",
@@ -1144,12 +1144,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0445_narrator_voice_07e4a37dd7.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0445_narrator_voice_07e4a37dd7.mp3"
+    "relative_audio_path": "audio/voice/en/script_0444_narrator_voice_07e4a37dd7.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0444_narrator_voice_07e4a37dd7.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 447,
+    "line": 446,
     "speaker": "im",
     "text": "If I copy these files, I'm committing espionage under the law. If I don't, no one will ever know this is happening. The proper channels have already failed me , my report to the Inspector General disappeared into a black hole.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1158,12 +1158,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0447_im_dd410947fd.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0447_im_dd410947fd.mp3"
+    "relative_audio_path": "audio/voice/en/script_0446_im_dd410947fd.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0446_im_dd410947fd.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 452,
+    "line": 451,
     "speaker": "im",
     "text": "I need the original documents. Notes won't be enough. Journalists need primary sources , verifiable proof that can't be denied or dismissed.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1172,12 +1172,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0452_im_5d1c8c9aa6.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0452_im_5d1c8c9aa6.mp3"
+    "relative_audio_path": "audio/voice/en/script_0451_im_5d1c8c9aa6.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0451_im_5d1c8c9aa6.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 457,
+    "line": 456,
     "speaker": "narrator_voice",
     "text": "You carefully copy selected documents to a micro SD card hidden inside a Rubik's Cube. Every file transfer is a risk , the NSA logs all data movement, and an unusual transfer could trigger an automated alert.",
     "voice": "en-US-BrianNeural",
@@ -1186,26 +1186,26 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0457_narrator_voice_475a96d3e3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0457_narrator_voice_475a96d3e3.mp3"
+    "relative_audio_path": "audio/voice/en/script_0456_narrator_voice_475a96d3e3.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0456_narrator_voice_475a96d3e3.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 459,
+    "line": 458,
     "speaker": "im",
-    "text": "The files are protected with AES-256 encryption , the Advanced Encryption Standard with a 256-bit key. It's the same encryption the US government uses to protect its own top-secret data. Effectively impossible to brute-force with any existing hardware.",
+    "text": "The files are protected with A E S two fifty six encryption , the Advanced Encryption Standard with a 256-bit key. It's the same encryption the US government uses to protect its own top-secret data. Effectively impossible to brute-force with any existing hardware.",
     "voice": "en-US-AndrewMultilingualNeural",
     "tag": "internal_monologue",
     "rate": "-8%",
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0459_im_3ad87dffe3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0459_im_3ad87dffe3.mp3"
+    "relative_audio_path": "audio/voice/en/script_0458_im_dcce61426d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0458_im_dcce61426d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 465,
+    "line": 464,
     "speaker": "im",
     "text": "If they catch me with files, it's espionage. Notes are deniable.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1214,12 +1214,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0465_im_6e0732e0f1.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0465_im_6e0732e0f1.mp3"
+    "relative_audio_path": "audio/voice/en/script_0464_im_6e0732e0f1.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0464_im_6e0732e0f1.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 469,
+    "line": 468,
     "speaker": "narrator_voice",
     "text": "You write down key details from memory. It's safer, but journalists may question the credibility without primary documents.",
     "voice": "en-US-BrianNeural",
@@ -1228,12 +1228,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0469_narrator_voice_6f1dede966.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0469_narrator_voice_6f1dede966.mp3"
+    "relative_audio_path": "audio/voice/en/script_0468_narrator_voice_6f1dede966.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0468_narrator_voice_6f1dede966.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 475,
+    "line": 474,
     "speaker": "im",
     "text": "When transferring these documents, the protocol matters. Standard HTTP sends everything in plain text , anyone on the network can read it. But HTTPS adds a layer of TLS/SSL encryption, securing the data between your browser and the web server.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1242,12 +1242,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0475_im_0cfcfeb477.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0475_im_0cfcfeb477.mp3"
+    "relative_audio_path": "audio/voice/en/script_0474_im_0cfcfeb477.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0474_im_0cfcfeb477.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 477,
+    "line": 476,
     "speaker": "im",
     "text": "That padlock icon in your browser's address bar? That's HTTPS at work. It's the difference between shouting your secrets across a room and whispering them through a sealed envelope.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1256,12 +1256,12 @@
     "pitch": "-5Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0477_im_e48dbc264f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0477_im_e48dbc264f.mp3"
+    "relative_audio_path": "audio/voice/en/script_0476_im_e48dbc264f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0476_im_e48dbc264f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 526,
+    "line": 524,
     "speaker": "im",
     "text": "I have the evidence. Now I need someone to publish it. But one wrong email, one unencrypted message, and the NSA will know before the ink is dry.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1270,12 +1270,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0526_im_a1f3b0cd16.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0526_im_a1f3b0cd16.mp3"
+    "relative_audio_path": "audio/voice/en/script_0524_im_a1f3b0cd16.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0524_im_a1f3b0cd16.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 528,
+    "line": 526,
     "speaker": "narrator_voice",
     "text": "You need to contact journalists who can responsibly publish the classified documents. But the NSA monitors virtually all electronic communication , the very programs you plan to expose are the ones hunting for people like you.",
     "voice": "en-US-BrianNeural",
@@ -1284,12 +1284,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0528_narrator_voice_bf90d38e91.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0528_narrator_voice_bf90d38e91.mp3"
+    "relative_audio_path": "audio/voice/en/script_0526_narrator_voice_bf90d38e91.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0526_narrator_voice_bf90d38e91.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 530,
+    "line": 528,
     "speaker": "im",
     "text": "The NSA doesn't just collect data in bulk. They have tools that flag specific patterns: a new email address contacting a known journalist, an encrypted connection from a government network, a Tor exit node accessing a news site. Any of these could trigger an alert.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1298,12 +1298,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0530_im_907ef704f9.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0530_im_907ef704f9.mp3"
+    "relative_audio_path": "audio/voice/en/script_0528_im_907ef704f9.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0528_im_907ef704f9.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 534,
+    "line": 532,
     "speaker": "im",
     "text": "I can't use my work email. I can't use my personal email. I need a completely new identity, on a completely separate network. And I need to make contact without anyone inside the NSA knowing I've reached out.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1312,12 +1312,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0534_im_c4dda3676a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0534_im_c4dda3676a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0532_im_c4dda3676a.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0532_im_c4dda3676a.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 538,
+    "line": 536,
     "speaker": "narrator_voice",
     "text": "Your unusual access patterns have already triggered internal alerts. Your options are narrowing.",
     "voice": "en-US-BrianNeural",
@@ -1326,12 +1326,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0538_narrator_voice_e35f399c18.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0538_narrator_voice_e35f399c18.mp3"
+    "relative_audio_path": "audio/voice/en/script_0536_narrator_voice_e35f399c18.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0536_narrator_voice_e35f399c18.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 548,
+    "line": 546,
     "speaker": "im",
     "text": "I told them I was running diagnostic tests on the archival system. They seemed to buy it... for now.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1340,12 +1340,12 @@
     "pitch": "-5Hz",
     "volume": "-24%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0548_im_cbda80472a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0548_im_cbda80472a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0546_im_cbda80472a.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0546_im_cbda80472a.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 550,
+    "line": 548,
     "speaker": "narrator_voice",
     "text": "The security team notes the explanation but doesn't close the file. The clock is ticking.",
     "voice": "en-US-BrianNeural",
@@ -1354,12 +1354,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0550_narrator_voice_d205792db4.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0550_narrator_voice_d205792db4.mp3"
+    "relative_audio_path": "audio/voice/en/script_0548_narrator_voice_d205792db4.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0548_narrator_voice_d205792db4.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 557,
+    "line": 555,
     "speaker": "im",
     "text": "No more waiting. If I don't move now, I won't get another chance.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1368,12 +1368,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0557_im_8e4992e8c5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0557_im_8e4992e8c5.mp3"
+    "relative_audio_path": "audio/voice/en/script_0555_im_8e4992e8c5.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0555_im_8e4992e8c5.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 563,
+    "line": 561,
     "speaker": "im",
     "text": "I've identified two journalists who might have the courage to publish: Leah Portman, a documentary filmmaker who's been investigating NSA surveillance for years, and Grayson Wardell, a constitutional lawyer turned journalist at The Guardian.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1382,12 +1382,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0563_im_9b856234a5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0563_im_9b856234a5.mp3"
+    "relative_audio_path": "audio/voice/en/script_0561_im_9b856234a5.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0561_im_9b856234a5.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 565,
+    "line": 563,
     "speaker": "im",
     "text": "The challenge is reaching them securely. PGP encryption with Tor would make my messages virtually untraceable , but it requires technical knowledge to set up correctly. One mistake in the key exchange and the whole channel is compromised.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1396,12 +1396,12 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_0565_im_0976dace9c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0565_im_0976dace9c.mp3"
+    "relative_audio_path": "audio/voice/en/script_0563_im_0976dace9c.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0563_im_0976dace9c.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 567,
+    "line": 565,
     "speaker": "narrator_voice",
     "text": "You weigh your options. Each method of contact carries its own risks and rewards.",
     "voice": "en-US-BrianNeural",
@@ -1410,12 +1410,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0567_narrator_voice_b6587fb3cb.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0567_narrator_voice_b6587fb3cb.mp3"
+    "relative_audio_path": "audio/voice/en/script_0565_narrator_voice_b6587fb3cb.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0565_narrator_voice_b6587fb3cb.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 590,
+    "line": 588,
     "speaker": "im",
     "text": "I know how PGP works. Public key, private key. I generate a key pair, publish my public key, and any message encrypted with it can only be read by me.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1424,12 +1424,12 @@
     "pitch": "-5Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0590_im_87da0b6702.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0590_im_87da0b6702.mp3"
+    "relative_audio_path": "audio/voice/en/script_0588_im_87da0b6702.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0588_im_87da0b6702.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 600,
+    "line": 598,
     "speaker": "narrator_voice",
     "text": "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Leah Portman.",
     "voice": "en-US-BrianNeural",
@@ -1438,12 +1438,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0600_narrator_voice_87feb29d1c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0600_narrator_voice_87feb29d1c.mp3"
+    "relative_audio_path": "audio/voice/en/script_0598_narrator_voice_87feb29d1c.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0598_narrator_voice_87feb29d1c.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 605,
+    "line": 603,
     "speaker": "poitras",
     "text": "I received your encrypted message. The fingerprint checks out. Who are you?",
     "voice": "en-US-EmmaMultilingualNeural",
@@ -1452,12 +1452,12 @@
     "pitch": "+4Hz",
     "volume": "+2%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_0605_poitras_f96af47c05.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0605_poitras_f96af47c05.mp3"
+    "relative_audio_path": "audio/voice/en/script_0603_poitras_f96af47c05.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0603_poitras_f96af47c05.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 607,
+    "line": 605,
     "speaker": "e",
     "text": "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -1466,12 +1466,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0607_e_7b666f57e5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0607_e_7b666f57e5.mp3"
+    "relative_audio_path": "audio/voice/en/script_0605_e_7b666f57e5.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0605_e_7b666f57e5.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 610,
+    "line": 608,
     "speaker": "poitras",
     "text": "Can you prove it?",
     "voice": "en-US-EmmaMultilingualNeural",
@@ -1480,12 +1480,12 @@
     "pitch": "+4Hz",
     "volume": "+2%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_0610_poitras_48d170a87b.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0610_poitras_48d170a87b.mp3"
+    "relative_audio_path": "audio/voice/en/script_0608_poitras_48d170a87b.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0608_poitras_48d170a87b.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 612,
+    "line": 610,
     "speaker": "e",
     "text": "I can prove everything. But we need to meet in person. I'll also reach out to Grayson Wardell , together, you can publish the full story.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -1494,12 +1494,12 @@
     "pitch": "-1Hz",
     "volume": "+1%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0612_e_6cd0011cd2.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0612_e_6cd0011cd2.mp3"
+    "relative_audio_path": "audio/voice/en/script_0610_e_6cd0011cd2.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0610_e_6cd0011cd2.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 617,
+    "line": 615,
     "speaker": "im",
     "text": "I know I need to use PGP, but I'm not confident in the setup. If I make a mistake with the key exchange...",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1508,12 +1508,12 @@
     "pitch": "-7Hz",
     "volume": "-21%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0617_im_2f3ed2294a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0617_im_2f3ed2294a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0615_im_2f3ed2294a.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0615_im_2f3ed2294a.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 624,
+    "line": 622,
     "speaker": "narrator_voice",
     "text": "You attempt to set up encrypted communications, but make errors in the key exchange process. The channel may not be fully secure.",
     "voice": "en-US-BrianNeural",
@@ -1522,12 +1522,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0624_narrator_voice_941572744c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0624_narrator_voice_941572744c.mp3"
+    "relative_audio_path": "audio/voice/en/script_0622_narrator_voice_941572744c.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0622_narrator_voice_941572744c.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 634,
+    "line": 632,
     "speaker": "narrator_voice",
     "text": "You reach out to Grayson Wardell through his public contact information. It's faster, but less secure.",
     "voice": "en-US-BrianNeural",
@@ -1536,12 +1536,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0634_narrator_voice_7aaee15875.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0634_narrator_voice_7aaee15875.mp3"
+    "relative_audio_path": "audio/voice/en/script_0632_narrator_voice_7aaee15875.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0632_narrator_voice_7aaee15875.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 636,
+    "line": 634,
     "speaker": "e",
     "text": "Mr. Wardell, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -1550,12 +1550,12 @@
     "pitch": "-1Hz",
     "volume": "+1%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0636_e_a446fe8fb9.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0636_e_a446fe8fb9.mp3"
+    "relative_audio_path": "audio/voice/en/script_0634_e_a446fe8fb9.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0634_e_a446fe8fb9.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 639,
+    "line": 637,
     "speaker": "greenwald",
     "text": "I get messages like this every week. Can you give me more details?",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1564,12 +1564,12 @@
     "pitch": "+1Hz",
     "volume": "-2%",
     "emotion_mode": "suspicious",
-    "relative_audio_path": "audio/voice/en/script_0639_greenwald_c70b3f1894.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0639_greenwald_c70b3f1894.mp3"
+    "relative_audio_path": "audio/voice/en/script_0637_greenwald_c70b3f1894.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0637_greenwald_c70b3f1894.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 641,
+    "line": 639,
     "speaker": "e",
     "text": "Not over this channel. You need to set up PGP encryption. I'll send you instructions.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -1578,12 +1578,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0641_e_3ca18f646e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0641_e_3ca18f646e.mp3"
+    "relative_audio_path": "audio/voice/en/script_0639_e_3ca18f646e.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0639_e_3ca18f646e.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 644,
+    "line": 642,
     "speaker": "greenwald",
     "text": "PGP? I've never used it. Can't we just talk on the phone?",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1592,12 +1592,12 @@
     "pitch": "+3Hz",
     "volume": "-2%",
     "emotion_mode": "suspicious",
-    "relative_audio_path": "audio/voice/en/script_0644_greenwald_c2437be411.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0644_greenwald_c2437be411.mp3"
+    "relative_audio_path": "audio/voice/en/script_0642_greenwald_c2437be411.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0642_greenwald_c2437be411.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 646,
+    "line": 644,
     "speaker": "im",
     "text": "This is the problem. The people who need to publish this information don't know the first thing about security.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1606,12 +1606,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0646_im_b631248db8.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0646_im_b631248db8.mp3"
+    "relative_audio_path": "audio/voice/en/script_0644_im_b631248db8.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0644_im_b631248db8.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 654,
+    "line": 652,
     "speaker": "narrator_voice",
     "text": "You decide to wait for a safer window. But there may not be one.",
     "voice": "en-US-BrianNeural",
@@ -1620,12 +1620,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0654_narrator_voice_223e24c66a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0654_narrator_voice_223e24c66a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0652_narrator_voice_223e24c66a.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0652_narrator_voice_223e24c66a.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 656,
+    "line": 654,
     "speaker": "im",
     "text": "Every day I wait is another day they could catch me. But rushing makes mistakes. Mistakes get you caught.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1634,12 +1634,12 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_0656_im_0210df48a3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0656_im_0210df48a3.mp3"
+    "relative_audio_path": "audio/voice/en/script_0654_im_0210df48a3.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0654_im_0210df48a3.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 661,
+    "line": 659,
     "speaker": "narrator_voice",
     "text": "Weeks pass. Your access patterns grow more suspicious. The window is closing.",
     "voice": "en-US-BrianNeural",
@@ -1648,12 +1648,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0661_narrator_voice_498387062f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0661_narrator_voice_498387062f.mp3"
+    "relative_audio_path": "audio/voice/en/script_0659_narrator_voice_498387062f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0659_narrator_voice_498387062f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 666,
+    "line": 664,
     "speaker": "narrator_voice",
     "text": "With time running out, you take risks you normally wouldn't.",
     "voice": "en-US-BrianNeural",
@@ -1662,12 +1662,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0666_narrator_voice_3074d89f5b.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0666_narrator_voice_3074d89f5b.mp3"
+    "relative_audio_path": "audio/voice/en/script_0664_narrator_voice_3074d89f5b.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0664_narrator_voice_3074d89f5b.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 672,
+    "line": 670,
     "speaker": "im",
     "text": "No time for perfect OpSec. I just need to get the message out.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1676,12 +1676,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0672_im_6aa5038206.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0672_im_6aa5038206.mp3"
+    "relative_audio_path": "audio/voice/en/script_0670_im_6aa5038206.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0670_im_6aa5038206.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 684,
+    "line": 682,
     "speaker": "im",
     "text": "Everything I've done to contact journalists relies on one tool above all others: Tor , The Onion Router. It's an anonymization network that routes your traffic through multiple relay nodes around the world, each encrypting another layer.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1690,12 +1690,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0684_im_aab8cbfb6a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0684_im_aab8cbfb6a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0682_im_aab8cbfb6a.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0682_im_aab8cbfb6a.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 686,
+    "line": 684,
     "speaker": "im",
     "text": "By the time your traffic reaches its destination, tracing it back to the source is nearly impossible. That's what makes Tor the tool of choice for anyone who needs to communicate without being tracked.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1704,12 +1704,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0686_im_c108062c3a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0686_im_c108062c3a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0684_im_c108062c3a.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0684_im_c108062c3a.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 699,
+    "line": 697,
     "speaker": "im",
     "text": "But technology alone isn't enough. OpSec , Operational Security , is the practice of thinking like your adversary. What can they learn from your actions? Every digital footprint, every unguarded conversation, every pattern of behaviour is a piece of the puzzle they're assembling.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1718,12 +1718,12 @@
     "pitch": "-3Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0699_im_3d8d0f8b94.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0699_im_3d8d0f8b94.mp3"
+    "relative_audio_path": "audio/voice/en/script_0697_im_3d8d0f8b94.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0697_im_3d8d0f8b94.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 701,
+    "line": 699,
     "speaker": "im",
     "text": "Good OpSec means denying the adversary those pieces. It means asking yourself before every action: could this reveal my identity, my location, or my intent?",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1732,12 +1732,12 @@
     "pitch": "-2Hz",
     "volume": "-16%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_0701_im_3c26d4cba7.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0701_im_3c26d4cba7.mp3"
+    "relative_audio_path": "audio/voice/en/script_0699_im_3c26d4cba7.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0699_im_3c26d4cba7.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 705,
+    "line": 703,
     "speaker": "im",
     "text": "The most basic OpSec failure is IP exposure. Your home IP address is assigned by your Internet Service Provider and tied directly to your name and physical address. If you log into a secure service from your home IP without a VPN, you've just stamped your real identity on the connection.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1746,12 +1746,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0705_im_43bea91758.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0705_im_43bea91758.mp3"
+    "relative_audio_path": "audio/voice/en/script_0703_im_43bea91758.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0703_im_43bea91758.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 711,
+    "line": 709,
     "speaker": "im",
     "text": "The right tools make anonymity possible. Tor anonymizes your connection through multiple relay nodes. SecureDrop , an open-source platform used by major newsrooms , lets whistleblowers submit documents anonymously. Burner email accounts, created from public locations like libraries, add another layer of separation between your real identity and your actions.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1760,12 +1760,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0711_im_f603d0f2ef.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0711_im_f603d0f2ef.mp3"
+    "relative_audio_path": "audio/voice/en/script_0709_im_f603d0f2ef.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0709_im_f603d0f2ef.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 717,
+    "line": 715,
     "speaker": "im",
     "text": "The biggest mistake an insider can make is using work infrastructure for anything sensitive. Work email, work Wi-Fi, work devices , all of these are monitored, logged, and directly tied to your employee identity. Sending classified documents via work email is essentially confessing.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1774,12 +1774,12 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_0717_im_27caff8d87.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0717_im_27caff8d87.mp3"
+    "relative_audio_path": "audio/voice/en/script_0715_im_27caff8d87.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0715_im_27caff8d87.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 723,
+    "line": 721,
     "speaker": "im",
     "text": "And then there's password reuse , the silent killer. If you use your personal Facebook password for an encrypted file container, you've created a bridge between your public identity and your secret activity. When one account is compromised, every account sharing that password falls.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1788,26 +1788,68 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_0723_im_15c85c6e8c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0723_im_15c85c6e8c.mp3"
+    "relative_audio_path": "audio/voice/en/script_0721_im_15c85c6e8c.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0721_im_15c85c6e8c.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 729,
+    "line": 727,
     "speaker": "im",
-    "text": "Now it's time to put that knowledge into practice. I've intercepted an encrypted password hash from the internal NSA directory. Before I can access the PRISM architecture files, I need to crack it. One mistake, and the system locks down.",
+    "text": "Now it's time to put that knowledge into practice. I've intercepted an encrypted password hash from the internal NSA directory. Before I can access the PRISM architecture files, I need to crack it.",
     "voice": "en-US-AndrewMultilingualNeural",
     "tag": "internal_monologue",
     "rate": "-2%",
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0729_im_a6cb2cedfa.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0729_im_a6cb2cedfa.mp3"
+    "relative_audio_path": "audio/voice/en/script_0727_im_f73a328ffa.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0727_im_f73a328ffa.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 761,
+    "line": 729,
+    "speaker": "im",
+    "text": "A hash is a one-way mathematical function , you can't just 'decrypt' it. You have to guess the password, hash your guess, and see if it matches. To do this, we use tools like 'John the Ripper' and a massive list of known passwords, like the 'rockyou.txt' wordlist. This is called a dictionary attack.",
+    "voice": "en-US-AndrewMultilingualNeural",
+    "tag": "internal_monologue",
+    "rate": "-2%",
+    "pitch": "-7Hz",
+    "volume": "-17%",
+    "emotion_mode": "resolute",
+    "relative_audio_path": "audio/voice/en/script_0729_im_534a1add8b.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0729_im_534a1add8b.mp3"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 731,
+    "speaker": "im",
+    "text": "But what if the password has substitutions, like 'M0nk3y!' instead of 'monkey'? That's where rule-based mutations come in. By applying rules, the cracking tool automatically tests thousands of variations for every word in the dictionary.",
+    "voice": "en-US-AndrewMultilingualNeural",
+    "tag": "internal_monologue",
+    "rate": "-4%",
+    "pitch": "-3Hz",
+    "volume": "-22%",
+    "emotion_mode": "conspiratorial",
+    "relative_audio_path": "audio/voice/en/script_0731_im_fd1dc944a8.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0731_im_fd1dc944a8.mp3"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 735,
+    "speaker": "im",
+    "text": "If these hashes use MD5, they'll break in seconds. If they use bcrypt... we might be here for a century. Let's find out.",
+    "voice": "en-US-AndrewMultilingualNeural",
+    "tag": "internal_monologue",
+    "rate": "-13%",
+    "pitch": "-5Hz",
+    "volume": "-24%",
+    "emotion_mode": "vulnerable",
+    "relative_audio_path": "audio/voice/en/script_0735_im_c407e05342.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0735_im_c407e05342.mp3"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 765,
     "speaker": "narrator_voice",
     "text": "The journalist asks for more details about the scope of the leaks.",
     "voice": "en-US-BrianNeural",
@@ -1816,12 +1858,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0761_narrator_voice_d0803e0aea.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0761_narrator_voice_d0803e0aea.mp3"
+    "relative_audio_path": "audio/voice/en/script_0765_narrator_voice_d0803e0aea.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0765_narrator_voice_d0803e0aea.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 763,
+    "line": 767,
     "speaker": "greenwald",
     "text": "I need to know what we're dealing with. How big is this?",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1830,12 +1872,12 @@
     "pitch": "+1Hz",
     "volume": "-2%",
     "emotion_mode": "suspicious",
-    "relative_audio_path": "audio/voice/en/script_0763_greenwald_8b32bc7026.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0763_greenwald_8b32bc7026.mp3"
+    "relative_audio_path": "audio/voice/en/script_0767_greenwald_8b32bc7026.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0767_greenwald_8b32bc7026.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 768,
+    "line": 772,
     "speaker": "e",
     "text": "It's everything. PRISM, XKeyscore, Boundless Informant, upstream collection , the NSA is collecting data on hundreds of millions of people. American citizens included.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -1844,12 +1886,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0768_e_d0a24ec501.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0768_e_d0a24ec501.mp3"
+    "relative_audio_path": "audio/voice/en/script_0772_e_d0a24ec501.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0772_e_d0a24ec501.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 774,
+    "line": 778,
     "speaker": "greenwald",
     "text": "My God. If this is true... this is the biggest intelligence leak in history.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1858,12 +1900,12 @@
     "pitch": "+1Hz",
     "volume": "-8%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0774_greenwald_0602aec18d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0774_greenwald_0602aec18d.mp3"
+    "relative_audio_path": "audio/voice/en/script_0778_greenwald_0602aec18d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0778_greenwald_0602aec18d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 778,
+    "line": 782,
     "speaker": "e",
     "text": "I can confirm the NSA is conducting mass domestic surveillance. I'll share the details when we meet in person.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -1872,12 +1914,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0778_e_dd5fb197c0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0778_e_dd5fb197c0.mp3"
+    "relative_audio_path": "audio/voice/en/script_0782_e_dd5fb197c0.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0782_e_dd5fb197c0.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 782,
+    "line": 786,
     "speaker": "greenwald",
     "text": "Fair enough. Where do we meet?",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1886,12 +1928,12 @@
     "pitch": "+1Hz",
     "volume": "-2%",
     "emotion_mode": "suspicious",
-    "relative_audio_path": "audio/voice/en/script_0782_greenwald_236a5dbfee.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0782_greenwald_236a5dbfee.mp3"
+    "relative_audio_path": "audio/voice/en/script_0786_greenwald_236a5dbfee.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0786_greenwald_236a5dbfee.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 786,
+    "line": 790,
     "speaker": "e",
     "text": "It's significant. That's all I can say right now.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -1900,12 +1942,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0786_e_60a26c0348.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0786_e_60a26c0348.mp3"
+    "relative_audio_path": "audio/voice/en/script_0790_e_60a26c0348.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0790_e_60a26c0348.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 790,
+    "line": 794,
     "speaker": "greenwald",
     "text": "You're asking me to fly halfway around the world on a vague tip?",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1914,12 +1956,12 @@
     "pitch": "+1Hz",
     "volume": "-2%",
     "emotion_mode": "suspicious",
-    "relative_audio_path": "audio/voice/en/script_0790_greenwald_475a58f9be.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0790_greenwald_475a58f9be.mp3"
+    "relative_audio_path": "audio/voice/en/script_0794_greenwald_475a58f9be.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0794_greenwald_475a58f9be.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 836,
+    "line": 839,
     "speaker": "narrator_voice",
     "text": "You arrive in Hong Kong with a laptop full of classified documents and a plan that's already falling apart.",
     "voice": "en-US-BrianNeural",
@@ -1928,12 +1970,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0836_narrator_voice_fe3b65f13f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0836_narrator_voice_fe3b65f13f.mp3"
+    "relative_audio_path": "audio/voice/en/script_0839_narrator_voice_fe3b65f13f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0839_narrator_voice_fe3b65f13f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 838,
+    "line": 841,
     "speaker": "im",
     "text": "I chose Hong Kong deliberately. It has its own legal system, independent from mainland China. Extradition would take time , time I need to get the story published before the government can suppress it.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1942,12 +1984,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0838_im_f9cb777112.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0838_im_f9cb777112.mp3"
+    "relative_audio_path": "audio/voice/en/script_0841_im_f9cb777112.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0841_im_f9cb777112.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 840,
+    "line": 843,
     "speaker": "im",
     "text": "I told my employer I needed medical leave for epilepsy treatment. They didn't question it. That bought me a few weeks.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1956,12 +1998,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0840_im_36f6d47aac.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0840_im_36f6d47aac.mp3"
+    "relative_audio_path": "audio/voice/en/script_0843_im_36f6d47aac.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0843_im_36f6d47aac.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 843,
+    "line": 846,
     "speaker": "im",
     "text": "Now I'm in a hotel room in Hong Kong, waiting for journalists who might not come, hunted by an agency that can find anyone. I've wedged pillows against the door, piled cushions against the window. Even the smoke detector might have a camera.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1970,12 +2012,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0843_im_3e19aa6dbc.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0843_im_3e19aa6dbc.mp3"
+    "relative_audio_path": "audio/voice/en/script_0846_im_3e19aa6dbc.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0846_im_3e19aa6dbc.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 853,
+    "line": 856,
     "speaker": "greenwald",
     "text": "You do realize what you're asking me to do? If we publish this, both our lives change forever.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -1984,12 +2026,12 @@
     "pitch": "+1Hz",
     "volume": "-2%",
     "emotion_mode": "suspicious",
-    "relative_audio_path": "audio/voice/en/script_0853_greenwald_5382c3a548.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0853_greenwald_5382c3a548.mp3"
+    "relative_audio_path": "audio/voice/en/script_0856_greenwald_5382c3a548.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0856_greenwald_5382c3a548.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 856,
+    "line": 859,
     "speaker": "e",
     "text": "My life changed the moment I read those documents. I can't unread them. I can't unknow what the government is doing to its own people.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -1998,12 +2040,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0856_e_e8a42759c0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0856_e_e8a42759c0.mp3"
+    "relative_audio_path": "audio/voice/en/script_0859_e_e8a42759c0.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0859_e_e8a42759c0.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 858,
+    "line": 861,
     "speaker": "im",
     "text": "Greenwald flew here from Rio de Janeiro. Poitras from Berlin. They left their lives behind on the strength of encrypted emails from a stranger. That took courage.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2012,12 +2054,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0858_im_ec87f9b69a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0858_im_ec87f9b69a.mp3"
+    "relative_audio_path": "audio/voice/en/script_0861_im_ec87f9b69a.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0861_im_ec87f9b69a.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 864,
+    "line": 867,
     "speaker": "im",
     "text": "They know something is wrong. I can feel it. The clock is ticking.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2026,12 +2068,12 @@
     "pitch": "-5Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0864_im_1bb62c6667.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0864_im_1bb62c6667.mp3"
+    "relative_audio_path": "audio/voice/en/script_0867_im_1bb62c6667.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0867_im_1bb62c6667.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 867,
+    "line": 870,
     "speaker": "greenwald",
     "text": "The documents check out. Laura and I have verified them. We're ready to publish.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2040,12 +2082,12 @@
     "pitch": "-1Hz",
     "volume": "-2%",
     "emotion_mode": "suspicious",
-    "relative_audio_path": "audio/voice/en/script_0867_greenwald_9415e885fe.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0867_greenwald_9415e885fe.mp3"
+    "relative_audio_path": "audio/voice/en/script_0870_greenwald_9415e885fe.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0870_greenwald_9415e885fe.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 869,
+    "line": 872,
     "speaker": "e",
     "text": "Publish everything. The world needs to see this.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -2054,12 +2096,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_0869_e_13806b9fc0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0869_e_13806b9fc0.mp3"
+    "relative_audio_path": "audio/voice/en/script_0872_e_13806b9fc0.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0872_e_13806b9fc0.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 873,
+    "line": 876,
     "speaker": "im",
     "text": "What scares me most isn't just the surveillance , it's the NSA's offensive capabilities. They stockpile zero-day exploits , vulnerabilities in software that the vendor doesn't even know about. Called 'zero-day' because there are zero days of notice before they're exploited. No patch exists yet.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2068,12 +2110,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0873_im_f87c5e50be.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0873_im_f87c5e50be.mp3"
+    "relative_audio_path": "audio/voice/en/script_0876_im_f87c5e50be.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0876_im_f87c5e50be.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 875,
+    "line": 878,
     "speaker": "im",
     "text": "If the NSA wants into your laptop, they don't need your password. They use a zero-day to bypass everything , your firewall, your encryption, your operating system. And the vendor can't fix what they don't know is broken.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2082,12 +2124,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0875_im_833e8fb56e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0875_im_833e8fb56e.mp3"
+    "relative_audio_path": "audio/voice/en/script_0878_im_833e8fb56e.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0878_im_833e8fb56e.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 881,
+    "line": 884,
     "speaker": "narrator_voice",
     "text": "You need to send final instructions to the publication team, but the hotel network is compromised. Every network connection is a potential leak.",
     "voice": "en-US-BrianNeural",
@@ -2096,12 +2138,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_0881_narrator_voice_2fc99a4f65.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0881_narrator_voice_2fc99a4f65.mp3"
+    "relative_audio_path": "audio/voice/en/script_0884_narrator_voice_2fc99a4f65.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0884_narrator_voice_2fc99a4f65.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 883,
+    "line": 886,
     "speaker": "im",
     "text": "The hotel Wi-Fi is managed by the hotel , they can see every device that connects, every connection made. Intelligence agencies routinely request hotel network logs. I need to decide how to send this last message.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2110,12 +2152,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0883_im_2c235d6245.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0883_im_2c235d6245.mp3"
+    "relative_audio_path": "audio/voice/en/script_0886_im_2c235d6245.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0886_im_2c235d6245.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 891,
+    "line": 894,
     "speaker": "im",
     "text": "The VPN encrypts my traffic, but the hotel's network logs will show my room connected to a VPN. That alone is a red flag for anyone watching.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2124,12 +2166,12 @@
     "pitch": "-5Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0891_im_436f937719.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0891_im_436f937719.mp3"
+    "relative_audio_path": "audio/voice/en/script_0894_im_436f937719.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0894_im_436f937719.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 901,
+    "line": 904,
     "speaker": "im",
     "text": "A mobile hotspot bypasses the hotel network entirely. With Tor on top of it, my traffic is encrypted and anonymized through multiple relay nodes.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2138,12 +2180,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0901_im_c25ed56dd0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0901_im_c25ed56dd0.mp3"
+    "relative_audio_path": "audio/voice/en/script_0904_im_c25ed56dd0.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0904_im_c25ed56dd0.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 930,
+    "line": 933,
     "speaker": "im",
     "text": "When you route traffic through Tor, you're building a chain of relay nodes. Each node only knows the hop before it and the hop after it , never the full path. Pick the right nodes and your trail goes cold.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2152,12 +2194,12 @@
     "pitch": "-5Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_0930_im_b9bfd3fea0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0930_im_b9bfd3fea0.mp3"
+    "relative_audio_path": "audio/voice/en/script_0933_im_b9bfd3fea0.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0933_im_b9bfd3fea0.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 932,
+    "line": 935,
     "speaker": "im",
     "text": "But if even one node in the chain is compromised , a monitored relay, a hostile exit point , the entire route is exposed and your identity with it. So understanding what each type of node does is critical.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2166,12 +2208,12 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_0932_im_625d8484b9.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0932_im_625d8484b9.mp3"
+    "relative_audio_path": "audio/voice/en/script_0935_im_625d8484b9.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0935_im_625d8484b9.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 936,
+    "line": 939,
     "speaker": "im",
     "text": "It all starts at your device , your laptop, your phone. This is where traffic originates. Right now, it carries your real IP address and your real identity. The goal is to strip that identity away before the traffic reaches its destination.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2180,12 +2222,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0936_im_e48c94ea65.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0936_im_e48c94ea65.mp3"
+    "relative_audio_path": "audio/voice/en/script_0939_im_e48c94ea65.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0939_im_e48c94ea65.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 940,
+    "line": 943,
     "speaker": "im",
     "text": "The first hop is usually your ISP router , the Internet Service Provider that connects you to the internet. Your ISP can see every website you visit, every connection you make. They log this data and, in many countries, hand it over to law enforcement on request.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2194,12 +2236,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0940_im_35a43a03f9.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0940_im_35a43a03f9.mp3"
+    "relative_audio_path": "audio/voice/en/script_0943_im_35a43a03f9.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0943_im_35a43a03f9.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 942,
+    "line": 945,
     "speaker": "im",
     "text": "Going through the ISP is unavoidable , it's your on-ramp to the internet. But it's a chokepoint. If someone is watching at this level, they see everything unless you've already encrypted your traffic.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2208,12 +2250,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0942_im_f62459a507.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0942_im_f62459a507.mp3"
+    "relative_audio_path": "audio/voice/en/script_0945_im_f62459a507.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0945_im_f62459a507.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 948,
+    "line": 951,
     "speaker": "im",
     "text": "A VPN server is your first line of defence. It creates an encrypted tunnel between your device and the VPN server. Your ISP can see that you've connected to a VPN, but they can't see what you're doing through it.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2222,12 +2264,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0948_im_54aebd2657.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0948_im_54aebd2657.mp3"
+    "relative_audio_path": "audio/voice/en/script_0951_im_54aebd2657.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0951_im_54aebd2657.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 950,
+    "line": 953,
     "speaker": "im",
     "text": "Starting your route through a VPN before entering the Tor network is called 'VPN over Tor' , it hides the fact that you're using Tor from your ISP, adding an extra layer of protection.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2236,12 +2278,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0950_im_83b66655ee.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0950_im_83b66655ee.mp3"
+    "relative_audio_path": "audio/voice/en/script_0953_im_83b66655ee.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0953_im_83b66655ee.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 956,
+    "line": 959,
     "speaker": "im",
     "text": "Tor nodes are the backbone of anonymous routing. Each Tor relay adds a layer of encryption , like nesting your message inside multiple sealed envelopes. The first relay knows who you are but not where you're going. The last relay knows where you're going but not who you are.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2250,12 +2292,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0956_im_b1edda6959.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0956_im_b1edda6959.mp3"
+    "relative_audio_path": "audio/voice/en/script_0959_im_b1edda6959.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0959_im_b1edda6959.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 958,
+    "line": 961,
     "speaker": "im",
     "text": "The more Tor nodes you route through, the harder it is to trace the connection back to you. But each hop adds latency , there's a trade-off between anonymity and speed.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2264,12 +2306,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0958_im_f22a75b396.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0958_im_f22a75b396.mp3"
+    "relative_audio_path": "audio/voice/en/script_0961_im_f22a75b396.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0961_im_f22a75b396.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 964,
+    "line": 967,
     "speaker": "im",
     "text": "The one node you must avoid at all costs is the government monitoring point. Intelligence agencies like the NSA operate surveillance nodes that intercept and log all traffic passing through them. If your route goes through a government monitor, the entire chain is compromised.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2278,12 +2320,12 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_0964_im_bc6a5cae97.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0964_im_bc6a5cae97.mp3"
+    "relative_audio_path": "audio/voice/en/script_0967_im_bc6a5cae97.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0967_im_bc6a5cae97.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 966,
+    "line": 969,
     "speaker": "im",
     "text": "It doesn't matter how many Tor nodes you've used , if even one hop routes through a known surveillance point, the adversary can correlate timing data to identify you. This is called a 'traffic correlation attack'.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2292,12 +2334,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0966_im_a92f31da76.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0966_im_a92f31da76.mp3"
+    "relative_audio_path": "audio/voice/en/script_0969_im_a92f31da76.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0969_im_a92f31da76.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 972,
+    "line": 975,
     "speaker": "im",
     "text": "Near the end of the route, you'll see two types of final relay. A CDN , Content Delivery Network , is standard internet infrastructure. It's fast but not designed for privacy. Your traffic is delivered efficiently, but CDN logs can be subpoenaed.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2306,12 +2348,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0972_im_c8683a1aae.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0972_im_c8683a1aae.mp3"
+    "relative_audio_path": "audio/voice/en/script_0975_im_c8683a1aae.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0975_im_c8683a1aae.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 974,
+    "line": 977,
     "speaker": "im",
     "text": "A secure relay, on the other hand, is specifically designed for private communication. It doesn't log traffic, strips metadata, and forwards your message with minimal exposure. When anonymity matters, always prefer the secure relay.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2320,12 +2362,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0974_im_62714fef2f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0974_im_62714fef2f.mp3"
+    "relative_audio_path": "audio/voice/en/script_0977_im_62714fef2f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0977_im_62714fef2f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 980,
+    "line": 983,
     "speaker": "im",
     "text": "So the optimal route is: start with a VPN to hide your Tor usage, chain through Tor nodes for anonymity, avoid the government monitor completely, and exit through a secure relay to reach the destination without leaving a trail.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2334,12 +2376,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0980_im_6941e4b3e3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0980_im_6941e4b3e3.mp3"
+    "relative_audio_path": "audio/voice/en/script_0983_im_6941e4b3e3.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0983_im_6941e4b3e3.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 986,
+    "line": 989,
     "speaker": "im",
     "text": "But before I can run, I need to wipe everything. Every file, every log, every trace. If I leave even one digital breadcrumb, it's over.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2348,12 +2390,40 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_0986_im_6e485d9b67.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0986_im_6e485d9b67.mp3"
+    "relative_audio_path": "audio/voice/en/script_0989_im_6e485d9b67.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0989_im_6e485d9b67.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 988,
+    "line": 991,
+    "speaker": "im",
+    "text": "Digital forensics is relentless. When you delete a file normally, the operating system just removes the pointer , the actual data remains on the disk until it's overwritten. To truly destroy it, I have to use secure deletion tools like 'shred' to overwrite the disk sectors with random data.",
+    "voice": "en-US-AndrewMultilingualNeural",
+    "tag": "internal_monologue",
+    "rate": "-2%",
+    "pitch": "-7Hz",
+    "volume": "-17%",
+    "emotion_mode": "resolute",
+    "relative_audio_path": "audio/voice/en/script_0991_im_e86a8dfd17.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0991_im_e86a8dfd17.mp3"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 993,
+    "speaker": "im",
+    "text": "And it's not just the files. My browser history and session tokens prove what I accessed. My photos have hidden EXIF metadata containing the exact GPS coordinates. My terminal history recorded every command I typed. Even my laptop's hardware MAC address was logged by the hotel's network.",
+    "voice": "en-US-AndrewMultilingualNeural",
+    "tag": "internal_monologue",
+    "rate": "-8%",
+    "pitch": "-7Hz",
+    "volume": "-24%",
+    "emotion_mode": "conspiratorial",
+    "relative_audio_path": "audio/voice/en/script_0993_im_f9bb534562.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0993_im_f9bb534562.mp3"
+  },
+  {
+    "src": "scripts/script.rpy",
+    "line": 995,
     "speaker": "im",
     "text": "I have 90 seconds before NSA agents reach my room. 8 digital traces that prove I copied the PRISM files. Each one needs a different command to destroy.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2362,12 +2432,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_0988_im_059dc00155.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0988_im_059dc00155.mp3"
+    "relative_audio_path": "audio/voice/en/script_0995_im_059dc00155.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_0995_im_059dc00155.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1002,
+    "line": 1011,
     "speaker": "im",
     "text": "Clean. Not a single trace left on this machine. When they get here, they'll find nothing but a blank hard drive and an empty hotel room.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2376,12 +2446,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1002_im_28df0547ea.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1002_im_28df0547ea.mp3"
+    "relative_audio_path": "audio/voice/en/script_1011_im_28df0547ea.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1011_im_28df0547ea.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1005,
+    "line": 1014,
     "speaker": "im",
     "text": "Most of it is gone, but I'm not sure I got everything. Some fragments might still be recoverable. I need to move , now.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2390,12 +2460,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_1005_im_829e5d201c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1005_im_829e5d201c.mp3"
+    "relative_audio_path": "audio/voice/en/script_1014_im_829e5d201c.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1014_im_829e5d201c.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1008,
+    "line": 1017,
     "speaker": "im",
     "text": "I ran out of time. They'll find everything , the files, the history, the logs. My identity is compromised.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2404,12 +2474,12 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_1008_im_48e4d51bf3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1008_im_48e4d51bf3.mp3"
+    "relative_audio_path": "audio/voice/en/script_1017_im_48e4d51bf3.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1017_im_48e4d51bf3.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1015,
+    "line": 1024,
     "speaker": "narrator_voice",
     "text": "The first stories are published. The world erupts. And now, you are the most wanted person on Earth.",
     "voice": "en-US-BrianNeural",
@@ -2418,12 +2488,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1015_narrator_voice_c0ed9ef7b0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1015_narrator_voice_c0ed9ef7b0.mp3"
+    "relative_audio_path": "audio/voice/en/script_1024_narrator_voice_c0ed9ef7b0.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1024_narrator_voice_c0ed9ef7b0.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1017,
+    "line": 1026,
     "speaker": "im",
     "text": "The US government has revoked my passport. I need to move. Now.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2432,12 +2502,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_1017_im_2e0d97358d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1017_im_2e0d97358d.mp3"
+    "relative_audio_path": "audio/voice/en/script_1026_im_2e0d97358d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1026_im_2e0d97358d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1020,
+    "line": 1029,
     "speaker": "narrator_voice",
     "text": "With your cover blown, your options have narrowed to almost nothing.",
     "voice": "en-US-BrianNeural",
@@ -2446,12 +2516,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1020_narrator_voice_1ca019e40c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1020_narrator_voice_1ca019e40c.mp3"
+    "relative_audio_path": "audio/voice/en/script_1029_narrator_voice_1ca019e40c.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1029_narrator_voice_1ca019e40c.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1028,
+    "line": 1037,
     "speaker": "im",
     "text": "No time to plan. The passport might still work for a few hours before the revocation hits every system.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2460,12 +2530,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1028_im_71e6faaa30.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1028_im_71e6faaa30.mp3"
+    "relative_audio_path": "audio/voice/en/script_1037_im_71e6faaa30.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1037_im_71e6faaa30.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1037,
+    "line": 1046,
     "speaker": "im",
     "text": "Russia isn't ideal, but beggars can't be choosers. They have their own reasons for helping me.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2474,12 +2544,12 @@
     "pitch": "-4Hz",
     "volume": "-16%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_1037_im_3630118336.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1037_im_3630118336.mp3"
+    "relative_audio_path": "audio/voice/en/script_1046_im_3630118336.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1046_im_3630118336.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1047,
+    "line": 1056,
     "speaker": "im",
     "text": "Ecuador has a history of granting asylum to people the US wants. WikiLeaks arranged the route through Moscow.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2488,12 +2558,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1047_im_13f8ccf5d4.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1047_im_13f8ccf5d4.mp3"
+    "relative_audio_path": "audio/voice/en/script_1056_im_13f8ccf5d4.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1056_im_13f8ccf5d4.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1049,
+    "line": 1058,
     "speaker": "narrator_voice",
     "text": "But you will never make it past Moscow. Your passport will be revoked mid-flight.",
     "voice": "en-US-BrianNeural",
@@ -2502,12 +2572,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1049_narrator_voice_63c95dd554.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1049_narrator_voice_63c95dd554.mp3"
+    "relative_audio_path": "audio/voice/en/script_1058_narrator_voice_63c95dd554.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1058_narrator_voice_63c95dd554.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1058,
+    "line": 1067,
     "speaker": "narrator_voice",
     "text": "With his identity already exposed, no embassy will risk the diplomatic fallout of harboring him.",
     "voice": "en-US-BrianNeural",
@@ -2516,12 +2586,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1058_narrator_voice_eac9e81ce5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1058_narrator_voice_eac9e81ce5.mp3"
+    "relative_audio_path": "audio/voice/en/script_1067_narrator_voice_eac9e81ce5.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1067_narrator_voice_eac9e81ce5.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1061,
+    "line": 1070,
     "speaker": "narrator_voice",
     "text": "The European embassies politely decline. No one wants to challenge the United States.",
     "voice": "en-US-BrianNeural",
@@ -2530,12 +2600,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1061_narrator_voice_faf752b7c7.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1061_narrator_voice_faf752b7c7.mp3"
+    "relative_audio_path": "audio/voice/en/script_1070_narrator_voice_faf752b7c7.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1070_narrator_voice_faf752b7c7.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1064,
+    "line": 1073,
     "speaker": "im",
     "text": "No one will help. Not officially. Moscow may be my only option.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2544,12 +2614,12 @@
     "pitch": "-4Hz",
     "volume": "-16%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_1064_im_affcf3bdba.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1064_im_affcf3bdba.mp3"
+    "relative_audio_path": "audio/voice/en/script_1073_im_affcf3bdba.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1073_im_affcf3bdba.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1072,
+    "line": 1081,
     "speaker": "im",
     "text": "If I stay, Hong Kong will extradite me. The US legal system won't give me a fair trial under the Espionage Act.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2558,12 +2628,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1072_im_fc5a5dc374.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1072_im_fc5a5dc374.mp3"
+    "relative_audio_path": "audio/voice/en/script_1081_im_fc5a5dc374.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1081_im_fc5a5dc374.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1079,
+    "line": 1088,
     "speaker": "narrator_voice",
     "text": "You board an international flight just hours before your name hits the global no-fly lists.",
     "voice": "en-US-BrianNeural",
@@ -2572,12 +2642,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1079_narrator_voice_bb80e4e123.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1079_narrator_voice_bb80e4e123.mp3"
+    "relative_audio_path": "audio/voice/en/script_1088_narrator_voice_bb80e4e123.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1088_narrator_voice_bb80e4e123.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1121,
+    "line": 1129,
     "speaker": "narrator_voice",
     "text": "The Sheremetyevo International Airport transit zone. You have been trapped here for 40 days. Sleeping on chairs, eating airport food, living in legal limbo.",
     "voice": "en-US-BrianNeural",
@@ -2586,12 +2656,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1121_narrator_voice_a9b3ec75a2.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1121_narrator_voice_a9b3ec75a2.mp3"
+    "relative_audio_path": "audio/voice/en/script_1129_narrator_voice_a9b3ec75a2.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1129_narrator_voice_a9b3ec75a2.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1123,
+    "line": 1131,
     "speaker": "narrator_voice",
     "text": "His passport is cancelled. No country will grant him asylum without risking the wrath of the United States. Twenty-one countries rejected his application. Russia is his last option.",
     "voice": "en-US-BrianNeural",
@@ -2600,12 +2670,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1123_narrator_voice_90d75eae6e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1123_narrator_voice_90d75eae6e.mp3"
+    "relative_audio_path": "audio/voice/en/script_1131_narrator_voice_90d75eae6e.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1131_narrator_voice_90d75eae6e.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1128,
+    "line": 1136,
     "speaker": "russian_official",
     "text": "The transit zone is a strange place, yes? You are not in Russia, but you are certainly not in America.",
     "voice": "ru-RU-DmitryNeural",
@@ -2614,12 +2684,12 @@
     "pitch": "+1Hz",
     "volume": "-1%",
     "emotion_mode": "cold",
-    "relative_audio_path": "audio/voice/en/script_1128_russian_official_5de4a348f9.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1128_russian_official_5de4a348f9.mp3"
+    "relative_audio_path": "audio/voice/en/script_1136_russian_official_5de4a348f9.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1136_russian_official_5de4a348f9.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1131,
+    "line": 1139,
     "speaker": "russian_official",
     "text": "You are... nowhere. We can offer you 'somewhere.' Russia can grant you temporary asylum.",
     "voice": "ru-RU-DmitryNeural",
@@ -2628,12 +2698,12 @@
     "pitch": "+2Hz",
     "volume": "-8%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_1131_russian_official_a53360cbb5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1131_russian_official_a53360cbb5.mp3"
+    "relative_audio_path": "audio/voice/en/script_1139_russian_official_a53360cbb5.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1139_russian_official_a53360cbb5.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1134,
+    "line": 1142,
     "speaker": "e",
     "text": "I don't want to be a pawn in anyone's geopolitical chess game.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -2642,12 +2712,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_1134_e_f8262dbd27.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1134_e_f8262dbd27.mp3"
+    "relative_audio_path": "audio/voice/en/script_1142_e_f8262dbd27.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1142_e_f8262dbd27.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1137,
+    "line": 1145,
     "speaker": "russian_official",
     "text": "You became a pawn the moment you took those files. The only question is which board you want to play on.",
     "voice": "ru-RU-DmitryNeural",
@@ -2656,12 +2726,12 @@
     "pitch": "-1Hz",
     "volume": "-1%",
     "emotion_mode": "cold",
-    "relative_audio_path": "audio/voice/en/script_1137_russian_official_1a6014bf55.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1137_russian_official_1a6014bf55.mp3"
+    "relative_audio_path": "audio/voice/en/script_1145_russian_official_1a6014bf55.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1145_russian_official_1a6014bf55.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1140,
+    "line": 1148,
     "speaker": "im",
     "text": "He's right. I have no leverage. The US government pressured every ally to refuse me. Bolivia's presidential plane was even forced to land in Austria because they suspected I was on board. That's how far they'll go.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2670,12 +2740,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1140_im_cab42c105f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1140_im_cab42c105f.mp3"
+    "relative_audio_path": "audio/voice/en/script_1148_im_cab42c105f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1148_im_cab42c105f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1150,
+    "line": 1158,
     "speaker": "im",
     "text": "I'm an exile in the physical world, but I've never been more active in the digital one.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2684,12 +2754,12 @@
     "pitch": "-5Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_1150_im_cc807ea41d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1150_im_cc807ea41d.mp3"
+    "relative_audio_path": "audio/voice/en/script_1158_im_cc807ea41d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1158_im_cc807ea41d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1152,
+    "line": 1160,
     "speaker": "im",
     "text": "From this small apartment in Moscow, I can still connect to the world. I use encrypted video calls to speak at conferences, secure messaging to coordinate with press freedom organisations. The irony of a surveillance whistleblower living in the surveillance capital of the East is not lost on me.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2698,12 +2768,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1152_im_d4346e345f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1152_im_d4346e345f.mp3"
+    "relative_audio_path": "audio/voice/en/script_1160_im_d4346e345f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1160_im_d4346e345f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1154,
+    "line": 1162,
     "speaker": "narrator_voice",
     "text": "From Moscow, you continue to advocate for digital privacy. You develop tools to help journalists protect their sources, speak to millions through encrypted channels, and become the face of the global privacy debate.",
     "voice": "en-US-BrianNeural",
@@ -2712,12 +2782,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1154_narrator_voice_2f99891ff7.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1154_narrator_voice_2f99891ff7.mp3"
+    "relative_audio_path": "audio/voice/en/script_1162_narrator_voice_2f99891ff7.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1162_narrator_voice_2f99891ff7.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1156,
+    "line": 1164,
     "speaker": "im",
     "text": "SecureDrop , an open-source whistleblowing platform , was adopted by dozens of major news organizations after the leaks. It allows anonymous document submission, protecting sources the way I wish I had been protected. The tools I helped popularise are now standard practice in investigative journalism.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2726,12 +2796,12 @@
     "pitch": "-4Hz",
     "volume": "-16%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_1156_im_87b75174eb.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1156_im_87b75174eb.mp3"
+    "relative_audio_path": "audio/voice/en/script_1164_im_87b75174eb.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1164_im_87b75174eb.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1161,
+    "line": 1169,
     "speaker": "im",
     "text": "I trusted the right people. Greenwald, Poitras, the editors , they did what journalists are supposed to do. They told the truth.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2740,12 +2810,12 @@
     "pitch": "-7Hz",
     "volume": "-17%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_1161_im_a3aa20ccb1.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1161_im_a3aa20ccb1.mp3"
+    "relative_audio_path": "audio/voice/en/script_1169_im_a3aa20ccb1.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1169_im_a3aa20ccb1.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1163,
+    "line": 1171,
     "speaker": "im",
     "text": "Trust is a calculation, not a feeling. I chose carefully, but not perfectly. Some bridges burned that didn't need to.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2754,12 +2824,12 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_1163_im_3effeb54fb.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1163_im_3effeb54fb.mp3"
+    "relative_audio_path": "audio/voice/en/script_1171_im_3effeb54fb.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1171_im_3effeb54fb.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1165,
+    "line": 1173,
     "speaker": "im",
     "text": "I trusted no one fully, and it cost me. Some stories never got published. Some evidence was lost. Half-measures half-worked.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2768,12 +2838,12 @@
     "pitch": "-4Hz",
     "volume": "-16%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_1165_im_a0f7c5aa3c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1165_im_a0f7c5aa3c.mp3"
+    "relative_audio_path": "audio/voice/en/script_1173_im_a0f7c5aa3c.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1173_im_a0f7c5aa3c.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1168,
+    "line": 1176,
     "speaker": "im",
     "text": "My technical knowledge kept me alive. Every encryption key, every secure channel, every OpSec decision mattered.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2782,12 +2852,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1168_im_d3d44d07f6.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1168_im_d3d44d07f6.mp3"
+    "relative_audio_path": "audio/voice/en/script_1176_im_d3d44d07f6.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1176_im_d3d44d07f6.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1170,
+    "line": 1178,
     "speaker": "im",
     "text": "I knew enough to be dangerous, but not enough to be safe. There were gaps in my knowledge that almost got me caught.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2796,12 +2866,12 @@
     "pitch": "-4Hz",
     "volume": "-15%",
     "emotion_mode": "tense",
-    "relative_audio_path": "audio/voice/en/script_1170_im_340634d39d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1170_im_340634d39d.mp3"
+    "relative_audio_path": "audio/voice/en/script_1178_im_340634d39d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1178_im_340634d39d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1172,
+    "line": 1180,
     "speaker": "im",
     "text": "Looking back, there's so much I didn't know. So many security mistakes I made. I survived on luck as much as skill.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2810,12 +2880,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1172_im_c547d1f041.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1172_im_c547d1f041.mp3"
+    "relative_audio_path": "audio/voice/en/script_1180_im_c547d1f041.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1180_im_c547d1f041.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1176,
+    "line": 1184,
     "speaker": "im",
     "text": "People think metadata is harmless , it's just 'data about data.' Who you called, when, for how long, from where. Not the content of the message itself.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2824,12 +2894,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1176_im_48b084225f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1176_im_48b084225f.mp3"
+    "relative_audio_path": "audio/voice/en/script_1184_im_48b084225f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1184_im_48b084225f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1178,
+    "line": 1186,
     "speaker": "im",
     "text": "But metadata reveals patterns of life. Call a doctor at midnight, a divorce lawyer the next morning, and a locksmith that afternoon , the content doesn't matter. The pattern tells the whole story. Intelligence agencies consider metadata even more valuable than content in many cases.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2838,12 +2908,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1178_im_b92206868f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1178_im_b92206868f.mp3"
+    "relative_audio_path": "audio/voice/en/script_1186_im_b92206868f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1186_im_b92206868f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1188,
+    "line": 1196,
     "speaker": "im",
     "text": "PGP , Pretty Good Privacy. It's the asymmetric encryption system that made the whole operation possible. I publish a public key that anyone can use to encrypt a message to me, but only my private key can decrypt it. Without PGP, every email to the journalists would have been an open letter to the NSA.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2852,12 +2922,12 @@
     "pitch": "-4Hz",
     "volume": "-16%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_1188_im_46c2c7688b.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1188_im_46c2c7688b.mp3"
+    "relative_audio_path": "audio/voice/en/script_1196_im_46c2c7688b.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1196_im_46c2c7688b.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1210,
+    "line": 1218,
     "speaker": "im",
     "text": "The scariest attack is one you never see , a man-in-the-middle. An attacker secretly positions themselves between you and the person you're talking to, intercepting every message. Both sides think they're communicating directly, but the attacker sees everything.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2866,12 +2936,12 @@
     "pitch": "-5Hz",
     "volume": "-22%",
     "emotion_mode": "vulnerable",
-    "relative_audio_path": "audio/voice/en/script_1210_im_39e8e483ff.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1210_im_39e8e483ff.mp3"
+    "relative_audio_path": "audio/voice/en/script_1218_im_39e8e483ff.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1218_im_39e8e483ff.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1212,
+    "line": 1220,
     "speaker": "im",
     "text": "The only defence is key verification , confirming encryption fingerprints through a separate, trusted channel. If you skip that step, you could be handing your secrets directly to the adversary.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2880,12 +2950,12 @@
     "pitch": "-4Hz",
     "volume": "-16%",
     "emotion_mode": "warm",
-    "relative_audio_path": "audio/voice/en/script_1212_im_cedff0ede3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1212_im_cedff0ede3.mp3"
+    "relative_audio_path": "audio/voice/en/script_1220_im_cedff0ede3.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1220_im_cedff0ede3.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1227,
+    "line": 1235,
     "speaker": "narrator_voice",
     "text": "Years have passed. The world has changed , partly because of what you did, and partly in spite of it.",
     "voice": "en-US-BrianNeural",
@@ -2894,12 +2964,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1227_narrator_voice_08a8526fb3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1227_narrator_voice_08a8526fb3.mp3"
+    "relative_audio_path": "audio/voice/en/script_1235_narrator_voice_08a8526fb3.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1235_narrator_voice_08a8526fb3.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1229,
+    "line": 1237,
     "speaker": "narrator_voice",
     "text": "A journalist contacts you with a new trove of classified documents from a different whistleblower. The cycle could begin again.",
     "voice": "en-US-BrianNeural",
@@ -2908,12 +2978,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1229_narrator_voice_fa6dfd1c1f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1229_narrator_voice_fa6dfd1c1f.mp3"
+    "relative_audio_path": "audio/voice/en/script_1237_narrator_voice_fa6dfd1c1f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1237_narrator_voice_fa6dfd1c1f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1232,
+    "line": 1240,
     "speaker": "im",
     "text": "Another person on the inside, seeing what I saw, feeling what I felt. They're asking me what to do.",
     "voice": "en-US-AndrewMultilingualNeural",
@@ -2922,12 +2992,12 @@
     "pitch": "-7Hz",
     "volume": "-24%",
     "emotion_mode": "conspiratorial",
-    "relative_audio_path": "audio/voice/en/script_1232_im_6841c8ac3d.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1232_im_6841c8ac3d.mp3"
+    "relative_audio_path": "audio/voice/en/script_1240_im_6841c8ac3d.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1240_im_6841c8ac3d.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1238,
+    "line": 1246,
     "speaker": "e",
     "text": "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -2936,12 +3006,12 @@
     "pitch": "-1Hz",
     "volume": "+1%",
     "emotion_mode": "resolute",
-    "relative_audio_path": "audio/voice/en/script_1238_e_4f4a602c3f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1238_e_4f4a602c3f.mp3"
+    "relative_audio_path": "audio/voice/en/script_1246_e_4f4a602c3f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1246_e_4f4a602c3f.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1242,
+    "line": 1250,
     "speaker": "narrator_voice",
     "text": "You help the new whistleblower establish secure communications, passing on the hard lessons of your own experience.",
     "voice": "en-US-BrianNeural",
@@ -2950,12 +3020,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1242_narrator_voice_9b7a0efd80.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1242_narrator_voice_9b7a0efd80.mp3"
+    "relative_audio_path": "audio/voice/en/script_1250_narrator_voice_9b7a0efd80.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1250_narrator_voice_9b7a0efd80.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1247,
+    "line": 1255,
     "speaker": "e",
     "text": "Try the Inspector General first. Document everything. If the system fails you , and it probably will , then you'll have a record proving you tried.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -2964,12 +3034,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_1247_e_b72bcc09af.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1247_e_b72bcc09af.mp3"
+    "relative_audio_path": "audio/voice/en/script_1255_e_b72bcc09af.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1255_e_b72bcc09af.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1252,
+    "line": 1260,
     "speaker": "narrator_voice",
     "text": "You advise a measured approach, hoping the system has improved since your time. Knowing it probably hasn't.",
     "voice": "en-US-BrianNeural",
@@ -2978,12 +3048,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1252_narrator_voice_bd6fa239ee.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1252_narrator_voice_bd6fa239ee.mp3"
+    "relative_audio_path": "audio/voice/en/script_1260_narrator_voice_bd6fa239ee.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1260_narrator_voice_bd6fa239ee.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1257,
+    "line": 1265,
     "speaker": "e",
     "text": "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price.",
     "voice": "en-US-BrianMultilingualNeural",
@@ -2992,12 +3062,12 @@
     "pitch": "-1Hz",
     "volume": "-5%",
     "emotion_mode": "reflective",
-    "relative_audio_path": "audio/voice/en/script_1257_e_016930bf79.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1257_e_016930bf79.mp3"
+    "relative_audio_path": "audio/voice/en/script_1265_e_016930bf79.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1265_e_016930bf79.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1261,
+    "line": 1269,
     "speaker": "narrator_voice",
     "text": "Your honesty about the personal cost weighs heavily on the would-be whistleblower.",
     "voice": "en-US-BrianNeural",
@@ -3006,12 +3076,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1261_narrator_voice_f16f66cc19.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1261_narrator_voice_f16f66cc19.mp3"
+    "relative_audio_path": "audio/voice/en/script_1269_narrator_voice_f16f66cc19.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1269_narrator_voice_f16f66cc19.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1269,
+    "line": 1277,
     "speaker": "narrator_voice",
     "text": "You remain in Russia. You were granted permanent residency in 2020 and Russian citizenship in 2022.",
     "voice": "en-US-BrianNeural",
@@ -3020,12 +3090,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1269_narrator_voice_8e4ba5b403.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1269_narrator_voice_8e4ba5b403.mp3"
+    "relative_audio_path": "audio/voice/en/script_1277_narrator_voice_8e4ba5b403.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1277_narrator_voice_8e4ba5b403.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1271,
+    "line": 1279,
     "speaker": "narrator_voice",
     "text": "Your disclosures led to the USA FREEDOM Act, which reformed some surveillance practices. Major tech companies adopted end-to-end encryption.",
     "voice": "en-US-BrianNeural",
@@ -3034,12 +3104,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1271_narrator_voice_0e0e34e658.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1271_narrator_voice_0e0e34e658.mp3"
+    "relative_audio_path": "audio/voice/en/script_1279_narrator_voice_0e0e34e658.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1279_narrator_voice_0e0e34e658.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1273,
+    "line": 1281,
     "speaker": "narrator_voice",
     "text": "But mass surveillance continues in new forms. The debate between security and privacy is far from over.",
     "voice": "en-US-BrianNeural",
@@ -3048,12 +3118,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1273_narrator_voice_e84ac7fa3a.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1273_narrator_voice_e84ac7fa3a.mp3"
+    "relative_audio_path": "audio/voice/en/script_1281_narrator_voice_e84ac7fa3a.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1281_narrator_voice_e84ac7fa3a.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1275,
+    "line": 1283,
     "speaker": "narrator_voice",
     "text": "The tools you used , encryption, Tor, secure communication , are the same tools available to everyone.",
     "voice": "en-US-BrianNeural",
@@ -3062,12 +3132,12 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1275_narrator_voice_8f7fbf11a4.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1275_narrator_voice_8f7fbf11a4.mp3"
+    "relative_audio_path": "audio/voice/en/script_1283_narrator_voice_8f7fbf11a4.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1283_narrator_voice_8f7fbf11a4.mp3"
   },
   {
     "src": "scripts/script.rpy",
-    "line": 1277,
+    "line": 1285,
     "speaker": "narrator_voice",
     "text": "The question is: will you use them?",
     "voice": "en-US-BrianNeural",
@@ -3076,8 +3146,8 @@
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/script_1277_narrator_voice_5dac7a125e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1277_narrator_voice_5dac7a125e.mp3"
+    "relative_audio_path": "audio/voice/en/script_1285_narrator_voice_5dac7a125e.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\script_1285_narrator_voice_5dac7a125e.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3091,7 +3161,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0057_narrator_voice_eb5c85c0b4.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0057_narrator_voice_eb5c85c0b4.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0057_narrator_voice_eb5c85c0b4.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3105,7 +3175,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0059_narrator_voice_1b96c4ca9e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0059_narrator_voice_1b96c4ca9e.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0059_narrator_voice_1b96c4ca9e.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3119,7 +3189,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0061_narrator_voice_18b05159ff.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0061_narrator_voice_18b05159ff.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0061_narrator_voice_18b05159ff.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3133,7 +3203,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0063_narrator_voice_a78a11feab.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0063_narrator_voice_a78a11feab.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0063_narrator_voice_a78a11feab.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3147,7 +3217,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0065_narrator_voice_5db6799d79.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0065_narrator_voice_5db6799d79.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0065_narrator_voice_5db6799d79.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3161,7 +3231,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0067_narrator_voice_40b142ca57.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0067_narrator_voice_40b142ca57.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0067_narrator_voice_40b142ca57.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3175,7 +3245,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0069_narrator_voice_eaba96f8cc.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0069_narrator_voice_eaba96f8cc.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0069_narrator_voice_eaba96f8cc.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3189,7 +3259,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0097_narrator_voice_9831448d21.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0097_narrator_voice_9831448d21.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0097_narrator_voice_9831448d21.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3203,7 +3273,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0099_narrator_voice_1fc0a784eb.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0099_narrator_voice_1fc0a784eb.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0099_narrator_voice_1fc0a784eb.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3217,21 +3287,21 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0101_narrator_voice_e2354b03d5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0101_narrator_voice_e2354b03d5.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0101_narrator_voice_e2354b03d5.mp3"
   },
   {
     "src": "scripts/endings.rpy",
     "line": 103,
     "speaker": "narrator_voice",
-    "text": "Russia grants you asylum — not out of kindness, but politics.",
+    "text": "Russia grants you asylum , not out of kindness, but politics.",
     "voice": "en-US-BrianNeural",
     "tag": "narration",
     "rate": "+0%",
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/endings_0103_narrator_voice_0346288cdc.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0103_narrator_voice_0346288cdc.mp3"
+    "relative_audio_path": "audio/voice/en/endings_0103_narrator_voice_a306110d65.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0103_narrator_voice_a306110d65.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3245,7 +3315,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0105_narrator_voice_0bf3a1bd1c.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0105_narrator_voice_0bf3a1bd1c.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0105_narrator_voice_0bf3a1bd1c.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3259,7 +3329,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0107_narrator_voice_6788bdfba3.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0107_narrator_voice_6788bdfba3.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0107_narrator_voice_6788bdfba3.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3273,7 +3343,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0109_narrator_voice_f143930b2f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0109_narrator_voice_f143930b2f.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0109_narrator_voice_f143930b2f.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3287,7 +3357,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0137_narrator_voice_ec85050cf2.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0137_narrator_voice_ec85050cf2.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0137_narrator_voice_ec85050cf2.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3301,7 +3371,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0139_narrator_voice_540b4abcaf.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0139_narrator_voice_540b4abcaf.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0139_narrator_voice_540b4abcaf.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3315,7 +3385,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0141_narrator_voice_87a93064d0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0141_narrator_voice_87a93064d0.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0141_narrator_voice_87a93064d0.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3329,7 +3399,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0143_narrator_voice_afd37c1eb1.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0143_narrator_voice_afd37c1eb1.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0143_narrator_voice_afd37c1eb1.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3343,7 +3413,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0145_narrator_voice_58862349a7.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0145_narrator_voice_58862349a7.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0145_narrator_voice_58862349a7.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3357,7 +3427,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0147_narrator_voice_8c733adaa6.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0147_narrator_voice_8c733adaa6.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0147_narrator_voice_8c733adaa6.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3371,7 +3441,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0149_narrator_voice_1b352eea14.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0149_narrator_voice_1b352eea14.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0149_narrator_voice_1b352eea14.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3385,7 +3455,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0177_narrator_voice_132068f71e.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0177_narrator_voice_132068f71e.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0177_narrator_voice_132068f71e.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3399,7 +3469,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0179_narrator_voice_72bc1b56af.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0179_narrator_voice_72bc1b56af.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0179_narrator_voice_72bc1b56af.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3413,7 +3483,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0181_narrator_voice_250b25329f.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0181_narrator_voice_250b25329f.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0181_narrator_voice_250b25329f.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3427,7 +3497,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0183_narrator_voice_5fbdee97e5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0183_narrator_voice_5fbdee97e5.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0183_narrator_voice_5fbdee97e5.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3441,7 +3511,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0185_narrator_voice_ca6ba452d0.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0185_narrator_voice_ca6ba452d0.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0185_narrator_voice_ca6ba452d0.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3455,7 +3525,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0187_narrator_voice_7e01c18a47.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0187_narrator_voice_7e01c18a47.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0187_narrator_voice_7e01c18a47.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3469,7 +3539,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0189_narrator_voice_a1a530c9af.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0189_narrator_voice_a1a530c9af.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0189_narrator_voice_a1a530c9af.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3483,21 +3553,21 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0217_narrator_voice_d9291690bf.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0217_narrator_voice_d9291690bf.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0217_narrator_voice_d9291690bf.mp3"
   },
   {
     "src": "scripts/endings.rpy",
     "line": 219,
     "speaker": "narrator_voice",
-    "text": "What you thought was a secure PGP channel was actually a honeypot — a man-in-the-middle operation run by the very agency you were trying to expose.",
+    "text": "What you thought was a secure PGP channel was actually a honeypot , a man-in-the-middle operation run by the very agency you were trying to expose.",
     "voice": "en-US-BrianNeural",
     "tag": "narration",
     "rate": "+0%",
     "pitch": "+0Hz",
     "volume": "+0%",
     "emotion_mode": "neutral",
-    "relative_audio_path": "audio/voice/en/endings_0219_narrator_voice_e7fec6a74b.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0219_narrator_voice_e7fec6a74b.mp3"
+    "relative_audio_path": "audio/voice/en/endings_0219_narrator_voice_4d6ea8bc9f.mp3",
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0219_narrator_voice_4d6ea8bc9f.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3511,7 +3581,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0221_narrator_voice_59ed008334.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0221_narrator_voice_59ed008334.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0221_narrator_voice_59ed008334.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3525,7 +3595,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0223_narrator_voice_60535234d5.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0223_narrator_voice_60535234d5.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0223_narrator_voice_60535234d5.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3539,7 +3609,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0225_narrator_voice_715b6fcba8.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0225_narrator_voice_715b6fcba8.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0225_narrator_voice_715b6fcba8.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3553,7 +3623,7 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0227_narrator_voice_09854d3a44.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0227_narrator_voice_09854d3a44.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0227_narrator_voice_09854d3a44.mp3"
   },
   {
     "src": "scripts/endings.rpy",
@@ -3567,6 +3637,6 @@
     "volume": "+0%",
     "emotion_mode": "neutral",
     "relative_audio_path": "audio/voice/en/endings_0229_narrator_voice_df310931cc.mp3",
-    "absolute_audio_path": "D:\\SkilsProject\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0229_narrator_voice_df310931cc.mp3"
+    "absolute_audio_path": "D:\\богдан\\Snowden-Visual-Novel\\game\\audio\\voice\\en\\endings_0229_narrator_voice_df310931cc.mp3"
   }
 ]

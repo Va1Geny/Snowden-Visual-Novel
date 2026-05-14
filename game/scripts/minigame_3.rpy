@@ -370,6 +370,13 @@ init python:
             pw_game_state["tab_hint_used"] = True
             renpy.restart_interaction()
 
+    def pw_delete_char():
+        if pw_game_state["status"] not in ["playing", "report"]:
+            return
+        if pw_game_state["current_input"]:
+            pw_game_state["current_input"] = pw_game_state["current_input"][:-1]
+            renpy.restart_interaction()
+
     def pw_apply_results():
         global knowledge_score, suspicion_level, evidence_secured
         score = pw_game_state["score"]
@@ -411,13 +418,14 @@ transform blink_underscore:
 
 screen minigame_3_main():
     style_prefix "terminal"
+    key "rollback" action NullAction()
 
     frame:
         style "terminal_screen_bg"
         xfill True
         yfill True
 
-        add "gui/logo.png" alpha 0.07 xalign 0.5 yalign 0.5 zoom 1.0
+        add "images/logo.png" alpha 0.07 xalign 0.5 yalign 0.5 zoom 1.0
 
         if pw_game_state["status"] == "outputting":
             timer 0.08 repeat True action If(
@@ -434,6 +442,22 @@ screen minigame_3_main():
         vbox:
             xfill True
             yfill True
+            spacing 12
+
+            frame:
+                xfill True
+                background "#0D1117"
+                padding (16, 12)
+
+                if pw_game_state["status"] == "playing":
+                    text t("How to play: read the terminal prompt, type the full John the Ripper command, press Enter to run it, use TAB after a few letters to autocomplete, and use Backspace to edit."):
+                        style "terminal_text"
+                elif pw_game_state["status"] == "learning":
+                    text t("Review the explanation, then press Enter to load the next hash challenge."):
+                        style "terminal_text"
+                else:
+                    text t("Session complete. Type 'exit' or press Enter to return to the story."):
+                        style "terminal_text"
 
             viewport id "terminal_vp":
                 yfill True
@@ -455,22 +479,23 @@ screen minigame_3_main():
 
                     if pw_game_state["status"] in ["playing", "report"]:
                         hbox:
-                            text "└─$ " style "terminal_text"
+                            text t("└─$ ") style "terminal_text"
                             input value TerminalInputValue() style "terminal_input_text" caret "terminal_caret"
                     elif pw_game_state["status"] == "learning":
                         hbox:
-                            text "└─$ " style "terminal_text"
+                            text t("└─$ ") style "terminal_text"
                             add "terminal_caret" yalign 1.0
                     elif pw_game_state["status"] == "outputting":
                         hbox:
-                            text "└─$ " style "terminal_text"
+                            text t("└─$ ") style "terminal_text"
 
         if pw_game_state["status"] in ["playing", "report"]:
             key "K_TAB" action Function(pw_autocomplete)
-            key "K_BACKSPACE" action Function(pw_backspace)
+            key "K_BACKSPACE" action Function(pw_delete_char)
+            key "K_DELETE" action Function(pw_delete_char)
 
             if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
-                text "Press TAB to autocomplete" xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
+                text t("Press TAB to autocomplete") xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
 
         if pw_game_state["status"] == "learning":
             key "K_RETURN" action Function(pw_check_command)

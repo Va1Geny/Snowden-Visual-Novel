@@ -17,17 +17,17 @@ screen game_over(narrative_text=""):
         vbox:
             spacing 20
 
-            text "OPERATION COMPROMISED" style "game_over_title"
+            text t("OPERATION COMPROMISED") style "game_over_title"
 
             frame:
                 background "#FF2D5544"
                 xysize (660, 1)
                 xalign 0.5
 
-            text "IDENTITY EXPOSED" style "game_over_status"
+            text t("IDENTITY EXPOSED") style "game_over_status"
 
             if narrative_text:
-                text narrative_text style "game_over_body"
+                text t(narrative_text) style "game_over_body"
 
             frame:
                 background "#FF2D5533"
@@ -46,8 +46,8 @@ screen game_over(narrative_text=""):
                         spacing 2
                         xalign 0.0
 
-                        text "KNOWLEDGE:" style "game_over_label"
-                        text "[knowledge_score]/100" style "game_over_score_value"
+                        text t("KNOWLEDGE:") style "game_over_label"
+                        text t("[knowledge_score]/100") style "game_over_score_value"
 
                 hbox:
                     spacing 120
@@ -57,8 +57,8 @@ screen game_over(narrative_text=""):
                         spacing 2
                         xalign 0.0
 
-                        text "SUSPICION:" style "game_over_label"
-                        text "[suspicion_level]/100" style "game_over_score_danger"
+                        text t("SUSPICION:") style "game_over_label"
+                        text t("[suspicion_level]/100") style "game_over_score_danger"
 
             frame:
                 background "#FF2D5544"
@@ -72,11 +72,11 @@ screen game_over(narrative_text=""):
                 button:
                     action Return("restart")
                     style "game_over_btn_primary"
-                    text "[ TRY AGAIN ]" style "game_over_btn_primary_text"
+                    text t("[ TRY AGAIN ]") style "game_over_btn_primary_text"
 
                 button:
                     action Return("main_menu")
                     style "game_over_btn_secondary"
-                    text "[ MAIN MENU ]" style "game_over_btn_secondary_text"
+                    text t("[ MAIN MENU ]") style "game_over_btn_secondary_text"
 
     on "show" action SetVariable("_game_over_show_anim", True)

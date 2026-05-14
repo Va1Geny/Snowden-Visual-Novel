@@ -15,8 +15,8 @@ define e = Character("You",
     image="edward",
     color="#00FFD1",
     what_color="#E8E8E8",
-    who_size=22,
-    what_size=20,
+    who_size=26,
+    what_size=26,
     who_bold=True)
 
 define greenwald = Character("Grayson Wardell",
@@ -24,68 +24,68 @@ define greenwald = Character("Grayson Wardell",
     color="#FFD700",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define poitras = Character("Leah Portman",
     image="poitras",
     color="#FF69B4",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define nsa_chief = Character("Director Marcus Hale",
     image="nsa_chief",
     color="#FF2D55",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define supervisor = Character("Supervisor Daniel Cross",
     image="supervisor",
     color="#FF6B35",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
     image="colleague",
     color="#888888",
     what_color="#CCCCCC",
     who_bold=False,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define russian_official = Character("Agent Viktor Malenkov",
     image="russian_official",
     color="#CC2222",
     what_color="#E8E8E8",
     who_bold=True,
-    who_size=22,
-    what_size=20)
+    who_size=26,
+    what_size=26)
 
 define sys = Character("// SYSTEM //",
     color="#00FF00",
     what_color="#00FF00",
     who_bold=True,
-    who_size=20,
-    what_size=18)
+    who_size=24,
+    what_size=24)
 
 define narrator_voice = Character(None,
     what_color="#AAAAAA",
     what_italic=True,
-    what_size=22)
+    what_size=28)
 
 define im = Character("INTERNAL MONOLOGUE",
     what_prefix="*",
     what_suffix="*",
     color="#888888",
     what_color="#AAAAAA",
-    who_size=18,
-    what_size=20)
+    who_size=24,
+    what_size=27)
 
 default trust_score = 0
 default knowledge_score = 0
@@ -255,6 +255,29 @@ init python:
         width, height = current_viewport_size()
         return renpy.variant("touch") or width <= 1600 or height <= 900
 
+    def localized_text_font(semibold=False, mono=False):
+        if current_translation_language() == "ukrainian":
+            return "fonts/DejaVuSans.ttf"
+        if mono:
+            return "fonts/DejaVuSans.ttf"
+        if semibold:
+            return "fonts/DejaVuSans.ttf"
+        return "fonts/DejaVuSans.ttf"
+
+    def voice_for_current_language(english_path):
+        lang = current_translation_language()
+        if lang is None:
+            return english_path
+        if lang == "french":
+            french_path = english_path.replace("audio/voice/en/", "audio/voice/fr/")
+            if renpy.loadable(french_path):
+                return french_path
+        if lang == "dutch":
+            dutch_path = english_path.replace("audio/voice/en/", "audio/voice/nl/")
+            if renpy.loadable(dutch_path):
+                return dutch_path
+        return None
+
     def notebook_entry_count():
         return len(store.notebook_entries)
 
@@ -389,19 +412,27 @@ init python:
         return header + "\n\n".join(lines)
 
     def export_dossier_txt():
-        export_dir = get_notebook_export_dir()
-        if not export_dir:
-            renpy.notify(t("Could not determine a writable export location."))
+        default_filename = datetime.now().strftime("dossier_%Y%m%d_%H%M%S.txt")
+        path = choose_notebook_export_path(default_filename)
+
+        if path == "":
+            renpy.notify(t("Dossier export canceled."))
             return
 
-        filename = datetime.now().strftime("dossier_%Y%m%d_%H%M%S.txt")
-        path = os.path.join(export_dir, filename)
+        if path is None:
+            export_dir = get_notebook_export_dir()
+            if not export_dir:
+                renpy.notify(t("Could not determine a writable export location."))
+                return
+
+            path = os.path.join(export_dir, default_filename)
+            renpy.notify(t("Could not open a save dialog. Exporting to the default exports folder."))
 
         try:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(get_dossier_export_text())
 
-            renpy.notify(t("Dossier exported to ") + export_dir)
+            renpy.notify(t("Dossier exported to ") + path)
         except Exception as exc:
             renpy.notify(f"Failed to export dossier: {exc}")
 
@@ -418,8 +449,14 @@ init python:
     )
 
     def _strip_speaker_state(at_list):
+        if not at_list:
+            return []
 
-        return at_list[:1] if at_list else []
+        return [
+            transform
+            for transform in at_list
+            if transform is not active_char and transform is not inactive_char
+        ]
 
     def speaker_dimmer(event, interact=True, **kwargs):
         if not interact or event != "begin":
@@ -436,13 +473,9 @@ init python:
             except Exception:
                 current = None
 
-            position_transforms = _strip_speaker_state(list(current or ()))
-
-            if not position_transforms:
-                continue
-
+            base_transforms = _strip_speaker_state(list(current or ()))
             new_state = active_char if tag == speaker_tag else inactive_char
-            renpy.show(tag, at_list=position_transforms + [new_state])
+            renpy.show(tag, at_list=base_transforms + [new_state])
 
     config.character_callback = speaker_dimmer
 
@@ -485,82 +518,47 @@ init python:
         trans.yoffset = (540 - y) * 0.02
         return 0
 
+    def portrait_sprite(path, width=900, height=1396, yoffset=0):
+        return renpy.display.transform.Transform(
+            path,
+            fit="contain",
+            xsize=width,
+            ysize=height,
+            xalign=0.5,
+            yalign=1.0,
+            yoffset=yoffset,
+            subpixel=True,
+        )
+
 transform parallax:
     zoom 1.05
     align (0.5, 0.5)
     function mouse_parallax
 
-image edward neutral:
-    "sprites/edward neutral.png"
-    zoom 0.76
-    yoffset 9
-image edward thoughtful:
-    "sprites/edward thoughtful.png"
-    zoom 1.02
-image edward concerned:
-    "sprites/edward concerned.png"
-    zoom 1.02
-image edward shocked:
-    "sprites/edward shocked.png"
-    zoom 1.02
-image edward tense:
-    "sprites/edward tense.png"
-    zoom 1.02
-image edward determined:
-    "sprites/edward determined.png"
-    zoom 1.02
-image edward defiant:
-    "sprites/edward defiant.png"
-    zoom 1.02
-image edward sad:
-    "sprites/edward sad.png"
-    zoom 1.02
-image edward tired:
-    "sprites/edward tired.png"
-    zoom 1.02
-image edward relieved:
-    "sprites/edward relieved.png"
-    zoom 1.02
+image edward neutral = portrait_sprite("sprites/edward neutral.png", yoffset=9)
+image edward thoughtful = portrait_sprite("sprites/edward thoughtful.png", yoffset=9)
+image edward concerned = portrait_sprite("sprites/edward concerned.png", yoffset=9)
+image edward shocked = portrait_sprite("sprites/edward shocked.png", yoffset=9)
+image edward tense = portrait_sprite("sprites/edward tense.png", yoffset=9)
+image edward determined = portrait_sprite("sprites/edward determined.png", yoffset=9)
+image edward defiant = portrait_sprite("sprites/edward defiant.png", yoffset=9)
+image edward sad = portrait_sprite("sprites/edward sad.png", yoffset=9)
+image edward tired = portrait_sprite("sprites/edward tired.png", yoffset=9)
+image edward relieved = portrait_sprite("sprites/edward relieved.png", yoffset=9)
 
-image supervisor neutral:
-    "sprites/supervisor neutral.png"
-    zoom 0.75
-    yoffset 21
-image supervisor stern:
-    "sprites/supervisor stern.png"
-    zoom 1.0
-image supervisor authoritative:
-    "sprites/supervisor authoritative.png"
-    zoom 1.0
-image supervisor suspicious:
-    "sprites/supervisor suspicious.png"
-    zoom 1.0
-image supervisor annoyed:
-    "sprites/supervisor annoyed.png"
-    zoom 1.0
-image supervisor cold:
-    "sprites/supervisor cold.png"
-    zoom 1.0
+image supervisor neutral = portrait_sprite("sprites/supervisor neutral.png", yoffset=21)
+image supervisor stern = portrait_sprite("sprites/supervisor stern.png", yoffset=21)
+image supervisor authoritative = portrait_sprite("sprites/supervisor authoritative.png", yoffset=21)
+image supervisor suspicious = portrait_sprite("sprites/supervisor suspicious.png", yoffset=21)
+image supervisor annoyed = portrait_sprite("sprites/supervisor annoyed.png", yoffset=21)
+image supervisor cold = portrait_sprite("sprites/supervisor cold.png", yoffset=21)
 
-image colleague neutral:
-    "sprites/colleague neutral.png"
-    zoom 0.74
-    yoffset 19
-image colleague casual:
-    "sprites/colleague casual.png"
-    zoom 0.98
-image colleague amused:
-    "sprites/colleague amused.png"
-    zoom 0.98
-image colleague smug:
-    "sprites/colleague smug.png"
-    zoom 0.98
-image colleague uneasy:
-    "sprites/colleague uneasy.png"
-    zoom 0.98
-image colleague cautious:
-    "sprites/colleague cautious.png"
-    zoom 0.98
+image colleague neutral = portrait_sprite("sprites/colleague neutral.png", yoffset=19)
+image colleague casual = portrait_sprite("sprites/colleague casual.png", yoffset=19)
+image colleague amused = portrait_sprite("sprites/colleague amused.png", yoffset=19)
+image colleague smug = portrait_sprite("sprites/colleague smug.png", yoffset=19)
+image colleague uneasy = portrait_sprite("sprites/colleague uneasy.png", yoffset=19)
+image colleague cautious = portrait_sprite("sprites/colleague cautious.png", yoffset=19)
 
 image greenwald neutral:
     "sprites/greenwald neutral.png"
@@ -606,25 +604,12 @@ image poitras resolved:
     "sprites/poitras resolved.png"
     zoom 1.02
 
-image russian_official neutral:
-    "sprites/russian official neutral.png"
-    zoom 0.76
-    yoffset 34
-image russian_official smug:
-    "sprites/russian official smug.png"
-    zoom 1.0
-image russian_official calculating:
-    "sprites/russian official calculating.png"
-    zoom 1.0
-image russian_official cold:
-    "sprites/russian official cold.png"
-    zoom 1.0
-image russian_official pressuring:
-    "sprites/russian official pressuring.png"
-    zoom 1.0
-image russian_official confident:
-    "sprites/russian official confident.png"
-    zoom 1.0
+image russian_official neutral = portrait_sprite("sprites/russian official neutral.png", yoffset=34)
+image russian_official smug = portrait_sprite("sprites/russian official smug.png", yoffset=34)
+image russian_official calculating = portrait_sprite("sprites/russian official calculating.png", yoffset=34)
+image russian_official cold = portrait_sprite("sprites/russian official cold.png", yoffset=34)
+image russian_official pressuring = portrait_sprite("sprites/russian official pressuring.png", yoffset=34)
+image russian_official confident = portrait_sprite("sprites/russian official confident.png", yoffset=34)
 
 image nsa_chief neutral:
     "sprites/nsa chief neutral.png"
@@ -639,28 +624,13 @@ image nsa_chief cold:
     "sprites/nsa chief cold.png"
     zoom 1.0
 
-image journalist neutral:
-    "sprites/journalist neutral.png"
-    zoom 0.77
-    yoffset 20
-image journalist skeptical:
-    "sprites/journalist skeptical.png"
-    zoom 1.02
-image journalist focused:
-    "sprites/journalist focused.png"
-    zoom 1.02
-image journalist serious:
-    "sprites/journalist serious.png"
-    zoom 1.02
-image journalist shocked:
-    "sprites/journalist shocked.png"
-    zoom 1.02
-image journalist resolved:
-    "sprites/journalist resolved.png"
-    zoom 1.02
-image journalist concerned:
-    "sprites/journalist concerned.png"
-    zoom 1.02
+image journalist neutral = portrait_sprite("sprites/journalist neutral.png", yoffset=20)
+image journalist skeptical = portrait_sprite("sprites/journalist skeptical.png", yoffset=20)
+image journalist focused = portrait_sprite("sprites/journalist focused.png", yoffset=20)
+image journalist serious = portrait_sprite("sprites/journalist serious.png", yoffset=20)
+image journalist shocked = portrait_sprite("sprites/journalist shocked.png", yoffset=20)
+image journalist resolved = portrait_sprite("sprites/journalist resolved.png", yoffset=20)
+image journalist concerned = portrait_sprite("sprites/journalist concerned.png", yoffset=20)
 
 image editor neutral:
     "sprites/editor neutral.png"
@@ -739,10 +709,10 @@ image bg_sheremetyevo:
     xysize (1920, 1080)
 
 transform active_char:
-    ease 0.3 matrixcolor SaturationMatrix(1.0) alpha 1.0 zoom 1.02
+    ease 0.2 matrixcolor SaturationMatrix(1.0) alpha 1.0
 
 transform inactive_char:
-    ease 0.3 matrixcolor SaturationMatrix(0.35) alpha 0.8 zoom 0.97
+    ease 0.2 matrixcolor SaturationMatrix(0.45) alpha 0.82
 
 transform enter_left:
     xanchor 0.5
