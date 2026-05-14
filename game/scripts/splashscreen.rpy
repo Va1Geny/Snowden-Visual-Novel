@@ -1,8 +1,6 @@
 image loading_animation = Movie(play="images/ui/loading_animation.webm", loop=True)
 
 label splashscreen:
-    $ apply_accessibility_font()
-    $ apply_high_contrast()
     scene black
     show loading_animation at truecenter
     pause 8.0

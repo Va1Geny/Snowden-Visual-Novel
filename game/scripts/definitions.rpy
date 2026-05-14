@@ -1,16 +1,5 @@
 init offset = -1
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# LEGAL SANITIZATION — Agency Alias Variables
-# Use these interpolated variables in all .rpy script files instead of
-# hardcoding real organization names. Change here for global effect.
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-define ag_cia = "The Obsidian Oversight"
-define ag_fbi = "Bureau of Internal Security"
-define ag_nsa = "Signal Reach Network"
-
-define config.default_fullscreen = True
-define config.allow_skipping = True
 define e = Character("You",
     image="edward",
     color="#00FFD1",
@@ -170,7 +159,6 @@ init python:
         "EXIF metadata",
         "hash function",
         "John the Ripper",
-        "Kali Linux",
         "MAC address",
         "MD5",
         "secure deletion",
@@ -182,7 +170,7 @@ init python:
         ("Bcrypt", "A password-hashing function designed to be computationally expensive and intentionally slow, making brute-force and dictionary attacks highly ineffective."),
         ("Boundless Informant", "A data analysis tool used by the NSA to summarize and visualize the metadata and communications records they collect globally."),
         ("Caesar Cipher", "Simple substitution cipher where each letter is shifted by a fixed number. Easy to break but historically significant. Example: ROT-3 shifts A to D, B to E, and so on."),
-        ("CIA — The Obsidian Oversight (Central Intelligence Agency)", "A civilian foreign intelligence service of the federal government of the United States, tasked with gathering, processing, and analyzing national security information. Known in-world as The Obsidian Oversight."),
+        ("CIA (Central Intelligence Agency)", "A civilian foreign intelligence service of the federal government of the United States, tasked with gathering, processing, and analyzing national security information."),
         ("Dictionary Attack", "A method of breaking into a password-protected system by systematically entering every word in a dictionary or a list of common passwords (like rockyou.txt)."),
         ("Digital Forensics", "The recovery and investigation of material found in digital devices, often used to uncover deleted files, internet history, and hidden metadata."),
         ("DNS (Domain Name System)", "The phonebook of the Internet. Translates human-readable domain names (like example.com) into machine-readable IP addresses."),
@@ -198,7 +186,6 @@ init python:
         ("HTTPS", "HTTP with TLS/SSL encryption. Secures data between your browser and a web server. Look for the padlock icon in your browser's address bar."),
         ("Inspector General", "An investigative official in a civil or military organization. In the intelligence community, they are responsible for internal audits and investigating whistleblowers' claims."),
         ("John the Ripper", "A fast, open-source password cracking software tool used to perform dictionary attacks and rule-based mutations against password hashes."),
-        ("Kali Linux", "A Debian-derived Linux distribution designed for digital forensics and penetration testing. It comes pre-installed with hundreds of security and hacking tools."),
         ("MAC Address", "A unique hardware identifier assigned to a network interface controller. Used by local networks and routers to identify specific devices."),
         ("Man-in-the-Middle Attack", "An attacker secretly intercepts communication between two parties. Both parties think they're talking directly to each other. Key verification prevents this."),
         ("Mass Surveillance", "The intricate surveillance of an entire or a substantial fraction of a population in order to monitor that group of citizens."),
@@ -206,7 +193,7 @@ init python:
         ("Metadata", "Data about data — who you communicated with, when, for how long, from where. Does not include the message content but can reveal intimate patterns of life."),
         ("National Security", "The security and defense of a nation state, including its citizens, economy, and institutions, which is regarded as a duty of government."),
         ("Network Security", "Policies and practices adopted to prevent and monitor unauthorized access, misuse, modification, or denial of a computer network and network-accessible resources."),
-        ("NSA — Signal Reach Network (National Security Agency)", "A national-level intelligence agency of the United States Department of Defense, under the authority of the Director of National Intelligence. Known in-world as the Signal Reach Network."),
+        ("NSA (National Security Agency)", "A national-level intelligence agency of the United States Department of Defense, under the authority of the Director of National Intelligence."),
         ("OpSec (Operational Security)", "The practice of protecting critical information by identifying what intelligence the adversary could gather from your actions and taking steps to prevent it."),
         ("PGP (Pretty Good Privacy)", "Asymmetric encryption system using public/private key pairs. Public key encrypts, only the matching private key can decrypt. Used for secure email communication."),
         ("PRISM", "NSA surveillance program providing direct access to user data from major tech companies. Exposed by Snowden in 2013."),
@@ -478,27 +465,6 @@ init python:
             renpy.show(tag, at_list=base_transforms + [new_state])
 
     config.character_callback = speaker_dimmer
-
-    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    # LEGAL FILTER — config.say_menu_text_filter
-    # Safety-net replacement applied at the Ren'Py text-render layer to any
-    # dialogue `what` text AND menu item captions. Acts as a backstop so that
-    # hardcoded agency names never reach the player, even if script lines
-    # were not updated to use the ag_* interpolation variables.
-    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    _AGENCY_REPLACEMENTS = [
-        ("NSA",  "Signal Reach Network (SRN)"),
-        ("CIA",  "The Obsidian Oversight (OO)"),
-        ("FBI",  "Bureau of Internal Security (BIS)"),
-    ]
-
-    def _legal_text_filter(s):
-        """Replace real agency acronyms with their fictional counterparts."""
-        for real, alias in _AGENCY_REPLACEMENTS:
-            s = s.replace(real, alias)
-        return s
-
-    config.say_menu_text_filter = _legal_text_filter
 
     def autosave_chapter(chapter_num):
         """Autosave after a chapter completes and show a notification."""
