@@ -9,6 +9,10 @@ init python:
             self.expired = False
 
     class TerminalInputValue(InputValue):
+        @property
+        def default(self):
+            return True
+
         def get_text(self):
             return pw_game_state["current_input"]
 
@@ -202,6 +206,10 @@ init python:
         }
     ]
 
+    def pw_backspace():
+        if len(pw_game_state["current_input"]) > 0:
+            pw_game_state["current_input"] = pw_game_state["current_input"][:-1]
+            renpy.restart_interaction()
     def pw_add_line(text, color="#ffffff"):
         pw_game_state["lines"].append(TerminalLine(text, color=color))
 

@@ -285,16 +285,26 @@ screen say(who, what):
 
     window:
         id "window"
+        if getattr(persistent, "dummy_high_contrast", False):
+            background Solid("#000000")
 
         if who is not None:
 
             window:
                 id "namebox"
                 style "namebox"
+                if getattr(persistent, "dummy_high_contrast", False):
+                    background Solid("#000000")
                 text who id "who":
+                    if getattr(persistent, "dummy_high_contrast", False):
+                        color "#00FFD1"
+                        outlines [(2, "#000000", 0, 0)]
                     substitute False
 
         text what id "what":
+            if getattr(persistent, "dummy_high_contrast", False):
+                color "#FFFFFF"
+                outlines [(2, "#000000", 0, 0)]
             substitute False
 
     if not renpy.variant("small"):
@@ -1880,7 +1890,7 @@ screen intro_fullscreen_prompt():
                         xsize 260
                         background Solid("#171C30")
                         hover_background Solid("#3A4A55")
-                        action Return()
+                        action Skip()
 
 screen intro_shortcuts_screen():
     modal True
@@ -2537,6 +2547,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, show_header=True, 
         )
 
     if compact:
+        # Compact: single column, full-width card below the header
         frame:
             xpos 24
             ypos compact_ypos
@@ -2625,59 +2636,65 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, show_header=True, 
                 background Solid("#0E1321EE")
                 padding (20, 24 if not show_header else 20)
 
-                vbox:
-                    spacing 18
+                    vbox:
+                        spacing 18
 
-                    use navigation
+                        use navigation
 
-                    null height 6
+                        null height 6
 
-                    textbutton t("Notes"):
-                        style "shell_nav_button"
-                        action Show("notebook_panel")
+                        textbutton t("Notes"):
+                            style "shell_nav_button"
+                            action Show("notebook_panel")
 
-                    textbutton t("Return"):
-                        style "shell_nav_button"
-                        action ShowMenu(menu_return_screen())
+                        textbutton t("Return"):
+                            style "shell_nav_button"
+                            action ShowMenu(menu_return_screen())
 
             frame:
                 xsize 1396
                 ysize (838 if not show_header else 770)
                 background Solid("#0E1321EE")
                 padding (24, 28 if not show_header else 24)
+                # RIGHT: content area
+                frame:
+                    xfill True
+                    yfill True
+                    background Solid("#0E1321EE")
+                    padding (24, 24)
 
-                if scroll == "viewport":
-                    viewport:
-                        style "game_menu_viewport"
-                        yinitial yinitial
-                        xfill True
-                        yfill True
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-
-                        vbox:
-                            spacing spacing
+                    if scroll == "viewport":
+                        viewport:
+                            style "game_menu_viewport"
+                            yinitial yinitial
                             xfill True
+                            yfill True
+                            scrollbars "vertical"
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+
+                            vbox:
+                                spacing spacing
+                                xfill True
+                                transclude
+
+                    elif scroll == "vpgrid":
+                        vpgrid:
+                            cols 1
+                            yinitial yinitial
+                            xfill True
+                            yfill True
+                            scrollbars "vertical"
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+                            spacing spacing
+
                             transclude
 
-                elif scroll == "vpgrid":
-                    vpgrid:
-                        cols 1
-                        yinitial yinitial
-                        xfill True
-                        yfill True
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-                        spacing spacing
-
+                    else:
                         transclude
-
-                else:
-                    transclude
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -2840,119 +2857,531 @@ screen file_slots(title):
                             xsize 74
                             action FilePageNext()
 
+transform appear_slide:
+    alpha 0.0
+    xoffset 14
+    linear 0.22 alpha 1.0 xoffset 0
+
+transform row_hover:
+    xoffset 0
+    linear 0.18 xoffset 4
+
+transform pulse_dot:
+    zoom 1.0 alpha 1.0
+    linear 0.7 zoom 0.6 alpha 0.3
+    linear 0.7 zoom 1.0 alpha 1.0
+    repeat
+
+transform bar_accent_slide:
+    xoffset -4
+    linear 0.14 xoffset 0
+
+transform blink:
+    alpha 1.0
+    linear 0.5 alpha 0.0
+    linear 0.5 alpha 1.0
+    repeat
+
+screen kbd_chip(txt):
+    frame:
+        style "pref_kbd_chip"
+        xalign 1.0 yalign 0.5
+        text txt style "pref_kbd_chip_text"
+
+screen pref_tab(txt, current_tab, act):
+    button:
+        if current_tab == txt:
+            style "pref_tab_active"
+        else:
+            style "pref_tab"
+        text txt:
+            if current_tab == txt:
+                style "pref_tab_text_active"
+            else:
+                style "pref_tab_text"
+        action act
+
+screen hotkey_row(key_txt, val_txt):
+    fixed:
+        xfill True
+        ysize 28
+        text val_txt style "pref_hotkey_val" xalign 0.0 yalign 0.5
+        use kbd_chip(key_txt)
+
+screen preset_chip(txt):
+    button:
+        xfill True
+        if persistent.theme_preset == txt:
+            style "pref_preset_chip_active"
+            text txt style "pref_preset_chip_active_text"
+        else:
+            style "pref_preset_chip"
+            text txt style "pref_preset_chip_text"
+        action SetField(persistent, "theme_preset", txt)
+
+screen pref_section_heading(txt):
+    frame:
+        style "pref_section_heading"
+        text txt style "pref_label"
+
+screen pref_row_toggle(icon, title, desc, pref_action):
+    $ is_sel = pref_action.get_selected()
+    button:
+        style "pref_row_button"
+        action pref_action
+        at appear_slide
+        
+        fixed:
+            fit_first True
+            xfill True
+            
+            hbox:
+                style "pref_row"
+                xalign 0.0 yalign 0.5
+                
+                frame:
+                    style "pref_icon_frame"
+                    text icon style "pref_icon_text"
+                    
+                vbox:
+                    style "pref_content_block"
+                    text title style "pref_title"
+                    text desc style "pref_desc"
+                    
+            hbox:
+                style "pref_toggle_control"
+                xalign 1.0 yalign 0.5
+                if is_sel:
+                    text "ENABLED" style "pref_toggle_label_on"
+                    frame:
+                        style "pref_toggle_frame_on"
+                        frame:
+                            style "pref_toggle_knob_on"
+                else:
+                    text "DISABLED" style "pref_toggle_label_off"
+                    frame:
+                        style "pref_toggle_frame_off"
+                        frame:
+                            style "pref_toggle_knob_off"
+
+screen pref_row_slider(icon, title, desc, pref_value):
+    frame:
+        style "pref_row_frame"
+        at appear_slide
+        
+        fixed:
+            fit_first True
+            xfill True
+            
+            hbox:
+                style "pref_row"
+                xalign 0.0 yalign 0.5
+                
+                frame:
+                    style "pref_icon_frame"
+                    text icon style "pref_icon_text"
+                    
+                vbox:
+                    style "pref_content_block"
+                    text title style "pref_title"
+                    text desc style "pref_desc"
+                    
+            hbox:
+                style "pref_slider_control"
+                xalign 1.0 yalign 0.5
+                bar:
+                    style "pref_slider"
+                    value pref_value
+                text "VAL" style "pref_slider_val"
+
+screen pref_row_stepper(icon, title, desc, pref_actions):
+    frame:
+        style "pref_row_frame"
+        at appear_slide
+        
+        fixed:
+            fit_first True
+            xfill True
+            
+            hbox:
+                style "pref_row"
+                xalign 0.0 yalign 0.5
+                
+                frame:
+                    style "pref_icon_frame"
+                    text icon style "pref_icon_text"
+                    
+                vbox:
+                    style "pref_content_block"
+                    text title style "pref_title"
+                    text desc style "pref_desc"
+                    
+            hbox:
+                style "pref_stepper_control"
+                xalign 1.0 yalign 0.5
+                for label, act in pref_actions:
+                    $ is_sel = act.get_selected()
+                    button:
+                        if is_sel:
+                            style "pref_stepper_chip_active"
+                        else:
+                            style "pref_stepper_chip"
+                        text label:
+                            if is_sel:
+                                style "pref_stepper_chip_text_active"
+                            else:
+                                style "pref_stepper_chip_text"
+                        action act
+
+screen pref_row_button_only(icon, title, desc, btn_label, btn_action):
+    frame:
+        style "pref_row_frame"
+        at appear_slide
+        
+        fixed:
+            fit_first True
+            xfill True
+            
+            hbox:
+                style "pref_row"
+                xalign 0.0 yalign 0.5
+                
+                frame:
+                    style "pref_icon_frame"
+                    text icon style "pref_icon_text"
+                    
+                vbox:
+                    style "pref_content_block"
+                    text title style "pref_title"
+                    text desc style "pref_desc"
+                    
+            button:
+                style "pref_stepper_chip"
+                xalign 1.0 yalign 0.5
+                text btn_label style "pref_stepper_chip_text"
+                action btn_action
+
+screen pref_tab_general():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// DISPLAY")
+        use pref_row_toggle("FS", "Fullscreen Mode", "Switch between windowed and fullscreen display.", Preference("display", "toggle"))
+        
+        $ has_lang_chooser = False
+        python:
+            try:
+                has_lang_chooser = config.enable_language_chooser
+            except Exception:
+                pass
+        
+        if has_lang_chooser:
+            use pref_row_stepper("LG", "Language", "Select dialogue and UI language.", [
+                ("English", Language(None)),
+                ("Dutch", Language("dutch")),
+                ("French", Language("french")),
+                ("Ukrainian", Language("ukrainian"))
+            ])
+            
+        null height 18
+        
+        use pref_section_heading("// BEHAVIOUR")
+        use pref_row_toggle("SK", "Skip Unseen Text", "Fast-forward through unread scenes.", Preference("skip", "toggle"))
+        use pref_row_toggle("SC", "Skip After Choices", "Continue skipping after dialogue decisions.", Preference("after choices", "toggle"))
+        use pref_row_toggle("BS", "Skip Mode", "Trigger fast-forward immediately on scene load.", Preference("begin skipping", "toggle"))
+
+screen pref_tab_text():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// READABILITY")
+        use pref_row_slider("TS", "Text Display Speed", "Controls how fast each character appears during dialogue.", Preference("text speed"))
+        use pref_row_slider("AF", "Auto-Forward Delay", "Delay before the game advances automatically in auto mode.", Preference("auto-forward time"))
+        
+        if config.joystick:
+            use pref_row_button_only("JS", "Joystick / Gamepad", "Configure gamepad bindings for navigation.", "CALIBRATE", GamepadCalibrate())
+
+screen pref_tab_audio():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// VOLUME CHANNELS")
+        use pref_row_slider("MV", "Master Volume", "Global volume affecting all audio channels.", Preference("main volume"))
+        use pref_row_slider("MS", "Music", "Background score and ambient tracks.", Preference("music volume"))
+        use pref_row_slider("SX", "Sound Effects", "UI clicks, ambient sounds, and scene effects.", Preference("sound volume"))
+        
+        if config.has_voice:
+            use pref_row_slider("VC", "Voice / Narration", "Character speech and narration tracks.", Preference("voice volume"))
+            
+        use pref_row_toggle("MU", "Mute When Minimised", "Silence all audio when the window loses focus.", ToggleField(_preferences, "audio_when_minimized", true_value=False, false_value=True))
+
+screen pref_tab_visual():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// GRAPHICS")
+        use pref_row_stepper("GL", "Renderer", "Active rendering engine. Changing requires restart.", [
+            ("Auto", SetField(persistent, "dummy_renderer", "Auto")),
+            ("GL2", SetField(persistent, "dummy_renderer", "GL2")),
+            ("Angle2", SetField(persistent, "dummy_renderer", "Angle2"))
+        ])
+        
+        use pref_row_stepper("FR", "Target Frame Rate", "Limit FPS for performance; default 60.", [
+            ("30 FPS", SetField(persistent, "dummy_fps", 30)),
+            ("60 FPS", SetField(persistent, "dummy_fps", 60))
+        ])
+        
+        use pref_row_toggle("TR", "Scene Transitions", "Enable or disable visual transition effects between scenes.", ToggleTransitions())
+        
+        null height 18
+        
+        use pref_section_heading("// SCREEN")
+        use pref_row_toggle("SV", "Self-Voicing (Screen Reader)", "Read UI text aloud for accessibility.", Preference("self voicing", "toggle"))
+
+screen pref_tab_accessibility():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// READABILITY ASSISTS")
+        use pref_row_stepper("FO", "Accessibility Font", "Override story fonts with a high-legibility alternative.", [
+            ("Standard", SetAccessibilityFont("Standard")),
+            ("Dyslexic", SetAccessibilityFont("Dyslexic"))
+        ])
+        
+        use pref_row_slider("FS", "Font Size Adjustment", "Scale all dialogue and UI text globally.", Preference("font size"))
+        
+        use pref_row_toggle("HC", "High Contrast Mode", "Boost text contrast for dark background scenes.", ToggleHighContrast())
+
+default persistent.theme_preset = "TERMINAL"
+default persistent.dummy_renderer = "Auto"
+default persistent.dummy_fps = 60
+default persistent.dummy_font = "Standard"
+
+init python:
+    def apply_accessibility_font():
+        if getattr(persistent, "dummy_font", "Standard") == "Dyslexic":
+            config.font_replacement_map[("fonts/Rajdhani-Regular.ttf", False, False)] = ("fonts/DejaVuSans.ttf", False, False)
+            config.font_replacement_map[("fonts/Rajdhani-SemiBold.ttf", False, False)] = ("fonts/DejaVuSans.ttf", True, False)
+            config.font_replacement_map[("fonts/ShareTechMono-Regular.ttf", False, False)] = ("fonts/DejaVuSans.ttf", False, False)
+        else:
+            config.font_replacement_map.pop(("fonts/Rajdhani-Regular.ttf", False, False), None)
+            config.font_replacement_map.pop(("fonts/Rajdhani-SemiBold.ttf", False, False), None)
+            config.font_replacement_map.pop(("fonts/ShareTechMono-Regular.ttf", False, False), None)
+
+    class SetAccessibilityFont(Action):
+        def __init__(self, val):
+            self.val = val
+        def __call__(self):
+            persistent.dummy_font = self.val
+            apply_accessibility_font()
+            renpy.free_memory()
+            renpy.restart_interaction()
+        def get_selected(self):
+            return getattr(persistent, "dummy_font", "Standard") == self.val
+
+    class ToggleHighContrast(Action):
+        def __call__(self):
+            _preferences.high_contrast = not getattr(_preferences, "high_contrast", False)
+            renpy.free_memory()
+            renpy.restart_interaction()
+        def get_selected(self):
+            return getattr(_preferences, "high_contrast", False)
+
+
+    class ToggleTransitions(Action):
+        """Toggles scene transitions via both the native Ren'Py preference
+        (_preferences.transitions) and persistent.no_transitions so that any
+        custom `with (None if persistent.no_transitions else dissolve)` guards
+        in script files also respect the player's preference."""
+        def __call__(self):
+            # 0 = transitions off, 1 = transitions on (Ren'Py native)
+            new_val = 0 if _preferences.transitions else 1
+            _preferences.transitions = new_val
+            persistent.no_transitions = (new_val == 0)
+            renpy.restart_interaction()
+        def get_selected(self):
+            # Returns True (ENABLED) when transitions are ON
+            return bool(_preferences.transitions)
+
+    def reset_to_field_defaults():
+        _preferences.text_cps = 0
+        _preferences.afm_time = 15
+        for m in ["main", "master", "music", "sfx", "voice"]:
+            if m in _preferences.volumes:
+                _preferences.volumes[m] = 1.0
+        _preferences.skip_unseen = False
+        _preferences.skip_after_choices = False
+        _preferences.desktop_self_voicing = False
+        _preferences.transitions = 1
+        persistent.no_transitions = False
+        persistent.theme_preset = "TERMINAL"
+        persistent.dummy_font = "Standard"
+        apply_accessibility_font()
+        renpy.free_memory()
+        renpy.restart_interaction()
+
 screen preferences():
     tag menu
-
-    use game_menu(t("Preferences"), scroll="viewport", spacing=18, show_header=False):
-        hbox:
-            spacing 18
-            box_wrap True
-            box_wrap_spacing 18
-            xfill True
-
-            frame:
-                xfill True
-                xminimum 620
-                background Solid("#171C30")
-                padding (24, 22)
-
-                vbox:
-                    spacing 18
-
-                    text t("DISPLAY AND FLOW"):
-                        color "#7A8A99"
-                        size 18
-                        bold True
-
-                    if renpy.variant("pc") or renpy.variant("web"):
-                        textbutton t("Window"):
-                            style "shell_nav_button"
-                            selected display_mode_is_windowed()
-                            action Preference("display", "window")
-
-                        textbutton t("Fullscreen"):
-                            style "shell_nav_button"
-                            selected display_mode_is_fullscreen()
-                            action Preference("display", "fullscreen")
-
-                    textbutton t("Skip Unseen Text"):
-                        style "shell_nav_button"
-                        action Preference("skip", "toggle")
-
-                    textbutton t("Skip After Choices"):
-                        style "shell_nav_button"
-                        action Preference("after choices", "toggle")
-
-                    textbutton t("Transitions"):
-                        style "shell_nav_button"
-                        action InvertSelected(Preference("transitions", "toggle"))
-
-            frame:
-                xfill True
-                xminimum 620
-                background Solid("#171C30")
-                padding (24, 22)
-
-                vbox:
-                    spacing 18
-
-                    text t("TEXT AND AUDIO"):
-                        color "#7A8A99"
-                        size 18
-                        bold True
-
-                    text t("Text Speed"):
-                        color "#E8E8E8"
-                        size 18
-                    bar value Preference("text speed")
-
-                    text t("Auto-Forward Time"):
-                        color "#E8E8E8"
-                        size 18
-                    bar value Preference("auto-forward time")
-
-                    if config.has_music:
-                        text t("Music Volume"):
-                            color "#E8E8E8"
-                            size 18
-                        bar value Preference("music volume")
-
-                    if config.has_sound:
-                        text t("Sound Volume"):
-                            color "#E8E8E8"
-                            size 18
-                        bar value Preference("sound volume")
-
-                    if config.has_voice:
-                        text t("Voice Volume"):
-                            color "#E8E8E8"
-                            size 18
-                        bar value Preference("voice volume")
-
-                    textbutton t("Mute All"):
-                        style "shell_nav_button"
-                        selected all_audio_muted()
-                        action Function(toggle_all_audio)
-
+    modal True
+    # style_prefix overrides the default `frame` style (which carries
+    # gui.frame_borders padding) so the full-screen backdrop frames use
+    # the zero-padding full_settings_frame variant instead.
+    style_prefix "full_settings"
+    
+    default active_tab = "General"
+    
+    # 2.1 Full-Screen Backdrop — xfill/yfill ensure 100% coverage at any resolution
+    add Solid("#07090F")
+    
+    # Full-screen outer container — no absolute pixel sizes so 1080p and 4K both work
+    frame:
+        xfill True
+        yfill True
+        background Solid("#07090F")
+        padding (0, 0)
+    
+    # Main Panel Container — centred card inside the full-screen frame
+    frame:
+        xalign 0.5 yalign 0.5
+        xsize 1100
+        background Solid("#0D1320")
+        
+        # Top glow bloom
         frame:
+            xfill True ysize 10
+            yoffset -10
+            background Solid("#00FFD11a")
+            
+        # Border top
+        frame:
+            background Solid("#00FFD1")
             xfill True
-            background Solid("#171C30")
-            padding (24, 22)
-
-            vbox:
-                spacing 18
-
-                text t("LANGUAGES"):
-                    color "#7A8A99"
-                    size 18
-                    bold True
-
-                text t("Choose the language used across menus and dialogue."):
-                    color "#7A8A99"
-                    size 15
-
+            ysize 2
+            yalign 0.0
+        # Border bottom
+        frame:
+            background Solid("#ffffff0f")
+            xfill True
+            ysize 1
+            yalign 1.0
+        # Border sides
+        frame:
+            background Solid("#ffffff0f")
+            yfill True
+            xsize 1
+            xalign 0.0
+        frame:
+            background Solid("#ffffff0f")
+            yfill True
+            xsize 1
+            xalign 1.0
+        
+        vbox:
+            # Panel Header Row
+            frame:
+                style "pref_header_row"
                 hbox:
-                    spacing 14
+                    xfill True
+                    
+                    # Left cluster
+                    hbox:
+                        spacing 12
+                        yalign 0.5
+                        add Solid("#00FFD1") xsize 7 ysize 7 at pulse_dot yalign 0.5
+                        text "// SYSTEM CONFIGURATION" style "pref_header_label" yalign 0.5
+                        add Solid("#ffffff14") xsize 1 ysize 14 yalign 0.5
+                        text "PROJECT: SNOWDEN  |  CH.2/5" style "pref_header_chapter" yalign 0.5
+                        
+                    # Right cluster
+                    hbox:
+                        spacing 8
+                        xalign 1.0
+                        yalign 0.5
+                        use kbd_chip("ESC")
+                        use kbd_chip("TAB")
+                        use kbd_chip("ENTER")
+
+            # Tab Navigation Bar
+            frame:
+                style "pref_tab_bar"
+                hbox:
+                    spacing 0
+                    use pref_tab("General", active_tab, SetScreenVariable("active_tab", "General"))
+                    use pref_tab("Text", active_tab, SetScreenVariable("active_tab", "Text"))
+                    use pref_tab("Audio", active_tab, SetScreenVariable("active_tab", "Audio"))
+                    use pref_tab("Visual", active_tab, SetScreenVariable("active_tab", "Visual"))
+                    use pref_tab("Accessibility", active_tab, SetScreenVariable("active_tab", "Accessibility"))
+
+            # Main Body Layout
+            hbox:
+                style "pref_body_layout"
+                
+                # LEFT: main settings list
+                frame:
+                    style "pref_left_col"
+                    
+                    if active_tab == "General":
+                        use pref_tab_general
+                    elif active_tab == "Text":
+                        use pref_tab_text
+                    elif active_tab == "Audio":
+                        use pref_tab_audio
+                    elif active_tab == "Visual":
+                        use pref_tab_visual
+                    elif active_tab == "Accessibility":
+                        use pref_tab_accessibility
+
+                # RIGHT: status column
+                frame:
+                    style "pref_side_col"
+                    
+                    vbox:
+                        spacing 18
+                        xfill True
+                        
+                        # 2.8.1 Current Tab Label
+                        frame:
+                            style "pref_side_card"
+                            vbox:
+                                text "ACTIVE SECTION" style "pref_side_card_title"
+                                text active_tab.upper() style "pref_side_card_value"
+                                
+                        # 2.8.2 Quick Keyboard Reference
+                        frame:
+                            style "pref_side_card_dark"
+                            vbox:
+                                text "// HOTKEYS" style "pref_side_card_title"
+                                null height 8
+                                use hotkey_row("TAB", "Next")
+                                use hotkey_row("Shift+TAB", "Prev")
+                                use hotkey_row("ENTER", "Toggle")
+                                use hotkey_row("ESC", "Back")
+                                use hotkey_row("1-5", "Tab switch")
+                                use hotkey_row("R", "Reset")
+                                
+                        # 2.8.3 Preset Selector
+                        frame:
+                            style "pref_side_card"
+                            vbox:
+                                text "// THEME PRESET" style "pref_side_card_title"
+                                null height 8
+                                use preset_chip("TERMINAL")
+                                use preset_chip("DOSSIER")
+                                use preset_chip("MINIMAL")
+                                
+                        # 2.8.4 Action Buttons
+                        vbox:
+                            yalign 1.0
+                            spacing 10
+                            xfill True
+                            textbutton "APPLY SETTINGS" style "pref_btn_apply" action Return()
+                            textbutton "RESET TO FIELD DEFAULTS" style "pref_btn_ghost" action Function(reset_to_field_defaults)
+                            textbutton "BACK" style "pref_btn_ghost" action Return()
+
+            # Panel Footer Strip
+            frame:
+                style "pref_footer_strip"
+                hbox:
                     box_wrap True
                     box_wrap_spacing 14
                     xfill True
@@ -2986,6 +3415,26 @@ screen preferences():
                         xminimum 300
                         selected current_translation_language() == "ukrainian"
                         action language_change_action("ukrainian")
+                    yalign 0.5
+                    
+                    # LEFT: cursor block
+                    add Solid("#00FFD1") xsize 8 ysize 18 at blink yalign 0.5
+                    
+                    # CENTER
+                    text "SETTINGS ACTIVE — CHANGES APPLY IMMEDIATELY" style "pref_footer_center" xalign 0.5 yalign 0.5
+                    
+                    # RIGHT
+                    text "SYS.TIME" style "pref_footer_right" xalign 1.0 yalign 0.5
+
+    # Keybinds
+    key "K_ESCAPE" action Return()
+    key "K_RETURN" action Return()
+    key "K_KP_ENTER" action Return()
+    key "1" action SetScreenVariable("active_tab", "General")
+    key "2" action SetScreenVariable("active_tab", "Text")
+    key "3" action SetScreenVariable("active_tab", "Audio")
+    key "4" action SetScreenVariable("active_tab", "Visual")
+    key "5" action SetScreenVariable("active_tab", "Accessibility")
 
 screen history():
     tag menu
