@@ -606,14 +606,14 @@ screen screen_cover_tracks():
             xfill True yalign 0.5
             hbox:
                 spacing 20 yalign 0.5
-                text t("CLASSIFIED") color "#FF2D55" size 11 bold True font "fonts/ShareTechMono-Regular.ttf"
-                text t("CH.4: THE ESCAPE") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
-                text t("// COVER YOUR TRACKS //") color "#00FFD1" size 16 bold True font "fonts/ShareTechMono-Regular.ttf"
+                text t("CLASSIFIED") color "#FF2D55" size 11 bold True font "fonts/DejaVuSans.ttf"
+                text t("CH.4: THE ESCAPE") color "#7A8A99" size 11 font "fonts/DejaVuSans.ttf"
+                text t("// COVER YOUR TRACKS //") color "#00FFD1" size 16 bold True font "fonts/DejaVuSans.ttf"
             hbox:
                 spacing 24 xalign 1.0 yalign 0.5
-                text t("TRACES: [_ct_wiped]/8") color "#E8E8E8" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
-                text t("[_ct_eta]") color (_ct_tcol if _ct_rem > 0 else "#FF2D55") size 22 bold True font "fonts/ShareTechMono-Regular.ttf"
-                text t("THREAT: [_ct_tlvl]") color _ct_tcol size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
+                text t("TRACES: [_ct_wiped]/8") color "#E8E8E8" size 14 bold True font "fonts/DejaVuSans.ttf"
+                text t("[_ct_eta]") color (_ct_tcol if _ct_rem > 0 else "#FF2D55") size 22 bold True font "fonts/DejaVuSans.ttf"
+                text t("THREAT: [_ct_tlvl]") color _ct_tcol size 14 bold True font "fonts/DejaVuSans.ttf"
 
     frame:
         xpos 0 ypos 52 xsize 330 ysize 924
@@ -622,15 +622,15 @@ screen screen_cover_tracks():
         vbox:
             spacing 6
 
-            text t("--- SYS MONITOR ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("--- SYS MONITOR ---") color "#00FFD1" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
             null height 4
             hbox:
                 xfill True
-                text t("CPU") color "#7A8A99" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" yalign 0.5 xsize 30
+                text t("CPU") color "#7A8A99" size 11 bold True font "fonts/DejaVuSans.ttf" yalign 0.5 xsize 30
                 add ct_wave_cpu
             hbox:
                 xfill True
-                text t("RAM") color "#7A8A99" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" yalign 0.5 xsize 30
+                text t("RAM") color "#7A8A99" size 11 bold True font "fonts/DejaVuSans.ttf" yalign 0.5 xsize 30
                 frame:
                     xsize 280 ysize 14 yalign 0.5
                     background "#111720"
@@ -639,7 +639,7 @@ screen screen_cover_tracks():
                         background "#FFD700"
             hbox:
                 xfill True
-                text t("NET") color "#7A8A99" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" yalign 0.5 xsize 30
+                text t("NET") color "#7A8A99" size 11 bold True font "fonts/DejaVuSans.ttf" yalign 0.5 xsize 30
                 add ct_wave_net
 
             null height 6
@@ -647,21 +647,21 @@ screen screen_cover_tracks():
                 xfill True ysize 1
                 background "#3A4A55"
 
-            text t("--- PROCESSES ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("--- PROCESSES ---") color "#00FFD1" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
             null height 2
-            text t("PID   NAME              CPU   MEM") color "#3A4A55" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("1024  snowden-os        2.1%%  4.8%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("3847  dropbox-daemon   12.4%%  8.2%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("4401  ssh-agent         0.3%%  0.1%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("5102  chrome-render    43.8%% 19.6%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("7788  wpa_supplicant    1.1%%  0.3%%") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("PID   NAME              CPU   MEM") color "#3A4A55" size 10 font "fonts/DejaVuSans.ttf"
+            text t("1024  snowden-os        2.1%%  4.8%%") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf"
+            text t("3847  dropbox-daemon   12.4%%  8.2%%") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf"
+            text t("4401  ssh-agent         0.3%%  0.1%%") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf"
+            text t("5102  chrome-render    43.8%% 19.6%%") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf"
+            text t("7788  wpa_supplicant    1.1%%  0.3%%") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf"
 
             null height 6
             frame:
                 xfill True ysize 1
                 background "#3A4A55"
 
-            text t("--- TRACES DETECTED ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("--- TRACES DETECTED ---") color "#00FFD1" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
             null height 4
             for _i in range(8):
                 $ _tr = ct_traces[_i]
@@ -681,9 +681,9 @@ screen screen_cover_tracks():
                         xfill True yalign 0.5
                         hbox:
                             spacing 6 yalign 0.5
-                            text _tr["icon"] size 14 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
-                            text _tr["name"] color ("#E8E8E8" if _is_cur else "#7A8A99") size 12 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
-                        text _st color _stcol size 10 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 1.0 yalign 0.5
+                            text _tr["icon"] size 14 font "fonts/DejaVuSans.ttf" yalign 0.5
+                            text _tr["name"] color ("#E8E8E8" if _is_cur else "#7A8A99") size 12 font "fonts/DejaVuSans.ttf" yalign 0.5
+                        text _st color _stcol size 10 bold True font "fonts/DejaVuSans.ttf" xalign 1.0 yalign 0.5
 
     frame:
         xpos 1590 ypos 52 xsize 330 ysize 924
@@ -692,24 +692,24 @@ screen screen_cover_tracks():
         vbox:
             spacing 8
 
-            text t("--- NSA MONITOR ---") color "#FF2D55" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("--- NSA MONITOR ---") color "#FF2D55" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
             null height 4
             add ct_threat_bar xalign 0.5
             $ _pct_text = "{:.0f}%%".format(_ct_prog * 100)
-            text _pct_text color _ct_tcol size 24 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
-            text t("NSA CLOSING IN") color "#7A8A99" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
-            text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 18 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text _pct_text color _ct_tcol size 24 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
+            text t("NSA CLOSING IN") color "#7A8A99" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
+            text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 18 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
 
             null height 6
             frame:
                 xfill True ysize 1
                 background "#3A4A55"
 
-            text t("--- NET TRAFFIC ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("--- NET TRAFFIC ---") color "#00FFD1" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
             null height 2
             add ct_wave_up xalign 0.5
             add ct_wave_dn xalign 0.5
-            text t("UP: 2.4 KB/s   DOWN: 14.8 KB/s") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("UP: 2.4 KB/s   DOWN: 14.8 KB/s") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf" xalign 0.5
 
             null height 6
             frame:
@@ -717,36 +717,36 @@ screen screen_cover_tracks():
                 background "#3A4A55"
 
             if _ct is not None:
-                text t("--- EVIDENCE SCAN ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                text t("--- EVIDENCE SCAN ---") color "#00FFD1" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
                 null height 4
                 $ _rl = _ct["risk_level"]
                 $ _rlcol = "#FF2D55" if _rl == "CRITICAL" else "#FF8C00" if _rl == "HIGH" else "#FFD700"
                 hbox:
                     xfill True
-                    text t("FILE TYPE:") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
-                    text _ct["file_type"] color "#E8E8E8" size 11 font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
+                    text t("FILE TYPE:") color "#7A8A99" size 11 font "fonts/DejaVuSans.ttf"
+                    text _ct["file_type"] color "#E8E8E8" size 11 font "fonts/DejaVuSans.ttf" xalign 1.0
                 hbox:
                     xfill True
-                    text t("SIZE:") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
-                    text _ct["file_size"] color "#E8E8E8" size 11 font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
+                    text t("SIZE:") color "#7A8A99" size 11 font "fonts/DejaVuSans.ttf"
+                    text _ct["file_size"] color "#E8E8E8" size 11 font "fonts/DejaVuSans.ttf" xalign 1.0
                 hbox:
                     xfill True
-                    text t("RISK:") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
-                    text t("[_rl]") color _rlcol size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
-                text _ct["forensic_note"] color "#3A4A55" size 10 font "fonts/ShareTechMono-Regular.ttf"
+                    text t("RISK:") color "#7A8A99" size 11 font "fonts/DejaVuSans.ttf"
+                    text t("[_rl]") color _rlcol size 11 bold True font "fonts/DejaVuSans.ttf" xalign 1.0
+                text _ct["forensic_note"] color "#3A4A55" size 10 font "fonts/DejaVuSans.ttf"
 
             null height 6
             frame:
                 xfill True ysize 1
                 background "#3A4A55"
 
-            text t("--- LOCATION ---") color "#00FFD1" size 11 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+            text t("--- LOCATION ---") color "#00FFD1" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
             null height 4
-            text t("IP:     172.16.4.22") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("VPN:    ACTIVE (ProtonVPN)") color "#00FF88" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("LOC:    Hong Kong, CN") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("UPTIME: 00:01:23") color "#7A8A99" size 10 font "fonts/ShareTechMono-Regular.ttf"
-            text t("CRYPTO: AES-256-GCM") color "#00FFD1" size 10 font "fonts/ShareTechMono-Regular.ttf"
+            text t("IP:     172.16.4.22") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf"
+            text t("VPN:    ACTIVE (ProtonVPN)") color "#00FF88" size 10 font "fonts/DejaVuSans.ttf"
+            text t("LOC:    Hong Kong, CN") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf"
+            text t("UPTIME: 00:01:23") color "#7A8A99" size 10 font "fonts/DejaVuSans.ttf"
+            text t("CRYPTO: AES-256-GCM") color "#00FFD1" size 10 font "fonts/DejaVuSans.ttf"
 
     if _ct is not None and not ct_state["show_result"]:
         frame:
@@ -763,14 +763,16 @@ screen screen_cover_tracks():
                     vbox:
                         spacing 4
                         $ _phase_label = "GUIDED" if _ct["phase"] == 1 else "ASSEMBLY" if _ct["phase"] == 2 else "SELECT"
+                        $ _phase_help = "Read the pre-filled command, study why it works, then execute it." if _ct["phase"] == 1 else "Build the command by clicking only the correct tokens from left to right." if _ct["phase"] == 2 else "Choose the one command that safely wipes the trace before the timer catches you."
                         $ _trace_id = _ct["id"]
                         $ _trace_name = _ct["name"]
                         hbox:
                             spacing 12
-                            text t("TARGET: TRACE [_trace_id]/8 — [_trace_name]") color "#00FFD1" size 15 bold True font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
-                            text t("MODE: [_phase_label]") color "#7A8A99" size 12 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
-                        text _ct["danger_title"] color "#FF2D55" size 13 bold True font "fonts/ShareTechMono-Regular.ttf"
-                        text _ct["danger_text"] color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
+                            text t("TARGET: TRACE [_trace_id]/8 — [_trace_name]") color "#00FFD1" size 15 bold True font "fonts/DejaVuSans.ttf" yalign 0.5
+                            text t("MODE: [_phase_label]") color "#7A8A99" size 12 font "fonts/DejaVuSans.ttf" yalign 0.5
+                        text _ct["danger_title"] color "#FF2D55" size 13 bold True font "fonts/DejaVuSans.ttf"
+                        text _ct["danger_text"] color "#7A8A99" size 11 font "fonts/DejaVuSans.ttf"
+                        text _phase_help color "#C8E6C9" size 11 font "fonts/DejaVuSans.ttf"
 
                 frame:
                     xfill True ysize 380
@@ -795,12 +797,12 @@ screen screen_cover_tracks():
                                 spacing 2
                                 for _line in ct_state["terminal_log"][-25:]:
                                     $ _lcol = "#00FF88" if "[[  OK  ]" in _line else "#FF2D55" if "FAILED" in _line or "PENALTY" in _line else "#FFD700" if "WARN" in _line or "HINT" in _line else "#C8E6C9"
-                                    text _line color _lcol size 13 font "fonts/ShareTechMono-Regular.ttf"
+                                    text _line color _lcol size 13 font "fonts/DejaVuSans.ttf"
 
                                 hbox:
                                     spacing 4
-                                    text t("root@snowden-laptop:~$") color "#00FFD1" size 13 bold True font "fonts/ShareTechMono-Regular.ttf"
-                                    text t("_") color "#00FFD1" size 13 font "fonts/ShareTechMono-Regular.ttf" at ct_cursor_blink
+                                    text t("root@snowden-laptop:~$") color "#00FFD1" size 13 bold True font "fonts/DejaVuSans.ttf"
+                                    text t("_") color "#00FFD1" size 13 font "fonts/DejaVuSans.ttf" at ct_cursor_blink
 
                 frame:
                     xfill True ysize 40
@@ -808,9 +810,9 @@ screen screen_cover_tracks():
                     padding (12, 8)
                     hbox:
                         spacing 6 yalign 0.5
-                        text t("root@snowden-laptop:~$") color "#00FFD1" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
+                        text t("root@snowden-laptop:~$") color "#00FFD1" size 14 bold True font "fonts/DejaVuSans.ttf"
                         $ _cmd_display = ct_get_input_command()
-                        text t("[_cmd_display]") color "#A8FF78" size 14 font "fonts/ShareTechMono-Regular.ttf"
+                        text t("[_cmd_display]") color "#A8FF78" size 14 font "fonts/DejaVuSans.ttf"
 
                 null height 4
 
@@ -821,8 +823,8 @@ screen screen_cover_tracks():
                         padding (14, 10)
                         vbox:
                             spacing 6
-                            text t("GUIDED MODE — Review the command, then press EXECUTE") color "#FFD700" size 12 bold True font "fonts/ShareTechMono-Regular.ttf"
-                            text t("The correct command is pre-filled above. Study each part before executing.") color "#7A8A99" size 11 font "fonts/ShareTechMono-Regular.ttf"
+                            text t("GUIDED MODE — Review the command, then press EXECUTE") color "#FFD700" size 12 bold True font "fonts/DejaVuSans.ttf"
+                            text t("The correct command is pre-filled above. Study each part before executing.") color "#7A8A99" size 11 font "fonts/DejaVuSans.ttf"
 
                 elif _ct["phase"] == 2:
                     frame:
@@ -831,7 +833,7 @@ screen screen_cover_tracks():
                         padding (14, 10)
                         vbox:
                             spacing 8
-                            text t("ASSEMBLY MODE — Click tokens in the correct order") color "#FFD700" size 12 bold True font "fonts/ShareTechMono-Regular.ttf"
+                            text t("ASSEMBLY MODE — Click tokens in the correct order") color "#FFD700" size 12 bold True font "fonts/DejaVuSans.ttf"
                             hbox:
                                 spacing 8
                                 box_wrap True
@@ -844,17 +846,17 @@ screen screen_cover_tracks():
                                             text_color "#A8FF78"
                                             text_hover_color "#000000"
                                             text_size 21
-                                            text_font "fonts/ShareTechMono-Regular.ttf"
+                                            text_font "fonts/DejaVuSans.ttf"
                                             padding (12, 8)
                                             action Function(ct_add_token, _tok)
                             if ct_state["assembled_tokens"]:
                                 hbox:
                                     spacing 6
-                                    text t("Built:") color "#7A8A99" size 12 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
+                                    text t("Built:") color "#7A8A99" size 12 font "fonts/DejaVuSans.ttf" yalign 0.5
                                     for _atok in ct_state["assembled_tokens"]:
-                                        text t("[_atok]") color "#00FFD1" size 13 font "fonts/ShareTechMono-Regular.ttf" yalign 0.5
+                                        text t("[_atok]") color "#00FFD1" size 13 font "fonts/DejaVuSans.ttf" yalign 0.5
                                     textbutton t("UNDO"):
-                                        text_color "#FF2D55" text_size 21 text_font "fonts/ShareTechMono-Regular.ttf"
+                                        text_color "#FF2D55" text_size 21 text_font "fonts/DejaVuSans.ttf"
                                         action Function(ct_remove_last_token)
 
                 elif _ct["phase"] == 3:
@@ -864,7 +866,7 @@ screen screen_cover_tracks():
                         padding (14, 10)
                         vbox:
                             spacing 8
-                            text t("SELECT MODE — Choose the correct command") color "#FFD700" size 12 bold True font "fonts/ShareTechMono-Regular.ttf"
+                            text t("SELECT MODE — Choose the correct command") color "#FFD700" size 12 bold True font "fonts/DejaVuSans.ttf"
                             for _opt in _ct["options"]:
                                 $ _is_sel = (ct_state["typed_input"] == _opt)
                                 textbutton t("[_opt]"):
@@ -874,7 +876,7 @@ screen screen_cover_tracks():
                                     text_color ("#00FFD1" if _is_sel else "#A8FF78")
                                     text_hover_color "#000000"
                                     text_size 17
-                                    text_font "fonts/ShareTechMono-Regular.ttf"
+                                    text_font "fonts/DejaVuSans.ttf"
                                     padding (12, 8)
                                     action Function(ct_select_option, _opt)
 
@@ -888,7 +890,7 @@ screen screen_cover_tracks():
                         text_hover_color "#000000"
                         text_size 21
                         text_bold True
-                        text_font "fonts/ShareTechMono-Regular.ttf"
+                        text_font "fonts/DejaVuSans.ttf"
                         padding (40, 12)
                         action Function(ct_execute)
                     if not ct_state["hint_used"]:
@@ -898,7 +900,7 @@ screen screen_cover_tracks():
                             text_color "#FFD700"
                             text_hover_color "#000000"
                             text_size 21
-                            text_font "fonts/ShareTechMono-Regular.ttf"
+                            text_font "fonts/DejaVuSans.ttf"
                             padding (15, 8)
                             action Function(ct_use_hint)
 
@@ -911,31 +913,31 @@ screen screen_cover_tracks():
             vbox:
                 spacing 12
                 if ct_state["feedback_ok"]:
-                    text t("// TRACE WIPED //") color "#00FF88" size 24 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                    text t("// TRACE WIPED //") color "#00FF88" size 24 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
                 else:
-                    text t("// TRACE FAILED //") color "#FF2D55" size 24 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                    text t("// TRACE FAILED //") color "#FF2D55" size 24 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
                 $ _fb = ct_state["feedback_text"]
-                text t("[_fb]") color "#E8E8E8" size 14 font "fonts/ShareTechMono-Regular.ttf"
+                text t("[_fb]") color "#E8E8E8" size 14 font "fonts/DejaVuSans.ttf"
                 null height 6
-                text t("--- COMMAND BREAKDOWN ---") color "#00FFD1" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
+                text t("--- COMMAND BREAKDOWN ---") color "#00FFD1" size 14 bold True font "fonts/DejaVuSans.ttf"
                 for _bk, _bv in _ct["command_breakdown"]:
                     hbox:
                         spacing 12
-                        text t("[_bk]") color "#00FFD1" size 13 bold True font "fonts/ShareTechMono-Regular.ttf" xsize 220
-                        text t("[_bv]") color "#7A8A99" size 13 font "fonts/ShareTechMono-Regular.ttf"
+                        text t("[_bk]") color "#00FFD1" size 13 bold True font "fonts/DejaVuSans.ttf" xsize 220
+                        text t("[_bv]") color "#7A8A99" size 13 font "fonts/DejaVuSans.ttf"
                 null height 10
                 hbox:
                     xalign 0.5 spacing 16
                     textbutton t("> WHAT I LEARNED"):
                         background "#2A2000" hover_background "#FFD700"
                         text_color "#FFD700" text_hover_color "#000000"
-                        text_size 17 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
+                        text_size 17 text_bold True text_font "fonts/DejaVuSans.ttf"
                         padding (20, 10)
                         action Function(ct_show_learn)
                     textbutton t("> NEXT TRACE"):
                         background "#003A2A" hover_background "#00FFD1"
                         text_color "#00FFD1" text_hover_color "#000000"
-                        text_size 17 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
+                        text_size 17 text_bold True text_font "fonts/DejaVuSans.ttf"
                         padding (20, 10)
                         action Function(ct_advance)
 
@@ -947,14 +949,14 @@ screen screen_cover_tracks():
             padding (30, 24)
             vbox:
                 spacing 14
-                text t("--- WHAT YOU LEARNED ---") color "#FFD700" size 16 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                text t("--- WHAT YOU LEARNED ---") color "#FFD700" size 16 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
                 $ _lt = _ct["learn_text"]
-                text t("[_lt]") color "#CCCCCC" size 15 font "fonts/ShareTechMono-Regular.ttf" line_spacing 4
+                text t("[_lt]") color "#CCCCCC" size 15 font "fonts/DejaVuSans.ttf" line_spacing 4
                 null height 10
                 textbutton t("> NEXT TRACE"):
                     background "#003A2A" hover_background "#00FFD1"
                     text_color "#00FFD1" text_hover_color "#000000"
-                    text_size 21 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
+                    text_size 21 text_bold True text_font "fonts/DejaVuSans.ttf"
                     padding (30, 12)
                     xalign 0.5
                     action Function(ct_advance)
@@ -972,19 +974,19 @@ screen screen_cover_tracks():
                 vbox:
                     spacing 14 xalign 0.5
                     if _ct_wiped >= 8:
-                        text t("// MISSION ACCOMPLISHED //") color "#00FF88" size 28 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
-                        text t("All 8 digital traces destroyed. NSA agents found nothing.") color "#E8E8E8" size 18 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5 text_align 0.5
-                        text t("DIGITAL FORENSICS EXPERT") color "#00FFD1" size 16 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                        text t("// MISSION ACCOMPLISHED //") color "#00FF88" size 28 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
+                        text t("All 8 digital traces destroyed. NSA agents found nothing.") color "#E8E8E8" size 18 font "fonts/DejaVuSans.ttf" xalign 0.5 text_align 0.5
+                        text t("DIGITAL FORENSICS EXPERT") color "#00FFD1" size 16 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
                     elif _ct_wiped >= 6:
-                        text t("// MISSION PARTIAL //") color "#FFD700" size 28 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
-                        text t("Most traces destroyed. Some evidence may be recoverable.") color "#E8E8E8" size 18 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5 text_align 0.5
+                        text t("// MISSION PARTIAL //") color "#FFD700" size 28 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
+                        text t("Most traces destroyed. Some evidence may be recoverable.") color "#E8E8E8" size 18 font "fonts/DejaVuSans.ttf" xalign 0.5 text_align 0.5
                     else:
-                        text t("// MISSION FAILED //") color "#FF2D55" size 28 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
-                        text t("NSA agents reached the room. Forensic evidence recovered.") color "#E8E8E8" size 18 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5 text_align 0.5
+                        text t("// MISSION FAILED //") color "#FF2D55" size 28 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
+                        text t("NSA agents reached the room. Forensic evidence recovered.") color "#E8E8E8" size 18 font "fonts/DejaVuSans.ttf" xalign 0.5 text_align 0.5
                     null height 6
-                    text t("WIPED: [_ct_wiped] / 8") color "#00FFD1" size 22 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                    text t("WIPED: [_ct_wiped] / 8") color "#00FFD1" size 22 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
                     null height 10
-                    text t("--- 8 THINGS YOU LEARNED TODAY ---") color "#FFD700" size 15 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
+                    text t("--- 8 THINGS YOU LEARNED TODAY ---") color "#FFD700" size 15 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
                     for _si in range(8):
                         $ _str = ct_traces[_si]
                         $ _sst = ct_state["statuses"][_si]
@@ -995,19 +997,19 @@ screen screen_cover_tracks():
                             padding (14, 8)
                             hbox:
                                 spacing 10
-                                text str(_si + 1) + "." color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf" yalign 0.0 xsize 24
+                                text str(_si + 1) + "." color "#7A8A99" size 14 font "fonts/DejaVuSans.ttf" yalign 0.0 xsize 24
                                 vbox:
                                     spacing 2
                                     hbox:
                                         spacing 8
-                                        text _str["name"] color "#E8E8E8" size 14 bold True font "fonts/ShareTechMono-Regular.ttf"
-                                        text t("[_sst]") color _ssc size 12 bold True font "fonts/ShareTechMono-Regular.ttf"
-                                    text _str["learn_text"][:80] + "..." color "#7A8A99" size 12 font "fonts/ShareTechMono-Regular.ttf"
+                                        text _str["name"] color "#E8E8E8" size 14 bold True font "fonts/DejaVuSans.ttf"
+                                        text t("[_sst]") color _ssc size 12 bold True font "fonts/DejaVuSans.ttf"
+                                    text _str["learn_text"][:80] + "..." color "#7A8A99" size 12 font "fonts/DejaVuSans.ttf"
                     null height 16
                     textbutton t("> CONTINUE MISSION"):
                         background "#003A2A" hover_background "#00FFD1"
                         text_color "#00FFD1" text_hover_color "#000000"
-                        text_size 23 text_bold True text_font "fonts/ShareTechMono-Regular.ttf"
+                        text_size 23 text_bold True text_font "fonts/DejaVuSans.ttf"
                         padding (40, 14) xalign 0.5
                         action Return(_ct_wiped)
 
@@ -1020,11 +1022,11 @@ screen screen_cover_tracks():
                 xfill True yalign 0.5
                 hbox:
                     spacing 30
-                    text t("ESC: ABORT") color "#3A4A55" size 12 font "fonts/ShareTechMono-Regular.ttf"
-                    text t("ENTER: EXECUTE") color "#3A4A55" size 12 font "fonts/ShareTechMono-Regular.ttf"
-                    text t("HINT: -5 SEC") color "#3A4A55" size 12 font "fonts/ShareTechMono-Regular.ttf"
-                text t("Leave no trace. Destroy all evidence.") color "#7A8A99" size 14 font "fonts/ShareTechMono-Regular.ttf" xalign 0.5
-                text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 16 bold True font "fonts/ShareTechMono-Regular.ttf" xalign 1.0
+                    text t("ESC: ABORT") color "#3A4A55" size 12 font "fonts/DejaVuSans.ttf"
+                    text t("ENTER: EXECUTE") color "#3A4A55" size 12 font "fonts/DejaVuSans.ttf"
+                    text t("HINT: -5 SEC") color "#3A4A55" size 12 font "fonts/DejaVuSans.ttf"
+                text t("Leave no trace. Destroy all evidence.") color "#7A8A99" size 14 font "fonts/DejaVuSans.ttf" xalign 0.5
+                text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 16 bold True font "fonts/DejaVuSans.ttf" xalign 1.0
 
     add ct_scanlines
 

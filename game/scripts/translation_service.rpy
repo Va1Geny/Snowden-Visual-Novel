@@ -32,7 +32,7 @@ init python:
 
         def _sync_voice_mixer(self, lang):
             try:
-                preferences.set_mute("voice", lang is not None)
+                preferences.set_mute("voice", lang not in (None, "french", "dutch"))
             except Exception:
                 pass
 
@@ -60,6 +60,16 @@ init python:
 
         def english_voice_enabled(self):
             return self.current_language() is None
+
+        def voice_language(self):
+            lang = self.current_language()
+            if lang == "french":
+                return "fr"
+            if lang == "dutch":
+                return "nl"
+            if lang is None:
+                return "en"
+            return None
 
         def preload_language(self, lang, force=False):
             if not lang:
@@ -269,5 +279,8 @@ init python:
 
     def should_play_english_voice():
         return translation_service.english_voice_enabled()
+
+    def current_voice_language():
+        return translation_service.voice_language()
 
     config.say_menu_text_filter = translation_service.say_menu_text_filter

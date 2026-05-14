@@ -100,7 +100,7 @@ VOICE_PROFILES = {
     "poitras": {"voice": "en-US-EmmaMultilingualNeural", "tag": "poitras"},
     "nsa_chief": {"voice": "en-US-AndrewNeural", "tag": "nsa_chief", "pitch": "-5Hz", "rate": "-4%"},
     "supervisor": {"voice": "en-US-AndrewNeural", "tag": "supervisor", "pitch": "-3Hz", "rate": "-3%"},
-    "colleague": {"voice": "en-US-BrianNeural", "tag": "colleague", "rate": "+1%"},
+    "colleague": {"voice": "en-US-RogerNeural", "tag": "colleague", "rate": "+2%", "pitch": "+2Hz"},
     "russian_official": {"voice": "ru-RU-DmitryNeural", "tag": "russian_official", "pitch": "+1Hz", "rate": "+2%"},
 }
 
@@ -192,6 +192,8 @@ def clean_text(text: str) -> str:
     text = text.replace("[[", "[").replace("]]", "]")
     text = text.replace("\\\"", "\"")
     text = text.replace("\\n", " ")
+    text = re.sub(r"\bAES-256\b", "A E S two fifty six", text)
+    text = re.sub(r"\bAES\b", "A E S", text)
     text = text.replace("\n", " ")
     text = text.replace("—", ", ")
     text = text.replace("–", ", ")
@@ -456,8 +458,9 @@ def inject_voice_calls(entries):
 
                 if speaker == entry["speaker"] and source_text == entry["text"]:
                     indent = match.group("indent")
-                    rebuilt.append(f"{indent}if should_play_english_voice():  {AUTO_MARKER}")
-                    rebuilt.append(f'{indent}    voice "{entry["relative_audio_path"]}"  {AUTO_MARKER}')
+                    rebuilt.append(f'{indent}$ localized_voice = voice_for_current_language("{entry["relative_audio_path"]}")  {AUTO_MARKER}')
+                    rebuilt.append(f"{indent}if localized_voice:  {AUTO_MARKER}")
+                    rebuilt.append(f"{indent}    voice localized_voice  {AUTO_MARKER}")
                     entry_index += 1
 
             rebuilt.append(line)
