@@ -986,13 +986,41 @@ label ch3_continue:
         voice "audio/voice/en/script_0729_im_a6cb2cedfa.mp3"  # edge-tts-auto
     im "Now it's time to put that knowledge into practice. I've intercepted an encrypted password hash from the internal NSA directory. Before I can access the PRISM architecture files, I need to crack it."
 
-    im "A hash is a one-way mathematical function — you can't just 'decrypt' it. You have to guess the password, hash your guess, and see if it matches. To do this, we use tools like 'John the Ripper' and a massive list of known passwords, like the 'rockyou.txt' wordlist. This is called a dictionary attack."
+    # --- Hash Functions vs Encryption ---
 
-    im "But what if the password has substitutions, like 'M0nk3y!' instead of 'monkey'? That's where rule-based mutations come in. By applying rules, the cracking tool automatically tests thousands of variations for every word in the dictionary."
+    im "A hash is fundamentally different from encryption. Encryption is a two-way street — you scramble data with a key, and decrypt it with the same key. A hash is a one-way mathematical meat grinder."
+    
+    im "When you create a password, the system doesn't save the password itself. It runs it through a hashing algorithm to produce a fixed-length string of characters. You can't reverse the math to 'decrypt' a hash back into the password."
+    
+    sys "// SYSTEM NOTE: Hashes are one-way cryptographic functions. You cannot decrypt a hash; you must guess the input that produced it. //"
 
-    sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Fast algorithms like MD5 can be cracked instantly using dictionary attacks. Strong algorithms like bcrypt use a computational cost factor to make guessing intentionally slow. //"
+    # --- Dictionary Attacks ---
 
-    im "If these hashes use MD5, they'll break in seconds. If they use bcrypt... we might be here for a century. Let's find out."
+    im "So how do you crack it? You guess. You take a massive list of known passwords — like the infamous 'rockyou.txt' wordlist, which contains millions of real passwords leaked from previous breaches."
+    
+    im "You run every word in that dictionary through the hashing algorithm. If the resulting hash matches the one you stole, you've found the password. This is called a dictionary attack, and tools like 'John the Ripper' can test millions of guesses per second."
+    
+    sys "// SYSTEM NOTE: A Dictionary Attack systematically hashes a list of common passwords to find a match. Fast algorithms like MD5 are highly vulnerable to this. //"
+
+    # --- Rule-Based Mutations ---
+
+    im "But people think they're clever. They substitute letters for numbers — 'M0nk3y!' instead of 'monkey'. That's where rule-based mutations come in."
+    
+    im "The cracking software doesn't just try the dictionary words. It automatically applies rules: capitalizing letters, adding numbers at the end, swapping 'e' for '3'. It turns one dictionary word into thousands of variations, devastating most 'clever' passwords."
+    
+    sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Adding predictable substitutions (like 'a' to '@') does not stop modern cracking tools. //"
+
+    # --- Kali Linux & Terminal Commands ---
+
+    im "To run this attack, we'll use Kali Linux — an operating system built specifically for penetration testing. We'll execute the attack entirely from the command line terminal."
+    
+    im "When running 'John the Ripper' from the terminal, you need to pass it specific arguments telling it which wordlist to use, and which file contains the hashes you want to crack."
+    
+    im "The standard syntax looks like this: 'john --wordlist=<path_to_wordlist> <path_to_hash_file>'. In Kali Linux, the famous 'rockyou.txt' dictionary is typically stored at '/usr/share/wordlists/rockyou.txt'."
+    
+    sys "// COMMAND SYNTAX: john --wordlist=/usr/share/wordlists/rockyou.txt /path/to/hash.txt //"
+
+    im "If these hashes use an outdated algorithm like MD5, they'll break instantly. If they use a slow, modern algorithm like bcrypt... we might be here for a century. Let's find out."
 
     window hide
     $ mg_intro3 = renpy.call_screen("minigame_briefing", challenge_title="BRUTE FORCE", subtitle="Passwords are only as strong as their entropy.\nTime to crack the hashes.", mission_id="OPS-03-09-2013", classification="TOP SECRET // EYES ONLY", challenge_type="CRYPTANALYSIS", estimated_time="120 SECONDS", difficulty=3, difficulty_label="OPERATIVE", succeed_reward="access_granted +1", fail_penalty="suspicion_level +1", learn_concept="Dictionary attacks and rule-based mutations\ncan break weak passwords instantly.", briefing_text="You intercepted an NSA internal system hash.\nYour task is to run a dictionary attack against this hash using John the Ripper.\n\nThe rockyou wordlist is available at /usr/share/wordlists/rockyou.txt\n\nType the correct terminal commands to crack the hashes.", controls=[("TAB", "Autocomplete command"),("ENTER", "Execute operation")])
@@ -1327,15 +1355,33 @@ label chapter_4:
         voice "audio/voice/en/script_0986_im_6e485d9b67.mp3"  # edge-tts-auto
     im "But before I can run, I need to wipe everything. Every file, every log, every trace. If I leave even one digital breadcrumb, it's over."
 
-    im "Digital forensics is relentless. When you delete a file normally, the operating system just removes the pointer — the actual data remains on the disk until it's overwritten. To truly destroy it, I have to use secure deletion tools like 'shred' to overwrite the disk sectors with random data."
+    # --- Digital Forensics and Secure Deletion ---
 
-    im "And it's not just the files. My browser history and session tokens prove what I accessed. My photos have hidden EXIF metadata containing the exact GPS coordinates. My terminal history recorded every command I typed. Even my laptop's hardware MAC address was logged by the hotel's network."
+    im "Digital forensics is relentless. Most people think that when they delete a file, it's gone. It's not. The operating system just deletes the pointer to the file, marking that space on the hard drive as 'available'."
+    
+    im "The actual 1s and 0s are still sitting on the disk. Forensic agents can easily recover them. To truly destroy digital evidence, you have to use secure deletion tools like 'shred' to physically overwrite those disk sectors with random data."
+
+    sys "// SYSTEM NOTE: Standard deletion only removes file pointers. Secure deletion (shredding) overwrites the physical disk space to prevent forensic recovery. //"
+
+    # --- Metadata Tracking ---
+
+    im "And it's not just the files themselves. It's the metadata — the data about the data. Take photos, for instance."
+    
+    im "Every photo taken on a modern smartphone contains hidden EXIF metadata. It records the camera model, the exact time, and the precise GPS coordinates of where you were standing when you took it. If I don't strip that metadata using 'exiftool', the photos themselves will lead them straight to this hotel."
+
+    sys "// SYSTEM NOTE: EXIF Metadata embeds location and device information directly into image files. Always strip metadata before publishing sensitive media. //"
+
+    # --- Network and Hardware Logs ---
+
+    im "My browser history and session tokens prove exactly what I accessed and when. My terminal history recorded every single command I typed. "
+    
+    im "Even my laptop's physical hardware is a liability. The hotel's Wi-Fi router logged my MAC address — a unique identifier hardcoded into my network card. If they match that MAC address to my machine, it's game over. I have to randomize it using 'macchanger'."
+
+    sys "// FORENSICS ALERT: Digital footprints include browser tokens, terminal logs, and hardware MAC addresses. All must be wiped or randomized. //"
 
     if should_play_english_voice():  # edge-tts-auto
         voice "audio/voice/en/script_0988_im_059dc00155.mp3"  # edge-tts-auto
     im "I have 90 seconds before NSA agents reach my room. 8 digital traces that prove I copied the PRISM files. Each one needs a different command to destroy."
-
-    sys "// FORENSICS ALERT: Normal deletion is insufficient. Use 'shred' to overwrite files, 'macchanger' to randomize hardware IDs, and 'exiftool' to strip metadata. //"
 
     sys "// ALERT: NSA RESPONSE TEAM EN ROUTE. ESTIMATED ARRIVAL: 90 SECONDS. BEGIN DIGITAL EVIDENCE ELIMINATION. //"
 

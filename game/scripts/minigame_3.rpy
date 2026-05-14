@@ -9,6 +9,10 @@ init python:
             self.expired = False
 
     class TerminalInputValue(InputValue):
+        @property
+        def default(self):
+            return True
+
         def get_text(self):
             return pw_game_state["current_input"]
 
@@ -202,6 +206,10 @@ init python:
         }
     ]
 
+    def pw_backspace():
+        if len(pw_game_state["current_input"]) > 0:
+            pw_game_state["current_input"] = pw_game_state["current_input"][:-1]
+            renpy.restart_interaction()
     def pw_add_line(text, color="#ffffff"):
         pw_game_state["lines"].append(TerminalLine(text, color=color))
 
@@ -459,6 +467,7 @@ screen minigame_3_main():
 
         if pw_game_state["status"] in ["playing", "report"]:
             key "K_TAB" action Function(pw_autocomplete)
+            key "K_BACKSPACE" action Function(pw_backspace)
 
             if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
                 text "Press TAB to autocomplete" xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
