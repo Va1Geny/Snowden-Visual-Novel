@@ -1889,7 +1889,7 @@ screen intro_fullscreen_prompt():
                         xsize 260
                         background Solid("#171C30")
                         hover_background Solid("#3A4A55")
-                        action Return()
+                        action Skip()
 
 screen intro_shortcuts_screen():
     modal True
@@ -2540,7 +2540,9 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     $ compact = is_compact_layout()
 
-    use ui_backdrop
+    # Full-screen backdrop so no gap is ever visible
+    add Solid("#131421")
+
     use shell_header(
         "ARCHIVE INTERFACE",
         "[title]",
@@ -2548,11 +2550,11 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
     )
 
     if compact:
+        # Compact: single column, full-width card below the header
         frame:
-            xpos 24
-            ypos 188
-            xsize 1872
-            ysize 844
+            xfill True
+            yfill True
+            yoffset 188
             background Solid("#0E1321EE")
             padding (20, 20)
 
@@ -2625,70 +2627,81 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
                         else:
                             transclude
     else:
-        hbox:
-            xpos 72
-            ypos 214
-            spacing 20
+        # Standard: two-column layout — nav sidebar left, content right
+        # Transparent frame provides 72px side margins; hbox cannot take directional padding
+        frame:
+            xfill True
+            yfill True
+            yoffset 214
+            background Solid("#00000000")
+            padding (72, 0, 72, 24)
 
-            frame:
-                xsize 360
-                ysize 770
-                background Solid("#0E1321EE")
-                padding (20, 20)
+            hbox:
+                xfill True
+                yfill True
+                spacing 20
 
-                vbox:
-                    spacing 18
+                # LEFT: navigation sidebar
+                frame:
+                    xsize 360
+                    yfill True
+                    background Solid("#0E1321EE")
+                    padding (20, 20)
 
-                    use navigation
+                    vbox:
+                        spacing 18
 
-                    null height 6
+                        use navigation
 
-                    textbutton t("Notes"):
-                        style "shell_nav_button"
-                        action Show("notebook_panel")
+                        null height 6
 
-                    textbutton t("Return"):
-                        style "shell_nav_button"
-                        action ShowMenu(menu_return_screen())
+                        textbutton t("Notes"):
+                            style "shell_nav_button"
+                            action Show("notebook_panel")
 
-            frame:
-                xsize 1396
-                ysize 770
-                background Solid("#0E1321EE")
-                padding (24, 24)
+                        textbutton t("Return"):
+                            style "shell_nav_button"
+                            action ShowMenu(menu_return_screen())
 
-                if scroll == "viewport":
-                    viewport:
-                        style "game_menu_viewport"
-                        yinitial yinitial
-                        xfill True
-                        yfill True
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
+                # RIGHT: content area
+                frame:
+                    xfill True
+                    yfill True
+                    background Solid("#0E1321EE")
+                    padding (24, 24)
 
-                        vbox:
-                            spacing spacing
+                    if scroll == "viewport":
+                        viewport:
+                            style "game_menu_viewport"
+                            yinitial yinitial
                             xfill True
+                            yfill True
+                            scrollbars "vertical"
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+
+                            vbox:
+                                spacing spacing
+                                xfill True
+                                transclude
+
+                    elif scroll == "vpgrid":
+                        vpgrid:
+                            cols 1
+                            yinitial yinitial
+                            xfill True
+                            yfill True
+                            scrollbars "vertical"
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+                            spacing spacing
+
                             transclude
 
-                elif scroll == "vpgrid":
-                    vpgrid:
-                        cols 1
-                        yinitial yinitial
-                        xfill True
-                        yfill True
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-                        spacing spacing
-
+                    else:
                         transclude
-
-                else:
-                    transclude
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -3107,7 +3120,7 @@ screen pref_tab_audio():
         if config.has_voice:
             use pref_row_slider("VC", "Voice / Narration", "Character speech and narration tracks.", Preference("voice volume"))
             
-        use pref_row_toggle("MU", "Mute When Minimised", "Silence all audio when the window loses focus.", NullAction())
+        use pref_row_toggle("MU", "Mute When Minimised", "Silence all audio when the window loses focus.", ToggleField(_preferences, "audio_when_minimized", true_value=False, false_value=True))
 
 screen pref_tab_visual():
     vbox:
@@ -3125,7 +3138,7 @@ screen pref_tab_visual():
             ("60 FPS", SetField(persistent, "dummy_fps", 60))
         ])
         
-        use pref_row_toggle("TR", "Scene Transitions", "Enable or disable visual transition effects between scenes.", Preference("transitions", "toggle"))
+        use pref_row_toggle("TR", "Scene Transitions", "Enable or disable visual transition effects between scenes.", ToggleTransitions())
         
         null height 18
         
@@ -3144,13 +3157,12 @@ screen pref_tab_accessibility():
         
         use pref_row_slider("FS", "Font Size Adjustment", "Scale all dialogue and UI text globally.", Preference("font size"))
         
-        use pref_row_toggle("HC", "High Contrast Mode", "Boost text contrast for dark background scenes.", ToggleHighContrast())
+        use pref_row_toggle("HC", "High Contrast Mode", "Boost text contrast for dark background scenes.", renpy.toggle_high_contrast())
 
 default persistent.theme_preset = "TERMINAL"
 default persistent.dummy_renderer = "Auto"
 default persistent.dummy_fps = 60
 default persistent.dummy_font = "Standard"
-default persistent.dummy_high_contrast = False
 
 init python:
     def apply_accessibility_font():
@@ -3174,53 +3186,21 @@ init python:
         def get_selected(self):
             return getattr(persistent, "dummy_font", "Standard") == self.val
 
-    original_char_colors = {}
 
-    def apply_high_contrast():
-        hc = getattr(persistent, "dummy_high_contrast", False)
-        
-        char_names = ["e", "greenwald", "poitras", "nsa_chief", "supervisor", "colleague", "russian_official", "sys", "narrator_voice", "im"]
-        
-        for name in char_names:
-            c = getattr(store, name, None)
-            if c:
-                if name not in original_char_colors:
-                    original_char_colors[name] = {
-                        "what_color": c.what_args.get("color"),
-                        "what_outlines": c.what_args.get("outlines"),
-                        "who_color": c.who_args.get("color"),
-                        "who_outlines": c.who_args.get("outlines"),
-                        "window_background": c.window_args.get("background")
-                    }
-                
-                orig = original_char_colors[name]
-                if hc:
-                    c.what_args["color"] = "#FFFFFF"
-                    c.what_args["outlines"] = [(2, "#000000", 0, 0)]
-                    c.who_args["outlines"] = [(2, "#000000", 0, 0)]
-                    c.window_args["background"] = Solid("#000000")
-                else:
-                    if orig["what_color"] is not None: c.what_args["color"] = orig["what_color"]
-                    elif "color" in c.what_args: del c.what_args["color"]
-                    
-                    if orig["what_outlines"] is not None: c.what_args["outlines"] = orig["what_outlines"]
-                    elif "outlines" in c.what_args: del c.what_args["outlines"]
-
-                    if orig["who_outlines"] is not None: c.who_args["outlines"] = orig["who_outlines"]
-                    elif "outlines" in c.who_args: del c.who_args["outlines"]
-                    
-                    if orig["window_background"] is not None: c.window_args["background"] = orig["window_background"]
-                    elif "background" in c.window_args: del c.window_args["background"]
-
-    class ToggleHighContrast(Action):
+    class ToggleTransitions(Action):
+        """Toggles scene transitions via both the native Ren'Py preference
+        (_preferences.transitions) and persistent.no_transitions so that any
+        custom `with (None if persistent.no_transitions else dissolve)` guards
+        in script files also respect the player's preference."""
         def __call__(self):
-            hc = not getattr(persistent, "dummy_high_contrast", False)
-            persistent.dummy_high_contrast = hc
-            apply_high_contrast()
-            renpy.free_memory()
+            # 0 = transitions off, 1 = transitions on (Ren'Py native)
+            new_val = 0 if _preferences.transitions else 1
+            _preferences.transitions = new_val
+            persistent.no_transitions = (new_val == 0)
             renpy.restart_interaction()
         def get_selected(self):
-            return getattr(persistent, "dummy_high_contrast", False)
+            # Returns True (ENABLED) when transitions are ON
+            return bool(_preferences.transitions)
 
     def reset_to_field_defaults():
         _preferences.text_cps = 0
@@ -3231,24 +3211,35 @@ init python:
         _preferences.skip_unseen = False
         _preferences.skip_after_choices = False
         _preferences.desktop_self_voicing = False
+        _preferences.transitions = 1
+        persistent.no_transitions = False
         persistent.theme_preset = "TERMINAL"
-        persistent.dummy_high_contrast = False
         persistent.dummy_font = "Standard"
         apply_accessibility_font()
-        apply_high_contrast()
         renpy.free_memory()
         renpy.restart_interaction()
 
 screen preferences():
     tag menu
     modal True
+    # style_prefix overrides the default `frame` style (which carries
+    # gui.frame_borders padding) so the full-screen backdrop frames use
+    # the zero-padding full_settings_frame variant instead.
+    style_prefix "full_settings"
     
     default active_tab = "General"
     
-    # 2.1 Full-Screen Backdrop
+    # 2.1 Full-Screen Backdrop — xfill/yfill ensure 100% coverage at any resolution
     add Solid("#07090F")
     
-    # Main Panel Container
+    # Full-screen outer container — no absolute pixel sizes so 1080p and 4K both work
+    frame:
+        xfill True
+        yfill True
+        background Solid("#07090F")
+        padding (0, 0)
+    
+    # Main Panel Container — centred card inside the full-screen frame
     frame:
         xalign 0.5 yalign 0.5
         xsize 1100

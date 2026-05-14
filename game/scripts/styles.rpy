@@ -1226,3 +1226,55 @@ style pref_footer_right is text:
     font FONT_MONO
     size 10
     color TEXT_FAINT
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# PART 7 — FULL-SCREEN SETTINGS STYLE PREFIX
+# Used by screen preferences() via style_prefix "full_settings".
+# Overrides the default `frame` style so the outermost backdrop frames
+# carry zero padding and a transparent background, preventing any
+# border gaps regardless of gui.frame_borders.padding.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+style full_settings_frame is frame:
+    # 100 % of the screen at any resolution — no fixed pixels
+    xsize 1.0
+    ysize 1.0
+    # Zero-out the default gui.frame_borders padding completely
+    padding (0, 0)
+    background Solid("#00000000")
+
+style full_settings_window is window:
+    xsize 1.0
+    ysize 1.0
+    padding (0, 0)
+    background Solid("#00000000")
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# PART 8 — HIGH-CONTRAST STYLE VARIANTS
+# Activated by ToggleHighContrast. These variants provide the engine-level
+# style override that Ren'Py uses when persistent.dummy_high_contrast = True.
+# The Python apply_high_contrast() function mutates Character objects;
+# these styles cover any non-Character UI elements (history, NVL, etc.).
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+style high_contrast_window is window:
+    background Solid("#000000")
+
+style high_contrast_say_dialogue is say_dialogue:
+    color "#FFFFFF"
+    outlines [(2, "#000000", 0, 0)]
+
+style high_contrast_say_label is say_label:
+    color "#00FFD1"
+    outlines [(2, "#000000", 0, 0)]
+
+style high_contrast_nvl_window is nvl_window:
+    background Solid("#000000E6")
+
+style high_contrast_nvl_dialogue is nvl_dialogue:
+    color "#FFFFFF"
+    outlines [(2, "#000000", 0, 0)]
+
+style high_contrast_nvl_label is nvl_label:
+    color "#00FFD1"
+    outlines [(2, "#000000", 0, 0)]
