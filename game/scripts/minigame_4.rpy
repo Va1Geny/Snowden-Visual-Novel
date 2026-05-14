@@ -763,6 +763,7 @@ screen screen_cover_tracks():
                     vbox:
                         spacing 4
                         $ _phase_label = "GUIDED" if _ct["phase"] == 1 else "ASSEMBLY" if _ct["phase"] == 2 else "SELECT"
+                        $ _phase_help = "Read the pre-filled command, study why it works, then execute it." if _ct["phase"] == 1 else "Build the command by clicking only the correct tokens from left to right." if _ct["phase"] == 2 else "Choose the one command that safely wipes the trace before the timer catches you."
                         $ _trace_id = _ct["id"]
                         $ _trace_name = _ct["name"]
                         hbox:
@@ -771,6 +772,7 @@ screen screen_cover_tracks():
                             text t("MODE: [_phase_label]") color "#7A8A99" size 12 font "fonts/DejaVuSans.ttf" yalign 0.5
                         text _ct["danger_title"] color "#FF2D55" size 13 bold True font "fonts/DejaVuSans.ttf"
                         text _ct["danger_text"] color "#7A8A99" size 11 font "fonts/DejaVuSans.ttf"
+                        text _phase_help color "#C8E6C9" size 11 font "fonts/DejaVuSans.ttf"
 
                 frame:
                     xfill True ysize 380

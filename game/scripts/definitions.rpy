@@ -484,82 +484,47 @@ init python:
         trans.yoffset = (540 - y) * 0.02
         return 0
 
+    def portrait_sprite(path, width=900, height=1396, yoffset=0):
+        return renpy.display.transform.Transform(
+            path,
+            fit="contain",
+            xsize=width,
+            ysize=height,
+            xalign=0.5,
+            yalign=1.0,
+            yoffset=yoffset,
+            subpixel=True,
+        )
+
 transform parallax:
     zoom 1.05
     align (0.5, 0.5)
     function mouse_parallax
 
-image edward neutral:
-    "sprites/edward neutral.png"
-    zoom 0.76
-    yoffset 9
-image edward thoughtful:
-    "sprites/edward thoughtful.png"
-    zoom 1.02
-image edward concerned:
-    "sprites/edward concerned.png"
-    zoom 1.02
-image edward shocked:
-    "sprites/edward shocked.png"
-    zoom 1.02
-image edward tense:
-    "sprites/edward tense.png"
-    zoom 1.02
-image edward determined:
-    "sprites/edward determined.png"
-    zoom 1.02
-image edward defiant:
-    "sprites/edward defiant.png"
-    zoom 1.02
-image edward sad:
-    "sprites/edward sad.png"
-    zoom 1.02
-image edward tired:
-    "sprites/edward tired.png"
-    zoom 1.02
-image edward relieved:
-    "sprites/edward relieved.png"
-    zoom 1.02
+image edward neutral = portrait_sprite("sprites/edward neutral.png", yoffset=9)
+image edward thoughtful = portrait_sprite("sprites/edward thoughtful.png", yoffset=9)
+image edward concerned = portrait_sprite("sprites/edward concerned.png", yoffset=9)
+image edward shocked = portrait_sprite("sprites/edward shocked.png", yoffset=9)
+image edward tense = portrait_sprite("sprites/edward tense.png", yoffset=9)
+image edward determined = portrait_sprite("sprites/edward determined.png", yoffset=9)
+image edward defiant = portrait_sprite("sprites/edward defiant.png", yoffset=9)
+image edward sad = portrait_sprite("sprites/edward sad.png", yoffset=9)
+image edward tired = portrait_sprite("sprites/edward tired.png", yoffset=9)
+image edward relieved = portrait_sprite("sprites/edward relieved.png", yoffset=9)
 
-image supervisor neutral:
-    "sprites/supervisor neutral.png"
-    zoom 0.75
-    yoffset 21
-image supervisor stern:
-    "sprites/supervisor stern.png"
-    zoom 1.0
-image supervisor authoritative:
-    "sprites/supervisor authoritative.png"
-    zoom 1.0
-image supervisor suspicious:
-    "sprites/supervisor suspicious.png"
-    zoom 1.0
-image supervisor annoyed:
-    "sprites/supervisor annoyed.png"
-    zoom 1.0
-image supervisor cold:
-    "sprites/supervisor cold.png"
-    zoom 1.0
+image supervisor neutral = portrait_sprite("sprites/supervisor neutral.png", yoffset=21)
+image supervisor stern = portrait_sprite("sprites/supervisor stern.png", yoffset=21)
+image supervisor authoritative = portrait_sprite("sprites/supervisor authoritative.png", yoffset=21)
+image supervisor suspicious = portrait_sprite("sprites/supervisor suspicious.png", yoffset=21)
+image supervisor annoyed = portrait_sprite("sprites/supervisor annoyed.png", yoffset=21)
+image supervisor cold = portrait_sprite("sprites/supervisor cold.png", yoffset=21)
 
-image colleague neutral:
-    "sprites/colleague neutral.png"
-    zoom 0.74
-    yoffset 19
-image colleague casual:
-    "sprites/colleague casual.png"
-    zoom 0.98
-image colleague amused:
-    "sprites/colleague amused.png"
-    zoom 0.98
-image colleague smug:
-    "sprites/colleague smug.png"
-    zoom 0.98
-image colleague uneasy:
-    "sprites/colleague uneasy.png"
-    zoom 0.98
-image colleague cautious:
-    "sprites/colleague cautious.png"
-    zoom 0.98
+image colleague neutral = portrait_sprite("sprites/colleague neutral.png", yoffset=19)
+image colleague casual = portrait_sprite("sprites/colleague casual.png", yoffset=19)
+image colleague amused = portrait_sprite("sprites/colleague amused.png", yoffset=19)
+image colleague smug = portrait_sprite("sprites/colleague smug.png", yoffset=19)
+image colleague uneasy = portrait_sprite("sprites/colleague uneasy.png", yoffset=19)
+image colleague cautious = portrait_sprite("sprites/colleague cautious.png", yoffset=19)
 
 image greenwald neutral:
     "sprites/greenwald neutral.png"
@@ -605,25 +570,12 @@ image poitras resolved:
     "sprites/poitras resolved.png"
     zoom 1.02
 
-image russian_official neutral:
-    "sprites/russian official neutral.png"
-    zoom 0.76
-    yoffset 34
-image russian_official smug:
-    "sprites/russian official smug.png"
-    zoom 1.0
-image russian_official calculating:
-    "sprites/russian official calculating.png"
-    zoom 1.0
-image russian_official cold:
-    "sprites/russian official cold.png"
-    zoom 1.0
-image russian_official pressuring:
-    "sprites/russian official pressuring.png"
-    zoom 1.0
-image russian_official confident:
-    "sprites/russian official confident.png"
-    zoom 1.0
+image russian_official neutral = portrait_sprite("sprites/russian official neutral.png", yoffset=34)
+image russian_official smug = portrait_sprite("sprites/russian official smug.png", yoffset=34)
+image russian_official calculating = portrait_sprite("sprites/russian official calculating.png", yoffset=34)
+image russian_official cold = portrait_sprite("sprites/russian official cold.png", yoffset=34)
+image russian_official pressuring = portrait_sprite("sprites/russian official pressuring.png", yoffset=34)
+image russian_official confident = portrait_sprite("sprites/russian official confident.png", yoffset=34)
 
 image nsa_chief neutral:
     "sprites/nsa chief neutral.png"
@@ -638,28 +590,13 @@ image nsa_chief cold:
     "sprites/nsa chief cold.png"
     zoom 1.0
 
-image journalist neutral:
-    "sprites/journalist neutral.png"
-    zoom 0.77
-    yoffset 20
-image journalist skeptical:
-    "sprites/journalist skeptical.png"
-    zoom 1.02
-image journalist focused:
-    "sprites/journalist focused.png"
-    zoom 1.02
-image journalist serious:
-    "sprites/journalist serious.png"
-    zoom 1.02
-image journalist shocked:
-    "sprites/journalist shocked.png"
-    zoom 1.02
-image journalist resolved:
-    "sprites/journalist resolved.png"
-    zoom 1.02
-image journalist concerned:
-    "sprites/journalist concerned.png"
-    zoom 1.02
+image journalist neutral = portrait_sprite("sprites/journalist neutral.png", yoffset=20)
+image journalist skeptical = portrait_sprite("sprites/journalist skeptical.png", yoffset=20)
+image journalist focused = portrait_sprite("sprites/journalist focused.png", yoffset=20)
+image journalist serious = portrait_sprite("sprites/journalist serious.png", yoffset=20)
+image journalist shocked = portrait_sprite("sprites/journalist shocked.png", yoffset=20)
+image journalist resolved = portrait_sprite("sprites/journalist resolved.png", yoffset=20)
+image journalist concerned = portrait_sprite("sprites/journalist concerned.png", yoffset=20)
 
 image editor neutral:
     "sprites/editor neutral.png"

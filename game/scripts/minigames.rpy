@@ -444,9 +444,9 @@ screen minigame_firewall():
                             else:
                                 text t("●") color "#FF2D55" size 18
                         elif _dot_i == _fw_idx:
-                            text t("â—†") color "#FFD700" size 18
+                            text t("◆") color "#FFD700" size 18
                         else:
-                            text t("â—‹") color "#555555" size 18
+                            text t("○") color "#555555" size 18
 
                     null width 20
                     text t("PACKET [_fw_num] / 8") color "#888888" size 14 yalign 0.5
@@ -488,10 +488,10 @@ screen minigame_firewall():
                     add Solid("#00FFD120"):
                         xsize 1 ysize 280 xpos 819 ypos 0
 
-                    text t("â—¢") color "#00FFD140" size 14 xpos 6 ypos 2
-                    text t("â—£") color "#00FFD140" size 14 xpos 798 ypos 2
-                    text t("â—¤") color "#00FFD140" size 14 xpos 6 ypos 258
-                    text t("â—¥") color "#00FFD140" size 14 xpos 798 ypos 258
+                    text t("◢") color "#00FFD140" size 14 xpos 6 ypos 2
+                    text t("◣") color "#00FFD140" size 14 xpos 798 ypos 2
+                    text t("◤") color "#00FFD140" size 14 xpos 6 ypos 258
+                    text t("◥") color "#00FFD140" size 14 xpos 798 ypos 258
 
                     vbox:
                         pos(0, 0)
@@ -639,7 +639,7 @@ screen minigame_firewall():
                             else:
                                 text t("{cps=40}✗ PACKET REJECTED{/cps}") color "#00FFD1" size 18 bold True xalign 0.5
                         else:
-                            text t("{cps=40}âš  INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
+                            text t("{cps=40}⚠ INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
 
                         text t("{cps=30}[_fw_explanation]{/cps}") color "#AAAAAA" size 15 text_align 0.5 xalign 0.5 justify True
 
