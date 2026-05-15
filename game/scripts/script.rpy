@@ -8,6 +8,20 @@
 ################################################################################
 
 label start:
+    # Force reset all variables in case of manual restart
+    $ trust_score = 0
+    $ knowledge_score = 0
+    $ suspicion_level = 0
+    $ contacts_secured = 0
+    $ evidence_secured = False
+    $ identity_exposed = False
+    $ escape_successful = False
+    $ current_chapter = 1
+    $ ending_type = ""
+    $ mg_firewall_score = 0
+    $ mg_decrypt_solved = False
+    $ mg_opsec_score = 0
+    $ mg_trace_solved = False
     show screen secret_ending_shortcut
     $ show_hud = False
     $ notebook_entries = []

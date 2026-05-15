@@ -75,7 +75,7 @@ screen game_over(narrative_text=""):
                     text t("[ TRY AGAIN ]") style "game_over_btn_primary_text"
 
                 button:
-                    action Return("main_menu")
+                    action MainMenu()
                     style "game_over_btn_secondary"
                     text t("[ MAIN MENU ]") style "game_over_btn_secondary_text"
 
