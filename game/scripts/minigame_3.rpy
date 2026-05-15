@@ -377,6 +377,14 @@ init python:
             pw_game_state["current_input"] = pw_game_state["current_input"][:-1]
             renpy.restart_interaction()
 
+    def pw_disable_backspace_rollback():
+        while 'K_BACKSPACE' in config.keymap['rollback']:
+            config.keymap['rollback'].remove('K_BACKSPACE')
+
+    def pw_restore_backspace_rollback():
+        if 'K_BACKSPACE' not in config.keymap['rollback']:
+            config.keymap['rollback'].append('K_BACKSPACE')
+
     def pw_apply_results():
         global knowledge_score, suspicion_level, evidence_secured
         score = pw_game_state["score"]
@@ -420,7 +428,6 @@ screen minigame_3_main():
     style_prefix "terminal"
     key "rollback" action NullAction()
     key "K_TAB" action Function(pw_autocomplete)
-    key "K_BACKSPACE" action Function(pw_delete_char)
     key "K_DELETE" action Function(pw_delete_char)
 
     frame:
@@ -502,11 +509,18 @@ screen minigame_3_main():
 
     use block_shortcuts_and_skip("SKIP")
 
+    key "K_BACKSPACE" action Function(pw_delete_char)
+    key "repeat_K_BACKSPACE" action Function(pw_delete_char)
+
 label minigame_3_brute_force:
     python:
+        pw_disable_backspace_rollback()
         pw_reset()
 
     call screen minigame_3_main
+
+    python:
+        pw_restore_backspace_rollback()
 
     if _return == "SKIP":
         return "SKIP"
