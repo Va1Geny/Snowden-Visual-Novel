@@ -815,7 +815,7 @@ transform notebook_note_slide:
     easein 0.2 yoffset 0
 
 image notebook_caret:
-    Text("_", color="#7ec8a0", size=24)
+    Text("_", color="#00FFD1", size=24)
     notebook_cursor_blink
 
 style notebook_button:
@@ -825,8 +825,8 @@ style notebook_button:
 style notebook_scrollbar:
     xsize 6
     unscrollable "hide"
-    base_bar Solid("#0f1a11")
-    thumb Solid("#5a9e7a")
+    base_bar Solid("#0B101A")
+    thumb Solid("#00A388")
 
 transform boot_line_1:
     alpha 0.0
@@ -884,7 +884,7 @@ screen notebook_panel():
         yalign 0.5
         xsize notebook_xsize
         ysize notebook_ysize
-        background Solid("#0a0f0b") # bg_main
+        background Solid("#0D1320") # bg_main
         padding (0, 0)
 
         vbox:
@@ -896,7 +896,7 @@ screen notebook_panel():
             frame:
                 xfill True
                 ysize 84
-                background Solid("#0f1f18") # header_bg
+                background Solid("#0F1423") # header_bg
                 padding (28, 0)
 
                 hbox:
@@ -904,7 +904,7 @@ screen notebook_panel():
                     yalign 0.5
 
                     text t("FIELD NOTEBOOK"):
-                        color "#d4e8d0" # text_main
+                        color "#E8E8E8" # text_main
                         size notebook_title_size
                         font settings_ui_font(mono=True)
                         bold True
@@ -914,13 +914,13 @@ screen notebook_panel():
                     frame:
                         xalign 1.0
                         yalign 0.5
-                        background Solid("#7ec8a04c") # accent glow for border
+                        background Solid("#00FFD14c") # accent glow for border
                         padding (1, 1, 1, 1)
                         frame:
-                            background Solid("#0a0f0b") # bg_main
+                            background Solid("#0D1320") # bg_main
                             padding (12, 6)
                             text t("[[ [notebook_entry_count()] ENTRIES ]"):
-                                color "#7a9e84" # text_muted
+                                color "#7A8A99" # text_muted
                                 size 16
                                 font settings_ui_font(mono=True)
                                 bold True
@@ -930,17 +930,17 @@ screen notebook_panel():
             frame:
                 xfill True
                 ysize 1
-                background Solid("#7ec8a026") # divider
+                background Solid("#00FFD126") # divider
 
             # ── BODY ──
             frame:
                 xfill True
                 ysize (notebook_ysize - 220)
-                background Solid("#0a0f0b") # bg_main
+                background Solid("#0D1320") # bg_main
                 padding (28, 24)
 
                 # Background texture watermark (Option B)
-                add Text("FIELD_OPS_LOG", font=settings_ui_font(mono=True), size=120, color="#7ec8a008") at Transform(rotate=-15, xanchor=1.0, yanchor=1.0, xpos=1.0, ypos=1.0, xoffset=-20, yoffset=-40)
+                add Text("FIELD_OPS_LOG", font=settings_ui_font(mono=True), size=120, color="#00FFD108") at Transform(rotate=-15, xanchor=1.0, yanchor=1.0, xpos=1.0, ypos=1.0, xoffset=-20, yoffset=-40)
 
                 vbox:
                     spacing 18
@@ -948,18 +948,18 @@ screen notebook_panel():
                     yfill True
 
                     text t("Write short reminders for yourself while you play. Important clues, terms, and decisions can live here."):
-                        color "#7a9e84" # text_muted
+                        color "#7A8A99" # text_muted
                         size notebook_body_size
                         xmaximum notebook_body_max
 
                     # INPUT FIELD
                     frame:
                         xfill True
-                        background Solid("#7ec8a04c") # glow border
+                        background Solid("#00FFD14c") # glow border
                         padding (1, 1, 1, 1)
                         frame:
                             xfill True
-                            background Solid("#131c14") # bg_card
+                            background Solid("#111827") # bg_card
                             padding (18, 16)
 
                             hbox:
@@ -967,7 +967,7 @@ screen notebook_panel():
                                 yalign 0.0
 
                                 text ">_":
-                                    color "#7ec8a0" # accent
+                                    color "#00FFD1" # accent
                                     size notebook_input_size
                                     font settings_ui_font(mono=True)
                                     bold True
@@ -976,7 +976,7 @@ screen notebook_panel():
                                 input:
                                     value VariableInputValue("notebook_draft")
                                     length 180
-                                    color "#d4e8d0" # text_main
+                                    color "#E8E8E8" # text_main
                                     size notebook_input_size
                                     caret "notebook_caret"
                                     xfill True
@@ -1005,52 +1005,53 @@ screen notebook_panel():
                                     for index, entry in enumerate(notebook_entries, 1):
                                         button:
                                             xfill True
+                                            ysize None
                                             action NullAction()
-                                            background Solid("#131c14") # bg_card
-                                            hover_background Solid("#1a2e1c") # bg_hover
+                                            background Solid("#111827") # bg_card
+                                            hover_background Solid("#1A2436") # bg_hover
                                             padding (0, 0)
                                             at notebook_note_slide
 
-                                            hbox:
+                                            fixed:
+                                                fit_first True
                                                 xfill True
-                                                # Left border
-                                                frame:
-                                                    xsize 2
-                                                    yfill True
-                                                    background Solid("#7ec8a0") # accent
                                                 
                                                 # Card content
                                                 frame:
                                                     background None
-                                                    padding (16, 16)
+                                                    padding (18, 16, 16, 16)
                                                     xfill True
-                                                    yalign 0.0
                                                     
                                                     vbox:
                                                         xfill True
                                                         spacing 8
-                                                        yalign 0.0
-
+                                                        
                                                         hbox:
                                                             xfill True
                                                             text t("ENTRY #[index]"):
-                                                                color "#5a9e7a" # accent_dim
+                                                                color "#00A388" # accent_dim
                                                                 size 14
                                                                 font settings_ui_font(mono=True)
                                                                 bold True
                                                             text "[SYS.LOG]":
-                                                                color "#5a9e7a" # accent_dim
+                                                                color "#00A388" # accent_dim
                                                                 size 14
                                                                 font settings_ui_font(mono=True)
                                                                 xalign 1.0
                                                                 substitute False
 
                                                         text entry:
-                                                            color "#d4e8d0" # text_main
+                                                            color "#E8E8E8" # text_main
                                                             size notebook_entry_size
                                                             xfill True
-                                                            yalign 0.0
                                                             substitute False
+
+                                                # Left border
+                                                frame:
+                                                    xsize 2
+                                                    yfill True
+                                                    xpos 0
+                                                    background Solid("#00FFD1") # accent
                         else:
                             # EMPTY STATE
                             vbox:
@@ -1059,26 +1060,26 @@ screen notebook_panel():
                                 spacing 8
 
                                 text "INITIALIZING  FIELD_LOG..." at boot_line_1:
-                                    color "#5a9e7a"
+                                    color "#00A388"
                                     size 18
                                     font settings_ui_font(mono=True)
 
                                 hbox at boot_line_2:
                                     xalign 0.5
                                     spacing 6
-                                    text "LOADING  " color "#3d5e44" size 16 font settings_ui_font(mono=True)
-                                    text "████████░░░░" color "#7ec8a0" size 16 
-                                    text "  67%" color "#5a9e7a" size 16 font settings_ui_font(mono=True)
+                                    text "LOADING  " color "#005C4D" size 16 font settings_ui_font(mono=True)
+                                    text "████████░░░░" color "#00FFD1" size 16 
+                                    text "  67%" color "#00A388" size 16 font settings_ui_font(mono=True)
 
                                 text "ACCESS GRANTED" at boot_line_3:
-                                    color "#7ec8a0"
+                                    color "#00FFD1"
                                     size 18
                                     font settings_ui_font(mono=True)
 
                                 null height 6
 
                                 text "SCANNING FOR ENTRIES..." at boot_line_4:
-                                    color "#5a9e7a"
+                                    color "#00A388"
                                     size 16
                                     font settings_ui_font(mono=True)
 
@@ -1086,22 +1087,22 @@ screen notebook_panel():
                                     xalign 0.5
                                     spacing 0
                                     text "> NO DATA FOUND  —  AWAITING INPUT":
-                                        color "#d4e8d0"
+                                        color "#E8E8E8"
                                         size 16
                                         font settings_ui_font(mono=True)
                                     text "▌" at notebook_boot_cursor_blink:
-                                        color "#7ec8a0"
+                                        color "#00FFD1"
                                         size 16
 
             # ── FOOTER ──
             frame:
                 xfill True
                 ysize 1
-                background Solid("#7ec8a026") # divider
+                background Solid("#00FFD126") # divider
 
             frame:
                 xfill True
-                background Solid("#0a0f0b") # bg_main
+                background Solid("#0D1320") # bg_main
                 padding (24, 20, 24, 24)
 
                 vbox:
@@ -1109,7 +1110,7 @@ screen notebook_panel():
                     xfill True
 
                     text t("Exports are saved automatically as a plain .txt file directly to your Desktop."):
-                        color "#7a9e84" # text_muted
+                        color "#7A8A99" # text_muted
                         size 16
                         xalign 0.5
                         text_align 0.5
@@ -1125,16 +1126,16 @@ screen notebook_panel():
                             ysize 56
                             action Function(export_notebook_txt)
                             padding (1, 1)
-                            background Solid("#4a8c5c")
-                            hover_background Solid("#7ec8a0")
+                            background Solid("#008066")
+                            hover_background Solid("#00FFD1")
                             frame:
-                                background Solid("#1e3d28")
+                                background Solid("#002B22")
                                 xfill True
                                 yfill True
                                 text t("EXPORT"):
                                     xalign 0.5
                                     yalign 0.5
-                                    color "#d4e8d0"
+                                    color "#E8E8E8"
                                     font settings_ui_font(mono=True)
                                     size 20
                                     bold True
@@ -1145,16 +1146,16 @@ screen notebook_panel():
                             ysize 56
                             action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
                             padding (1, 1)
-                            background Solid("#4a8c5c")
-                            hover_background Solid("#7ec8a0")
+                            background Solid("#008066")
+                            hover_background Solid("#00FFD1")
                             frame:
-                                background Solid("#1a2e20")
+                                background Solid("#00221A")
                                 xfill True
                                 yfill True
                                 text t("SAVE NOTE"):
                                     xalign 0.5
                                     yalign 0.5
-                                    color "#7ec8a0"
+                                    color "#00FFD1"
                                     font settings_ui_font(mono=True)
                                     size 20
                                     bold True
@@ -1185,16 +1186,16 @@ screen notebook_panel():
                             ysize 56
                             action Hide("notebook_panel")
                             padding (1, 1)
-                            background Solid("#4a7a60")
-                            hover_background Solid("#7ec8a0")
+                            background Solid("#00594D")
+                            hover_background Solid("#00FFD1")
                             frame:
-                                background Solid("#0a0f0b") # Transparent/main bg
+                                background Solid("#0D1320") # Transparent/main bg
                                 xfill True
                                 yfill True
                                 text t("CLOSE"):
                                     xalign 0.5
                                     yalign 0.5
-                                    color "#7ec8a0"
+                                    color "#00FFD1"
                                     font settings_ui_font(mono=True)
                                     size 20
                                     bold True
