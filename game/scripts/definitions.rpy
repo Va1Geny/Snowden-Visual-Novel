@@ -442,15 +442,23 @@ init python:
         "russian_official",
     )
 
-    def _strip_speaker_state(at_list):
+    def _normalize_transforms(at_list):
         if not at_list:
             return []
 
-        return [
-            transform
-            for transform in at_list
-            if transform is not active_char and transform is not inactive_char
-        ]
+        result = []
+        for t in at_list:
+            if t is active_char or t is inactive_char:
+                continue
+            if t is outro_left or t is outro_right:
+                continue
+            if t is intro_left or t is enter_center or t is stage_center:
+                result.append(enter_left)
+            elif t is intro_right:
+                result.append(enter_right)
+            else:
+                result.append(t)
+        return result
 
     def speaker_dimmer(event, interact=True, **kwargs):
         if not interact or event != "begin":
@@ -467,8 +475,14 @@ init python:
             except Exception:
                 current = None
 
-            base_transforms = _strip_speaker_state(list(current or ()))
+            current_list = list(current or ())
             new_state = active_char if tag == speaker_tag else inactive_char
+
+            already_has_state = (new_state in current_list)
+            if already_has_state:
+                continue
+
+            base_transforms = _normalize_transforms(current_list)
             renpy.show(tag, at_list=base_transforms + [new_state])
 
     config.character_callback = speaker_dimmer
@@ -668,38 +682,54 @@ transform active_char:
 transform inactive_char:
     ease 0.2 matrixcolor SaturationMatrix(0.45) alpha 0.82
 
+# ── STATIC position transforms (safe for speaker_dimmer re-show) ──
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
-    on show:
-        xpos -0.20 ypos 1.50 alpha 0.0 zoom 1.0
-        ease 0.6 xpos 0.15 ypos 1.50 alpha 1.0 zoom 1.40
-    on replace:
-        xpos 0.15 ypos 1.50 alpha 1.0 zoom 1.40
+    xpos 0.25
+    ypos 1.65
+    zoom 1.40
 
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    on show:
-        xpos 1.40 ypos 1.50 alpha 0.0 zoom 1.0
-        ease 0.6 xpos 0.85 ypos 1.50 alpha 1.0 zoom 1.40
-    on replace:
-        xpos 0.85 ypos 1.50 alpha 1.0 zoom 1.40
+    xpos 0.78
+    ypos 1.65
+    zoom 1.40
 
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
-    on show:
-        xpos 0.3 ypos 1.50 alpha 0.0 zoom 1.0
-        ease 0.5 xpos 0.5 ypos 1.50 alpha 1.0 zoom 1.40
-    on replace:
-        xpos 0.5 ypos 1.50 alpha 1.0 zoom 1.40
+    xpos 0.25
+    ypos 1.65
+    zoom 1.40
 
 transform stage_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.5
-    ypos 1.15
+    xpos 0.25
+    ypos 1.65
+    zoom 1.40
+
+# ── One-shot INTRO transforms (used only on first appearance) ──
+transform intro_left:
+    xanchor 0.5
+    yanchor 1.0
+    xpos 0.25 ypos 1.80 alpha 0.0 zoom 1.40
+    easeout_cubic 0.55 ypos 1.65 alpha 1.0
+
+transform intro_right:
+    xanchor 0.5
+    yanchor 1.0
+    xpos 0.78 ypos 1.80 alpha 0.0 zoom 1.40
+    easeout_cubic 0.55 ypos 1.65 alpha 1.0
+
+# ── One-shot EXIT transforms ──
+transform outro_left:
+    easeout_cubic 0.4 ypos 1.80 alpha 0.0
+
+transform outro_right:
+    easeout_cubic 0.4 ypos 1.80 alpha 0.0
 
 transform idle_breathe:
     zoom 1.0
@@ -708,20 +738,20 @@ transform idle_breathe:
     repeat
 
 transform exit_left:
-    ease 0.5 xpos -0.4 alpha 0.0
+    easeout_cubic 0.4 ypos 1.80 alpha 0.0
 
 transform exit_right:
-    ease 0.5 xpos 1.4 alpha 0.0
+    easeout_cubic 0.4 ypos 1.80 alpha 0.0
 
 transform exit_fade:
-    ease 0.4 alpha 0.0
+    easeout_cubic 0.35 alpha 0.0
 
 transform exit_panic:
-    linear 0.1 xoffset 5
-    linear 0.1 xoffset -5
-    linear 0.1 xoffset 3
-    linear 0.1 xoffset 0
-    ease 0.3 xpos 1.4 alpha 0.0
+    linear 0.08 xoffset 5
+    linear 0.08 xoffset -5
+    linear 0.08 xoffset 3
+    linear 0.08 xoffset 0
+    easeout_cubic 0.25 ypos 1.80 alpha 0.0
 
 transform title_glitch:
     alpha 1.0

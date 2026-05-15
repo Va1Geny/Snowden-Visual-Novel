@@ -136,8 +136,7 @@ label chapter_1:
     narrator_voice "You walk through layers of biometric security. Badge. Fingerprint. Retinal scan. The door hisses open."
 
     scene bg_nsa_main at parallax with dissolve
-    show edward neutral at enter_center
-    with dissolve
+    show edward neutral at intro_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0099_im_6b61024b7f.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -149,8 +148,7 @@ label chapter_1:
         voice localized_voice  # edge-tts-auto
     im "I'm a systems administrator — I keep this infrastructure running. The irony is, the more access I have to maintain the system, the more I see what the system actually does."
 
-    show supervisor neutral at enter_right
-    with dissolve
+    show supervisor neutral at intro_right
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0106_supervisor_e79ba05711.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -176,9 +174,10 @@ label chapter_1:
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     im "Verify the handshake. That's NSA-speak for confirming the network connection is legitimate — checking that the source and destination match the selector criteria. But nobody asks whether the criteria themselves are legitimate."
+    hide supervisor with dissolve
+    $ renpy.pause(0.3, hard=True)
 
-    show colleague casual at enter_left
-    with dissolve
+    show colleague casual at intro_right
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0119_colleague_123e1203e7.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -204,7 +203,7 @@ label chapter_1:
 
     # --- Choice 1: Follow protocol or explore restricted files? ---
     hide colleague with dissolve
-    hide supervisor with dissolve
+    $ renpy.pause(0.2, hard=True)
 
     menu:
         "Follow protocol. Process the flagged selectors as assigned.":
@@ -390,8 +389,7 @@ label chapter_1:
     )
 
     # --- Choice 2: Report anomaly or stay silent? ---
-    show supervisor stern at enter_right
-    with dissolve
+    show supervisor stern at intro_right
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0251_narrator_voice_b4f3cc6714.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -464,8 +462,9 @@ label chapter_1:
                 voice localized_voice  # edge-tts-auto
             narrator_voice "You continue working in silence, but your eyes are open. Every day reveals more."
 
-    hide supervisor neutral with dissolve
-    hide edward neutral with dissolve
+    hide supervisor with dissolve
+    $ renpy.pause(0.2, hard=True)
+    hide edward with dissolve
 
     # --- Chapter 1 Summary ---
 
@@ -535,8 +534,7 @@ label chapter_2:
     im "And there's more. Boundless Informant — a tool that counts and visualises exactly how much data the NSA collects from each country. In one month alone, 97 billion pieces of intelligence were gathered worldwide. The American public has no idea."
 
     # --- Internal conflict with colleague ---
-    show colleague uneasy at enter_left
-    with dissolve
+    show colleague uneasy at intro_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0345_colleague_5d696f38ce.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -612,7 +610,7 @@ label chapter_2:
                 voice localized_voice  # edge-tts-auto
             im "I can't trust anyone here. One wrong word and I'm done. I need to do this alone."
 
-    hide colleague neutral with dissolve
+    hide colleague with dissolve
 
     # --- Question Segment 2: Text Input ---
 
@@ -689,8 +687,7 @@ label chapter_2:
 
     # --- Choice 2: Copy the files or take notes only? ---
     scene bg_nsa_servers at parallax with dissolve
-    show edward tense at stage_center
-    with dissolve
+    show edward tense at intro_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0442_im_09c3298c5f.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -744,7 +741,7 @@ label chapter_2:
                 voice localized_voice  # edge-tts-auto
             narrator_voice "You write down key details from memory. It's safer, but journalists may question the credibility without primary documents."
 
-    hide edward neutral with dissolve
+    hide edward with dissolve
 
     # --- MCQ Question ---
 
@@ -799,8 +796,7 @@ label chapter_3:
 
     scene bg_hong_kong at parallax with chapter_transition
 
-    show edward tense at enter_left
-    with dissolve
+    show edward tense at intro_left
 
     # --- Snowden must contact journalists ---
 
@@ -919,8 +915,7 @@ label ch3_secure_success:
         voice localized_voice  # edge-tts-auto
     narrator_voice "You create an anonymous email account, accessed only through Tor, and use PGP encryption to contact documentary filmmaker Leah Portman."
 
-    show poitras neutral at enter_right
-    with dissolve
+    show poitras neutral at intro_right
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0603_poitras_f96af47c05.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -966,8 +961,7 @@ label ch3_secure_fail:
 
 label ch3_greenwald_contact:
     scene bg_hong_kong_street at parallax with dissolve
-    show greenwald neutral at enter_right
-    with dissolve
+    show greenwald neutral at intro_right
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0632_narrator_voice_7aaee15875.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -1046,11 +1040,11 @@ label ch3_contact_unsafe:
 
 label ch3_continue:
     # --- Question Segment 3: MCQ on Encryption ---
-    hide journalist
-    hide greenwald
-    hide poitras
-    hide edward
-    with dissolve
+    hide journalist with dissolve
+    hide greenwald with dissolve
+    hide poitras with dissolve
+    $ renpy.pause(0.2, hard=True)
+    hide edward with dissolve
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0682_im_aab8cbfb6a.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -1201,9 +1195,9 @@ label ch3_continue:
         $ renpy.notify(t("Knowledge -1 (Skipped)"))
 
     # --- Choice 2: How much to reveal? ---
-    show edward neutral at stage_center
-    show greenwald serious at enter_right
-    with dissolve
+    show edward neutral at intro_left
+    $ renpy.pause(0.3, hard=True)
+    show greenwald serious at intro_right
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0765_narrator_voice_d0803e0aea.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -1260,9 +1254,9 @@ label ch3_continue:
                 voice localized_voice  # edge-tts-auto
             greenwald "You're asking me to fly halfway around the world on a vague tip?"
 
-    hide greenwald
-    hide edward
-    with dissolve
+    hide greenwald with dissolve
+    $ renpy.pause(0.2, hard=True)
+    hide edward with dissolve
 
     # --- Chapter 3 Summary ---
 
@@ -1298,8 +1292,7 @@ label chapter_4:
 
     scene bg_hong_kong_hotel at parallax with chapter_transition
 
-    show edward tired at enter_left
-    with dissolve
+    show edward tired at intro_left
 
     # --- Snowden in Hong Kong ---
 
@@ -1328,8 +1321,7 @@ label chapter_4:
 
     # --- Tense dialogue with pressure ---
 
-    show greenwald neutral at enter_right
-    with dissolve
+    show greenwald neutral at intro_right
 
     show greenwald serious
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0856_greenwald_5382c3a548.mp3")  # edge-tts-auto
@@ -1753,8 +1745,7 @@ label chapter_5:
 
     scene bg_sheremetyevo at parallax with chapter_transition
 
-    show edward tired at enter_left
-    with dissolve
+    show edward tired at intro_left
 
     # --- Snowden in Russia ---
 
@@ -1768,8 +1759,7 @@ label chapter_5:
         voice localized_voice  # edge-tts-auto
     narrator_voice "His passport is cancelled. No country will grant him asylum without risking the wrath of the United States. Twenty-one countries rejected his application. Russia is his last option."
 
-    show russian_official neutral at enter_right
-    with dissolve
+    show russian_official neutral at intro_right
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1136_russian_official_5de4a348f9.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -1805,8 +1795,7 @@ label chapter_5:
     hide russian_official with dissolve
 
     scene bg_moscow_apartment at parallax with dissolve
-    show edward thoughtful at stage_center
-    with dissolve
+    show edward thoughtful at intro_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1158_im_cc807ea41d.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -1927,8 +1916,7 @@ label chapter_5:
 
     # --- Final Choice: Culminating Moral Decision ---
 
-    show edward neutral at stage_center
-    with dissolve
+    show edward neutral at intro_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1235_narrator_voice_08a8526fb3.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
