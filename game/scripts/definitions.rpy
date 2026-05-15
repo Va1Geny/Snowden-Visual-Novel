@@ -313,61 +313,9 @@ init python:
         return None
 
     def choose_notebook_export_path(default_filename="field_notebook.txt"):
-        root = None
-
-        try:
-            import tkinter as tk
-            from tkinter import filedialog
-
-            root = tk.Tk()
-            root.withdraw()
-            root.attributes("-topmost", True)
-            root.update_idletasks()
-            root.lift()
-            root.focus_force()
-
-            path = filedialog.asksaveasfilename(
-                title=t("Save notebook as..."),
-                initialdir=os.path.expanduser("~"),
-                initialfile=default_filename,
-                defaultextension=".txt",
-                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
-            )
-
-            root.destroy()
-            return path
-        except Exception:
-            try:
-                if root is not None:
-                    root.destroy()
-            except Exception:
-                pass
-
-        if hasattr(renpy, "filepicker"):
-            try:
-                path = renpy.filepicker(
-                    title=t("Save notebook as..."),
-                    save=True,
-                    default=default_filename,
-                )
-                if path is None:
-                    return ""
-                return path
-            except TypeError:
-                try:
-                    path = renpy.filepicker(
-                        title=t("Save notebook as..."),
-                        save=True,
-                    )
-                    if path is None:
-                        return ""
-                    return path
-                except Exception:
-                    pass
-            except Exception:
-                pass
-
-        return None
+        import os
+        desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+        return os.path.join(desktop, default_filename)
 
     def export_notebook_txt():
         if not store.notebook_entries:
@@ -832,6 +780,25 @@ transform title_glitch:
 transform btn_glow:
     linear 0.2 zoom 1.02
     linear 0.2 zoom 1.0
+
+transform dossier_scanlines:
+    alpha 0.03
+    yoffset 0
+    linear 10.0 yoffset 1080
+    yoffset 0
+    repeat
+
+transform dossier_cursor_blink:
+    alpha 1.0
+    pause 0.5
+    alpha 0.0
+    pause 0.5
+    repeat
+
+transform dossier_btn_idle:
+    alpha 0.9
+    linear 2.0 alpha 1.0
+    linear 2.0 alpha 0.9
     repeat
 
 transform scanline_move:
