@@ -184,7 +184,7 @@ label chapter_1:
         voice localized_voice  # edge-tts-auto
     colleague "Hey Ed. Check this out — I can watch this guy's webcam feed in real time. He's just eating cereal. It's wild what we can access without even a targeted request."
 
-    show edward concerned
+    show edward concerned at enter_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0123_e_274a3d437d.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -927,7 +927,7 @@ label ch3_secure_success:
         voice localized_voice  # edge-tts-auto
     e "I'm a senior member of the intelligence community. I have evidence of massive, unconstitutional surveillance by the NSA."
 
-    show poitras cautious
+    show poitras cautious at enter_left
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0608_poitras_48d170a87b.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
@@ -973,7 +973,7 @@ label ch3_greenwald_contact:
         voice localized_voice  # edge-tts-auto
     e "Mr. Wardell, I have information of extreme importance regarding US government surveillance. We need to talk on a secure channel."
 
-    show greenwald skeptical
+    show greenwald skeptical at enter_right
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0637_greenwald_c70b3f1894.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
@@ -984,7 +984,7 @@ label ch3_greenwald_contact:
         voice localized_voice  # edge-tts-auto
     e "Not over this channel. You need to set up PGP encryption. I'll send you instructions."
 
-    show greenwald confused
+    show greenwald confused at enter_right
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0642_greenwald_c2437be411.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
@@ -1220,7 +1220,7 @@ label ch3_continue:
             $ contacts_secured += 1
             $ renpy.notify(t("Trust +2 | Contacts +1"))
 
-            show greenwald shocked
+            show greenwald shocked at enter_right
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0778_greenwald_0602aec18d.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
                 voice localized_voice  # edge-tts-auto
@@ -1311,7 +1311,7 @@ label chapter_4:
         voice localized_voice  # edge-tts-auto
     im "I told my employer I needed medical leave for epilepsy treatment. They didn't question it. That bought me a few weeks."
 
-    show edward tense
+    show edward tense at enter_left
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0846_im_3e19aa6dbc.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
@@ -1323,13 +1323,13 @@ label chapter_4:
 
     show greenwald neutral at intro_right
 
-    show greenwald serious
+    show greenwald serious at enter_right
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0856_greenwald_5382c3a548.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     greenwald "You do realize what you're asking me to do? If we publish this, both our lives change forever."
 
-    show edward determined
+    show edward determined at enter_left
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0859_e_e8a42759c0.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
@@ -1343,13 +1343,13 @@ label chapter_4:
     if suspicion_level >= 3:
         sys "// WARNING: NSA INTERNAL AUDIT HAS FLAGGED YOUR ACCESS ANOMALIES. INVESTIGATION IN PROGRESS. //"
 
-        show edward tense
+        show edward tense at enter_left
         $ localized_voice = voice_for_current_language("audio/voice/en/script_0867_im_1bb62c6667.mp3")  # edge-tts-auto
         if localized_voice:  # edge-tts-auto
             voice localized_voice  # edge-tts-auto
         im "They know something is wrong. I can feel it. The clock is ticking."
 
-    show greenwald resolved
+    show greenwald resolved at enter_right
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0870_greenwald_9415e885fe.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
@@ -1766,25 +1766,25 @@ label chapter_5:
         voice localized_voice  # edge-tts-auto
     russian_official "The transit zone is a strange place, yes? You are not in Russia, but you are certainly not in America."
 
-    show russian_official smug
+    show russian_official smug at enter_right
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1139_russian_official_a53360cbb5.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     russian_official "You are... nowhere. We can offer you 'somewhere.' Russia can grant you temporary asylum."
 
-    show edward defiant
+    show edward defiant at enter_left
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1142_e_f8262dbd27.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     e "I don't want to be a pawn in anyone's geopolitical chess game."
 
-    show russian_official calculating
+    show russian_official calculating at enter_right
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1145_russian_official_1a6014bf55.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     russian_official "You became a pawn the moment you took those files. The only question is which board you want to play on."
 
-    show edward sad
+    show edward sad at enter_left
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1148_im_cab42c105f.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
@@ -1928,7 +1928,7 @@ label chapter_5:
         voice localized_voice  # edge-tts-auto
     narrator_voice "A journalist contacts you with a new trove of classified documents from a different whistleblower. The cycle could begin again."
 
-    show edward thoughtful
+    show edward thoughtful at enter_left
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1240_im_6841c8ac3d.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
@@ -1937,7 +1937,7 @@ label chapter_5:
     menu:
         "Encourage them to leak. The public deserves to know.":
             $ tree_record_choice("choice_ch5_1", "encourage")
-            show edward determined
+            show edward determined at enter_left
             $ localized_voice = voice_for_current_language("audio/voice/en/script_1246_e_4f4a602c3f.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
                 voice localized_voice  # edge-tts-auto
@@ -1952,7 +1952,7 @@ label chapter_5:
 
         "Advise caution. Use official channels first.":
             $ tree_record_choice("choice_ch5_1", "caution")
-            show edward concerned
+            show edward concerned at enter_left
             $ localized_voice = voice_for_current_language("audio/voice/en/script_1255_e_b72bcc09af.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
                 voice localized_voice  # edge-tts-auto
@@ -1968,7 +1968,7 @@ label chapter_5:
 
         "Tell them not to do it. The personal cost is too high.":
             $ tree_record_choice("choice_ch5_1", "refuse")
-            show edward sad
+            show edward sad at enter_left
             $ localized_voice = voice_for_current_language("audio/voice/en/script_1265_e_016930bf79.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
                 voice localized_voice  # edge-tts-auto

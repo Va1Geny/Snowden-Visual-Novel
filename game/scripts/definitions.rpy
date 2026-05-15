@@ -450,12 +450,16 @@ init python:
         for t in at_list:
             if t is active_char or t is inactive_char:
                 continue
-            if t is outro_left or t is outro_right:
+            if t is outro_left or t is outro_right or t is exit_left or t is exit_right:
                 continue
-            if t is intro_left or t is enter_center or t is stage_center:
+
+            # Приводимо всі позиції до статичних
+            if t is intro_left or t is enter_left:
                 result.append(enter_left)
-            elif t is intro_right:
+            elif t is intro_right or t is enter_right:
                 result.append(enter_right)
+            elif t is enter_center or t is stage_center:
+                result.append(enter_center)
             else:
                 result.append(t)
         return result
@@ -471,19 +475,48 @@ init python:
                 continue
 
             try:
-                current = renpy.get_at_list(tag, "master")
+                attrs = renpy.get_attributes(tag)
+                full_name = tuple([tag] + list(attrs)) if attrs else tag
             except Exception:
-                current = None
+                full_name = tag
 
-            current_list = list(current or ())
             new_state = active_char if tag == speaker_tag else inactive_char
 
-            already_has_state = (new_state in current_list)
-            if already_has_state:
-                continue
+            base_t = None
+            
+            # Метод 1: Зчитуємо фізичну позицію на екрані. 
+            # Це ідеально працює, коли персонажу змінили емоцію без 'at'
+            try:
+                placement = renpy.get_placement(tag)
+                if placement and placement.xpos is not None:
+                    x_pos = placement.xpos
+                    if isinstance(x_pos, float):
+                        if x_pos <= 0.35: base_t = enter_left
+                        elif x_pos >= 0.65: base_t = enter_right
+                        else: base_t = enter_center
+                    else:
+                        if x_pos <= 1920 * 0.35: base_t = enter_left
+                        elif x_pos >= 1920 * 0.65: base_t = enter_right
+                        else: base_t = enter_center
+            except Exception:
+                pass
 
-            base_transforms = _normalize_transforms(current_list)
-            renpy.show(tag, at_list=base_transforms + [new_state])
+            # Метод 2: Якщо позиція анімується (xpos == None), зчитуємо поточну трансформацію
+            if base_t is None:
+                try:
+                    current = renpy.get_at_list(tag, "master")
+                    current_list = list(current or ())
+                    base_transforms = _normalize_transforms(current_list)
+                    if base_transforms:
+                        base_t = base_transforms[0]
+                except Exception:
+                    pass
+
+            # Метод 3: Останній запобіжник
+            if base_t is None:
+                base_t = enter_center
+
+            renpy.show(full_name, at_list=[base_t, new_state])
 
     config.character_callback = speaker_dimmer
 
@@ -526,10 +559,32 @@ init python:
         trans.yoffset = (540 - y) * 0.02
         return 0
 
-    def portrait_sprite(path, target_height=780, yoffset=0):
+    # ТАБЛИЦЯ МАСШТАБІВ: Налаштуйте розмір кожного персонажа ОКРЕМО.
+    # Змінюйте ці числа (наприклад, 0.8 для меншого, 1.2 для більшого), 
+    # щоб візуально вирівняти розмір їхніх голів та тіл одне відносно одного.
+    CHAR_ZOOMS = {
+        "edward": 0.8,
+        "supervisor": 0.8,
+        "colleague": 0.8,
+        "greenwald": 0.8,
+        "poitras": 0.8,
+        "russian_official": 0.7,
+        "nsa_chief": 0.8,
+        "journalist": 0.8,
+        "editor": 0.8
+    }
+
+    def portrait_sprite(path, yoffset=0):
+        # Визначаємо, який масштаб застосувати, шукаючи ім'я в назві файлу
+        scale = 1.0
+        for name, z in CHAR_ZOOMS.items():
+            if name in path or name.replace('_', ' ') in path:
+                scale = z
+                break
+
         return renpy.display.transform.Transform(
             path,
-            ysize=target_height,
+            zoom=scale,
             xalign=0.5,
             yalign=1.0,
             yoffset=yoffset,
@@ -682,66 +737,68 @@ transform active_char:
 transform inactive_char:
     ease 0.2 matrixcolor SaturationMatrix(0.45) alpha 0.82
 
-# ── STATIC position transforms (safe for speaker_dimmer re-show) ──
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# CHARACTER POSITIONING & ANIMATIONS
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Змінні для зручного налаштування розміру і позиції всіх персонажів відразу
+define char_ypos = 1.05      # Позиція по вертикалі (1.0 = низ екрану. Якщо модельки маленькі, великі значення зроблять їх невидимими!)
+define char_zoom = 1.0       # Масштаб (1.0 = оригінал. Змініть це, якщо спрайти завеликі або замалі)
+
+# ── СТАТИЧНІ ТРАНСФОРМАЦІЇ (Базове розміщення) ──
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
     xpos 0.25
-    ypos 1.65
-    zoom 1.40
+    ypos char_ypos
+    zoom char_zoom
 
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.78
-    ypos 1.65
-    zoom 1.40
+    xpos 0.75
+    ypos char_ypos
+    zoom char_zoom
 
 transform enter_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.25
-    ypos 1.65
-    zoom 1.40
+    xpos 0.5
+    ypos char_ypos
+    zoom char_zoom
 
 transform stage_center:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.25
-    ypos 1.65
-    zoom 1.40
+    xpos 0.5
+    ypos char_ypos
+    zoom char_zoom
 
-# ── One-shot INTRO transforms (used only on first appearance) ──
+# ── АНІМАЦІЇ ПОЯВИ (Одноразові) ──
 transform intro_left:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.25 ypos 1.80 alpha 0.0 zoom 1.40
-    easeout_cubic 0.55 ypos 1.65 alpha 1.0
+    xpos 0.25 ypos (char_ypos + 0.15) alpha 0.0 zoom char_zoom
+    easeout_cubic 0.55 ypos char_ypos alpha 1.0
 
 transform intro_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.78 ypos 1.80 alpha 0.0 zoom 1.40
-    easeout_cubic 0.55 ypos 1.65 alpha 1.0
+    xpos 0.75 ypos (char_ypos + 0.15) alpha 0.0 zoom char_zoom
+    easeout_cubic 0.55 ypos char_ypos alpha 1.0
 
-# ── One-shot EXIT transforms ──
+# ── АНІМАЦІЇ ЗНИКНЕННЯ ──
 transform outro_left:
-    easeout_cubic 0.4 ypos 1.80 alpha 0.0
+    easeout_cubic 0.4 ypos (char_ypos + 0.15) alpha 0.0
 
 transform outro_right:
-    easeout_cubic 0.4 ypos 1.80 alpha 0.0
-
-transform idle_breathe:
-    zoom 1.0
-    linear 2.0 zoom 1.01
-    linear 2.0 zoom 1.0
-    repeat
+    easeout_cubic 0.4 ypos (char_ypos + 0.15) alpha 0.0
 
 transform exit_left:
-    easeout_cubic 0.4 ypos 1.80 alpha 0.0
+    easeout_cubic 0.4 ypos (char_ypos + 0.15) alpha 0.0
 
 transform exit_right:
-    easeout_cubic 0.4 ypos 1.80 alpha 0.0
+    easeout_cubic 0.4 ypos (char_ypos + 0.15) alpha 0.0
 
 transform exit_fade:
     easeout_cubic 0.35 alpha 0.0
@@ -751,7 +808,14 @@ transform exit_panic:
     linear 0.08 xoffset -5
     linear 0.08 xoffset 3
     linear 0.08 xoffset 0
-    easeout_cubic 0.25 ypos 1.80 alpha 0.0
+    easeout_cubic 0.25 ypos (char_ypos + 0.15) alpha 0.0
+
+# ── ДОДАТКОВІ ЕФЕКТИ ──
+transform idle_breathe:
+    zoom 1.0
+    linear 2.0 zoom 1.01
+    linear 2.0 zoom 1.0
+    repeat
 
 transform title_glitch:
     alpha 1.0
