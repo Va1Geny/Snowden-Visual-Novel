@@ -30,6 +30,20 @@ label start:
 
 label intro:
     scene black
+    show expression "images/ui/headphones_icon.png" as headphones_icon:
+        xalign 0.5 yalign 0.5
+        zoom 0.5
+    show text "{font=fonts/ShareTechMono-Regular.ttf}{size=+5}{color=#00FFD1}Better experience with headphones.{/color}{/size}{/font}" as headphones_text:
+        xalign 0.5 yalign 0.85
+    with dissolve
+
+    $ renpy.pause()
+
+    hide headphones_icon
+    hide headphones_text
+    with dissolve
+
+    scene black
     with fade
     $ renpy.pause(1.0, hard=True)
 
@@ -82,7 +96,6 @@ label intro:
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     narrator_voice "Pay attention. Think carefully. The skills you learn here are real — and in the digital age, they matter."
-
 
     jump chapter_1
 
