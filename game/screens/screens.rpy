@@ -498,9 +498,8 @@ screen choice(items):
 
                 for index, item in enumerate(items):
                     $ is_hovered = choice_hovered == index
-                    $ accent_idle = "#00FFD1" if index == 0 else "#FFD700" if index == 1 else "#00FF88"
-                    $ accent = "#00FFD1" if index == 0 else "#FF2D55" if index == 1 and is_hovered else accent_idle
-                    $ label_text = "[ SECURE ]" if index == 0 else "[ RISK ]" if index == 1 else "[ OPTION ]"
+                    $ accent_idle = "#00FFD1"
+                    $ accent = "#00FFD1"
                     $ appear_delay = 0.06 + min(index, 5) * 0.08
 
                     hbox at choice_appear(appear_delay):
@@ -604,46 +603,7 @@ screen choice(items):
                                         yalign 0.5
                                         substitute False
 
-                                    frame:
-                                        yalign 0.5
-                                        background Solid(accent + "24" if is_hovered else accent_idle + "0F")
-                                        padding (10, 6)
 
-                                        fixed:
-                                            xsize (76 if index < 2 else 82)
-                                            ysize 16
-
-                                            frame:
-                                                xfill True
-                                                ysize 1
-                                                ypos 0
-                                                background Solid(accent + "59" if is_hovered else accent_idle + "26")
-                                                padding (0, 0)
-                                            frame:
-                                                xfill True
-                                                ysize 1
-                                                yalign 1.0
-                                                background Solid(accent + "59" if is_hovered else accent_idle + "26")
-                                                padding (0, 0)
-                                            frame:
-                                                xsize 1
-                                                yfill True
-                                                xpos 0
-                                                background Solid(accent + "59" if is_hovered else accent_idle + "26")
-                                                padding (0, 0)
-                                            frame:
-                                                xsize 1
-                                                yfill True
-                                                xalign 1.0
-                                                background Solid(accent + "59" if is_hovered else accent_idle + "26")
-                                                padding (0, 0)
-
-                                            text t(label_text):
-                                                style "choice_tag_text"
-                                                color (accent if is_hovered else accent_idle + "B3")
-                                                xalign 0.5
-                                                yalign 0.5
-                                                substitute False
 
 
 
