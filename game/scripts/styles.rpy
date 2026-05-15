@@ -1,9 +1,9 @@
 init offset = -1
 
 init python:
-    FONT_MONO = "fonts/DejaVuSans.ttf"
-    FONT_BODY = "fonts/DejaVuSans.ttf"
-    FONT_BODY_BOLD = "fonts/DejaVuSans.ttf"
+    FONT_MONO = "fonts/ShareTechMono-Regular.ttf"
+    FONT_BODY = "fonts/Rajdhani-Regular.ttf"
+    FONT_BODY_BOLD = "fonts/Rajdhani-SemiBold.ttf"
 
     BG_DEEP = "#080C10"
     BG_PANEL = "#0D1117"
@@ -34,7 +34,7 @@ init python:
     SIZE_2XL = 41
 
 style sys_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 32
     bold True
@@ -42,7 +42,7 @@ style sys_text:
     xalign 0.5
 
 style chapter_title_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 74
     bold True
@@ -50,7 +50,7 @@ style chapter_title_text:
     xalign 0.5
 
 style chapter_subtitle_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 28
     text_align 0.5
@@ -58,22 +58,22 @@ style chapter_subtitle_text:
     italic True
 
 style hud_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 15
     color "#7A8A99"
 
 style hud_score_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 15
     color "#00FFD1"
 
 style hud_suspicion_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 15
     color "#FF2D55"
 
 style minigame_title:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 41
     bold True
@@ -81,20 +81,20 @@ style minigame_title:
     xalign 0.5
 
 style minigame_instruction:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 25
     text_align 0.5
     xalign 0.5
 
 style minigame_label:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 21
     text_align 0.0
 
 style minigame_score:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 28
     bold True
@@ -102,7 +102,7 @@ style minigame_score:
     xalign 0.5
 
 style question_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 30
     text_align 0.5
@@ -114,7 +114,7 @@ style answer_button:
     xalign 0.5
 
 style answer_button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     hover_color "#0D1117"
     size 25
@@ -122,7 +122,7 @@ style answer_button_text:
     xalign 0.0
 
 style ending_title:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 55
     bold True
@@ -130,33 +130,33 @@ style ending_title:
     xalign 0.5
 
 style ending_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 25
     text_align 0.5
     xalign 0.5
 
 style ending_score_label:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 23
     text_align 0.0
 
 style ending_score_value:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 23
     bold True
     text_align 1.0
 
 style ending_lesson_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 21
     text_align 0.0
 
 style briefing_header:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#FF2D55"
     size 37
     bold True
@@ -164,14 +164,14 @@ style briefing_header:
     xalign 0.5
 
 style briefing_body:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 25
     text_align 0.5
     xalign 0.5
 
 style briefing_warning:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 23
     italic True
@@ -179,7 +179,7 @@ style briefing_warning:
     xalign 0.5
 
 style menu_title_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 60
     bold True
@@ -187,7 +187,7 @@ style menu_title_text:
     xalign 0.5
 
 style menu_subtitle_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 23
     italic True
@@ -200,7 +200,7 @@ style menu_btn:
     xalign 0.5
 
 style menu_btn_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     hover_color "#0D1117"
     size 25
@@ -209,14 +209,14 @@ style menu_btn_text:
     xalign 0.5
 
 style menu_version:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#3A4A5560"
     size 16
     text_align 0.5
     xalign 0.5
 
 style dossier_title:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 41
     bold True
@@ -224,18 +224,18 @@ style dossier_title:
     xalign 0.5
 
 style dossier_term:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 25
     bold True
 
 style dossier_definition:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 21
 
 style summary_title:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 41
     bold True
@@ -243,25 +243,25 @@ style summary_title:
     xalign 0.5
 
 style summary_stat_label:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 23
 
 style summary_stat_value:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 23
     bold True
 
 style pause_title_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 67
     bold True
     text_align 0.0
 
 style pause_caption_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 21
     text_align 0.0
@@ -272,7 +272,7 @@ style pause_btn:
     xalign 0.0
 
 style pause_btn_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     hover_color "#0D1117"
     size 28
@@ -280,19 +280,19 @@ style pause_btn_text:
     text_align 0.0
 
 style tree_hud_kicker:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 17
     bold True
 
 style tree_hud_value:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 28
     bold True
 
 style tree_hud_meta:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 17
 
@@ -308,7 +308,7 @@ style cipher_tile is button:
     right_padding 6
 
 style cipher_tile_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 44
     bold True
     color "#FFD700"
@@ -328,7 +328,7 @@ style decoded_tile is button:
     right_padding 6
 
 style decoded_tile_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 39
     bold True
     color "#E8E8E8"
@@ -348,7 +348,7 @@ style decoded_tile_correct is button:
     right_padding 6
 
 style decoded_tile_correct_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 39
     bold True
     color "#00FF88"
@@ -368,7 +368,7 @@ style decoded_tile_active is button:
     right_padding 6
 
 style decoded_tile_active_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 39
     bold True
     color "#00FFD1"
@@ -388,7 +388,7 @@ style alphabet_cell is button:
     right_padding 0
 
 style alphabet_cell_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 25
     bold True
     color "#7A8A99"
@@ -408,7 +408,7 @@ style alphabet_cell_highlighted_cipher is button:
     right_padding 0
 
 style alphabet_cell_highlighted_cipher_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 25
     bold True
     color "#FFD700"
@@ -437,7 +437,7 @@ style keyboard_key is button:
     right_padding 0
 
 style keyboard_key_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 25
     bold True
     color "#E8E8E8"
@@ -464,13 +464,13 @@ style stage_badge is frame:
     right_padding 14
 
 style ctm_field_label:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 17
     bold True
 
 style ctm_field_value:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 18
 
@@ -480,59 +480,59 @@ style ctm_threat is button:
     padding (8, 4)
 
 style ctm_threat_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
     color "#FF2D55"
     hover_color "#FF6680"
 
 style ctm_cleaned_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
     color "#00FF88"
 
 style ctm_body_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
     color "#E8E8E8"
     line_spacing 4
 
 style ctm_scanner_label:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 16
     bold True
 
 style ctm_scanner_value:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 16
 
 style ct_panel_title:
     color "#00FFD1"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 16
     bold True
 
 style ct_text:
     color "#E8E8E8"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 17
 
 style choice_terminal_header:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 12
     bold True
     kerning 2
 
 style choice_index_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 13
     bold True
     text_align 0.5
     xalign 0.5
 
 style choice_caption_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
     bold True
     line_leading 2
@@ -541,7 +541,7 @@ style choice_caption_text:
     text_align 0.0
 
 style choice_tag_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 10
     bold True
     kerning 1
@@ -549,67 +549,67 @@ style choice_tag_text:
     xalign 0.5
 
 style choice_key_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 10
     color "#7A8A99"
     text_align 0.5
     xalign 0.5
 
 style choice_key_label_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 10
     color "#2A3A45"
     text_align 0.0
     xalign 0.0
 
 style mcq_terminal_header:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 13
     color "#00FFD14D"
     kerning 2
     text_align 0.0
 
 style mcq_prompt_arrow:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 24
     color "#00FFD1"
     bold True
     yoffset -1
 
 style mcq_question_terminal:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 26
     color "#E8E8E8"
     line_leading 5
     text_align 0.0
 
 style mcq_helper_terminal:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 21
     color "#7A8A99"
     line_leading 4
     text_align 0.0
 
 style mcq_option_num:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
     text_align 0.0
     min_width 34
 
 style mcq_option_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 22
     text_align 0.0
     xfill False
 
 style mcq_result_line:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
     bold True
     text_align 0.0
 
 style mcq_result_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 21
     color "#7A8A99"
     line_leading 2
@@ -622,7 +622,7 @@ style mcq_terminal_continue is button:
     padding (10, 5)
 
 style mcq_terminal_continue_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 16
     bold True
     color "#00FFD1"
@@ -634,29 +634,29 @@ style mcq_terminal_continue_text is button_text:
 
 style ct_text_dim:
     color "#7A8A99"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 15
 
 style ct_danger:
     color "#FF2D55"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 17
     bold True
 
 style ct_success:
     color "#00FF88"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 17
     bold True
 
 style ct_cmd:
     color "#00FF88"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
 
 style ct_prompt:
     color "#00FFD1"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
     bold True
 
@@ -669,7 +669,7 @@ style ct_execute_btn is button:
 style ct_execute_btn_text is button_text:
     color "#00FFD1"
     hover_color "#0D1117"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 21
     bold True
 
@@ -680,7 +680,7 @@ style ct_hint_btn is button:
 
 style ct_hint_btn_text is button_text:
     color "#FFD700"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 16
 
 style ct_token_btn is button:
@@ -690,29 +690,29 @@ style ct_token_btn is button:
 
 style ct_token_btn_text is button_text:
     color "#00FF88"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 17
 
 style ct_breakdown_key:
     color "#00FFD1"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 16
     bold True
 
 style ct_breakdown_val:
     color "#7A8A99"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 16
 
 style ct_learn_title:
     color "#FFD700"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 16
     bold True
 
 style ct_learn_body:
     color "#E8E8E8"
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 18
     line_leading 5
 
@@ -746,7 +746,7 @@ style terminal_learn_line:
     color "#ffffff"
 
 style classified_briefing_title:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 32
     bold True
@@ -754,26 +754,26 @@ style classified_briefing_title:
     xalign 0.5
 
 style classified_briefing_label:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 17
     text_align 0.0
 
 style classified_briefing_value:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 20
     text_align 0.0
 
 style classified_briefing_value_accent:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 20
     bold True
     text_align 0.0
 
 style classified_briefing_body:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 20
     text_align 0.5
@@ -781,7 +781,7 @@ style classified_briefing_body:
     line_leading 6
 
 style classified_briefing_muted:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 17
     text_align 0.5
@@ -799,7 +799,7 @@ style classified_briefing_btn is button:
     xalign 0.5
 
 style classified_briefing_btn_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     hover_color "#0D1117"
     size 20
@@ -808,7 +808,7 @@ style classified_briefing_btn_text is button_text:
     xalign 0.5
 
 style chapter_select_title:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 32
     bold True
@@ -816,34 +816,34 @@ style chapter_select_title:
     xalign 0.5
 
 style chapter_select_chapter_num:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 20
     bold True
     text_align 0.0
 
 style chapter_select_chapter_num_locked:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#3A4A55"
     size 20
     bold True
     text_align 0.0
 
 style chapter_select_codename:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     size 20
     text_align 0.0
 
 style chapter_select_description:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 17
     text_align 0.0
     line_leading 4
 
 style chapter_select_locked_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#FF2D55"
     size 17
     text_align 0.0
@@ -858,7 +858,7 @@ style chapter_select_btn is button:
     xalign 0.5
 
 style chapter_select_btn_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#00FFD1"
     hover_color "#0D1117"
     size 20
@@ -867,7 +867,7 @@ style chapter_select_btn_text is button_text:
     xalign 0.5
 
 style game_over_title:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#FF2D55"
     size 32
     bold True
@@ -875,7 +875,7 @@ style game_over_title:
     xalign 0.5
 
 style game_over_status:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#FF2D55"
     size 41
     bold True
@@ -883,7 +883,7 @@ style game_over_status:
     xalign 0.5
 
 style game_over_body:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 20
     text_align 0.5
@@ -891,20 +891,20 @@ style game_over_body:
     line_leading 6
 
 style game_over_label:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#7A8A99"
     size 17
     text_align 0.0
 
 style game_over_score_value:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#E8E8E8"
     size 20
     bold True
     text_align 0.0
 
 style game_over_score_danger:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     color "#FF2D55"
     size 20
     bold True
@@ -929,7 +929,7 @@ style game_over_btn_secondary is button:
     xalign 0.5
 
 style game_over_btn_text is button_text:
-    font "fonts/DejaVuSans.ttf"
+    font "fonts/Rajdhani-Regular.ttf"
     size 20
     bold True
     text_align 0.5
