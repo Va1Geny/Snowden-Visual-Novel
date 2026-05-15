@@ -419,6 +419,9 @@ transform blink_underscore:
 screen minigame_3_main():
     style_prefix "terminal"
     key "rollback" action NullAction()
+    key "K_TAB" action Function(pw_autocomplete)
+    key "K_BACKSPACE" action Function(pw_delete_char)
+    key "K_DELETE" action Function(pw_delete_char)
 
     frame:
         style "terminal_screen_bg"
@@ -443,6 +446,7 @@ screen minigame_3_main():
             xfill True
             yfill True
             spacing 12
+            xoffset 5
 
             frame:
                 xfill True
@@ -489,12 +493,7 @@ screen minigame_3_main():
                         hbox:
                             text t("└─$ ") style "terminal_text"
 
-        if pw_game_state["status"] in ["playing", "report"]:
-            key "K_TAB" action Function(pw_autocomplete)
-            key "K_BACKSPACE" action Function(pw_delete_char)
-            key "K_DELETE" action Function(pw_delete_char)
-
-            if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
+        if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
                 text t("Press TAB to autocomplete") xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO
 
         if pw_game_state["status"] == "learning":

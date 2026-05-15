@@ -253,7 +253,7 @@ screen story_tree():
         xalign 1.0
         ypos 120
         xoffset -92
-        xsize 360
+        xsize 420
         background "#0D1322D8"
         padding (18, 16)
 
@@ -268,17 +268,16 @@ screen story_tree():
                 size 24
                 bold True
 
-            text ("Ending is locked until chapter 5 is reached." if _ch() < 5 else "Forecast updated from your current branch selections."):
+            text (t("Ending is locked until chapter 5 is reached.") if _ch() < 5 else t("Forecast updated from your current branch selections.")):
                 color "#AAB0D6"
                 size 15
-                xmaximum 360
 
     viewport:
         id "story_tree_vp"
         xpos 72
-        ypos 214
+        ypos 260
         xsize 1756
-        ysize 760
+        ysize 710
         scrollbars "vertical"
         mousewheel True
         draggable True

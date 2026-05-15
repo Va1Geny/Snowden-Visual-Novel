@@ -28,6 +28,25 @@ init python:
     def all_audio_muted():
         return all(preferences.get_mute(mixer) for mixer in ("music", "sfx", "voice"))
 
+    def settings_ui_font(mono=False, semibold=False):
+        if mono:
+            return "fonts/ShareTechMono-Regular.ttf"
+        if semibold:
+            return "fonts/Rajdhani-SemiBold.ttf"
+        return FONT_BODY
+
+    class SelectTranslationLanguage(Action):
+        def __init__(self, target_lang):
+            self.target_lang = target_lang
+
+        def __call__(self):
+            action = language_change_action(self.target_lang)
+            if action is not None:
+                return action()
+
+        def get_selected(self):
+            return current_translation_language() == self.target_lang
+
     def _hex_to_rgba(value, alpha=255):
         value = value.lstrip("#")
         return (
@@ -626,28 +645,7 @@ screen choice(items):
                                                 yalign 0.5
                                                 substitute False
 
-            hbox:
-                xalign 0.5
-                spacing 20
 
-                hbox:
-                    spacing 8
-                    use choice_key_hint("1", "SECURE ACTION")
-
-                hbox:
-                    spacing 8
-                    use choice_key_hint("2", "RISKY ACTION")
-
-                frame:
-                    xsize 1
-                    ysize 16
-                    yalign 0.5
-                    background Solid("#FFFFFF12")
-                    padding (0, 0)
-
-                hbox:
-                    spacing 8
-                    use choice_key_hint("UP/DN", "NAVIGATE")
 
 screen choice_key_hint(key_label, action_label):
     frame:
@@ -709,11 +707,11 @@ screen quick_menu():
             spacing 8
             style_prefix "quick"
 
-            textbutton t("Back") action Rollback()
-            textbutton t("History") action ShowMenu("history")
-            textbutton t("Notes") action Show("notebook_panel")
-            textbutton t("Save") action ShowMenu("save")
-            textbutton t("Prefs") action ShowMenu("preferences")
+            textbutton t("Back") action Rollback() text_font settings_ui_font(mono=True)
+            textbutton t("History") action ShowMenu("history") text_font settings_ui_font(mono=True)
+            textbutton t("Notes") action Show("notebook_panel") text_font settings_ui_font(mono=True)
+            textbutton t("Save") action ShowMenu("save") text_font settings_ui_font(mono=True)
+            textbutton t("Prefs") action ShowMenu("preferences") text_font settings_ui_font(mono=True)
 
     key "ctrl_K_i" action ShowMenu("dossier")
 
@@ -969,6 +967,7 @@ screen notebook_panel():
 
                         textbutton t("EXPORT TXT"):
                             style "modal_action_button"
+                            text_font settings_ui_font(mono=True)
                             xfill True
                             xmaximum 260
                             background Solid("#244C2F")
@@ -977,12 +976,14 @@ screen notebook_panel():
 
                         textbutton t("SAVE NOTE"):
                             style "modal_action_button"
+                            text_font settings_ui_font(mono=True)
                             xfill True
                             xmaximum 300
                             action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
 
                         textbutton t("CLEAR"):
                             style "modal_action_button"
+                            text_font settings_ui_font(mono=True)
                             xfill True
                             xmaximum 220
                             background Solid("#241926")
@@ -991,6 +992,7 @@ screen notebook_panel():
 
                         textbutton t("CLOSE"):
                             style "modal_action_button"
+                            text_font settings_ui_font(mono=True)
                             xfill True
                             xmaximum 220
                             background Solid("#171C30")
@@ -1315,7 +1317,7 @@ screen main_menu():
                     ysize 100
                     xalign 0.5
 
-                    text t("ENEMY OF THE STATE"):
+                    text "ENEMY OF THE STATE":
                         xalign 0.5
                         yalign 0.5
                         text_align 0.5
@@ -1324,7 +1326,7 @@ screen main_menu():
                         bold True
                         outlines [(6, "#003A3A14", 0, 0), (3, "#00FFD116", 0, 0)]
 
-                    text t("ENEMY OF THE STATE") at title_glitch:
+                    text "ENEMY OF THE STATE" at title_glitch:
                         xalign 0.5
                         yalign 0.5
                         text_align 0.5
@@ -1333,7 +1335,7 @@ screen main_menu():
                         bold True
                         outlines [(2, "#00FFD155", 0, 0), (6, "#00FFD10E", 0, 0)]
 
-                    text t("ENEMY OF THE STATE"):
+                    text "ENEMY OF THE STATE":
                         xalign 0.5
                         yalign 0.5
                         text_align 0.5
@@ -1386,27 +1388,32 @@ screen main_menu():
                         style "modal_action_button"
                         xalign 0.5
                         action Start()
+                        text_font settings_ui_font(mono=True)
 
                     if renpy.newest_slot():
                         textbutton t("– CONTINUE"):
                             style "modal_action_button"
                             xalign 0.5
                             action FileLoad(renpy.newest_slot(), confirm=False)
+                            text_font settings_ui_font(mono=True)
 
                     textbutton t("– DOSSIER"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("dossier")
+                        text_font settings_ui_font(mono=True)
 
                     textbutton t("– STORY TREE"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("story_tree")
+                        text_font settings_ui_font(mono=True)
 
                     textbutton t("– SETTINGS"):
                         style "modal_action_button"
                         xalign 0.5
                         action ShowMenu("preferences")
+                        text_font settings_ui_font(mono=True)
 
                     if renpy.variant("pc"):
                         textbutton t("— EXIT"):
@@ -1415,6 +1422,7 @@ screen main_menu():
                             background Solid("#241926")
                             hover_background Solid("#3A4A55")
                             action Quit(confirm=True)
+                            text_font settings_ui_font(mono=True)
 
                 null height 6
 
@@ -1487,42 +1495,50 @@ screen pause_hub():
 
                             textbutton t("RESUME"):
                                 style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
                                 xfill True
                                 action Return()
 
                             textbutton t("OPEN NOTEBOOK"):
                                 style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
                                 xfill True
                                 action Show("notebook_panel")
 
                             textbutton t("DOSSIER"):
                                 style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
                                 xfill True
                                 action ShowMenu("dossier")
 
                             textbutton t("SAVE"):
                                 style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
                                 xfill True
                                 action ShowMenu("save")
 
                             textbutton t("SETTINGS"):
                                 style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
                                 xfill True
                                 action ShowMenu("preferences")
 
                             textbutton t("STORY TREE"):
                                 style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
                                 xfill True
                                 action ShowMenu("story_tree")
 
                             textbutton t("START OVER"):
                                 style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
                                 xfill True
                                 action Start()
 
                             if renpy.variant("pc"):
                                 textbutton t("EXIT"):
                                     style "modal_action_button"
+                                    text_font settings_ui_font(mono=True)
                                     xfill True
                                     background Solid("#241926")
                                     hover_background Solid("#3A4A55")
@@ -1572,35 +1588,43 @@ screen pause_hub():
 
                 textbutton t("RESUME"):
                     style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
                     action Return()
 
                 textbutton t("OPEN NOTEBOOK"):
                     style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
                     action Show("notebook_panel")
 
                 textbutton t("DOSSIER"):
                     style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
                     action ShowMenu("dossier")
 
                 textbutton t("START"):
                     style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
                     action Start()
 
                 textbutton t("SAVE"):
                     style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
                     action ShowMenu("save")
 
                 textbutton t("SETTINGS"):
                     style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
                     action ShowMenu("preferences")
 
                 textbutton t("STORY TREE"):
                     style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
                     action ShowMenu("story_tree")
 
                 if renpy.variant("pc"):
                     textbutton t("EXIT"):
                         style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
                         background Solid("#241926")
                         hover_background Solid("#3A4A55")
                         action Quit(confirm=True)
@@ -1803,6 +1827,7 @@ screen dossier():
 
                         textbutton t("EXPORT TXT"):
                             style "modal_action_button"
+                            text_font settings_ui_font(mono=True)
                             xsize 220
                             text_xalign 0.5
                             text_text_align 0.5
@@ -1812,6 +1837,7 @@ screen dossier():
 
                         textbutton t("RETURN"):
                             style "modal_action_button"
+                            text_font settings_ui_font(mono=True)
                             xsize 220
                             xalign 1.0
                             action Return()
@@ -1882,11 +1908,13 @@ screen intro_fullscreen_prompt():
 
                     textbutton t("GO FULLSCREEN"):
                         style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
                         xsize 320
                         action [Preference("display", "fullscreen"), Return()]
 
                     textbutton t("SKIP"):
                         style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
                         xsize 260
                         background Solid("#171C30")
                         hover_background Solid("#3A4A55")
@@ -1954,12 +1982,12 @@ screen intro_shortcuts_screen():
                                 bold True
 
                             for control, description in [
-                                ("Click / Enter / Space", "Advance dialogue and confirm UI actions."),
-                                ("Esc / Right Click / MENU", "Open mission control and game settings."),
-                                ("Back / Page Up", "Review previous dialogue."),
-                                ("Ctrl+N", "                   Open / close the field notebook."),
-                                ("Ctrl+I", "                   Open the network security dossier."),
-                                ("Notebook", "              Save your own reminders while playing."),
+                                ("Click / Enter / Space", t("Advance dialogue and confirm UI actions.")),
+                                ("Esc / Right Click / MENU", t("Open mission control and game settings.")),
+                                ("Back / Page Up", t("Review previous dialogue.")),
+                                ("Ctrl+N", t("                   Open / close the field notebook.")),
+                                ("Ctrl+I", t("                   Open the network security dossier.")),
+                                ("Notebook", t("              Save your own reminders while playing.")),
                             ]:
                                 hbox:
                                     spacing 14
@@ -1987,6 +2015,7 @@ screen intro_shortcuts_screen():
 
                     textbutton t("BEGIN MISSION"):
                         style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
                         xsize 320
                         action Return()
 
@@ -2071,6 +2100,7 @@ screen briefing_screen():
 
                 textbutton t("ACCEPT MISSION"):
                     style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
                     xalign 0.5
                     action Return()
 
@@ -2229,11 +2259,13 @@ screen chapter_summary(chapter_num, chapter_name):
                 if chapter_num < 5:
                     textbutton t("CONTINUE TO CHAPTER [chapter_num + 1]"):
                         style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
                         xalign 0.5
                         action Return()
                 else:
                     textbutton t("PROCEED TO FINAL ASSESSMENT"):
                         style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
                         xalign 0.5
                         action Return()
 
@@ -2636,20 +2668,20 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, show_header=True, 
                 background Solid("#0E1321EE")
                 padding (20, 24 if not show_header else 20)
 
-                    vbox:
-                        spacing 18
+                vbox:
+                    spacing 18
 
-                        use navigation
+                    use navigation
 
-                        null height 6
+                    null height 6
 
-                        textbutton t("Notes"):
-                            style "shell_nav_button"
-                            action Show("notebook_panel")
+                    textbutton t("Notes"):
+                        style "shell_nav_button"
+                        action Show("notebook_panel")
 
-                        textbutton t("Return"):
-                            style "shell_nav_button"
-                            action ShowMenu(menu_return_screen())
+                    textbutton t("Return"):
+                        style "shell_nav_button"
+                        action ShowMenu(menu_return_screen())
 
             frame:
                 xsize 1396
@@ -2886,7 +2918,8 @@ screen kbd_chip(txt):
     frame:
         style "pref_kbd_chip"
         xalign 1.0 yalign 0.5
-        text txt style "pref_kbd_chip_text"
+        text t(txt) style "pref_kbd_chip_text":
+            font settings_ui_font(mono=True)
 
 screen pref_tab(txt, current_tab, act):
     button:
@@ -2894,18 +2927,20 @@ screen pref_tab(txt, current_tab, act):
             style "pref_tab_active"
         else:
             style "pref_tab"
-        text txt:
+        text t(txt):
             if current_tab == txt:
                 style "pref_tab_text_active"
             else:
                 style "pref_tab_text"
+            font settings_ui_font(mono=True)
         action act
 
 screen hotkey_row(key_txt, val_txt):
     fixed:
         xfill True
         ysize 28
-        text val_txt style "pref_hotkey_val" xalign 0.0 yalign 0.5
+        text t(val_txt) style "pref_hotkey_val" xalign 0.0 yalign 0.5:
+            font settings_ui_font(mono=True)
         use kbd_chip(key_txt)
 
 screen preset_chip(txt):
@@ -2913,16 +2948,19 @@ screen preset_chip(txt):
         xfill True
         if persistent.theme_preset == txt:
             style "pref_preset_chip_active"
-            text txt style "pref_preset_chip_active_text"
+            text t(txt) style "pref_preset_chip_active_text":
+                font settings_ui_font(mono=True)
         else:
             style "pref_preset_chip"
-            text txt style "pref_preset_chip_text"
+            text t(txt) style "pref_preset_chip_text":
+                font settings_ui_font(mono=True)
         action SetField(persistent, "theme_preset", txt)
 
 screen pref_section_heading(txt):
     frame:
         style "pref_section_heading"
-        text txt style "pref_label"
+        text t(txt) style "pref_label":
+            font settings_ui_font(mono=True)
 
 screen pref_row_toggle(icon, title, desc, pref_action):
     $ is_sel = pref_action.get_selected()
@@ -2945,20 +2983,24 @@ screen pref_row_toggle(icon, title, desc, pref_action):
                     
                 vbox:
                     style "pref_content_block"
-                    text title style "pref_title"
-                    text desc style "pref_desc"
+                    text t(title) style "pref_title":
+                        font settings_ui_font(semibold=True)
+                    text t(desc) style "pref_desc":
+                        font settings_ui_font()
                     
             hbox:
                 style "pref_toggle_control"
                 xalign 1.0 yalign 0.5
                 if is_sel:
-                    text "ENABLED" style "pref_toggle_label_on"
+                    text t("ENABLED") style "pref_toggle_label_on":
+                        font settings_ui_font(mono=True)
                     frame:
                         style "pref_toggle_frame_on"
                         frame:
                             style "pref_toggle_knob_on"
                 else:
-                    text "DISABLED" style "pref_toggle_label_off"
+                    text t("DISABLED") style "pref_toggle_label_off":
+                        font settings_ui_font(mono=True)
                     frame:
                         style "pref_toggle_frame_off"
                         frame:
@@ -2983,8 +3025,10 @@ screen pref_row_slider(icon, title, desc, pref_value):
                     
                 vbox:
                     style "pref_content_block"
-                    text title style "pref_title"
-                    text desc style "pref_desc"
+                    text t(title) style "pref_title":
+                        font settings_ui_font(semibold=True)
+                    text t(desc) style "pref_desc":
+                        font settings_ui_font()
                     
             hbox:
                 style "pref_slider_control"
@@ -2992,7 +3036,8 @@ screen pref_row_slider(icon, title, desc, pref_value):
                 bar:
                     style "pref_slider"
                     value pref_value
-                text "VAL" style "pref_slider_val"
+                text t("VAL") style "pref_slider_val":
+                    font settings_ui_font(mono=True)
 
 screen pref_row_stepper(icon, title, desc, pref_actions):
     frame:
@@ -3013,8 +3058,10 @@ screen pref_row_stepper(icon, title, desc, pref_actions):
                     
                 vbox:
                     style "pref_content_block"
-                    text title style "pref_title"
-                    text desc style "pref_desc"
+                    text t(title) style "pref_title":
+                        font settings_ui_font(semibold=True)
+                    text t(desc) style "pref_desc":
+                        font settings_ui_font()
                     
             hbox:
                 style "pref_stepper_control"
@@ -3031,6 +3078,7 @@ screen pref_row_stepper(icon, title, desc, pref_actions):
                                 style "pref_stepper_chip_text_active"
                             else:
                                 style "pref_stepper_chip_text"
+                            font settings_ui_font(mono=True)
                         action act
 
 screen pref_row_button_only(icon, title, desc, btn_label, btn_action):
@@ -3052,13 +3100,16 @@ screen pref_row_button_only(icon, title, desc, btn_label, btn_action):
                     
                 vbox:
                     style "pref_content_block"
-                    text title style "pref_title"
-                    text desc style "pref_desc"
+                    text t(title) style "pref_title":
+                        font settings_ui_font(semibold=True)
+                    text t(desc) style "pref_desc":
+                        font settings_ui_font()
                     
             button:
                 style "pref_stepper_chip"
                 xalign 1.0 yalign 0.5
-                text btn_label style "pref_stepper_chip_text"
+                text t(btn_label) style "pref_stepper_chip_text":
+                    font settings_ui_font(mono=True)
                 action btn_action
 
 screen pref_tab_general():
@@ -3077,10 +3128,9 @@ screen pref_tab_general():
         
         if has_lang_chooser:
             use pref_row_stepper("LG", "Language", "Select dialogue and UI language.", [
-                ("English", Language(None)),
-                ("Dutch", Language("dutch")),
-                ("French", Language("french")),
-                ("Ukrainian", Language("ukrainian"))
+                (language_self_name(None), SelectTranslationLanguage(None)),
+                (language_self_name("dutch"), SelectTranslationLanguage("dutch")),
+                (language_self_name("french"), SelectTranslationLanguage("french"))
             ])
             
         null height 18
@@ -3121,7 +3171,7 @@ screen pref_tab_visual():
         
         use pref_section_heading("// GRAPHICS")
         use pref_row_stepper("GL", "Renderer", "Active rendering engine. Changing requires restart.", [
-            ("Auto", SetField(persistent, "dummy_renderer", "Auto")),
+            (t("Auto"), SetField(persistent, "dummy_renderer", "Auto")),
             ("GL2", SetField(persistent, "dummy_renderer", "GL2")),
             ("Angle2", SetField(persistent, "dummy_renderer", "Angle2"))
         ])
@@ -3144,8 +3194,8 @@ screen pref_tab_accessibility():
         
         use pref_section_heading("// READABILITY ASSISTS")
         use pref_row_stepper("FO", "Accessibility Font", "Override story fonts with a high-legibility alternative.", [
-            ("Standard", SetAccessibilityFont("Standard")),
-            ("Dyslexic", SetAccessibilityFont("Dyslexic"))
+            (t("Standard"), SetAccessibilityFont("Standard")),
+            (t("Dyslexic"), SetAccessibilityFont("Dyslexic"))
         ])
         
         use pref_row_slider("FS", "Font Size Adjustment", "Scale all dialogue and UI text globally.", Preference("font size"))
@@ -3158,6 +3208,9 @@ default persistent.dummy_fps = 60
 default persistent.dummy_font = "Standard"
 
 init python:
+    def apply_high_contrast():
+        pass
+
     def apply_accessibility_font():
         if getattr(persistent, "dummy_font", "Standard") == "Dyslexic":
             config.font_replacement_map[("fonts/Rajdhani-Regular.ttf", False, False)] = ("fonts/DejaVuSans.ttf", False, False)
@@ -3229,6 +3282,15 @@ screen preferences():
     style_prefix "full_settings"
     
     default active_tab = "General"
+    $ pref_view_w, pref_view_h = current_viewport_size()
+    $ pref_panel_w = pref_view_w
+    $ pref_left_w = 720 if pref_panel_w <= 1240 else 860 if pref_panel_w <= 1400 else 980 if pref_panel_w <= 1600 else 1200
+    $ pref_side_w = 260 if pref_panel_w <= 1240 else 300 if pref_panel_w <= 1400 else 340 if pref_panel_w <= 1600 else 400
+    $ pref_footer_h = 112
+    
+    # 2.1 Full-Screen Backdrop — xfill/yfill ensure 100% coverage at any resolution
+    add Solid("#07090F")
+    
     
     # 2.1 Full-Screen Backdrop — xfill/yfill ensure 100% coverage at any resolution
     add Solid("#07090F")
@@ -3242,8 +3304,8 @@ screen preferences():
     
     # Main Panel Container — centred card inside the full-screen frame
     frame:
-        xalign 0.5 yalign 0.5
-        xsize 1100
+        xfill True
+        yfill True
         background Solid("#0D1320")
         
         # Top glow bloom
@@ -3277,6 +3339,9 @@ screen preferences():
             xalign 1.0
         
         vbox:
+            xfill True
+            yfill True
+            
             # Panel Header Row
             frame:
                 style "pref_header_row"
@@ -3288,9 +3353,11 @@ screen preferences():
                         spacing 12
                         yalign 0.5
                         add Solid("#00FFD1") xsize 7 ysize 7 at pulse_dot yalign 0.5
-                        text "// SYSTEM CONFIGURATION" style "pref_header_label" yalign 0.5
+                        text t("// SYSTEM CONFIGURATION") style "pref_header_label" yalign 0.5:
+                            font settings_ui_font(mono=True)
                         add Solid("#ffffff14") xsize 1 ysize 14 yalign 0.5
-                        text "PROJECT: SNOWDEN  |  CH.2/5" style "pref_header_chapter" yalign 0.5
+                        text t("PROJECT: SNOWDEN  |  CH.2/5") style "pref_header_chapter" yalign 0.5:
+                            font settings_ui_font(mono=True)
                         
                     # Right cluster
                     hbox:
@@ -3305,6 +3372,7 @@ screen preferences():
             frame:
                 style "pref_tab_bar"
                 hbox:
+                    xalign 0.5
                     spacing 0
                     use pref_tab("General", active_tab, SetScreenVariable("active_tab", "General"))
                     use pref_tab("Text", active_tab, SetScreenVariable("active_tab", "Text"))
@@ -3315,10 +3383,12 @@ screen preferences():
             # Main Body Layout
             hbox:
                 style "pref_body_layout"
+                xalign 0.5
                 
                 # LEFT: main settings list
                 frame:
                     style "pref_left_col"
+                    xsize pref_left_w
                     
                     if active_tab == "General":
                         use pref_tab_general
@@ -3334,6 +3404,7 @@ screen preferences():
                 # RIGHT: status column
                 frame:
                     style "pref_side_col"
+                    xsize pref_side_w
                     
                     vbox:
                         spacing 18
@@ -3343,14 +3414,17 @@ screen preferences():
                         frame:
                             style "pref_side_card"
                             vbox:
-                                text "ACTIVE SECTION" style "pref_side_card_title"
-                                text active_tab.upper() style "pref_side_card_value"
+                                text t("ACTIVE SECTION") style "pref_side_card_title":
+                                    font settings_ui_font(mono=True)
+                                text t(active_tab) style "pref_side_card_value":
+                                    font settings_ui_font(semibold=True)
                                 
                         # 2.8.2 Quick Keyboard Reference
                         frame:
                             style "pref_side_card_dark"
                             vbox:
-                                text "// HOTKEYS" style "pref_side_card_title"
+                                text t("// HOTKEYS") style "pref_side_card_title":
+                                    font settings_ui_font(mono=True)
                                 null height 8
                                 use hotkey_row("TAB", "Next")
                                 use hotkey_row("Shift+TAB", "Prev")
@@ -3363,7 +3437,8 @@ screen preferences():
                         frame:
                             style "pref_side_card"
                             vbox:
-                                text "// THEME PRESET" style "pref_side_card_title"
+                                text t("// THEME PRESET") style "pref_side_card_title":
+                                    font settings_ui_font(mono=True)
                                 null height 8
                                 use preset_chip("TERMINAL")
                                 use preset_chip("DOSSIER")
@@ -3374,57 +3449,68 @@ screen preferences():
                             yalign 1.0
                             spacing 10
                             xfill True
-                            textbutton "APPLY SETTINGS" style "pref_btn_apply" action Return()
-                            textbutton "RESET TO FIELD DEFAULTS" style "pref_btn_ghost" action Function(reset_to_field_defaults)
-                            textbutton "BACK" style "pref_btn_ghost" action Return()
+                            textbutton t("APPLY SETTINGS") style "pref_btn_apply" action Return():
+                                text_font settings_ui_font(mono=True)
+                            textbutton t("RESET TO FIELD DEFAULTS") style "pref_btn_ghost" action Function(reset_to_field_defaults):
+                                text_font settings_ui_font(mono=True)
+                            textbutton t("BACK") style "pref_btn_ghost" action Return():
+                                text_font settings_ui_font(mono=True)
+
+            null yfill True
 
             # Panel Footer Strip
             frame:
                 style "pref_footer_strip"
-                hbox:
-                    box_wrap True
-                    box_wrap_spacing 14
+                ysize pref_footer_h
+                vbox:
                     xfill True
+                    spacing 12
 
-                    textbutton language_self_name(None):
-                        style "shell_nav_button"
+                    null height 4
+
+                    hbox:
+                        xalign 0.5
+                        spacing 16
+
+                        textbutton language_self_name(None):
+                            style "shell_nav_button"
+                            xminimum 240
+                            selected current_translation_language() is None
+                            action language_change_action(None)
+                            text_font settings_ui_font(mono=True)
+
+                        textbutton language_self_name("dutch"):
+                            style "shell_nav_button"
+                            xminimum 240
+                            selected current_translation_language() == "dutch"
+                            action language_change_action("dutch")
+                            text_font settings_ui_font(mono=True)
+
+                        textbutton language_self_name("french"):
+                            style "shell_nav_button"
+                            xminimum 240
+                            selected current_translation_language() == "french"
+                            action language_change_action("french")
+                            text_font settings_ui_font(mono=True)
+
+
+                    frame:
                         xfill True
-                        xminimum 300
-                        selected current_translation_language() is None
-                        action language_change_action(None)
+                        background None
+                        padding (24, 0)
+                        
+                        hbox:
+                            xfill True
+                            spacing 12
+                            yalign 0.5
 
-                    textbutton language_self_name("dutch"):
-                        style "shell_nav_button"
-                        xfill True
-                        xminimum 300
-                        selected current_translation_language() == "dutch"
-                        action language_change_action("dutch")
+                        add Solid("#00FFD1") xsize 8 ysize 18 at blink yalign 0.5
 
-                    textbutton language_self_name("french"):
+                        text t("SETTINGS ACTIVE — CHANGES APPLY IMMEDIATELY") style "pref_footer_center" yalign 0.5:
+                            font settings_ui_font(mono=True)
 
-                        style "shell_nav_button"
-                        xfill True
-                        xminimum 300
-                        selected current_translation_language() == "french"
-                        action language_change_action("french")
-
-                    textbutton language_self_name("ukrainian"):
-
-                        style "shell_nav_button"
-                        xfill True
-                        xminimum 300
-                        selected current_translation_language() == "ukrainian"
-                        action language_change_action("ukrainian")
-                    yalign 0.5
-                    
-                    # LEFT: cursor block
-                    add Solid("#00FFD1") xsize 8 ysize 18 at blink yalign 0.5
-                    
-                    # CENTER
-                    text "SETTINGS ACTIVE — CHANGES APPLY IMMEDIATELY" style "pref_footer_center" xalign 0.5 yalign 0.5
-                    
-                    # RIGHT
-                    text "SYS.TIME" style "pref_footer_right" xalign 1.0 yalign 0.5
+                        text t("SYS.TIME") style "pref_footer_right" xalign 1.0 yalign 0.5:
+                            font settings_ui_font(mono=True)
 
     # Keybinds
     key "K_ESCAPE" action Return()
@@ -3643,6 +3729,7 @@ screen confirm(message, yes_action, no_action):
                     style "modal_action_button"
                     xsize 220
                     action yes_action
+                    text_font settings_ui_font(mono=True)
 
                 textbutton t("No"):
                     style "modal_action_button"
@@ -3650,6 +3737,7 @@ screen confirm(message, yes_action, no_action):
                     background Solid("#171C30")
                     hover_background Solid("#3A4A55")
                     action no_action
+                    text_font settings_ui_font(mono=True)
 
     key "game_menu" action no_action
 
@@ -3873,7 +3961,7 @@ screen quick_menu():
             spacing 10
             style_prefix "quick"
 
-            textbutton t("Back") action Rollback()
-            textbutton t("Notes") action Show("notebook_panel")
-            textbutton t("Save") action ShowMenu("save")
-            textbutton t("Menu") action ShowMenu("pause_hub")
+            textbutton t("Back") action Rollback() text_font settings_ui_font(mono=True)
+            textbutton t("Notes") action Show("notebook_panel") text_font settings_ui_font(mono=True)
+            textbutton t("Save") action ShowMenu("save") text_font settings_ui_font(mono=True)
+            textbutton t("Menu") action ShowMenu("pause_hub") text_font settings_ui_font(mono=True)

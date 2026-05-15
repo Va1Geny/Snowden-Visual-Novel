@@ -1054,7 +1054,7 @@ style pref_icon_text is text:
     xalign 0.5 yalign 0.5
 
 style pref_content_block is vbox:
-    xsize 420
+    xsize 560
 
 style pref_title is text:
     font "fonts/Rajdhani-SemiBold.ttf"
@@ -1079,7 +1079,7 @@ style pref_stepper_control is hbox:
     spacing 0
 
 style pref_slider is bar:
-    xsize 200 ysize 6
+    xsize 240 ysize 6
     left_bar Solid("#00FFD1")
     right_bar Solid("#ffffff14")
     thumb Solid("#00FFD1")
@@ -1213,7 +1213,8 @@ style pref_btn_ghost_text is button_text:
 
 style pref_footer_strip is frame:
     xfill True
-    ysize 36
+    ysize 112
+    padding (0, 0)
     background Solid("#00000033")
     yalign 1.0
 

@@ -15,14 +15,12 @@ init python:
             None: "English",
             "dutch": "Nederlands",
             "french": "Fran\u00e7ais",
-            "ukrainian": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
         }
 
         CHANGE_LANGUAGE_MESSAGES = {
             None: "Are you sure you want to change your current language to \"{language}\"?",
             "dutch": "Weet u zeker dat u uw huidige taal wilt wijzigen naar \"{language}\"?",
             "french": "Voulez-vous vraiment changer votre langue actuelle en \"{language}\" ?",
-            "ukrainian": "\u0412\u0438 \u0434\u0456\u0439\u0441\u043d\u043e \u0445\u043e\u0447\u0435\u0442\u0435 \u0437\u043c\u0456\u043d\u0438\u0442\u0438 \u0432\u0430\u0448\u0443 \u043f\u043e\u0442\u043e\u0447\u043d\u0443 \u043c\u043e\u0432\u0443 \u043d\u0430 \"{language}\"?",
         }
 
         def __init__(self):
