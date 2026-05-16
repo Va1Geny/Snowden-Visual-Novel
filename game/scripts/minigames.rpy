@@ -1649,6 +1649,97 @@ screen decrypt_cipher_wheel():
             color "#8B8FCC"
             font "fonts/DejaVuSans.ttf"
 
+
+# ==========================================================
+# DECRYPTION POPUP SCREEN
+# ==========================================================
+
+transform overlay_appear:
+    alpha 0.0
+    easein 0.2 alpha 1.0
+
+transform popup_appear:
+    alpha 0.0 zoom 0.85
+    easein 0.25 alpha 1.0 zoom 1.0
+
+style popup_button:
+    background Solid("#1a3d28")
+    hover_background Solid("#1e5c38")
+    padding (20, 10)
+
+style popup_button_text:
+    color "#5a9e7a"
+    hover_color "#00ff88"
+    size 16
+    font "fonts/ShareTechMono-Regular.ttf"
+
+screen word_complete_popup(word_num, total_words, time_taken, rating, next_cta):
+    zorder 200
+    modal True
+    
+    # Dark semi-transparent background overlay
+    add "#000000B3" at overlay_appear
+    
+    # Popup Frame
+    frame at popup_appear:
+        xalign 0.5
+        yalign 0.5
+        xsize 760
+        ysize 280
+        background Solid("#0a1a0f")
+        padding (0, 0)
+        
+        # Top and Bottom Borders
+        add Solid("#1a7a4a"):
+            xsize 760 ysize 2 xpos 0 ypos 0
+        add Solid("#1a7a4a"):
+            xsize 760 ysize 2 xpos 0 ypos 278
+            
+        vbox:
+            xalign 0.5
+            yalign 0.5
+            spacing 20
+            
+            # Title
+            text t("// DECRYPTION SUCCESSFUL //"):
+                color "#00ff88"
+                size 20
+                bold True
+                xalign 0.5
+                font "fonts/ShareTechMono-Regular.ttf"
+                
+            # Progress Indicator
+            text t("ENCRYPTED [word_num]/[total_words]"):
+                color "#d4e8d0"
+                size 28
+                bold True
+                xalign 0.5
+                font "fonts/ShareTechMono-Regular.ttf"
+                
+            # Stats Row
+            hbox:
+                xalign 0.5
+                spacing 40
+                
+                hbox:
+                    spacing 8
+                    text t("Time:") color "#5a9e7a" size 13 yalign 0.5 font "fonts/ShareTechMono-Regular.ttf"
+                    text t("[time_taken]s") color "#d4e8d0" size 18 yalign 0.5 font "fonts/ShareTechMono-Regular.ttf"
+                    
+                hbox:
+                    spacing 8
+                    text t("Rating:") color "#5a9e7a" size 13 yalign 0.5 font "fonts/ShareTechMono-Regular.ttf"
+                    text t("[rating]") color "#d4e8d0" size 18 yalign 0.5 font "fonts/ShareTechMono-Regular.ttf"
+                    
+            null height 10
+            
+            # Action Button
+            button:
+                style "popup_button"
+                xalign 0.5
+                action Return("next")
+                text t("[next_cta]") style "popup_button_text"
+
 screen decrypt_game():
     modal True
     tag decrypt_game
@@ -2030,46 +2121,13 @@ screen decrypt_game():
 
     if decrypt_state["phase"] == "word_complete":
         $ next_cta = "> LOAD NEXT TRANSMISSION" if stage_index < 2 else "> OPEN DEBRIEF"
-        frame:
-            xalign 0.5
-            yalign 0.5
-            xsize 760
-            ysize 240
-            background Solid("#08130DDC")
-            padding(28, 22)
-            at stage_transition_in
-
-            vbox:
-                xalign 0.5
-                yalign 0.5
-                spacing 14
-
-                text t("// DECRYPTION SUCCESSFUL //"):
-                    color "#39FF14"
-                    size 30
-                    bold True
-                    xalign 0.5
-                    font "fonts/DejaVuSans.ttf"
-
-                text t("[puzzle['word']]  [stage_index + 1]/[len(decrypt_puzzles)]"):
-                    color "#E8E8E8"
-                    size 28
-                    bold True
-                    xalign 0.5
-                    font "fonts/DejaVuSans.ttf"
-                    at star_earn
-
-                text t("Time: [decrypt_state['stage_times'][stage_index]]s   Rating: [decrypt_stage_rating(decrypt_state['stage_scores'][stage_index])]"):
-                    color "#00FFD1"
-                    size 18
-                    xalign 0.5
-                    font "fonts/DejaVuSans.ttf"
-
-                textbutton t("[next_cta]"):
-                    style "modal_action_button"
-                    text_style "modal_action_button_text"
-                    xalign 0.5
-                    action Return("next")
+        use word_complete_popup(
+            word_num=stage_index + 1,
+            total_words=len(decrypt_puzzles),
+            time_taken=decrypt_state["stage_times"][stage_index],
+            rating=decrypt_stage_rating(decrypt_state["stage_scores"][stage_index]),
+            next_cta=next_cta
+        )
     key "K_BACKSPACE" action NullAction()
     key "mouseup_3" action NullAction()
 
