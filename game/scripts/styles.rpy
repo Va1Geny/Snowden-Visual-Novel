@@ -619,7 +619,7 @@ style mcq_terminal_continue is button:
     background None
     hover_background Solid("#00FFD114")
     insensitive_background Solid("#00000000")
-    padding (10, 5)
+    padding (20, 10)
 
 style mcq_terminal_continue_text is button_text:
     font "fonts/Rajdhani-Regular.ttf"

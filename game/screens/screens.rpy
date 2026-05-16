@@ -2651,8 +2651,7 @@ screen mcq_question(question, answers, correct_index, explanation, helper_text=N
                             
                             frame:
                                 background Solid("#040810") # Match window background
-                                xpadding 10
-                                ypadding 5
+                                padding (0, 0)
                                 
                                 textbutton t("EXECUTE: CONTINUE"):
                                     style "mcq_terminal_continue"
