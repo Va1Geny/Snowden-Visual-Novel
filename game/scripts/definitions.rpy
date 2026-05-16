@@ -51,7 +51,7 @@ define supervisor = Character("Supervisor Daniel Cross",
     who_size=26,
     what_size=26)
 
-define colleague = Character("COLLEAGUE [[CLASSIFIED]]",
+define colleague = Character("COLLEAGUE [[CLASSIFIED]",
     image="colleague",
     color="#888888",
     what_color="#CCCCCC",
