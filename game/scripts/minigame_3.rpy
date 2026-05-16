@@ -1,6 +1,8 @@
 init python:
     import time
 
+    terminal_yadj = ui.adjustment()
+
     class TerminalLine:
         def __init__(self, text, color="#ffffff"):
             self.text = text
@@ -212,6 +214,7 @@ init python:
             renpy.restart_interaction()
     def pw_add_line(text, color="#ffffff"):
         pw_game_state["lines"].append(TerminalLine(text, color=color))
+        terminal_yadj.value = float('inf')
 
     def pw_add_line_queued():
         if pw_game_state["queued_output"]:
@@ -223,7 +226,7 @@ init python:
             pw_add_line(l)
 
     def pw_add_prompt():
-        pw_add_line("┌──(snowden㉿nsa-laptop)-[~]", color="#ffffff")
+        pass  # Removed top line for single-line bracket prompt
 
     def pw_reset():
         pw_game_state["lines"] = []
@@ -255,7 +258,7 @@ init python:
         else:
             pw_game_state["status"] = "report"
             pw_add_prompt()
-            pw_add_line("└─$ cat session_report.txt")
+            pw_add_line("[snowden@nsa-laptop ~]$ cat session_report.txt")
             pw_add_line("")
             pw_add_line("SESSION REPORT — HASH CRACKING EXERCISE")
             pw_add_line("========================================")
@@ -282,7 +285,7 @@ init python:
             if inp.lower() == "exit" or inp == "":
                 return "EXIT"
             else:
-                pw_add_line("└─$ " + inp)
+                pw_add_line("[snowden@nsa-laptop ~]$ " + inp)
                 if inp:
                     pw_add_line("command not found: " + inp, color="#ff0000")
                 pw_add_line("> type 'exit' to continue mission")
@@ -304,7 +307,7 @@ init python:
             return
 
         if inp == "":
-            pw_add_line("└─$ ")
+            pw_add_line("[snowden@nsa-laptop ~]$ ")
             pw_add_prompt()
             return
 
@@ -319,7 +322,7 @@ init python:
                 is_correct = True
                 break
 
-        pw_add_line("└─$ " + inp, color="#00ff00" if is_correct else "#ffffff")
+        pw_add_line("[snowden@nsa-laptop ~]$ " + inp, color="#00ff00" if is_correct else "#ffffff")
 
         if is_correct:
             if pw_game_state["wrong_attempts"] < 3:
@@ -473,8 +476,10 @@ screen minigame_3_main():
             viewport id "terminal_vp":
                 yfill True
                 xfill True
-                yinitial 1.0
+                yadjustment terminal_yadj
                 mousewheel True
+                scrollbars "vertical"
+                vscrollbar_unscrollable "hide"
 
                 vbox:
                     xfill True
@@ -490,15 +495,15 @@ screen minigame_3_main():
 
                     if pw_game_state["status"] in ["playing", "report"]:
                         hbox:
-                            text t("└─$ ") style "terminal_text"
+                            text t("[[snowden@nsa-laptop ~]$ ") style "terminal_text"
                             input value TerminalInputValue() style "terminal_input_text" caret "terminal_caret"
                     elif pw_game_state["status"] == "learning":
                         hbox:
-                            text t("└─$ ") style "terminal_text"
+                            text t("[[snowden@nsa-laptop ~]$ ") style "terminal_text"
                             add "terminal_caret" yalign 1.0
                     elif pw_game_state["status"] == "outputting":
                         hbox:
-                            text t("└─$ ") style "terminal_text"
+                            text t("[[snowden@nsa-laptop ~]$ ") style "terminal_text"
 
         if pw_game_state["current_input"] and len(pw_game_state["current_input"]) >= 3 and not pw_game_state["tab_hint_used"]:
                 text t("Press TAB to autocomplete") xalign 0.5 yalign 0.95 color "#888888" size 14 font FONT_MONO

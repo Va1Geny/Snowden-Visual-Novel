@@ -720,25 +720,28 @@ style terminal_screen_bg:
     background "bg_kali_net"
 
 style terminal_text:
-    font FONT_MONO
+    font "fonts/DejaVuSans.ttf"
     size 20
     color "#ffffff"
     line_leading 4
 
 style terminal_input_text:
-    font FONT_MONO
+    font "fonts/DejaVuSans.ttf"
     size 20
     color "#ffffff"
+    line_leading 4
 
 style terminal_correct_line:
-    font FONT_MONO
+    font "fonts/DejaVuSans.ttf"
     size 20
     color "#00ff00"
+    line_leading 4
 
 style terminal_error_line:
-    font FONT_MONO
+    font "fonts/DejaVuSans.ttf"
     size 20
     color "#ff0000"
+    line_leading 4
 
 style terminal_learn_line:
     font FONT_MONO
