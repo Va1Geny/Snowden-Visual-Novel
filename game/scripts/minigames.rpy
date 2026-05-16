@@ -9,7 +9,7 @@ screen block_shortcuts_and_skip(return_value="SKIP", show_skip_button=True):
     if show_skip_button:
         textbutton t("SKIP MINIGAME"):
             xalign 0.98
-            yalign 0.02
+            yalign 0.98
             text_size 21
             text_color "#ff4444"
             text_hover_color "#ff0000"
