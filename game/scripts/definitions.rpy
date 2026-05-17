@@ -162,8 +162,8 @@ init python:
         "OpSec",
         "zero-day",
         "FISA",
-        "NSA",
-        "CIA",
+        "Signal Reach Network",
+        "The Obsidian Oversight",
         "bcrypt",
         "dictionary attack",
         "digital forensics",
@@ -179,6 +179,8 @@ init python:
 
     DOSSIER_ENTRIES = [
         ("AES-256", "Advanced Encryption Standard with a 256-bit key. Strong symmetric encryption that is effectively impossible to brute-force with current consumer hardware."),
+        ("&& (Command Chaining)", "In Linux/Unix shells, '&&' connects two commands so that the second command only runs if the first one succeeded (exited without error). Essential for multi-step operations like wiping logs: if the first step fails, the chain stops safely."),
+        (".bash_history", "A hidden file in your Linux home directory (~/.bash_history) that records every command you type in a terminal. It persists across reboots. Forensic investigators read it to reconstruct exactly what a suspect did and when. Wiping it safely requires three steps: overwrite the file, clear in-memory history with 'history -c', then exit the session."),
         ("Bcrypt", "A password-hashing function designed to be computationally expensive and intentionally slow, making brute-force and dictionary attacks highly ineffective."),
         ("Boundless Informant", "A data analysis tool used by the NSA to summarize and visualize the metadata and communications records they collect globally."),
         ("Caesar Cipher", "Simple substitution cipher where each letter is shifted by a fixed number. Easy to break but historically significant. Example: ROT-3 shifts A to D, B to E, and so on."),
@@ -190,6 +192,7 @@ init python:
         ("Edward Snowden", "An American former computer intelligence consultant who leaked highly classified information from the NSA in 2013, revealing numerous global surveillance programs."),
         ("Encryption Fingerprints", "Unique patterns or metadata in encrypted traffic that can reveal the type of encryption used, the application generating it, or even the user, without breaking the encryption itself."),
         ("EXIF Metadata", "Hidden information embedded in image files, such as the camera model, date/time, and exact GPS coordinates of where the photo was taken."),
+        ("exiftool", "A command-line tool for reading, writing, and stripping EXIF metadata from image files. The flag '-all=' removes all metadata fields at once. Example: 'exiftool -all= ~/pictures/*.jpg' strips GPS and camera data from every JPEG in a folder."),
         ("Firewall", "Network security system that monitors and filters incoming and outgoing traffic based on predefined rules. Acts as a barrier between trusted and untrusted networks."),
         ("FISA (Foreign Intelligence Surveillance Act)", "A United States federal law that establishes procedures for the physical and electronic surveillance and collection of foreign intelligence information."),
         ("Foreign Intelligence", "Information relating to the capabilities, intentions, or activities of foreign governments, organizations, or persons."),
@@ -198,8 +201,10 @@ init python:
         ("HTTPS", "HTTP with TLS/SSL encryption. Secures data between your browser and a web server. Look for the padlock icon in your browser's address bar."),
         ("Inspector General", "An investigative official in a civil or military organization. In the intelligence community, they are responsible for internal audits and investigating whistleblowers' claims."),
         ("John the Ripper", "A fast, open-source password cracking software tool used to perform dictionary attacks and rule-based mutations against password hashes."),
+        ("journalctl / Systemd Journal", "The command-line tool for querying and managing logs produced by systemd, the Linux init system. The journal records USB connections (device serial number, model, timestamp) and persists across reboots. The anti-forensics technique is: 'sudo journalctl --rotate' (seals the current log file) followed by 'sudo journalctl --vacuum-time=1s' (deletes all archived logs older than one second)."),
         ("Kali Linux", "A Debian-derived Linux distribution designed for digital forensics and penetration testing. It comes pre-installed with hundreds of security and hacking tools."),
         ("MAC Address", "A unique hardware identifier assigned to a network interface controller. Used by local networks and routers to identify specific devices."),
+        ("macchanger", "A Linux tool that changes (spoofs) the MAC address of a network interface. The '-r' flag assigns a completely random address. Example: 'sudo macchanger -r wlan0'. This breaks the link between your device's real hardware ID and any network log that recorded it."),
         ("Man-in-the-Middle Attack", "An attacker secretly intercepts communication between two parties. Both parties think they're talking directly to each other. Key verification prevents this."),
         ("Mass Surveillance", "The intricate surveillance of an entire or a substantial fraction of a population in order to monitor that group of citizens."),
         ("MD5", "An older, widely used hashing algorithm that is now considered cryptographically broken and vulnerable to rapid brute-force attacks."),
@@ -209,15 +214,19 @@ init python:
         ("NSA — Signal Reach Network (National Security Agency)", "A national-level intelligence agency of the United States Department of Defense, under the authority of the Director of National Intelligence. Known in-world as the Signal Reach Network."),
         ("OpSec (Operational Security)", "The practice of protecting critical information by identifying what intelligence the adversary could gather from your actions and taking steps to prevent it."),
         ("PGP (Pretty Good Privacy)", "Asymmetric encryption system using public/private key pairs. Public key encrypts, only the matching private key can decrypt. Used for secure email communication."),
+        ("pkill", "A Linux command that sends a signal (by default, terminate) to processes matching a name pattern. The '-f' flag matches against the full command string, not just the process name. Example: 'pkill -f dropbox' stops all Dropbox processes. Essential first step before removing a sync daemon's files."),
         ("PRISM", "NSA surveillance program providing direct access to user data from major tech companies. Exposed by Snowden in 2013."),
         ("Private IP Ranges", "IP addresses reserved for internal network use (like 192.168.x.x) that are not routable on the public internet."),
         ("Public Wi-Fi", "Unsecured wireless networks open to the public. Highly vulnerable to interception and man-in-the-middle attacks."),
         ("RDP (Remote Desktop Protocol)", "A proprietary protocol developed by Microsoft that provides a user with a graphical interface to connect to another computer over a network connection."),
         ("Reverse Shell", "A type of shell in which the target machine communicates back to the attacking machine. Often used to bypass firewalls that block incoming connections."),
+        ("rm -rf", "A Linux command to remove files or directories. 'rm' stands for remove; '-r' (recursive) deletes directories and all their contents; '-f' (force) suppresses confirmation prompts and ignores non-existent files. Powerful but permanent — data removed with rm is still recoverable by forensic tools. Use 'shred' instead when secure deletion is required."),
         ("Secure Deletion", "The process of permanently destroying digital data by overwriting the physical disk sectors with random data (e.g., using 'shred'), preventing forensic recovery."),
         ("SecureDrop", "An open-source whistleblowing platform that allows anonymous document submission. Used by major news organizations to protect sources."),
         ("Session Token", "A unique piece of data generated by a server and stored in a user's browser (often as a cookie) to keep them authenticated after logging in."),
+        ("shred", "A Linux command-line tool for secure file deletion. Unlike 'rm', shred overwrites the file's actual disk sectors with random data multiple times before deleting it. Key flags: '-v' (verbose, show progress), '-z' (final zero-pass to hide shredding), '-u' (unlink/delete after shredding), '-n N' (number of overwrite passes). The DoD 5220.22-M standard requires 7 passes: 'shred -vzu -n 7 <file>'."),
         ("SSH (Secure Shell)", "A cryptographic network protocol for operating network services securely over an unsecured network, often used for remote command-line login."),
+        ("sudo", "Short for 'superuser do'. Allows a permitted user to run a command as the superuser (root/administrator). Required for system-level operations like changing network hardware settings. Example: 'sudo macchanger -r wlan0' — the sudo prefix grants the necessary privileges."),
         ("Telnet", "An application protocol providing a bidirectional interactive text-oriented communication facility. Unencrypted and largely obsolete for secure networks."),
         ("TLS (Transport Layer Security)", "A cryptographic protocol designed to provide communications security over a computer network, widely used in HTTPS."),
         ("TOR (The Onion Router)", "Anonymization network that routes traffic through multiple relay nodes, each encrypting a layer. Makes it very difficult to trace traffic to its source."),
@@ -476,9 +485,9 @@ init python:
     # were not updated to use the ag_* interpolation variables.
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     _AGENCY_REPLACEMENTS = [
-        ("NSA",  "Signal Reach Network (SRN)"),
-        ("CIA",  "The Obsidian Oversight (OO)"),
-        ("FBI",  "Bureau of Internal Security (BIS)"),
+        ("NSA",  "Signal Reach Network"),
+        ("CIA",  "The Obsidian Oversight"),
+        ("FBI",  "Bureau of Internal Security"),
     ]
 
     def _legal_text_filter(s):

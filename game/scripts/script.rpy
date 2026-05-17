@@ -1147,43 +1147,69 @@ label ch3_continue:
     sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Fast algorithms like MD5 can be cracked instantly using dictionary attacks. Strong algorithms like bcrypt use a computational cost factor to make guessing intentionally slow. //"
     # --- Hash Functions vs Encryption ---
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0736_im_hash_vs_encrypt.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "A hash is fundamentally different from encryption. Encryption is a two-way street — you scramble data with a key, and decrypt it with the same key. A hash is a one-way mathematical meat grinder."
-    
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0737_im_hash_oneway.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "When you create a password, the system doesn't save the password itself. It runs it through a hashing algorithm to produce a fixed-length string of characters. You can't reverse the math to 'decrypt' a hash back into the password."
-    
+
     sys "// SYSTEM NOTE: Hashes are one-way cryptographic functions. You cannot decrypt a hash; you must guess the input that produced it. //"
 
     # --- Dictionary Attacks ---
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0738_im_dict_attack_1.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "So how do you crack it? You guess. You take a massive list of known passwords — like the infamous 'rockyou.txt' wordlist, which contains millions of real passwords leaked from previous breaches."
-    
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0739_im_dict_attack_2.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "You run every word in that dictionary through the hashing algorithm. If the resulting hash matches the one you stole, you've found the password. This is called a dictionary attack, and tools like 'John the Ripper' can test millions of guesses per second."
-    
+
     sys "// SYSTEM NOTE: A Dictionary Attack systematically hashes a list of common passwords to find a match. Fast algorithms like MD5 are highly vulnerable to this. //"
 
     # --- Rule-Based Mutations ---
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0740_im_rules_1.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "But people think they're clever. They substitute letters for numbers — 'M0nk3y!' instead of 'monkey'. That's where rule-based mutations come in."
-    
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0741_im_rules_2.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "The cracking software doesn't just try the dictionary words. It automatically applies rules: capitalizing letters, adding numbers at the end, swapping 'e' for '3'. It turns one dictionary word into thousands of variations, devastating most 'clever' passwords."
-    
+
     sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Adding predictable substitutions (like 'a' to '@') does not stop modern cracking tools. //"
 
     # --- Kali Linux & Terminal Commands ---
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0742_im_kali_1.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "To run this attack, we'll use Kali Linux — an operating system built specifically for penetration testing. We'll execute the attack entirely from the command line terminal."
-    
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0743_im_kali_2.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "When running 'John the Ripper' from the terminal, you need to pass it specific arguments telling it which wordlist to use, and which file contains the hashes you want to crack."
-    
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0744_im_kali_3.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     im "The standard syntax looks like this: 'john --wordlist=<path_to_wordlist> <path_to_hash_file>'. In Kali Linux, the famous 'rockyou.txt' dictionary is typically stored at '/usr/share/wordlists/rockyou.txt'."
-    
+
     sys "// COMMAND SYNTAX: john --wordlist=/usr/share/wordlists/rockyou.txt /path/to/hash.txt //"
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0735_im_c407e05342.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     im "If these hashes use MD5, they'll break in seconds. If they use bcrypt... we might be here for a century. Let's find out."
-    im "If these hashes use an outdated algorithm like MD5, they'll break instantly. If they use a slow, modern algorithm like bcrypt... we might be here for a century. Let's find out."
 
     window hide
     $ mg_intro3 = renpy.call_screen("minigame_briefing", challenge_title="BRUTE FORCE", subtitle="Passwords are only as strong as their entropy.\nTime to crack the hashes.", mission_id="OPS-03-09-2013", classification="TOP SECRET // EYES ONLY", challenge_type="CRYPTANALYSIS", estimated_time="120 SECONDS", difficulty=3, difficulty_label="OPERATIVE", succeed_reward="access_granted +1", fail_penalty="suspicion_level +1", learn_concept="Dictionary attacks and rule-based mutations\ncan break weak passwords instantly.", briefing_text="You intercepted an NSA internal system hash.\nYour task is to run the correct John the Ripper command for each round.\n\nRound 1: use a basic dictionary attack.\nRound 2: add rules so John also tests common substitutions.\nRound 3: prove that bcrypt plus a strong password is too slow to crack.\n\nRead the prompt, type the full command, press Enter to execute it, and use TAB for quick autocomplete when you already know the start of the command.", controls=[("BACKSPACE", "Delete typed text"),("TAB", "Autocomplete command"),("ENTER", "Execute operation")])
@@ -1554,37 +1580,79 @@ label chapter_4:
         voice localized_voice  # edge-tts-auto
     im "But before I can run, I need to wipe everything. Every file, every log, every trace. If I leave even one digital breadcrumb, it's over."
 
-    $ localized_voice = voice_for_current_language("audio/voice/en/script_0991_im_e86a8dfd17.mp3")  # edge-tts-auto
+    # --- TRACE 1 & 2: Browser History and Session Tokens ---
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0990_im_trace1_browser.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
-    # --- Digital Forensics and Secure Deletion ---
+    im "First priority: the browser. Chromium stores your entire browsing history in a local SQLite database file called 'History'. Forensic tools like Autopsy open it in seconds and read every URL you ever visited. The command 'rm -rf' removes a file or directory — 'r' for recursive, 'f' to force it without any confirmation prompt. I need: rm -rf ~/.config/chromium/Default/History"
 
-    im "Digital forensics is relentless. Most people think that when they delete a file, it's gone. It's not. The operating system just deletes the pointer to the file, marking that space on the hard drive as 'available'."
-    
-    im "The actual 1s and 0s are still sitting on the disk. Forensic agents can easily recover them. To truly destroy digital evidence, you have to use secure deletion tools like 'shred' to physically overwrite those disk sectors with random data."
+    sys "// TRACE 1: Browser History — rm -rf ~/.config/chromium/Default/History //"
 
-    $ localized_voice = voice_for_current_language("audio/voice/en/script_0993_im_f9bb534562.mp3")  # edge-tts-auto
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0991_im_trace2_tokens.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
-    sys "// SYSTEM NOTE: Standard deletion only removes file pointers. Secure deletion (shredding) overwrites the physical disk space to prevent forensic recovery. //"
+    im "Next: session tokens. When you log into a website, the server sends a session token stored in a 'Cookies' file — it's proof you were logged in at a specific time. There's also a Local Storage folder for web app data. I need to wipe both. The '&&' operator chains two commands: the second only runs if the first succeeded. Command: rm -rf ~/.config/chromium/Default/Cookies && rm -rf ~/.config/chromium/Default/Local\\ Storage/"
 
-    # --- Metadata Tracking ---
+    sys "// TRACE 2: Session Tokens — rm -rf Cookies && rm -rf Local\\ Storage/ — '&&' chains commands conditionally. //"
 
-    im "And it's not just the files themselves. It's the metadata — the data about the data. Take photos, for instance."
-    
-    im "Every photo taken on a modern smartphone contains hidden EXIF metadata. It records the camera model, the exact time, and the precise GPS coordinates of where you were standing when you took it. If I don't strip that metadata using 'exiftool', the photos themselves will lead them straight to this hotel."
+    # --- TRACE 3: EXIF Photo Metadata ---
 
-    sys "// SYSTEM NOTE: EXIF Metadata embeds location and device information directly into image files. Always strip metadata before publishing sensitive media. //"
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0992_im_trace3_exif.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "Third: photos. Every JPEG carries hidden EXIF metadata — GPS coordinates accurate to three metres, the camera model, the timestamp. Forensics investigators use this to place you at a scene. The tool 'exiftool' reads and edits this data. The flag '-all=' sets ALL metadata fields to empty, stripping everything. The wildcard '*.jpg' targets every JPEG in a folder. Command: exiftool -all= ~/pictures/*.jpg"
 
-    # --- Network and Hardware Logs ---
+    sys "// TRACE 3: EXIF Metadata — exiftool -all= ~/pictures/*.jpg — strips GPS, camera model, and timestamp from every photo. //"
 
-    im "My browser history and session tokens prove exactly what I accessed and when. My terminal history recorded every single command I typed. "
-    
-    im "Even my laptop's physical hardware is a liability. The hotel's Wi-Fi router logged my MAC address — a unique identifier hardcoded into my network card. If they match that MAC address to my machine, it's game over. I have to randomize it using 'macchanger'."
+    # --- TRACE 4: Classified Documents ---
 
-    sys "// FORENSICS ALERT: Digital footprints include browser tokens, terminal logs, and hardware MAC addresses. All must be wiped or randomized. //"
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0993_im_trace4_shred.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "Fourth: the PRISM files themselves — 2.3 gigabytes of classified documents still sitting on the hard drive. Normal 'rm' won't cut it. Forensic tools like Recuva or PhotoRec recover 'deleted' files in under a minute because the data is still physically on disk. I need 'shred'. It overwrites the actual disk sectors with random data before deleting. Flags: '-v' shows progress, '-z' does a final pass of zeros to hide the shredding, '-u' unlinks the file after, '-n 7' overwrites seven times — that's the DoD 5220.22-M standard. Command: shred -vzu -n 7 ~/documents/nsa_files/*"
 
-    $ localized_voice = voice_for_current_language("audio/voice/en/script_0995_im_059dc00155.mp3")  # edge-tts-auto
+    sys "// TRACE 4: NSA Files — shred -vzu -n 7 ~/documents/nsa_files/* — seven-pass overwrite, then delete. Forensically unrecoverable. //"
+
+    # --- TRACE 5: Hotel WiFi MAC Address ---
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0994_im_trace5_mac.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "Fifth: my MAC address. Every network device has a MAC address — a unique hardware identifier that every router logs. The Mira Hotel's router has my laptop's MAC on record. I need 'macchanger' with the '-r' flag, which assigns a completely random new MAC address. 'sudo' runs the command with administrator privileges — required for changing hardware identifiers. 'wlan0' is the wireless interface name. Command: sudo macchanger -r wlan0"
+
+    sys "// TRACE 5: MAC Address — sudo macchanger -r wlan0 — randomizes your hardware network ID. The hotel log now points to a device that no longer exists. //"
+
+    # --- TRACE 6: USB Device Logs ---
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0995_im_trace6_journal.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "Sixth: kernel logs. Linux automatically logs every USB device ever connected — the serial number, model, and connection time — in what's called the systemd journal. The command 'journalctl' manages these logs. The trick is two steps chained with '&&': first '--rotate' forces the journal to seal the old log file, then '--vacuum-time=1s' deletes all journal files older than one second. This wipes the USB connection record without leaving fragments. Command: sudo journalctl --rotate && sudo journalctl --vacuum-time=1s"
+
+    sys "// TRACE 6: USB Logs — sudo journalctl --rotate && sudo journalctl --vacuum-time=1s — rotate seals the log, vacuum deletes it. //"
+
+    # --- TRACE 7: Bash Command History ---
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0996_im_trace7_bashhistory.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "Seventh: bash history. Every command I've typed is saved to a file called '.bash_history' in my home directory. But there's a trap — the current terminal session also keeps the history in memory. If I just delete the file, bash will recreate it from memory when I exit. I need three steps chained together: redirect '/dev/null' — an always-empty source — into the history file to overwrite it with nothing, then run 'history -c' to clear the in-memory history, then 'exit' to close the session and write zero entries to disk. Command: cat /dev/null > ~/.bash_history && history -c && exit"
+
+    sys "// TRACE 7: Bash History — cat /dev/null > ~/.bash_history && history -c && exit — three steps required. Missing any one step leaves recoverable evidence. //"
+
+    # --- TRACE 8: Cloud Backup Sync ---
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0997_im_trace8_cloudsync.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "Eighth and final: cloud backup. A Dropbox daemon has been silently syncing my documents to a remote server in the background. Even if I destroy the laptop, the NSA can subpoena the cloud provider in under two hours. I need three steps: 'pkill -f dropbox' kills all running processes matching that name, then I remove the hidden config folder '~/.dropbox' which holds account credentials and a full sync history log, then remove the local synced files folder '~/Dropbox'. Command: pkill -f dropbox && rm -rf ~/.dropbox && rm -rf ~/Dropbox"
+
+    sys "// TRACE 8: Cloud Sync — pkill -f dropbox && rm -rf ~/.dropbox && rm -rf ~/Dropbox — kill the process, wipe credentials, remove files. //"
+
+    sys "// SUMMARY: 8 traces. 8 commands. rm -rf for browser data. exiftool -all= for photos. shred -vzu -n 7 for files. macchanger -r for MAC. journalctl --rotate + --vacuum-time for USB logs. cat /dev/null + history -c + exit for bash history. pkill + rm -rf for cloud sync. //"
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0998_im_059dc00155.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     im "I have 90 seconds before NSA agents reach my room. 8 digital traces that prove I copied the PRISM files. Each one needs a different command to destroy."

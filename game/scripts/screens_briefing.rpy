@@ -134,7 +134,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
                 yalign 0.5
                 at transform:
                     rotate -90
-            text t("[date] // NSA // EYES ONLY"):
+            text t("[date] // SRN // EYES ONLY"):
                 font FONT_MONO
                 size 12
                 color "#3A4A55"
