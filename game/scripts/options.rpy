@@ -31,7 +31,7 @@ define config.window = "auto"
 define config.window_show_transition = Dissolve(.2)
 define config.window_hide_transition = Dissolve(.2)
 
-default preferences.text_cps = 0
+default preferences.text_cps = 32
 
 default preferences.afm_time = 15
 

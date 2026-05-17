@@ -1638,7 +1638,7 @@ screen main_menu():
                         textbutton t("– CONTINUE"):
                             style "modal_action_button"
                             xalign 0.5
-                            action FileLoad(renpy.newest_slot(), confirm=False)
+                            action Continue()
                             text_font settings_ui_font(mono=True)
 
                     textbutton t("– DOSSIER"):
@@ -3108,117 +3108,285 @@ screen load():
 
 screen file_slots(title):
     default page_name_value = FilePageNameInputValue(pattern=t("Page {}"), auto=t("Automatic saves"), quick=t("Quick saves"))
+    default hovered_file_slot = -1
+    $ is_save_screen = (title == t("Save"))
+    $ is_load_screen = (title == t("Load"))
+    $ archive_title = "// SAVE ARCHIVE //" if is_save_screen else "// LOAD ARCHIVE //"
+    $ archive_body = "Encrypted field snapshots stored for rapid recovery and chapter rollback."
+    $ current_file_page = FileCurrentPage()
+    $ page_chip_label = "CHAPTER SAVES" if current_file_page == "chapter" else None
 
-    use game_menu(title, scroll="viewport", spacing=18):
-        frame:
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        background None
+        xfill True
+        yfill True
+        padding (64, 68)
+
+        hbox:
             xfill True
-            background Solid("#171C30")
-            padding (24, 22)
+            yfill True
+            spacing 24
 
-            vbox:
-                spacing 18
+            frame:
+                xsize 320
+                yfill True
+                background Solid("#111827")
+                padding (28, 22)
 
-                button:
-                    xalign 0.5
-                    background Solid("#101523")
-                    hover_background Solid("#0D1117")
-                    padding (18, 10)
-                    action If(FileCurrentPage() == "chapter", NullAction(), page_name_value.Toggle())
+                vbox:
+                    xfill True
+                    yfill True
+                    spacing 14
 
-                    if FileCurrentPage() == "chapter":
-                        text t("Chapter saves"):
-                            color "#E8E8E8"
-                            size 22
-                            xalign 0.5
-                            text_align 0.5
-                    else:
-                        input:
-                            value page_name_value
-                            color "#E8E8E8"
-                            size 22
-                            xalign 0.5
-                            text_align 0.5
+                    vbox:
+                        xfill True
+                        spacing 6
 
-                grid gui.file_slot_cols gui.file_slot_rows:
-                    xalign 0.5
-                    spacing 18
+                        text "ARCHIVE INTERFACE":
+                            font settings_ui_font(mono=True)
+                            size 15
+                            color "#8B9CB0"
 
-                    for i in range(gui.file_slot_cols * gui.file_slot_rows):
-                        $ slot = i + 1
+                        text archive_title:
+                            font settings_ui_font(mono=True)
+                            size 30
+                            color "#00E5B0"
 
-                        button:
-                            xsize 414
-                            ysize 330
-                            background Solid("#101523")
-                            hover_background Solid("#0D1117")
-                            padding (14, 14)
-                            action FileAction(slot)
+                        text archive_body:
+                            font settings_ui_font(mono=True)
+                            size 14
+                            color "#8B9CB0"
+                            line_spacing 2
+                            xfill True
 
-                            has vbox
-                            spacing 10
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00E5B026")
+                        padding (0, 0)
 
-                            add FileScreenshot(slot) xalign 0.5
+                    vbox:
+                        xfill True
+                        spacing 8
 
-                            text FileTime(slot, format=t("{#file_time}%A, %B %d %Y, %H:%M"), empty=t("Empty slot")):
-                                color "#7A8A99"
-                                size 15
-                                xalign 0.0
+                        use history_nav_button("History", ShowMenu("history"), item_id="history")
+                        use history_nav_button("Save", ShowMenu("save"), style_name="menu_item_active" if is_save_screen else "menu_item_default", item_id="save", active=is_save_screen)
+                        use history_nav_button("Load", ShowMenu("load"), style_name="menu_item_active" if is_load_screen else "menu_item_default", item_id="load", active=is_load_screen)
+                        use history_nav_button("Preferences", ShowMenu("preferences"), item_id="preferences")
 
-                            text FileSaveName(slot):
-                                color "#E8E8E8"
-                                size 18
-                                xalign 0.0
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00E5B014")
+                        padding (0, 0)
 
-                            key "save_delete" action FileDelete(slot)
+                    vbox:
+                        xfill True
+                        spacing 8
 
-                hbox:
-                    xalign 0.5
-                    spacing 10
+                        use history_nav_button("Dossier", ShowMenu("dossier"), item_id="dossier")
+                        use history_nav_button("Story Tree", ShowMenu("story_tree"), item_id="story_tree")
+                        use history_nav_button("Notes", Show("notebook_panel"), item_id="notes")
 
-                    if FileCurrentPage() == "chapter":
-                        textbutton t("<"):
-                            style "shell_nav_button"
-                            xsize 74
-                            action FilePage("auto")
-                    else:
-                        textbutton t("<"):
-                            style "shell_nav_button"
-                            xsize 74
-                            action FilePagePrevious()
+                    null height 0
 
-                    if config.has_autosave:
-                        textbutton t("{#auto_page}A"):
-                            style "shell_nav_button"
-                            xsize 74
-                            action FilePage("auto")
+                    vbox:
+                        xfill True
+                        yalign 1.0
+                        spacing 8
 
-                    textbutton t("{#chapter_page}C"):
-                        style "shell_nav_button"
-                        xsize 74
-                        action FilePage("chapter")
+                        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+                            use history_nav_button("Help", ShowMenu("help"), item_id="help")
 
-                    if config.has_quicksave:
-                        textbutton t("{#quick_page}Q"):
-                            style "shell_nav_button"
-                            xsize 74
-                            action FilePage("quick")
+                        use history_nav_button("Main Menu", MainMenu(), item_id="main_menu")
+                        use history_nav_button("Return", ShowMenu(menu_return_screen()), item_id="return")
 
-                    for page in range(1, 10):
-                        textbutton t("[page]"):
-                            style "shell_nav_button"
-                            xsize 74
-                            action FilePage(page)
+                        if renpy.variant("pc"):
+                            use history_nav_button("Quit", Quit(confirm=not main_menu), style_name="menu_item_quit", item_id="quit")
 
-                    if FileCurrentPage() == "chapter":
-                        textbutton t(">"):
-                            style "shell_nav_button"
-                            xsize 74
-                            action FilePage(1)
-                    else:
-                        textbutton t(">"):
-                            style "shell_nav_button"
-                            xsize 74
-                            action FilePageNext()
+            fixed:
+                xsize 1
+                yfill True
+                add Solid("#00E5B026")
+
+            frame:
+                xfill True
+                yfill True
+                background Solid("#0D1117")
+                padding (34, 26)
+
+                fixed:
+                    xfill True
+                    yfill True
+
+                    add Solid("#111827")
+
+                    for y in range(0, 1600, 4):
+                        frame:
+                            xpos 0
+                            ypos y
+                            xfill True
+                            ysize 1
+                            background Solid("#00E5B005")
+                            padding (0, 0)
+
+                    hbox:
+                        xfill True
+                        yfill True
+                        spacing 16
+
+                        viewport:
+                            id "file_slots_viewport"
+                            xfill True
+                            yfill True
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+
+                            vbox:
+                                xfill True
+                                spacing 18
+
+                                hbox:
+                                    xfill True
+                                    spacing 14
+
+                                    button:
+                                        background Solid("#101523")
+                                        hover_background Solid("#1A2332")
+                                        padding (18, 10)
+                                        action If(current_file_page == "chapter", NullAction(), page_name_value.Toggle())
+
+                                        if current_file_page == "chapter":
+                                            text t("Chapter saves"):
+                                                font settings_ui_font(mono=True)
+                                                color "#E0E0E0"
+                                                size 20
+                                                xalign 0.5
+                                                text_align 0.5
+                                        else:
+                                            input:
+                                                value page_name_value
+                                                font settings_ui_font(mono=True)
+                                                color "#E0E0E0"
+                                                size 20
+                                                xalign 0.5
+                                                text_align 0.5
+
+                                    null width 0
+
+                                grid gui.file_slot_cols gui.file_slot_rows:
+                                    xfill True
+                                    spacing 16
+
+                                    for i in range(gui.file_slot_cols * gui.file_slot_rows):
+                                        $ slot = i + 1
+                                        $ slot_bg = "#1A2332" if hovered_file_slot == slot else "#101523"
+
+                                        button:
+                                            xfill True
+                                            ysize 298
+                                            background Solid("#00E5B040")
+                                            hover_background Solid("#00E5B0")
+                                            padding (2, 0, 0, 0)
+                                            action FileAction(slot)
+                                            hovered SetScreenVariable("hovered_file_slot", slot)
+                                            unhovered SetScreenVariable("hovered_file_slot", -1)
+
+                                            frame:
+                                                xfill True
+                                                yfill True
+                                                background Solid(slot_bg)
+                                                padding (14, 14)
+
+                                                vbox:
+                                                    xfill True
+                                                    spacing 12
+
+                                                    frame:
+                                                        xfill True
+                                                        ysize 196
+                                                        background Solid("#0D1117")
+                                                        padding (0, 0)
+
+                                                        add FileScreenshot(slot) xalign 0.5 yalign 0.5
+
+                                                    text FileTime(slot, format=t("{#file_time}%A, %B %d %Y, %H:%M"), empty=t("Empty slot")):
+                                                        font settings_ui_font(mono=True)
+                                                        color "#8B9CB0"
+                                                        size 14
+                                                        xalign 0.0
+
+                                                    text FileSaveName(slot):
+                                                        font settings_ui_font(mono=True)
+                                                        color "#E0E0E0"
+                                                        size 17
+                                                        xalign 0.0
+
+                                                    key "save_delete" action FileDelete(slot)
+
+                                hbox:
+                                    xalign 0.5
+                                    spacing 10
+
+                                    if current_file_page == "chapter":
+                                        textbutton t("<"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage("auto")
+                                            text_font settings_ui_font(mono=True)
+                                    else:
+                                        textbutton t("<"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePagePrevious()
+                                            text_font settings_ui_font(mono=True)
+
+                                    if config.has_autosave:
+                                        textbutton t("{#auto_page}A"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage("auto")
+                                            text_font settings_ui_font(mono=True)
+
+                                    textbutton t("{#chapter_page}C"):
+                                        style "shell_nav_button"
+                                        xsize 74
+                                        action FilePage("chapter")
+                                        text_font settings_ui_font(mono=True)
+
+                                    if config.has_quicksave:
+                                        textbutton t("{#quick_page}Q"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage("quick")
+                                            text_font settings_ui_font(mono=True)
+
+                                    for page in range(1, 10):
+                                        textbutton t("[page]"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage(page)
+                                            text_font settings_ui_font(mono=True)
+
+                                    if current_file_page == "chapter":
+                                        textbutton t(">"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage(1)
+                                            text_font settings_ui_font(mono=True)
+                                    else:
+                                        textbutton t(">"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePageNext()
+                                            text_font settings_ui_font(mono=True)
+
+                        vbar value YScrollValue("file_slots_viewport"):
+                            style "history_scrollbar"
 
 transform appear_slide:
     alpha 0.0
@@ -3588,7 +3756,7 @@ init python:
             return bool(_preferences.transitions)
 
     def reset_to_field_defaults():
-        _preferences.text_cps = 0
+        _preferences.text_cps = 32
         _preferences.afm_time = 15
         for m in ["main", "master", "music", "sfx", "voice"]:
             if m in _preferences.volumes:
@@ -3853,50 +4021,316 @@ screen preferences():
     key "4" action SetScreenVariable("active_tab", "Visual")
     key "5" action SetScreenVariable("active_tab", "Accessibility")
 
+screen history_nav_button(label, action, style_name="menu_item_default", item_id=None, active=False):
+    $ base_text_color = "#E07070" if style_name == "menu_item_quit" else ("#00E5B0" if active else "#E0E0E0")
+
+    fixed:
+        xfill True
+        ysize 52
+
+        if active:
+            add Solid("#00E5B0") xsize 3 ysize 52
+
+        textbutton t(label):
+            style style_name
+            xfill True
+            action action
+            text_font settings_ui_font(mono=True)
+            text_size 22
+            text_color base_text_color
+            text_hover_color "#00E5B0"
+            text_xalign 0.0
+            text_yalign 0.5
+
 screen history():
     tag menu
     predict False
+    default hovered_history_card = -1
 
-    use game_menu(t("History"), scroll="viewport", spacing=14):
-        if _history_list:
-            for h in _history_list:
-                frame:
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        background None
+        xfill True
+        yfill True
+        padding (64, 68)
+
+        hbox:
+            xfill True
+            yfill True
+            spacing 24
+
+            frame:
+                xsize 320
+                yfill True
+                background Solid("#111827")
+                padding (28, 22)
+
+                vbox:
                     xfill True
-                    background Solid("#171C30")
-                    padding (22, 18)
+                    yfill True
+                    spacing 14
 
                     vbox:
+                        xfill True
+                        spacing 6
+
+                        text "ARCHIVE INTERFACE":
+                            font settings_ui_font(mono=True)
+                            size 15
+                            color "#8B9CB0"
+
+                        text "// TRANSMISSION LOG //":
+                            font settings_ui_font(mono=True)
+                            size 30
+                            color "#00E5B0"
+
+                        text "A single menu grid now drives save, load, settings, history, help, and reference screens.":
+                            font settings_ui_font(mono=True)
+                            size 14
+                            color "#8B9CB0"
+                            line_spacing 2
+                            xfill True
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00E5B026")
+                        padding (0, 0)
+
+                    vbox:
+                        xfill True
                         spacing 8
 
-                        if h.who:
-                            if "color" in h.who_args:
-                                text t(h.who):
-                                    color h.who_args["color"]
-                                    size 20
-                                    bold True
-                                    substitute False
-                            else:
-                                text t(h.who):
-                                    color "#7A8A99"
-                                    size 20
-                                    bold True
-                                    substitute False
+                        use history_nav_button("History", ShowMenu("history"), style_name="menu_item_active", item_id="history", active=True)
+                        use history_nav_button("Save", ShowMenu("save"), item_id="save")
+                        use history_nav_button("Load", ShowMenu("load"), item_id="load")
+                        use history_nav_button("Preferences", ShowMenu("preferences"), item_id="preferences")
 
-                        $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
-                        text trich(what):
-                            color "#E8E8E8"
-                            size 19
-                            substitute False
-        else:
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00E5B014")
+                        padding (0, 0)
+
+                    vbox:
+                        xfill True
+                        spacing 8
+
+                        use history_nav_button("Dossier", ShowMenu("dossier"), item_id="dossier")
+                        use history_nav_button("Story Tree", ShowMenu("story_tree"), item_id="story_tree")
+                        use history_nav_button("Notes", Show("notebook_panel"), item_id="notes")
+
+                    null height 0
+
+                    vbox:
+                        xfill True
+                        yalign 1.0
+                        spacing 8
+
+                        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+                            use history_nav_button("Help", ShowMenu("help"), item_id="help")
+
+                        use history_nav_button("Main Menu", MainMenu(), item_id="main_menu")
+                        use history_nav_button("Return", ShowMenu(menu_return_screen()), item_id="return")
+
+                        if renpy.variant("pc"):
+                            use history_nav_button("Quit", Quit(confirm=not main_menu), style_name="menu_item_quit", item_id="quit")
+
+            fixed:
+                xsize 1
+                yfill True
+                add Solid("#00E5B026")
+
             frame:
                 xfill True
-                background Solid("#171C30")
-                padding (28, 22)
-                text t("The dialogue history is empty."):
-                    color "#7A8A99"
-                    size 20
+                yfill True
+                background Solid("#0D1117")
+                padding (34, 26)
+
+                fixed:
+                    xfill True
+                    yfill True
+
+                    add Solid("#111827")
+
+                    for y in range(0, 1600, 4):
+                        frame:
+                            xpos 0
+                            ypos y
+                            xfill True
+                            ysize 1
+                            background Solid("#00E5B005")
+                            padding (0, 0)
+
+                    hbox:
+                        xfill True
+                        yfill True
+                        spacing 16
+
+                        viewport:
+                            id "history_log_viewport"
+                            xfill True
+                            yfill True
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+
+                            vbox:
+                                xfill True
+                                spacing 6
+
+                                if _history_list:
+                                    for i, h in enumerate(_history_list):
+                                        $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
+                                        $ lines = [line.strip() for line in what.split("\n") if line.strip()]
+                                        $ is_quote_card = (i == 0 and not h.who and ("Edward Snowden" in what or what.strip().startswith(("\"", "“"))))
+                                        $ quote_body = "\n".join(lines[:-1]) if is_quote_card and len(lines) > 1 and "Edward Snowden" in lines[-1] else what
+                                        $ quote_attribution = lines[-1].lstrip("-– ").strip() if is_quote_card and len(lines) > 1 and "Edward Snowden" in lines[-1] else None
+                                        $ history_card_style = "history_quote_card" if is_quote_card else "history_window"
+                                        $ history_card_bg = "#1A2332" if hovered_history_card == i else ("#131C14" if is_quote_card else "#111827")
+                                        $ history_border_color = "#00E5B0" if is_quote_card else "#00E5B040"
+                                        $ history_border_width = 3 if is_quote_card else 2
+
+                                        button:
+                                            style history_card_style
+                                            action NullAction()
+                                            hovered SetScreenVariable("hovered_history_card", i)
+                                            unhovered SetScreenVariable("hovered_history_card", -1)
+                                            xfill True
+                                            background None
+                                            left_padding 0
+                                            right_padding 0
+                                            top_padding 0
+                                            bottom_padding 0
+
+                                            frame:
+                                                xfill True
+                                                background Solid(history_border_color)
+                                                padding (history_border_width, 0, 0, 0)
+
+                                                frame:
+                                                    xfill True
+                                                    background Solid(history_card_bg)
+                                                    padding (16, 12)
+
+                                                    vbox:
+                                                        xfill True
+                                                        spacing 10
+
+                                                        if h.who and not is_quote_card:
+                                                            if "color" in h.who_args:
+                                                                text t(h.who):
+                                                                    style "history_name"
+                                                                    color h.who_args["color"]
+                                                                    substitute False
+                                                            else:
+                                                                text t(h.who):
+                                                                    style "history_name"
+                                                                    substitute False
+
+                                                        if is_quote_card:
+                                                            text trich(quote_body):
+                                                                style "history_text"
+                                                                italic True
+                                                                size 17
+                                                                substitute False
+
+                                                            if quote_attribution:
+                                                                text "– [quote_attribution]":
+                                                                    font settings_ui_font(mono=True)
+                                                                    size 14
+                                                                    color "#00A07A"
+                                                                    xalign 1.0
+                                                        else:
+                                                            text trich(what):
+                                                                style "history_text"
+                                                                substitute False
+                                else:
+                                    frame:
+                                        xfill True
+                                        background Solid("#00E5B040")
+                                        padding (2, 0, 0, 0)
+
+                                        frame:
+                                            xfill True
+                                            background Solid("#111827")
+                                            padding (16, 12)
+                                            text t("The dialogue history is empty."):
+                                                style "history_text"
+                                                color "#8B9CB0"
+
+                        vbar value YScrollValue("history_log_viewport"):
+                            style "history_scrollbar"
 
 define gui.history_allow_tags = { "alt", "noalt", "rt", "rb", "art" }
+
+style history_window is button:
+    background Solid("#111827")
+    hover_background Solid("#1A2332")
+    xfill True
+    left_padding 16
+    right_padding 16
+    top_padding 12
+    bottom_padding 12
+
+style history_name is text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 18
+    bold True
+    color "#8B9CB0"
+
+style history_text is text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#E0E0E0"
+    line_spacing 4
+
+style history_quote_card is button:
+    background Solid("#131C14")
+    hover_background Solid("#1A2332")
+    xfill True
+    left_padding 16
+    right_padding 16
+    top_padding 12
+    bottom_padding 12
+
+style menu_item_default is button:
+    xfill True
+    ysize 52
+    left_padding 18
+    right_padding 18
+    top_padding 10
+    bottom_padding 10
+    background Solid("#0D1117")
+    hover_background Solid("#1A2332")
+
+style menu_item_active is button:
+    xfill True
+    ysize 52
+    left_padding 21
+    right_padding 18
+    top_padding 10
+    bottom_padding 10
+    background Solid("#111827")
+    hover_background Solid("#1A2332")
+
+style menu_item_quit is button:
+    xfill True
+    ysize 52
+    left_padding 18
+    right_padding 18
+    top_padding 10
+    bottom_padding 10
+    background Solid("#2E1515")
+    hover_background Solid("#1A2332")
+
+style history_scrollbar is vscrollbar:
+    xsize 4
+    unscrollable "hide"
+    base_bar Solid("#00E5B014")
+    thumb Solid("#00E5B099")
 
 screen help():
     tag menu
