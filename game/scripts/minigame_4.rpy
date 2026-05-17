@@ -141,7 +141,7 @@ init python:
         {
             "id": 1, "name": "Browser History", "icon": "🌐", "phase": 1,
             "danger_title": "YOUR BROWSING PROVES INTENT",
-            "danger_text": "Every URL you visited is stored locally with timestamps. NSA forensics will find your searches for WikiLeaks and journalist contacts.",
+            "danger_text": "Every URL you visited is stored locally with timestamps. SRN forensics will find your searches for WikiLeaks and journalist contacts.",
             "file_type": "SQLite Database", "file_size": "4.2 MB", "risk_level": "CRITICAL",
             "forensic_note": "Recoverable with Autopsy or DB Browser",
             "correct_command": "rm -rf ~/.config/chromium/Default/History",
@@ -167,7 +167,7 @@ init python:
         {
             "id": 2, "name": "Session Tokens", "icon": "🔑", "phase": 1,
             "danger_title": "SAVED LOGINS REVEAL YOUR IDENTITY",
-            "danger_text": "Your browser stored authentication tokens for 3 classified NSA systems. These tokens prove you had active sessions during document exfiltration.",
+            "danger_text": "Your browser stored authentication tokens for 3 classified Signal Reach Network systems. These tokens prove you had active sessions during document exfiltration.",
             "file_type": "JSON / SQLite cookies", "file_size": "892 KB", "risk_level": "CRITICAL",
             "forensic_note": "Session tokens valid for up to 30 days",
             "correct_command": "rm -rf ~/.config/chromium/Default/Cookies && rm -rf ~/.config/chromium/Default/Local\\ Storage/",
@@ -195,7 +195,7 @@ init python:
         {
             "id": 3, "name": "GPS Photo Metadata", "icon": "📸", "phase": 2,
             "danger_title": "YOUR PHOTOS CONTAIN HIDDEN LOCATION DATA",
-            "danger_text": "3 photos contain EXIF metadata with GPS coordinates placing you at NSA HQ during the exfiltration window.",
+            "danger_text": "3 photos contain EXIF metadata with GPS coordinates placing you at SRN HQ during the exfiltration window.",
             "file_type": "JPEG EXIF Metadata", "file_size": "3 x embedded GPS", "risk_level": "CRITICAL",
             "forensic_note": "EXIF GPS accurate to 3 meters",
             "correct_command": "exiftool -all= ~/pictures/*.jpg",
@@ -223,7 +223,7 @@ init python:
         {
             "id": 4, "name": "Downloaded PRISM Files", "icon": "📁", "phase": 2,
             "danger_title": "56,000 CLASSIFIED DOCUMENTS ON DISK",
-            "danger_text": "The NSA files are still on your hard drive. Standard DELETE will not work — forensic tools recover deleted files in seconds. You need secure overwrite.",
+            "danger_text": "The classified files are still on your hard drive. Standard DELETE will not work — forensic tools recover deleted files in seconds. You need secure overwrite.",
             "file_type": "Classified PDF / DOCX", "file_size": "2.3 GB", "risk_level": "CRITICAL",
             "forensic_note": "Standard rm recoverable with Recuva/PhotoRec",
             "correct_command": "shred -vzu -n 7 ~/documents/nsa_files/*",
@@ -244,7 +244,7 @@ init python:
                 "[[  OK  ] shred: PRISM_slides_v3.pdf: pass 1/7 (random)...",
                 "[[  OK  ] shred: PRISM_slides_v3.pdf: pass 7/7 (000000)...",
                 "[[  OK  ] shred: PRISM_slides_v3.pdf: removed",
-                "[[  OK  ] shred: All 2.3GB of NSA files: PERMANENTLY WIPED",
+                "[[  OK  ] shred: All 2.3GB of classified files: PERMANENTLY WIPED",
                 "[[  OK  ] Data unrecoverable. Trace 4/8 eliminated.",
             ],
             "success_feedback": "Files securely overwritten 7 times then deleted. Unlike rm, shred overwrites the actual disk sectors with random data, making forensic recovery impossible.",
@@ -350,7 +350,7 @@ init python:
         {
             "id": 8, "name": "Cloud Backup Sync", "icon": "☁", "phase": 3,
             "danger_title": "YOUR FILES ARE ON A REMOTE SERVER",
-            "danger_text": "A background sync process uploaded copies of your documents to a cloud server. The NSA can subpoena those files in minutes.",
+            "danger_text": "A background sync process uploaded copies of your documents to a cloud server. Signal Reach Network agents can subpoena those files in minutes.",
             "file_type": "Cloud sync daemon", "file_size": "Remote — 2.3 GB", "risk_level": "CRITICAL",
             "forensic_note": "Subpoena to provider takes < 2 hours",
             "correct_command": "pkill -f dropbox && rm -rf ~/.dropbox && rm -rf ~/Dropbox",
@@ -412,7 +412,7 @@ init python:
             "> COVER YOUR TRACKS v2.1 initialized",
             "> Scanning system for forensic traces...",
             "> 8 digital traces detected",
-            "> WARNING: NSA response team dispatched",
+            "> WARNING: SRN response team dispatched",
             "> Begin elimination sequence",
         ]
         ct_state["assembled_tokens"] = []
@@ -692,12 +692,12 @@ screen screen_cover_tracks():
         vbox:
             spacing 8
 
-            text t("--- NSA MONITOR ---") color "#FF2D55" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
+            text t("--- SRN MONITOR ---") color "#FF2D55" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
             null height 4
             add ct_threat_bar xalign 0.5
             $ _pct_text = "{:.0f}%%".format(_ct_prog * 100)
             text _pct_text color _ct_tcol size 24 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
-            text t("NSA CLOSING IN") color "#7A8A99" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
+            text t("SRN CLOSING IN") color "#7A8A99" size 11 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
             text t("AGENT ETA: [_ct_eta]") color _ct_tcol size 18 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
 
             null height 6
