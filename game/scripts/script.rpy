@@ -135,6 +135,7 @@ label chapter_1:
 
 
     scene bg_nsa_exterior at parallax with chapter_transition
+    $ stop_ambient(0.5)
 
     # --- Scene: Arriving at the NSA ---
 
@@ -144,12 +145,14 @@ label chapter_1:
     narrator_voice "The Tunnel. That's what they call it — the underground NSA facility beneath a pineapple field in Oahu, Hawaii."
 
     scene bg_nsa_checkpoint at parallax with dissolve
+    $ stop_ambient(0.5)
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0093_narrator_voice_75301c64a2.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
         voice localized_voice  # edge-tts-auto
     narrator_voice "You walk through layers of biometric security. Badge. Fingerprint. Retinal scan. The door hisses open."
 
     scene bg_nsa_main at parallax with dissolve
+    $ play_ambient(sfx_ambient_office_busy, fadein=0.8, fadeout=0.5, volume=0.30)
     show edward neutral at intro_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0099_im_6b61024b7f.mp3")  # edge-tts-auto
@@ -227,9 +230,10 @@ label chapter_1:
                 voice localized_voice  # edge-tts-auto
             e "Alright, let's focus on the assignment. Processing the flagged selectors now."
             $ trust_score += 1
-            $ renpy.notify(t("Trust +1"))
+            $ sfx_notify_stat("Trust +1")
 
             scene bg_nsa_terminal at parallax with dissolve
+            $ play_ambient(sfx_ambient_terminal_sparse, fadein=0.8, fadeout=0.4, volume=0.24)
             with dissolve
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0143_im_b6beac96b3.mp3")  # edge-tts-auto
@@ -249,9 +253,10 @@ label chapter_1:
                 voice localized_voice  # edge-tts-auto
             e "I need to check something first..."
             $ suspicion_level += 1
-            $ renpy.notify(t("Suspicion +1"))
+            $ sfx_notify_stat("Suspicion +1")
 
             scene bg_nsa_terminal at parallax with dissolve
+            $ play_ambient(sfx_ambient_terminal_sparse, fadein=0.8, fadeout=0.4, volume=0.24)
             with dissolve
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0156_im_0d6c45c0a5.mp3")  # edge-tts-auto
@@ -370,18 +375,18 @@ label chapter_1:
         $ quick_menu = True
         $ show_hud = True
         if mg_firewall_score == "SKIP":
-            $ renpy.notify(t("Minigame Skipped"))
+            $ sfx_notify_stat("Minigame Skipped")
         elif mg_firewall_score >= 6:
             $ knowledge_score += 2
-            $ renpy.notify(t("Knowledge +2"))
+            $ sfx_notify_stat("Knowledge +2")
             sys "// CHALLENGE PASSED. Your firewall analysis was solid. //"
         else:
             $ suspicion_level += 1
-            $ renpy.notify(t("Suspicion +1"))
+            $ sfx_notify_stat("Suspicion +1")
             sys "// CHALLENGE FAILED. Poor packet filtering leaves the network vulnerable. //"
     else:
         $ knowledge_score -= 1
-        $ renpy.notify(t("Knowledge -1 (Skipped)"))
+        $ sfx_notify_stat("Knowledge -1 (Skipped)")
 
     # --- Question Segment 1: MCQ ---
 
@@ -429,7 +434,7 @@ label chapter_1:
             voice localized_voice  # edge-tts-auto
         supervisor "Your 'due diligence' is noted. Logged and noted."
         $ suspicion_level += 1
-        $ renpy.notify(t("Suspicion +1"))
+        $ sfx_notify_stat("Suspicion +1")
     else:
         $ localized_voice = voice_for_current_language("audio/voice/en/script_0262_supervisor_fe38e0aa8f.mp3")  # edge-tts-auto
         if localized_voice:  # edge-tts-auto
@@ -444,7 +449,7 @@ label chapter_1:
                 voice localized_voice  # edge-tts-auto
             e "I should file a formal concern with the IG office."
             $ trust_score += 2
-            $ renpy.notify(t("Trust +2"))
+            $ sfx_notify_stat("Trust +2")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0271_supervisor_974b128c9d.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -469,7 +474,7 @@ label chapter_1:
                 voice localized_voice  # edge-tts-auto
             im "Not yet. I need to understand the full scope before I act. If I report one anomaly, they'll lock me out. I need to see the whole picture."
             $ trust_score -= 1
-            $ renpy.notify(t("Trust -1"))
+            $ sfx_notify_stat("Trust -1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0284_narrator_voice_6162d06c6d.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -513,6 +518,7 @@ label chapter_2:
 
 
     scene bg_prism at parallax with chapter_transition
+    $ play_ambient(sfx_ambient_terminal_sparse, fadein=1.0, fadeout=0.4, volume=0.24)
 
     with dissolve
 
@@ -576,6 +582,7 @@ label chapter_2:
     colleague "Ed... be very careful what you say next. The walls have ears. Literally."
 
     scene bg_prism1 at parallax with dissolve
+    $ play_ambient(sfx_ambient_terminal_sparse, fadein=0.8, fadeout=0.4, volume=0.24)
 
     # --- Choice 1: Trust colleague or work alone? ---
 
@@ -587,7 +594,7 @@ label chapter_2:
                 voice localized_voice  # edge-tts-auto
             e "Look, I need someone I can trust. What I've found... it's bigger than both of us."
             $ trust_score += 1
-            $ renpy.notify(t("Trust +1"))
+            $ sfx_notify_stat("Trust +1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0366_colleague_dd16107ec9.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -612,7 +619,7 @@ label chapter_2:
             e "Never mind. Forget I said anything. Just tired."
             $ suspicion_level += 0
             $ trust_score -= 1
-            $ renpy.notify(t("Trust -1"))
+            $ sfx_notify_stat("Trust -1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0379_colleague_f0450ba0a8.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -645,7 +652,7 @@ label chapter_2:
     )
     if tiq_result == "continue" and tiq_is_correct:
         $ knowledge_score += 1
-        $ renpy.notify(t("Knowledge +1"))
+        $ sfx_notify_stat("Knowledge +1")
 
     # --- Minigame 2: Decrypt the Message — Learning Section ---
     # (Structured as a self-contained briefing — can be branched into the story tree later)
@@ -701,6 +708,7 @@ label chapter_2:
 
     # --- Choice 2: Copy the files or take notes only? ---
     scene bg_nsa_servers at parallax with dissolve
+    $ play_ambient(sfx_ambient_server_hum, fadein=0.8, fadeout=0.5, volume=0.22)
     show edward tense at intro_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0442_im_09c3298c5f.mp3")  # edge-tts-auto
@@ -727,7 +735,7 @@ label chapter_2:
             im "I need the original documents. Notes won't be enough. Journalists need primary sources — verifiable proof that can't be denied or dismissed."
             $ evidence_secured = True
             $ suspicion_level += 1
-            $ renpy.notify(t("Evidence Secured! | Suspicion +1"))
+            $ sfx_notify_stat("Evidence Secured! | Suspicion +1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0456_narrator_voice_475a96d3e3.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -748,7 +756,7 @@ label chapter_2:
                 voice localized_voice  # edge-tts-auto
             im "If they catch me with files, it's espionage. Notes are deniable."
             $ trust_score -= 1
-            $ renpy.notify(t("Trust -1"))
+            $ sfx_notify_stat("Trust -1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0468_narrator_voice_6f1dede966.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -809,6 +817,7 @@ label chapter_3:
 
 
     scene bg_hong_kong at parallax with chapter_transition
+    $ play_ambient(sfx_ambient_hk_room_buzz, fadein=1.0, fadeout=0.5, volume=0.22)
 
     show edward tense at intro_left
 
@@ -849,7 +858,7 @@ label chapter_3:
             "Try to bluff your way through the security review.":
                 $ tree_record_choice("choice_ch3_0", "bluff")
                 $ suspicion_level += 1
-                $ renpy.notify(t("Suspicion +1"))
+                $ sfx_notify_stat("Suspicion +1")
 
                 $ localized_voice = voice_for_current_language("audio/voice/en/script_0546_im_cbda80472a.mp3")  # edge-tts-auto
                 if localized_voice:  # edge-tts-auto
@@ -864,7 +873,7 @@ label chapter_3:
             "Accelerate the timeline. Contact journalists immediately.":
                 $ tree_record_choice("choice_ch3_0", "accelerate")
                 $ trust_score -= 1
-                $ renpy.notify(t("Trust -1"))
+                $ sfx_notify_stat("Trust -1")
 
                 $ localized_voice = voice_for_current_language("audio/voice/en/script_0555_im_8e4992e8c5.mp3")  # edge-tts-auto
                 if localized_voice:  # edge-tts-auto
@@ -901,13 +910,13 @@ label chapter_3:
         "Contact Grayson Wardell directly through his public email.":
             $ tree_record_choice("choice_ch3_1", "email")
             $ contacts_secured += 1
-            $ renpy.notify(t("Contacts +1"))
+            $ sfx_notify_stat("Contacts +1")
             jump ch3_greenwald_contact
 
         "Wait for a safer moment to make contact.":
             $ tree_record_choice("choice_ch3_1", "wait")
             $ trust_score -= 1
-            $ renpy.notify(t("Trust -1"))
+            $ sfx_notify_stat("Trust -1")
             jump ch3_wait
 
 label ch3_secure_success:
@@ -920,9 +929,10 @@ label ch3_secure_success:
 
     $ contacts_secured += 1
     $ knowledge_score += 1
-    $ renpy.notify(t("Contacts +1 | Knowledge +1"))
+    $ sfx_notify_stat("Contacts +1 | Knowledge +1")
 
     scene bg_hong_kong_terminal at parallax with dissolve
+    $ play_ambient(sfx_ambient_terminal_sparse, fadein=0.8, fadeout=0.4, volume=0.22)
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0598_narrator_voice_87feb29d1c.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -963,7 +973,7 @@ label ch3_secure_fail:
     sys "// WARNING: INSUFFICIENT KNOWLEDGE TO ESTABLISH SECURE CHANNEL. PROCEEDING WITH PARTIAL ENCRYPTION. //"
 
     $ suspicion_level += 1
-    $ renpy.notify(t("Suspicion +1"))
+    $ sfx_notify_stat("Suspicion +1")
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0622_narrator_voice_941572744c.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -975,6 +985,7 @@ label ch3_secure_fail:
 
 label ch3_greenwald_contact:
     scene bg_hong_kong_street at parallax with dissolve
+    $ play_ambient(sfx_ambient_hk_street_mix, fadein=0.8, fadeout=0.5, volume=0.24)
     show greenwald neutral at intro_right
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0632_narrator_voice_7aaee15875.mp3")  # edge-tts-auto
@@ -1010,7 +1021,7 @@ label ch3_greenwald_contact:
     im "This is the problem. The people who need to publish this information don't know the first thing about security."
 
     $ suspicion_level += 1
-    $ renpy.notify(t("Suspicion +1"))
+    $ sfx_notify_stat("Suspicion +1")
 
     jump ch3_continue
 
@@ -1026,7 +1037,7 @@ label ch3_wait:
     im "Every day I wait is another day they could catch me. But rushing makes mistakes. Mistakes get you caught."
 
     $ suspicion_level += 1
-    $ renpy.notify(t("Suspicion +1"))
+    $ sfx_notify_stat("Suspicion +1")
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0659_narrator_voice_498387062f.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -1043,7 +1054,7 @@ label ch3_contact_unsafe:
 
     $ suspicion_level += 1
     $ contacts_secured += 1
-    $ renpy.notify(t("Suspicion +1 | Contacts +1"))
+    $ sfx_notify_stat("Suspicion +1 | Contacts +1")
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0670_im_6aa5038206.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -1222,17 +1233,17 @@ label ch3_continue:
         $ show_hud = True
         
         if mg_opsec_score == "SKIP":
-            $ renpy.notify(t("Minigame Skipped"))
+            $ sfx_notify_stat("Minigame Skipped")
         elif mg_opsec_score >= 4:
             $ contacts_secured += 1
             $ knowledge_score += 1
-            $ renpy.notify(t("Contacts +1 | Knowledge +1"))
+            $ sfx_notify_stat("Contacts +1 | Knowledge +1")
         else:
             $ suspicion_level += 1
-            $ renpy.notify(t("Suspicion +1"))
+            $ sfx_notify_stat("Suspicion +1")
     else:
         $ knowledge_score -= 1
-        $ renpy.notify(t("Knowledge -1 (Skipped)"))
+        $ sfx_notify_stat("Knowledge -1 (Skipped)")
 
     # --- Choice 2: How much to reveal? ---
     show edward neutral at intro_left
@@ -1258,7 +1269,7 @@ label ch3_continue:
             e "It's everything. PRISM, XKeyscore, Boundless Informant, upstream collection — the NSA is collecting data on hundreds of millions of people. American citizens included."
             $ trust_score += 2
             $ contacts_secured += 1
-            $ renpy.notify(t("Trust +2 | Contacts +1"))
+            $ sfx_notify_stat("Trust +2 | Contacts +1")
 
             show greenwald shocked at enter_right
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0778_greenwald_0602aec18d.mp3")  # edge-tts-auto
@@ -1273,7 +1284,7 @@ label ch3_continue:
                 voice localized_voice  # edge-tts-auto
             e "I can confirm the NSA is conducting mass domestic surveillance. I'll share the details when we meet in person."
             $ trust_score += 1
-            $ renpy.notify(t("Trust +1"))
+            $ sfx_notify_stat("Trust +1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0786_greenwald_236a5dbfee.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -1287,7 +1298,7 @@ label ch3_continue:
                 voice localized_voice  # edge-tts-auto
             e "It's significant. That's all I can say right now."
             $ trust_score -= 1
-            $ renpy.notify(t("Trust -1"))
+            $ sfx_notify_stat("Trust -1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0794_greenwald_475a58f9be.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -1331,6 +1342,7 @@ label chapter_4:
 
 
     scene bg_hong_kong_hotel at parallax with chapter_transition
+    $ stop_ambient(0.8)
 
     show edward tired at intro_left
 
@@ -1430,7 +1442,7 @@ label chapter_4:
         "Use the hotel Wi-Fi with a VPN.":
             $ tree_record_choice("choice_ch4_1", "hotel")
             $ suspicion_level += 1
-            $ renpy.notify(t("Suspicion +1"))
+            $ sfx_notify_stat("Suspicion +1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0894_im_436f937719.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -1443,7 +1455,7 @@ label chapter_4:
         "Use a personal mobile hotspot with Tor.":
             $ tree_record_choice("choice_ch4_1", "mobile")
             $ trust_score += 1
-            $ renpy.notify(t("Trust +1"))
+            $ sfx_notify_stat("Trust +1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_0904_im_c25ed56dd0.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -1472,7 +1484,7 @@ label chapter_4:
     )
     if tiq_result == "continue" and tiq_is_correct:
         $ knowledge_score += 1
-        $ renpy.notify(t("Knowledge +1"))
+        $ sfx_notify_stat("Knowledge +1")
 
     # --- Minigame 4: Trace the Route — Learning Section ---
     # (Structured as a self-contained briefing — can be branched into the story tree later)
@@ -1666,7 +1678,7 @@ label chapter_4:
     else:
         $ knowledge_score = max(0, knowledge_score - 1)
         $ escape_successful = False
-        $ renpy.notify(t("Challenge skipped. Knowledge -1"))
+        $ sfx_notify_stat("Challenge skipped. Knowledge -1")
 
     if escape_successful and evidence_secured:
         $ localized_voice = voice_for_current_language("audio/voice/en/script_1011_im_28df0547ea.mp3")  # edge-tts-auto
@@ -1690,6 +1702,7 @@ label chapter_4:
     # --- Choice 2: Fly to Russia or seek another country? ---
 
     scene bg_leak at parallax with dissolve
+    $ play_ambient(sfx_ambient_tv_news_murmur, fadein=0.8, fadeout=0.5, volume=0.18)
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1024_narrator_voice_c0ed9ef7b0.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -1711,7 +1724,7 @@ label chapter_4:
             "Head to the airport immediately. Every minute counts.":
                 $ tree_record_choice("choice_ch4_2", "airport")
                 $ escape_successful = True
-                $ renpy.notify(t("Escape initiated!"))
+                $ sfx_notify_stat("Escape initiated!")
 
                 $ localized_voice = voice_for_current_language("audio/voice/en/script_1037_im_71e6faaa30.mp3")  # edge-tts-auto
                 if localized_voice:  # edge-tts-auto
@@ -1723,7 +1736,7 @@ label chapter_4:
                 $ tree_record_choice("choice_ch4_2", "russia")
                 $ escape_successful = True
                 $ trust_score -= 1
-                $ renpy.notify(t("Escape to Russia | Trust -1"))
+                $ sfx_notify_stat("Escape to Russia | Trust -1")
 
                 $ localized_voice = voice_for_current_language("audio/voice/en/script_1046_im_3630118336.mp3")  # edge-tts-auto
                 if localized_voice:  # edge-tts-auto
@@ -1736,7 +1749,7 @@ label chapter_4:
             "Fly to Ecuador via Moscow. Multiple stops make tracking harder.":
                 $ tree_record_choice("choice_ch4_2", "ecuador")
                 $ escape_successful = True
-                $ renpy.notify(t("Escape route planned!"))
+                $ sfx_notify_stat("Escape route planned!")
 
                 $ localized_voice = voice_for_current_language("audio/voice/en/script_1056_im_13f8ccf5d4.mp3")  # edge-tts-auto
                 if localized_voice:  # edge-tts-auto
@@ -1752,7 +1765,7 @@ label chapter_4:
             "Seek asylum at a European embassy in Hong Kong.":
                 $ tree_record_choice("choice_ch4_2", "embassy")
                 $ trust_score += 1
-                $ renpy.notify(t("Trust +1"))
+                $ sfx_notify_stat("Trust +1")
 
                 if identity_exposed:
                     $ localized_voice = voice_for_current_language("audio/voice/en/script_1067_narrator_voice_eac9e81ce5.mp3")  # edge-tts-auto
@@ -1776,7 +1789,7 @@ label chapter_4:
             "Stay in Hong Kong and face the legal system.":
                 $ tree_record_choice("choice_ch4_2", "stay")
                 $ escape_successful = False
-                $ renpy.notify(t("Escape abandoned."))
+                $ sfx_notify_stat("Escape abandoned.")
 
                 $ localized_voice = voice_for_current_language("audio/voice/en/script_1081_im_fc5a5dc374.mp3")  # edge-tts-auto
                 if localized_voice:  # edge-tts-auto
@@ -1788,6 +1801,7 @@ label chapter_4:
 
     if escape_successful and not identity_exposed:
         scene bg_hk_airport at parallax with dissolve
+        $ play_ambient(sfx_ambient_hk_airport, fadein=0.8, fadeout=0.5, volume=0.24)
         $ localized_voice = voice_for_current_language("audio/voice/en/script_1088_narrator_voice_bb80e4e123.mp3")  # edge-tts-auto
         if localized_voice:  # edge-tts-auto
             voice localized_voice  # edge-tts-auto
@@ -1826,6 +1840,7 @@ label chapter_5:
 
 
     scene bg_sheremetyevo at parallax with chapter_transition
+    $ play_ambient(sfx_ambient_svo_airport, fadein=1.0, fadeout=0.5, volume=0.24)
 
     show edward tired at intro_left
 
@@ -1877,6 +1892,7 @@ label chapter_5:
     hide russian_official with dissolve
 
     scene bg_moscow_apartment at parallax with dissolve
+    $ stop_ambient(0.8)
     show edward thoughtful at intro_left
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1158_im_cc807ea41d.mp3")  # edge-tts-auto
@@ -1976,7 +1992,7 @@ label chapter_5:
     )
     if tiq_result == "continue" and tiq_is_correct:
         $ knowledge_score += 1
-        $ renpy.notify(t("Knowledge +1"))
+        $ sfx_notify_stat("Knowledge +1")
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1218_im_39e8e483ff.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto
@@ -2025,7 +2041,7 @@ label chapter_5:
                 voice localized_voice  # edge-tts-auto
             e "The public's right to know outweighs the government's desire for secrecy. If the system won't reform itself, people of conscience have to act."
             $ trust_score += 2
-            $ renpy.notify(t("Trust +2"))
+            $ sfx_notify_stat("Trust +2")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_1250_narrator_voice_9b7a0efd80.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -2041,7 +2057,7 @@ label chapter_5:
             e "Try the Inspector General first. Document everything. If the system fails you — and it probably will — then you'll have a record proving you tried."
             $ trust_score += 1
             $ knowledge_score += 1
-            $ renpy.notify(t("Trust +1 | Knowledge +1"))
+            $ sfx_notify_stat("Trust +1 | Knowledge +1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_1260_narrator_voice_bd6fa239ee.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -2056,7 +2072,7 @@ label chapter_5:
                 voice localized_voice  # edge-tts-auto
             e "I lost my country, my family, my freedom. I'd do it again, but I won't ask anyone else to pay that price."
             $ trust_score -= 1
-            $ renpy.notify(t("Trust -1"))
+            $ sfx_notify_stat("Trust -1")
 
             $ localized_voice = voice_for_current_language("audio/voice/en/script_1269_narrator_voice_f16f66cc19.mp3")  # edge-tts-auto
             if localized_voice:  # edge-tts-auto
@@ -2068,6 +2084,7 @@ label chapter_5:
     # --- Final scene ---
 
     scene bg_moscow_winter_epilogue at parallax with fade
+    $ play_ambient(sfx_ambient_winter_wind, fadein=0.8, fadeout=0.5, volume=0.16)
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_1277_narrator_voice_8e4ba5b403.mp3")  # edge-tts-auto
     if localized_voice:  # edge-tts-auto

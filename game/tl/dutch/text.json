@@ -2083,7 +2083,6 @@
   "Tab switch": "Tab wisselen",
   "Reset": "Resetten",
   "TERMINAL": "TERMINAL",
-  "DOSSIER": "DOSSIER",
   "MINIMAL": "MINIMAAL",
   "APPLY SETTINGS": "INSTELLINGEN TOEPASSEN",
   "RESET TO FIELD DEFAULTS": "STANDAARDINSTELLINGEN HERSTELLEN",
@@ -2134,5 +2133,13 @@
   "Font Size Adjustment": "Aanpassing lettergrootte",
   "Scale all dialogue and UI text globally.": "Schaal alle dialoog- en interfacetekst globaal.",
   "High Contrast Mode": "Hoog contrast",
-  "Boost text contrast for dark background scenes.": "Verhoog het tekstcontrast voor scènes met donkere achtergronden."
+  "Boost text contrast for dark background scenes.": "Verhoog het tekstcontrast voor scènes met donkere achtergronden.",
+  "--- SRN MONITOR ---": "--- SRN-MONITOR ---",
+  "How to play: follow each objective, inspect the clues, type the terminal command, press Enter to run it, and use TAB to complete only the current command token.": "Zo speel je: volg elk doel, bekijk de aanwijzingen, typ de terminalopdracht, druk op Enter om die uit te voeren en gebruik TAB om alleen het huidige opdrachtonderdeel aan te vullen.",
+  "Review the explanation, then press Enter to load the next hash challenge.": "Bekijk de uitleg en druk daarna op Enter om de volgende hash-uitdaging te laden.",
+  "SRN CLOSING IN": "SRN KOMT DICHTERBIJ",
+  "Session complete. Type 'exit' or press Enter to return to the story.": "Sessie voltooid. Typ 'exit' of druk op Enter om terug te keren naar het verhaal.",
+  "TAB completes the current token": "TAB vult het huidige onderdeel aan",
+  "[[snowden@nsa-laptop ~]$ ": "[[snowden@nsa-laptop ~]$ ",
+  "inf": "inf"
 }

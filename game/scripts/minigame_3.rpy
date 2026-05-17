@@ -533,7 +533,7 @@ init python:
         if score >= 2:
             knowledge_score += 2
             evidence_secured = True
-            renpy.notify("knowledge +2")
+            sfx_notify_stat("knowledge +2")
         elif score == 1:
             knowledge_score += 1
         else:

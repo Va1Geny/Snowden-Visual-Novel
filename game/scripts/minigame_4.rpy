@@ -1051,7 +1051,7 @@ label minigame_4_cover_tracks:
     if _return == "SKIP":
         $ quick_menu = True
         $ show_hud = True
-        $ renpy.notify("Minigame Skipped")
+        $ sfx_notify_stat("Minigame Skipped")
         return
 
     $ cover_wiped = ct_state["wiped"]
@@ -1063,18 +1063,18 @@ label minigame_4_cover_tracks:
         $ knowledge_score += 3
         $ escape_successful = True
         $ evidence_secured = True
-        $ renpy.notify(t("PERFECT — Digital Forensics Expert! +3"))
+        $ sfx_notify_stat("PERFECT — Digital Forensics Expert! +3")
     elif cover_wiped >= 6:
         $ knowledge_score += 2
         $ escape_successful = True
-        $ renpy.notify(t("Good work. Most traces wiped. +2"))
+        $ sfx_notify_stat("Good work. Most traces wiped. +2")
     elif cover_wiped >= 4:
         $ knowledge_score += 1
         $ suspicion_level += 1
-        $ renpy.notify(t("Partial success. Some evidence remains."))
+        $ sfx_notify_stat("Partial success. Some evidence remains.")
     else:
         $ suspicion_level += 2
         $ identity_exposed = True
-        $ renpy.notify(t("Mission failed. NSA found evidence."))
+        $ sfx_notify_stat("Mission failed. NSA found evidence.")
 
     return

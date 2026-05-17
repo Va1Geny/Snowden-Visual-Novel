@@ -11,6 +11,82 @@ define ag_nsa = "Signal Reach Network"
 
 define config.default_fullscreen = True
 define config.allow_skipping = True
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# SOUND EFFECTS — Global SFX Definitions
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+define sfx_ui_click     = "audio/sfx/ui_click.wav"
+define sfx_ui_hover     = "audio/sfx/ui_hover.wav"
+define sfx_notify       = "audio/sfx/notify.wav"
+define sfx_success      = "audio/sfx/success.wav"
+define sfx_failure      = "audio/sfx/failure.wav"
+define sfx_transition   = "audio/sfx/transition.wav"
+define sfx_suspicion    = "audio/sfx/suspicion.wav"
+define sfx_knowledge    = "audio/sfx/knowledge.wav"
+define sfx_text_advance = "audio/sfx/text_advance.wav"
+define sfx_menu_open    = "audio/sfx/menu_open.wav"
+define sfx_menu_close   = "audio/sfx/menu_close.wav"
+define sfx_click_single = "audio/sfx/click_single.wav"
+define sfx_ambient_office_busy = "audio/sfx/ambient_office_busy_real_quiet.wav"
+define sfx_ambient_terminal_sparse = "audio/sfx/ambient_terminal_sparse_real_quiet.wav"
+define sfx_ambient_server_hum = "audio/sfx/ambient_server_hum_real_quiet.wav"
+define sfx_ambient_hk_street_mix = "audio/sfx/ambient_hk_street_mix_real_quiet.wav"
+define sfx_ambient_hk_room_buzz = "audio/sfx/ambient_hk_room_buzz_real_quiet.wav"
+define sfx_ambient_hk_airport = "audio/sfx/ambient_hk_airport_real_quiet.wav"
+define sfx_ambient_tv_news_murmur = "audio/sfx/ambient_tv_news_murmur_real_quiet.wav"
+define sfx_ambient_winter_wind = "audio/sfx/ambient_winter_wind_real_quiet.wav"
+define sfx_ambient_svo_airport = "audio/sfx/ambient_svo_airport_real_quiet.wav"
+
+# Global button sounds (applied to ALL buttons automatically)
+style button:
+    hover_sound "audio/sfx/ui_hover.wav"
+    activate_sound "audio/sfx/ui_click.wav"
+
+style choice_button:
+    hover_sound "audio/sfx/ui_hover.wav"
+    activate_sound "audio/sfx/ui_click.wav"
+
+init python:
+    renpy.music.register_channel(
+        "ambient",
+        mixer="music",
+        loop=True,
+        stop_on_mute=True,
+        tight=True,
+    )
+
+    def play_ambient(track, fadein=0.8, fadeout=0.5, volume=0.35):
+        """Play looping background ambience on its own channel."""
+        renpy.music.play(
+            track,
+            channel="ambient",
+            loop=True,
+            fadeout=fadeout,
+            fadein=fadein,
+            if_changed=True,
+            relative_volume=volume,
+        )
+
+    def stop_ambient(fadeout=0.5):
+        """Stop the current ambience cleanly before a scene change."""
+        renpy.music.stop(channel="ambient", fadeout=fadeout)
+
+    # Helper: play a stat-change SFX alongside renpy.notify
+    def sfx_notify_stat(message, stat_type="neutral"):
+        """Play appropriate SFX and show notification for stat changes."""
+        if "suspicion" in stat_type.lower() or "suspicion" in message.lower():
+            renpy.play("audio/sfx/suspicion.wav", channel="audio")
+        elif "knowledge" in stat_type.lower() or "knowledge" in message.lower():
+            renpy.play("audio/sfx/knowledge.wav", channel="audio")
+        elif "trust" in stat_type.lower() or "trust" in message.lower():
+            renpy.play("audio/sfx/notify.wav", channel="audio")
+        elif "success" in stat_type.lower() or "passed" in message.lower():
+            renpy.play("audio/sfx/success.wav", channel="audio")
+        elif "fail" in stat_type.lower() or "failed" in message.lower():
+            renpy.play("audio/sfx/failure.wav", channel="audio")
+        else:
+            renpy.play("audio/sfx/notify.wav", channel="audio")
+        renpy.notify(t(message))
 define e = Character("You",
     image="edward",
     color="#00FFD1",

@@ -1102,7 +1102,7 @@ init python:
         decrypt_state["wrong_position"] = None
         decrypt_state["last_input_at"] = time.time()
         decrypt_log("> Hint activated — one letter revealed")
-        renpy.notify(t("Hint activated"))
+        sfx_notify_stat("Hint activated")
         renpy.restart_interaction()
         decrypt_check_word()
 
@@ -1148,7 +1148,7 @@ init python:
         decrypt_state["wrong_position"] = None
         decrypt_state["word_complete_serial"] += 1
         decrypt_log("> " + puzzle["word"] + " — DECRYPTION SUCCESSFUL")
-        renpy.notify(t("Encryption cracked! +1"))
+        sfx_notify_stat("Encryption cracked! +1")
         renpy.restart_interaction()
         return True
 
@@ -2301,7 +2301,7 @@ label minigame_2_decrypt:
     if not mg_intro2:
         $ knowledge_score -= 1
         $ mg_decrypt_solved = False
-        $ renpy.notify(t("Knowledge -1 (Skipped)"))
+        $ sfx_notify_stat("Knowledge -1 (Skipped)")
         return
 
     $ decrypt_reset_game()
@@ -2341,7 +2341,7 @@ label decrypt_game_results:
         $ suspicion_level += 1
 
     $ mg_decrypt_solved = total >= 3
-    $ renpy.notify(t("Decryption score: {}/9").format(total))
+    $ sfx_notify_stat("Decryption score: {}/9").format(total)
 
     $ quick_menu = True
     $ show_hud = True

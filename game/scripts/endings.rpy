@@ -8,6 +8,7 @@
 ################################################################################
 
 label max_suspicion_game_over:
+    $ stop_ambient(0.6)
     $ show_hud = False
     $ quick_menu = True
     $ ending_type = "silenced"
@@ -16,6 +17,7 @@ label max_suspicion_game_over:
 
 
 label determine_ending:
+    $ stop_ambient(0.6)
     # Calculate the ending based on accumulated flags
     if knowledge_score >= 8 and escape_successful and contacts_secured >= 2 and not identity_exposed:
         $ ending_type = "hero"
@@ -373,7 +375,7 @@ transform slide_up_delay(d):
 
 screen ending_screen(title, color, description, lessons, bg_image=None):
     modal True
-    
+    on "show" action Play("sound", "audio/sfx/transition.wav")
     # ── Background Layer ──────────────────────────────────────────────
     if bg_image:
         add bg_image:

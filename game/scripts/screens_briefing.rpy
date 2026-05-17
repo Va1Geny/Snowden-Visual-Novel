@@ -98,7 +98,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
     default t_btn = renpy.variant("reduces_motion")
 
     if not renpy.variant("reduces_motion"):
-        timer 0.01 action SetScreenVariable("t_bg", True)
+        timer 0.01 action [SetScreenVariable("t_bg", True), Play("audio", "audio/sfx/transition.wav")]
         timer 0.3 action SetScreenVariable("t_deco", True)
         timer 0.5 action SetScreenVariable("t_chap", True)
         timer 0.6 action SetScreenVariable("t_div_top", True)
@@ -106,7 +106,7 @@ screen chapter_transition(chapter_num, codename, location, date, time_str, clear
 
         if t_typing:
             if typing_idx < len(codename):
-                timer 0.035 action SetScreenVariable("typing_idx", typing_idx + 1) repeat True
+                timer 0.06 action [SetScreenVariable("typing_idx", typing_idx + 1), Play("audio", "audio/sfx/click_single.wav")] repeat True
             else:
                 if not t_div_bot:
                     timer 0.01 action SetScreenVariable("t_div_bot", True)
@@ -318,7 +318,7 @@ screen minigame_briefing(challenge_title, subtitle, mission_id, classification, 
 
         if t_typing:
             if typing_idx < len(challenge_title):
-                timer 0.04 action SetScreenVariable("typing_idx", typing_idx + 1) repeat True
+                timer 0.06 action [SetScreenVariable("typing_idx", typing_idx + 1), Play("audio", "audio/sfx/click_single.wav")] repeat True
             else:
                 if not t_sub:
                     timer 0.01 action SetScreenVariable("t_sub", True)

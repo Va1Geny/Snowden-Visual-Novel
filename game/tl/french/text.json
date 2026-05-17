@@ -2084,7 +2084,6 @@
   "Tab switch": "Changer d'onglet",
   "Reset": "Réinitialiser",
   "TERMINAL": "TERMINAL",
-  "DOSSIER": "DOSSIER",
   "MINIMAL": "MINIMAL",
   "APPLY SETTINGS": "APPLIQUER LES PARAMÈTRES",
   "RESET TO FIELD DEFAULTS": "RÉINITIALISER LES PARAMÈTRES",
@@ -2135,5 +2134,13 @@
   "Font Size Adjustment": "Ajustement de la taille du texte",
   "Scale all dialogue and UI text globally.": "Ajuster globalement la taille du texte des dialogues et de l'interface.",
   "High Contrast Mode": "Mode contraste élevé",
-  "Boost text contrast for dark background scenes.": "Augmenter le contraste du texte sur les scènes à fond sombre."
+  "Boost text contrast for dark background scenes.": "Augmenter le contraste du texte sur les scènes à fond sombre.",
+  "--- SRN MONITOR ---": "--- MONITEUR SRN ---",
+  "How to play: follow each objective, inspect the clues, type the terminal command, press Enter to run it, and use TAB to complete only the current command token.": "Comment jouer : suivez chaque objectif, inspectez les indices, tapez la commande du terminal, appuyez sur Entrée pour l'exécuter et utilisez TAB pour compléter uniquement le jeton de commande en cours.",
+  "Review the explanation, then press Enter to load the next hash challenge.": "Lisez l'explication, puis appuyez sur Entrée pour charger le défi de hachage suivant.",
+  "SRN CLOSING IN": "LE SRN SE RAPPROCHE",
+  "Session complete. Type 'exit' or press Enter to return to the story.": "Session terminée. Tapez 'exit' ou appuyez sur Entrée pour revenir à l'histoire.",
+  "TAB completes the current token": "TAB complète le jeton en cours",
+  "[[snowden@nsa-laptop ~]$ ": "[[snowden@nsa-laptop ~]$ ",
+  "inf": "inf"
 }
