@@ -97,7 +97,8 @@ label ending_hero:
             "Strong encryption (AES-256, PGP) is the foundation of digital privacy. Without it, no communication is truly private.",
             "Operational Security (OpSec) is not optional — every step in the chain must be secured, from encrypted channels to physical device security.",
             "Whistleblowing platforms like SecureDrop exist to protect sources. Technology can be a shield for truth."
-        ]
+        ],
+        bg_image="images/endings/thehero.png"
     )
     if _return == "restart":
         jump start
@@ -158,7 +159,8 @@ label ending_fugitive:
             "VPNs encrypt your traffic, but they don't make you invisible. Your VPN provider can still see your activity — trust matters.",
             "Metadata (who you contacted, when, from where) can be as revealing as message content. Stripping metadata from files before sharing is essential.",
             "Digital security requires constant vigilance — one mistake can compromise months of careful planning."
-        ]
+        ],
+        bg_image="images/endings/fugitive.png"
     )
     if _return == "restart":
         jump start
@@ -219,7 +221,8 @@ label ending_imprisoned:
             "IP tracking and digital forensics can identify you in minutes if you leave traces. Always use Tor and VPNs together on untrusted networks.",
             "The Espionage Act of 1917 doesn't distinguish between whistleblowers and spies — legal protections for digital whistleblowers remain weak.",
             "Physical security is as important as digital security. Cameras, keyloggers, and 'evil maid' attacks can bypass the strongest encryption."
-        ]
+        ],
+        bg_image="images/endings/imprissioned.png"
     )
     if _return == "restart":
         jump start
@@ -280,7 +283,8 @@ label ending_silenced:
             "Network monitoring tools like intrusion detection systems (IDS) track access patterns. Unusual behavior triggers automated alerts.",
             "Insider threat programs use behavioral analytics to detect anomalies — accessing files outside your clearance level is immediately flagged.",
             "Firewalls work both ways: they keep threats out, but they also monitor what goes out. Data Loss Prevention (DLP) systems watch for unauthorized transfers."
-        ]
+        ],
+        bg_image="images/endings/silenced.png"
     )
     if _return == "restart":
         jump start
@@ -341,7 +345,8 @@ label ending_betrayed:
             "Man-in-the-middle attacks can compromise even encrypted channels if you don't verify the other party's identity through key fingerprints.",
             "Trust verification is critical — in cryptography, you must independently verify public keys through a separate channel, not just accept them.",
             "Zero-day exploits can break any system. Defense in depth (multiple layers of security) is the only way to mitigate unknown vulnerabilities."
-        ]
+        ],
+        bg_image="images/endings/betrayed.png"
     )
     if _return == "restart":
         jump start
@@ -366,11 +371,18 @@ transform slide_up_delay(d):
     pause d
     easein 1.0 alpha 1.0 yoffset 0
 
-screen ending_screen(title, color, description, lessons):
+screen ending_screen(title, color, description, lessons, bg_image=None):
     modal True
     
     # ── Background Layer ──────────────────────────────────────────────
-    add "#080C10"
+    if bg_image:
+        add bg_image:
+            xsize 1920 ysize 1080
+            fit "cover"
+            align (0.5, 0.5)
+        add Solid("#080C1040") # ~25% opacity overlay so the background is very bright and clear
+    else:
+        add "#080C10"
     
     add Solid("#00FFD105")
     
@@ -419,9 +431,9 @@ screen ending_screen(title, color, description, lessons):
             
             # ── DESCRIPTION CARD ──
             frame:
-                xalign 0.5 xsize 1000
-                background "#0D1117F0"
-                padding (40, 30)
+                xalign 0.5 xsize 1190
+                background "#0D1117E6"
+                padding (50, 36)
                 at slide_up_delay(0.4)
                 
                 text description:
@@ -438,9 +450,9 @@ screen ending_screen(title, color, description, lessons):
                 
                 # Left Side: Mission Metrics
                 frame:
-                    xsize 580 ysize 420
-                    background "#0D1117F0"
-                    padding (24, 20)
+                    xsize 580 ysize 440
+                    background "#0D1117E6"
+                    padding (30, 26)
                     at slide_up_delay(0.8)
                     
                     vbox:
@@ -463,7 +475,7 @@ screen ending_screen(title, color, description, lessons):
                                 xfill True ysize 8
                                 background "#1A2530"
                                 frame:
-                                    xsize int(532 * (knowledge_score / 10.0)) ysize 8
+                                    xsize int(520 * (knowledge_score / 10.0)) ysize 8
                                     background "#00FFD1"
                         
                         # Suspicion Bar (Inverted Color)
@@ -477,7 +489,7 @@ screen ending_screen(title, color, description, lessons):
                                 xfill True ysize 8
                                 background "#1A2530"
                                 frame:
-                                    xsize int(532 * (suspicion_level / 5.0)) ysize 8
+                                    xsize int(520 * (suspicion_level / 5.0)) ysize 8
                                     background "#FF2D55"
 
                         null height 10
@@ -518,9 +530,9 @@ screen ending_screen(title, color, description, lessons):
 
                 # Right Side: Post-Mortem Analysis
                 frame:
-                    xsize 580 ysize 420
-                    background "#0D1117F0"
-                    padding (24, 20)
+                    xsize 580 ysize 440
+                    background "#0D1117E6"
+                    padding (30, 26)
                     at slide_up_delay(1.2)
                     
                     vbox:
@@ -587,7 +599,6 @@ label dev_ending_selector:
     scene black with dissolve
     
     menu:
-        "Select Ending to View (Dev Tool):"
         "Ending 1: The Hero":
             # Set minimum requirements for the UI breakdown to not look weird
             $ knowledge_score = 10

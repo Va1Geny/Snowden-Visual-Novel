@@ -208,6 +208,86 @@ style modal_action_button_text is button_text:
     xalign 0.5
     text_align 0.5
 
+style dossier_shell_frame is frame:
+    background Solid("#0C131DEE")
+    padding (24, 20)
+
+style dossier_header_kicker:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 13
+    color "#00E5B0"
+    bold True
+    kerning 2.5
+
+style dossier_header_title:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 32
+    color "#00E5B0"
+    bold True
+
+style dossier_header_body:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 15
+    color "#5F7385"
+
+style dossier_card_button is button:
+    background Solid("#10171F")
+    hover_background Solid("#141E2C")
+    selected_background Solid("#141E2C")
+    left_padding 0
+    right_padding 0
+    top_padding 0
+    bottom_padding 0
+
+style dossier_card_button_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E0E0E0"
+
+style dossier_term_title:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 22
+    color "#00E5B0"
+    bold True
+
+style dossier_term_body:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#7B8FA3"
+    line_spacing 4
+
+style dossier_footer_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 14
+    color "#4A5E70"
+    text_align 0.5
+
+style dossier_scrollbar is vscrollbar:
+    xsize 6
+    base_bar Solid("#0A1018")
+    thumb Solid("#00E5B066")
+
+style dossier_action_button is button:
+    xsize 200
+    ysize 52
+    background Solid("#0A1A22")
+    hover_background Solid("#0D2A34")
+    selected_background Solid("#0D2A34")
+    left_padding 16
+    right_padding 16
+    top_padding 6
+    bottom_padding 6
+
+style dossier_action_button_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 18
+    bold True
+    color "#00E5B0"
+    hover_color "#FFFFFF"
+    selected_color "#FFFFFF"
+    text_align 0.5
+    xalign 0.5
+
+
 style choice_button is button:
     xsize 1120
     yminimum 78
@@ -432,12 +512,14 @@ screen choice(items):
         key "K_2" action items[1].action
         key "K_KP2" action items[1].action
 
+    $ panel_h = max(270, 100 + len(items) * 85)
+
     fixed at panel_rise:
         xfill True
         yalign 1.0
-        ysize 270
+        ysize panel_h
 
-        add VerticalFade("#0A0F1A", "#0A0F1A", 0, 247) xsize config.screen_width ysize 270
+        add VerticalFade("#0A0F1A", "#0A0F1A", 0, 247) xsize config.screen_width ysize panel_h
 
         frame:
             xfill True
@@ -1888,121 +1970,209 @@ screen dossier():
 
     $ compact = is_compact_layout()
     $ dossier_xpos = 24 if compact else 72
-    $ dossier_ypos = 188 if compact else 214
+    $ dossier_ypos = 24 if compact else 44
     $ dossier_xsize = 1872 if compact else 1776
-    $ dossier_ysize = 844 if compact else 770
-    $ dossier_viewport_ysize = 694 if compact else 640
-    $ dossier_term_size = 26 if compact else 24
-    $ dossier_definition_size = 20 if compact else 18
-    $ dossier_footer_size = 19 if compact else 17
+    $ dossier_ysize = 1012 if compact else 992
+    $ dossier_viewport_ysize = (680 if compact else 660)
+    $ dossier_term_size = 22 if compact else 20
+    $ dossier_definition_size = 17 if compact else 16
+    $ dossier_footer_size = 14 if compact else 13
+    $ dossier_entry_count = len(DOSSIER_ENTRIES)
 
-    use ui_backdrop
-    add "logo_watermark"
-    use shell_header(
-        "REFERENCE DATABASE",
-        "NETWORK SECURITY DOSSIER",
-        "Core cyber-security concepts presented in one scrollable reference layout."
-    )
+    # ── BACKGROUND: dark base + grid + scanline ──
+    add Solid("#090D13")
 
+    fixed:
+        xfill True
+        yfill True
+
+        # horizontal grid lines
+        for y in range(0, 1080, 24):
+            add Solid("#0E1A2218") xpos 0 ypos y xsize 1920 ysize 1
+
+        # vertical grid lines
+        for x in range(0, 1920, 24):
+            add Solid("#0E1A2212") xpos x ypos 0 xsize 1 ysize 1080
+
+        # slow full-screen scanline
+        add Solid("#FFFFFF06") at dossier_scanline_slow
+
+    # ── MAIN SHELL FRAME ──
     frame:
         xpos dossier_xpos
         ypos dossier_ypos
         xsize dossier_xsize
         ysize dossier_ysize
-        background Solid("#0E1321E6")
-        padding (26, 26)
+        style "dossier_shell_frame"
 
-        vbox:
+        fixed:
             xfill True
             yfill True
-            spacing 18
 
-            viewport:
+            # panel fill
+            add Solid("#0B1019F0")
+
+            # inner scanline overlay (faster, header area feel)
+            fixed:
                 xfill True
-                ysize dossier_viewport_ysize
-                scrollbars "vertical"
-                mousewheel True
-                draggable True
-                pagekeys True
+                yfill True
+                add Solid("#00E5B008") at dossier_header_scanline
 
-                vbox:
-                    spacing 14
-                    xfill True
-                    xmaximum 1670
-
-                    for term, definition in DOSSIER_ENTRIES:
-                        frame:
-                            xfill True
-                            xmaximum 1670
-                            background Solid("#171C30")
-                            padding (24, 20)
-
-                            hbox:
-                                spacing 18
-                                xfill True
-
-                                frame:
-                                    xsize 4
-                                    ysize 76
-                                    background Solid("#003A3A")
-                                    yalign 0.0
-
-                                vbox:
-                                    spacing 8
-                                    xfill True
-                                    xmaximum 1600
-
-                                    text t(term):
-                                        color "#E8E8E8"
-                                        size dossier_term_size
-                                        bold True
-                                        xfill True
-                                        substitute False
-
-                                    text t(definition):
-                                        color "#7A8A99"
-                                        size dossier_definition_size
-                                        xfill True
-                                        xmaximum 1540
-                                        substitute False
-
-            frame:
+            vbox:
                 xfill True
-                background Solid("#171C30")
-                padding (20, 18)
+                spacing 14
 
-                vbox:
-                    spacing 10
+                # ━━━━━━ HEADER SECTION ━━━━━━
+                frame:
                     xfill True
-
-                    text t("Exports are saved as plain .txt files to an exports folder or to your user profile if needed."):
-                        color "#7A8A99"
-                        size dossier_footer_size
-                        xalign 0.5
-                        text_align 0.5
-                        xmaximum 1400
-                        substitute False
+                    background Solid("#0D151F")
+                    padding (24, 18)
 
                     fixed:
                         xfill True
-                        ysize 74
+                        yfit True
 
-                        textbutton t("EXPORT TXT"):
-                            style "modal_action_button"
-                            text_font settings_ui_font(mono=True)
-                            xsize 220
-                            text_xalign 0.5
-                            text_text_align 0.5
-                            background Solid("#244C2F")
-                            hover_background Solid("#3A7A58")
-                            action Function(export_dossier_txt)
+                        # faint top border accent
+                        add Solid("#00E5B030") xpos 0 ypos 0 xsize 9999 ysize 1
 
-                        textbutton t("RETURN"):
-                            style "modal_action_button"
-                            text_font settings_ui_font(mono=True)
-                            xsize 220
+                        vbox:
+                            spacing 8
+                            xfill True
+                            yoffset 4
+
+                            hbox:
+                                spacing 6
+
+                                text t("REFERENCE DATABASE"):
+                                    style "dossier_header_kicker"
+
+                                text "█":
+                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    size 13
+                                    color "#00E5B0"
+                                    at dossier_cursor_blink_fast
+
+                                null width 20
+
+                                text "[dossier_entry_count] ENTRIES LOADED":
+                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    size 11
+                                    color "#3A5060"
+                                    kerning 1.5
+                                    yalign 0.5
+
+                            text t("NETWORK SECURITY DOSSIER"):
+                                style "dossier_header_title"
+                                at dossier_title_glow
+
+                            # animated divider line
+                            frame:
+                                xfill True
+                                ysize 2
+                                background Solid("#00E5B0")
+                                at dossier_divider_draw
+
+                            # secondary dim divider
+                            frame:
+                                xfill True
+                                ysize 1
+                                yoffset 2
+                                background Solid("#00E5B018")
+
+                            text t("Core cyber-security concepts presented in one scrollable reference layout."):
+                                style "dossier_header_body"
+
+                # ━━━━━━ ENTRIES VIEWPORT ━━━━━━
+                side "c r":
+                    spacing 8
+                    xfill True
+                    ysize dossier_viewport_ysize
+
+                    viewport id "dossier_vp":
+                        xfill True
+                        mousewheel True
+                        draggable True
+                        pagekeys True
+
+                        vbox:
+                            spacing 6
+                            xfill True
+
+                            for term, definition in DOSSIER_ENTRIES:
+                                button:
+                                    style "dossier_card_button"
+                                    xfill True
+                                    action NullAction()
+
+                                    # outer: accent bar color as background
+                                    frame:
+                                        xfill True
+                                        background Solid("#00E5B0")
+                                        left_padding 4
+                                        right_padding 0
+                                        top_padding 0
+                                        bottom_padding 0
+
+                                        # inner: card body sits on top, exposing 4px accent on the left
+                                        frame:
+                                            xfill True
+                                            background Solid("#0D151F")
+                                            padding (18, 14, 18, 14)
+
+                                            vbox:
+                                                spacing 6
+                                                xfill True
+
+                                                text t(term):
+                                                    style "dossier_term_title"
+                                                    size dossier_term_size
+                                                    substitute False
+
+                                                text t(definition):
+                                                    style "dossier_term_body"
+                                                    size dossier_definition_size
+                                                    xfill True
+                                                    substitute False
+
+                    vbar value YScrollValue("dossier_vp"):
+                        style "dossier_scrollbar"
+
+                # ━━━━━━ FOOTER ━━━━━━
+                frame:
+                    xfill True
+                    background Solid("#0A1018")
+                    padding (24, 14)
+
+                    hbox:
+                        xfill True
+
+                        # left: info text
+                        vbox:
+                            yalign 0.5
+
+                            text t("Exports are saved as plain .txt files to an exports folder or to your user profile if needed."):
+                                style "dossier_footer_text"
+                                size dossier_footer_size
+                                text_align 0.0
+                                substitute False
+
+                        # right: action buttons
+                        hbox:
+                            spacing 12
                             xalign 1.0
-                            action Return()
+                            yalign 0.5
+
+                            textbutton t("EXPORT TXT"):
+                                style "dossier_action_button"
+                                text_style "dossier_action_button_text"
+                                at dossier_button_pulse
+                                action Function(export_dossier_txt)
+
+                            textbutton t("RETURN"):
+                                style "dossier_action_button"
+                                text_style "dossier_action_button_text"
+                                at dossier_button_pulse
+                                action Return()
 
     key "game_menu" action Return()
 

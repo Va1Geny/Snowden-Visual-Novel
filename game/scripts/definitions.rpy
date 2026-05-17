@@ -655,6 +655,10 @@ image bg_kali_net:
     "backgrounds/chapter_3/kali-net.jpg"
     xysize (1920, 1080)
 
+image bg_kali_dragon:
+    "backgrounds/chapter_3/kali_linux_neon_dragon.jpg"
+    xysize (1920, 1080)
+
 image bg_hk_airport:
     "backgrounds/chapter_4/bg_hk_airport.png"
     xysize (1920, 1080)
@@ -795,11 +799,49 @@ transform dossier_cursor_blink:
     pause 0.5
     repeat
 
+transform dossier_cursor_blink_fast:
+    alpha 1.0
+    pause 0.45
+    alpha 0.0
+    pause 0.45
+    repeat
+
 transform dossier_btn_idle:
     alpha 0.9
     linear 2.0 alpha 1.0
     linear 2.0 alpha 0.9
     repeat
+
+transform dossier_button_pulse:
+    alpha 0.88
+    linear 1.4 alpha 1.0
+    linear 1.4 alpha 0.88
+    repeat
+
+transform dossier_scanline_slow:
+    alpha 0.035
+    yoffset -1080
+    linear 12.0 yoffset 1080
+    repeat
+
+transform dossier_header_scanline:
+    alpha 0.06
+    yoffset -200
+    linear 3.5 yoffset 200
+    repeat
+
+transform dossier_title_glow:
+    alpha 0.0
+    linear 0.6 alpha 1.0
+
+transform dossier_divider_draw:
+    xzoom 0.0
+    easein_cubic 0.8 xzoom 1.0
+
+transform dossier_card_fadein(delay=0.0):
+    alpha 0.0 xoffset -6
+    pause delay
+    easein 0.3 alpha 1.0 xoffset 0
 
 transform scanline_move:
     ypos 0.0

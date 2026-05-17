@@ -717,7 +717,7 @@ style ct_learn_body:
     line_leading 5
 
 style terminal_screen_bg:
-    background "bg_kali_net"
+    background "bg_kali_dragon"
 
 style terminal_text:
     font "fonts/DejaVuSans.ttf"
