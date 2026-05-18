@@ -597,10 +597,95 @@ screen ending_screen(title, color, description, lessons, bg_image=None):
 ## DEV SHORTCUT: ENDING SELECTOR
 ################################################################################
 
+label dev_prepare_minigame_state:
+    $ stop_ambient(0.3)
+    $ quick_menu = True
+    $ show_hud = False
+    $ trust_score = 0
+    $ knowledge_score = 0
+    $ suspicion_level = 0
+    $ contacts_secured = 0
+    $ evidence_secured = False
+    $ identity_exposed = False
+    $ escape_successful = False
+    $ mg_firewall_score = 0
+    $ mg_decrypt_solved = False
+    $ mg_opsec_score = 0
+    $ mg_trace_solved = False
+    return
+
+label dev_minigame_selector:
+    scene black with dissolve
+
+    menu:
+        "Minigame 1: Firewall Breach":
+            jump dev_launch_minigame_1
+
+        "Minigame 2: Decrypt the Message":
+            jump dev_launch_minigame_2
+
+        "Minigame 3: Brute Force":
+            jump dev_launch_minigame_3
+
+        "Minigame 4: Cover Your Tracks":
+            jump dev_launch_minigame_4
+
+        "Back to developer menu":
+            jump dev_ending_selector
+
+        "Cancel":
+            return
+
+label dev_launch_minigame_1:
+    call dev_prepare_minigame_state
+    window hide
+    $ mg_intro = renpy.call_screen("minigame_briefing", challenge_title="FIREWALL BREACH", subtitle="Eight packets. Eight decisions.\nOne wrong call exposes the network.", mission_id="OPS-01-01-2013", classification="TOP SECRET // SCI", challenge_type="NETWORK SECURITY", estimated_time="60-90 SECONDS", difficulty=2, difficulty_label="ANALYST", succeed_reward="knowledge_score +2", fail_penalty="suspicion_level +1", learn_concept="Firewalls filter traffic using ports,\nIP addresses, and protocol rules.", briefing_text="You are monitoring the NSA firewall.\nIncoming data packets are attempting to enter the network.\n\nEach packet shows three pieces of information:\n  WHERE it is coming from  (IP address)\n  Which DOOR it is using   (Port number)\n  What TYPE of data it is  (Protocol)\n\nYour job: decide ALLOW or BLOCK for each packet.", controls=[("ALLOW", "Permit the packet through"),("BLOCK", "Reject the packet")])
+
+    if mg_intro:
+        $ quick_menu = False
+        $ show_hud = False
+        $ mg_firewall_score = renpy.call_screen("minigame_firewall")
+        $ quick_menu = True
+        $ show_hud = False
+
+        if mg_firewall_score == "SKIP":
+            jump dev_minigame_selector
+        elif mg_firewall_score >= 6:
+            $ knowledge_score += 2
+            call screen minigame_result(True, "FIREWALL BREACH", "Developer launch complete. Strong packet filtering and protocol analysis.")
+        else:
+            $ suspicion_level += 1
+            call screen minigame_result(False, "FIREWALL BREACH", "Developer launch complete. The network stayed exposed to suspicious traffic.")
+    jump dev_minigame_selector
+
+label dev_launch_minigame_2:
+    call dev_prepare_minigame_state
+    call minigame_2_decrypt
+    jump dev_minigame_selector
+
+label dev_launch_minigame_3:
+    call dev_prepare_minigame_state
+    window hide
+    $ mg_intro3 = renpy.call_screen("minigame_briefing", challenge_title="BRUTE FORCE", subtitle="Passwords are only as strong as their entropy.\nTime to crack the hashes.", mission_id="OPS-03-09-2013", classification="TOP SECRET // EYES ONLY", challenge_type="CRYPTANALYSIS", estimated_time="120 SECONDS", difficulty=3, difficulty_label="OPERATIVE", succeed_reward="access_granted +1", fail_penalty="suspicion_level +1", learn_concept="Dictionary attacks and rule-based mutations\ncan break weak passwords instantly.", briefing_text="You intercepted an NSA internal system hash.\nYour task is to work through the terminal like a real operator, not just fire one command.\n\nRound 1: inspect the file, then run a basic dictionary attack.\nRound 2: inspect John's rules, then add the right mutation rules.\nRound 3: identify the hash type, then prove bcrypt plus a strong password is too slow to crack.\n\nRead each objective, type the command, press Enter to execute it, and use TAB only to complete the current token when you already know what comes next.", controls=[("BACKSPACE", "Delete typed text"),("TAB", "Complete current token"),("ENTER", "Execute operation")])
+    if mg_intro3:
+        call minigame_3_brute_force
+    jump dev_minigame_selector
+
+label dev_launch_minigame_4:
+    call dev_prepare_minigame_state
+    window hide
+    $ mg_intro4 = renpy.call_screen("minigame_briefing", challenge_title="COVER YOUR TRACKS", subtitle="NSA forensics are knocking. Destroy the evidence.", mission_id="OPS-04-10-2013", classification="TOP SECRET // BLACK", challenge_type="DIGITAL FORENSICS", estimated_time="90 SECONDS", difficulty=4, difficulty_label="EXPERT", succeed_reward="escape_secured = True", fail_penalty="evidence_compromised = True", learn_concept="Secure deletion requires overwriting data,\nnot just deleting file pointers.", briefing_text="NSA forensic agents are knocking on the hotel door.\nYou have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive.\n\nEach trace uses one of three modes:\n1. GUIDED: study the pre-filled command and execute it.\n2. ASSEMBLY: click tokens in the correct order to build the command.\n3. SELECT: choose the safest command from the list.\n\nHints and mistakes can add time pressure, so move quickly and wipe all 8 traces.", controls=[("CLICK", "Pick tokens or command options"),("ENTER", "Execute operation"),("HINT", "Get help for a 5s penalty")])
+    if mg_intro4:
+        call minigame_4_cover_tracks
+    jump dev_minigame_selector
+
 label dev_ending_selector:
     scene black with dissolve
     
     menu:
+        "Minigames (choose 1 of 4)":
+            jump dev_minigame_selector
+
         "Ending 1: The Hero":
             # Set minimum requirements for the UI breakdown to not look weird
             $ knowledge_score = 10
@@ -658,4 +743,6 @@ label dev_ending_selector:
 screen secret_ending_shortcut():
     key "shift_K_0" action Jump("dev_ending_selector")
     key "shift_0" action Jump("dev_ending_selector")
+    key "shift_K_9" action Jump("dev_minigame_selector")
+    key "shift_9" action Jump("dev_minigame_selector")
 
