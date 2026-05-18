@@ -607,21 +607,33 @@ init python:
         "editor": 0.8
     }
 
+    PORTRAIT_CANVAS_WIDTH = 1024
+    PORTRAIT_CANVAS_HEIGHT = 1396
+
     def portrait_sprite(path, yoffset=0):
-        # Визначаємо, який масштаб застосувати, шукаючи ім'я в назві файлу
+        # У різних емоцій PNG мають різний фактичний canvas
+        # (частина 1024x1024, а частина ~630x1394). Через це Ren'Py
+        # перераховує bounds і персонажі "стрибають" під час зміни емоцій.
+        # Загортаємо кожен спрайт у спільний контейнер фіксованого розміру
+        # й прив'язуємо його до нижнього центру.
         scale = 1.0
         for name, z in CHAR_ZOOMS.items():
             if name in path or name.replace('_', ' ') in path:
                 scale = z
                 break
 
-        return renpy.display.transform.Transform(
+        sprite = renpy.display.transform.Transform(
             path,
             zoom=scale,
-            xalign=0.5,
-            yalign=1.0,
-            yoffset=yoffset,
+            anchor=(0.5, 1.0),
+            pos=(PORTRAIT_CANVAS_WIDTH / 2.0, PORTRAIT_CANVAS_HEIGHT + yoffset),
             subpixel=True,
+        )
+
+        return renpy.display.layout.LiveComposite(
+            (PORTRAIT_CANVAS_WIDTH, PORTRAIT_CANVAS_HEIGHT),
+            (0, 0),
+            sprite,
         )
 
 transform parallax:
@@ -779,21 +791,21 @@ transform inactive_char:
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 # Змінні для зручного налаштування розміру і позиції всіх персонажів відразу
-define char_ypos = 1.05      # Позиція по вертикалі (1.0 = низ екрану. Якщо модельки маленькі, великі значення зроблять їх невидимими!)
-define char_zoom = 1.0       # Масштаб (1.0 = оригінал. Змініть це, якщо спрайти завеликі або замалі)
+define char_ypos = 1.60      # Опускаємо персонажів ще нижче, щоб кадр починався ближче до колін / нижче колін.
+define char_zoom = 1.10      # Трохи збільшуємо сценічний масштаб, зберігаючи стабільні bounds між емоціями.
 
 # ── СТАТИЧНІ ТРАНСФОРМАЦІЇ (Базове розміщення) ──
 transform enter_left:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.25
+    xpos 0.40
     ypos char_ypos
     zoom char_zoom
 
 transform enter_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.75
+    xpos 0.78
     ypos char_ypos
     zoom char_zoom
 
@@ -815,13 +827,13 @@ transform stage_center:
 transform intro_left:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.25 ypos (char_ypos + 0.15) alpha 0.0 zoom char_zoom
+    xpos 0.22 ypos (char_ypos + 0.15) alpha 0.0 zoom char_zoom
     easeout_cubic 0.55 ypos char_ypos alpha 1.0
 
 transform intro_right:
     xanchor 0.5
     yanchor 1.0
-    xpos 0.75 ypos (char_ypos + 0.15) alpha 0.0 zoom char_zoom
+    xpos 0.78 ypos (char_ypos + 0.15) alpha 0.0 zoom char_zoom
     easeout_cubic 0.55 ypos char_ypos alpha 1.0
 
 # ── АНІМАЦІЇ ЗНИКНЕННЯ ──
