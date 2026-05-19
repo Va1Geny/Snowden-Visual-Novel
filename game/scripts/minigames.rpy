@@ -559,9 +559,9 @@ screen minigame_firewall():
                             hbox:
                                 xoffset 30
                                 if fw_state["last_correct"]:
-                                    text t("[OK] CORRECT ANALYSIS") color "#00FF88" size 16 bold True
+                                    text t("[[OK] CORRECT ANALYSIS") color "#00FF88" size 16 bold True
                                 else:
-                                    text t("[FAIL] INCORRECT ANALYSIS") color "#FF2D55" size 16 bold True
+                                    text t("[[FAIL] INCORRECT ANALYSIS") color "#FF2D55" size 16 bold True
 
         if fw_state["phase"] == "incoming":
             hbox at fw_fade_in:
@@ -582,7 +582,7 @@ screen minigame_firewall():
                     add Solid("#00FFD140"):
                         xsize 1 ysize 70 xpos 219 ypos 0
 
-                    textbutton t("[ALLOW]"):
+                    textbutton t("[[ALLOW]"):
                         xalign 0.5 yalign 0.5
                         text_color "#00FFD1"
                         text_hover_color "#FFFFFF"
@@ -604,7 +604,7 @@ screen minigame_firewall():
                     add Solid("#FF2D5540"):
                         xsize 1 ysize 70 xpos 219 ypos 0
 
-                    textbutton t("[BLOCK]"):
+                    textbutton t("[[BLOCK]"):
                         xalign 0.5 yalign 0.5
                         text_color "#FF2D55"
                         text_hover_color "#FFFFFF"
@@ -631,15 +631,15 @@ screen minigame_firewall():
                         text t("> ANALYSIS TERMINAL <") color "#00FFD180" size 14 bold True xalign 0.5
 
                         if fw_state["timed_out"]:
-                            text t("{cps=40}[TIME OUT] Packet auto-blocked{/cps}") color "#FFD700" size 16 bold True xalign 0.5
+                            text t("{cps=40}[[TIME OUT] Packet auto-blocked{/cps}") color "#FFD700" size 16 bold True xalign 0.5
                         elif fw_state["last_correct"]:
                             $ _fb_choice = fw_state["answers"][-1]["choice"]
                             if _fb_choice == "ALLOW":
-                                text t("{cps=40}[OK] AUTHORIZATION GRANTED{/cps}") color "#00FF88" size 18 bold True xalign 0.5
+                                text t("{cps=40}[[OK] AUTHORIZATION GRANTED{/cps}") color "#00FF88" size 18 bold True xalign 0.5
                             else:
-                                text t("{cps=40}[OK] PACKET REJECTED{/cps}") color "#00FFD1" size 18 bold True xalign 0.5
+                                text t("{cps=40}[[OK] PACKET REJECTED{/cps}") color "#00FFD1" size 18 bold True xalign 0.5
                         else:
-                            text t("{cps=40}[FAIL] INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
+                            text t("{cps=40}[[FAIL] INCORRECT ANALYSIS{/cps}") color "#FF2D55" size 18 bold True xalign 0.5
 
                         text t("{cps=30}[_fw_explanation]{/cps}") color "#AAAAAA" size 15 text_align 0.5 xalign 0.5 justify True
 
@@ -754,9 +754,9 @@ screen minigame_firewall():
                                 hbox:
                                     spacing 8
                                     if _rans and _rans["is_correct"]:
-                                        text t("[OK]") color "#00FF88" size 13 yalign 0.5
+                                        text t("[[OK]") color "#00FF88" size 13 yalign 0.5
                                     else:
-                                        text t("[X]") color "#FF2D55" size 13 yalign 0.5
+                                        text t("[[X]") color "#FF2D55" size 13 yalign 0.5
 
                                     $ _r_ip = _rpkt["source_ip"]
                                     $ _r_pt = str(_rpkt["port"])
