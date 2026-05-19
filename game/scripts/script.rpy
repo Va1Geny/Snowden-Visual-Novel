@@ -1198,6 +1198,38 @@ label ch3_continue:
 
     sys "// SYSTEM NOTE: Passwords are only as strong as their entropy. Adding predictable substitutions (like 'a' to '@') does not stop modern cracking tools. //"
 
+    # --- Enumerating Rulesets ---
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0741b_im_rules_list.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "John the Ripper ships with several built-in rulesets. Before picking one, you can check which sets are available with 'john --list=rules'. The most useful for everyday substitution attacks is 'best64' — 64 hand-picked transformations that cover the vast majority of how people modify base words."
+
+    sys "// LIST RULESETS: john --list=rules | APPLY RULESET: john --wordlist=rockyou.txt --rules=best64 <hash_file> //"
+
+    # --- Password Salting and Rainbow Tables ---
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0741c_im_salting.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "Now, there's a shortcut attackers used to love: rainbow tables. A rainbow table is a precomputed list — millions of hash values already mapped back to their plaintext passwords. If your hash is in the table, cracking takes one lookup. Zero guessing required."
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0741d_im_salting2.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "The defence is salting. Before hashing, the system adds a unique random string — the 'salt' — to each password. Now two users with the same password produce completely different hashes. You can't precompute a rainbow table that covers salted hashes. bcrypt, scrypt, and Argon2 all salt automatically."
+
+    sys "// PASSWORD SALTING: unique random string added before hashing. Defeats rainbow tables. Required for secure password storage. //"
+
+    # --- bcrypt Cost Factor ---
+
+    $ localized_voice = voice_for_current_language("audio/voice/en/script_0741e_im_cost_factor.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
+    im "But salting alone isn't enough if the underlying algorithm is fast. bcrypt adds a 'cost factor' — an integer that forces the algorithm to repeat its work 2-to-the-N times. Cost factor 12 means 4096 iterations per guess. A modern GPU goes from billions of MD5 guesses per second down to roughly twelve bcrypt guesses per second. Same password, one hundred million times slower."
+
+    sys "// bcrypt COST FACTOR: higher number = exponentially more work per guess. Factor 12 = ~4096 iterations. GPUs slow from billions/s to ~12/s. //"
+
     # --- Kali Linux & Terminal Commands ---
 
     $ localized_voice = voice_for_current_language("audio/voice/en/script_0742_im_kali_1.mp3")  # edge-tts-auto
