@@ -160,8 +160,6 @@ One of the most unusual strengths of the project is that the educational layer i
 
 ### 1. Firewall Breach
 
-File: [game/scripts/minigames.rpy](D:\SkilsProject\Snowden-Visual-Novel\game\scripts\minigames.rpy:367)
-
 Concepts covered:
 
 - internal vs. public IP addresses
@@ -180,8 +178,6 @@ Implementation notes:
 
 ### 2. Decrypt The Message
 
-File: [game/scripts/minigames.rpy](D:\SkilsProject\Snowden-Visual-Novel\game\scripts\minigames.rpy:2298)
-
 Concepts covered:
 
 - Caesar ciphers
@@ -197,8 +193,6 @@ Implementation notes:
 - separate result screen with learning summary
 
 ### 3. Brute Force
-
-File: [game/scripts/minigame_3.rpy](D:\SkilsProject\Snowden-Visual-Novel\game\scripts\minigame_3.rpy:656)
 
 Concepts covered:
 
@@ -222,8 +216,6 @@ Implementation notes:
 This is one of the most distinctive systems in the repository because it teaches command-line reasoning inside a narrative minigame.
 
 ### 4. Cover Your Tracks
-
-File: [game/scripts/minigame_4.rpy](D:\SkilsProject\Snowden-Visual-Novel\game\scripts\minigame_4.rpy:1040)
 
 Concepts covered:
 
@@ -262,8 +254,6 @@ The project consistently tries to teach by **placing concepts under pressure**, 
 ## Systems That Make The Project Unusual
 
 ### Branch Network / Story Tree
-
-File: [game/scripts/story_tree.rpy](D:\SkilsProject\Snowden-Visual-Novel\game\scripts\story_tree.rpy:1)
 
 The game includes a dedicated **story tree / branch network** screen that tracks:
 
