@@ -1,0 +1,4732 @@
+init offset = -1
+
+define config.game_menu_action = ShowMenu("pause_hub")
+
+init python:
+    config.character_id_prefixes.append("namebox")
+    config.overlay_screens.append("quick_menu")
+    config.overlay_screens.append("game_hud")
+    config.overlay_screens.append("scene_stage_line")
+    config.overlay_screens.append("notebook_toggle")
+    config.overlay_screens.append("suspicion_lockdown_watch")
+
+    def menu_return_screen():
+        return "main_menu" if main_menu else "pause_hub"
+
+    def display_mode_is_windowed():
+        return not preferences.fullscreen
+
+    def display_mode_is_fullscreen():
+        return preferences.fullscreen
+
+    def toggle_all_audio():
+        target_muted = not all_audio_muted()
+        for mixer in ("music", "sfx", "voice"):
+            preferences.set_mute(mixer, target_muted)
+        renpy.restart_interaction()
+
+    def all_audio_muted():
+        return all(preferences.get_mute(mixer) for mixer in ("music", "sfx", "voice"))
+
+    def settings_ui_font(mono=False, semibold=False):
+        if mono:
+            return "fonts/ShareTechMono-Regular.ttf"
+        if semibold:
+            return "fonts/Rajdhani-SemiBold.ttf"
+        return FONT_BODY
+
+    class SelectTranslationLanguage(Action):
+        def __init__(self, target_lang):
+            self.target_lang = target_lang
+
+        def __call__(self):
+            action = language_change_action(self.target_lang)
+            if action is not None:
+                return action()
+
+        def get_selected(self):
+            return current_translation_language() == self.target_lang
+
+    def _hex_to_rgba(value, alpha=255):
+        value = value.lstrip("#")
+        return (
+            int(value[0:2], 16),
+            int(value[2:4], 16),
+            int(value[4:6], 16),
+            int(alpha)
+        )
+
+    class VerticalFade(renpy.Displayable):
+        def __init__(self, top_color="#0A0F1A", bottom_color="#0A0F1A", top_alpha=0, bottom_alpha=247, **kwargs):
+            super(VerticalFade, self).__init__(**kwargs)
+            self.top_color = top_color
+            self.bottom_color = bottom_color
+            self.top_alpha = top_alpha
+            self.bottom_alpha = bottom_alpha
+
+        def render(self, width, height, st, at):
+            width = int(width or config.screen_width)
+            height = int(height or 260)
+            render = renpy.Render(width, height)
+            canvas = render.canvas()
+            top = _hex_to_rgba(self.top_color, self.top_alpha)
+            bottom = _hex_to_rgba(self.bottom_color, self.bottom_alpha)
+
+            for y in range(height):
+                mix = y / float(max(1, height - 1))
+                color = tuple(int(top[i] + (bottom[i] - top[i]) * mix) for i in range(4))
+                canvas.line(color, (0, y), (width, y))
+
+            return render
+
+        def visit(self):
+            return []
+
+    class HorizontalSignalLine(renpy.Displayable):
+        def __init__(self, color="#00FFD1", **kwargs):
+            super(HorizontalSignalLine, self).__init__(**kwargs)
+            self.color = color
+
+        def render(self, width, height, st, at):
+            width = int(width or config.screen_width)
+            render = renpy.Render(width, 1)
+            canvas = render.canvas()
+            rgb = _hex_to_rgba(self.color, 255)[:3]
+
+            for x in range(width):
+                distance = abs((x / float(max(1, width - 1))) - 0.5) * 2.0
+                alpha = int(max(0, 255 * (1.0 - distance)))
+                if alpha:
+                    canvas.line(rgb + (alpha,), (x, 0), (x, 1))
+
+            return render
+
+        def visit(self):
+            return []
+
+default quick_menu = True
+
+style default:
+    properties gui.text_properties()
+    language gui.language
+
+style input:
+    properties gui.text_properties("input", accent=True)
+    adjust_spacing False
+
+style hyperlink_text:
+    properties gui.text_properties("hyperlink", accent=True)
+    hover_underline True
+
+style gui_text:
+    properties gui.text_properties("interface")
+
+style button:
+    properties gui.button_properties("button")
+
+style button_text is gui_text:
+    properties gui.text_properties("button")
+    yalign 0.5
+
+style label_text is gui_text:
+    properties gui.text_properties("label", accent=True)
+
+style prompt_text is gui_text:
+    properties gui.text_properties("prompt")
+
+style frame:
+    padding gui.frame_borders.padding
+    background Solid("#0D1117")
+
+style bar:
+    ysize gui.bar_size
+    left_bar Solid("#00FFD1")
+    right_bar Solid("#111720")
+
+style vbar:
+    xsize gui.bar_size
+    top_bar Solid("#00FFD1")
+    bottom_bar Solid("#111720")
+
+style scrollbar:
+    ysize gui.scrollbar_size
+    base_bar Solid("#111720")
+    thumb Solid("#3A4A55")
+
+style vscrollbar:
+    xsize gui.scrollbar_size
+    base_bar Solid("#111720")
+    thumb Solid("#3A4A55")
+
+style slider:
+    ysize gui.slider_size
+    base_bar Solid("#111720")
+    thumb Solid("#00FFD1")
+
+style vslider:
+    xsize gui.slider_size
+    base_bar Solid("#111720")
+    thumb Solid("#00FFD1")
+
+style shell_nav_button is button:
+    xsize 320
+    ysize 58
+    left_padding 18
+    right_padding 18
+    background Solid("#0D1117")
+    hover_background Solid("#003A3A")
+    selected_background Solid("#001A1A")
+    insensitive_background Solid("#080C10")
+
+style shell_nav_button_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 22
+    color "#E8E8E8"
+    hover_color "#00FFD1"
+    selected_color "#00FFD1"
+    insensitive_color "#3A4A55"
+    xalign 0.0
+
+style modal_action_button is button:
+    xsize 520
+    ysize 74
+    left_padding 22
+    right_padding 22
+    top_padding 4
+    bottom_padding 4
+    background Solid("#003A3A")
+    hover_background Solid("#00FFD1")
+    selected_background Solid("#001A1A")
+
+style modal_action_button_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 23
+    bold True
+    color "#00FFD1"
+    hover_color "#0D1117"
+    selected_color "#0D1117"
+    xalign 0.5
+    text_align 0.5
+
+style dossier_shell_frame is frame:
+    background Solid("#0C131DEE")
+    padding (24, 20)
+
+style dossier_header_kicker:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 13
+    color "#00E5B0"
+    bold True
+    kerning 2.5
+
+style dossier_header_title:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 32
+    color "#00E5B0"
+    bold True
+
+style dossier_header_body:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 15
+    color "#5F7385"
+
+style dossier_card_button is button:
+    background Solid("#10171F")
+    hover_background Solid("#141E2C")
+    selected_background Solid("#141E2C")
+    left_padding 0
+    right_padding 0
+    top_padding 0
+    bottom_padding 0
+
+style dossier_card_button_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    color "#E0E0E0"
+
+style dossier_term_title:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 22
+    color "#00E5B0"
+    bold True
+
+style dossier_term_body:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#7B8FA3"
+    line_spacing 4
+
+style dossier_footer_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 14
+    color "#4A5E70"
+    text_align 0.5
+
+style dossier_scrollbar is vscrollbar:
+    xsize 6
+    base_bar Solid("#0A1018")
+    thumb Solid("#00E5B066")
+
+style dossier_action_button is button:
+    xsize 200
+    ysize 52
+    background Solid("#0A1A22")
+    hover_background Solid("#0D2A34")
+    selected_background Solid("#0D2A34")
+    left_padding 16
+    right_padding 16
+    top_padding 6
+    bottom_padding 6
+
+style dossier_action_button_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 18
+    bold True
+    color "#00E5B0"
+    hover_color "#FFFFFF"
+    selected_color "#FFFFFF"
+    text_align 0.5
+    xalign 0.5
+
+
+style choice_button is button:
+    xsize 1120
+    yminimum 78
+    left_padding 28
+    right_padding 28
+    top_padding 20
+    bottom_padding 20
+    background Solid("#0D1117")
+    hover_background Solid("#003A3A")
+    selected_background Solid("#001A1A")
+
+style choice_button_text is button_text:
+    font "fonts/Rajdhani-Regular.ttf"
+    size 28
+    color "#E8E8E8"
+    hover_color "#00FFD1"
+    xalign 0.5
+    text_align 0.5
+
+style quick_button is button:
+    background Solid("#080C10CC")
+    hover_background Solid("#003A3A")
+    left_padding 14
+    right_padding 14
+    top_padding 10
+    bottom_padding 10
+
+style quick_button_text is button_text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 18
+    color "#7A8A99"
+    hover_color "#00FFD1"
+
+style game_menu_scrollbar is vscrollbar
+style game_menu_viewport is empty
+style game_menu_label is label
+style game_menu_label_text is label_text
+
+screen ui_backdrop():
+    add "#131421"
+
+screen shell_header(kicker, title, body=None):
+    $ compact = is_compact_layout()
+    $ header_xpos = 24 if compact else 32
+    $ header_ypos = 24 if compact else 44
+    $ header_xsize = 1872 if compact else 1856
+    $ header_ysize = 142 if compact else 116
+    $ header_padding_x = 24 if compact else 34
+    $ header_padding_y = 20 if compact else 24
+    $ kicker_size = 17 if compact else 15
+    $ title_size = 30 if compact else 34
+    $ body_size = 18 if compact else 16
+    $ body_max = 1120 if compact else 860
+
+    frame:
+        xpos header_xpos
+        ypos header_ypos
+        xsize header_xsize
+        ysize header_ysize
+        background Solid("#0E1220EE")
+        padding (header_padding_x, header_padding_y)
+
+        hbox:
+            xfill True
+            spacing 28
+
+            vbox:
+                spacing 4
+                yalign 0.5
+
+                text t(kicker):
+                    color "#7A8A99"
+                    size kicker_size
+                    bold True
+                    substitute False
+
+                text t(title):
+                    color "#E8E8E8"
+                    size title_size
+                    bold True
+                    substitute False
+
+                if body:
+                    text t(body):
+                        color "#7A8A99"
+                        size body_size
+                        xmaximum body_max
+                        substitute False
+
+            if body:
+                null width 80
+
+screen say(who, what):
+
+    window:
+        id "window"
+        if getattr(persistent, "dummy_high_contrast", False):
+            background Solid("#000000")
+
+        if who is not None:
+
+            window:
+                id "namebox"
+                style "namebox"
+                if getattr(persistent, "dummy_high_contrast", False):
+                    background Solid("#000000")
+                text who id "who":
+                    if getattr(persistent, "dummy_high_contrast", False):
+                        color "#00FFD1"
+                        outlines [(2, "#000000", 0, 0)]
+                    substitute False
+
+        text what id "what":
+            if getattr(persistent, "dummy_high_contrast", False):
+                color "#FFFFFF"
+                outlines [(2, "#000000", 0, 0)]
+            substitute False
+
+    if not renpy.variant("small"):
+        $ edward_pov_bgs = ["bg_nsa_terminal", "bg_prism", "bg_prism1", "bg_hong_kong_terminal"]
+        if not (renpy.get_say_image_tag() == "edward" and any(bg in renpy.get_showing_tags("master") for bg in edward_pov_bgs)):
+            add SideImage() xalign 0.0 yalign 1.0
+
+style window is default
+style say_label is default
+style say_dialogue is default
+style say_thought is say_dialogue
+
+style namebox is default
+style namebox_label is say_label
+
+style window:
+    xalign 0.5
+    xfill True
+    yalign 1.0
+    ysize 292
+    background Solid("#0D1220E8")
+    top_padding 28
+    bottom_padding 34
+
+style namebox:
+    xpos 188
+    ypos 24
+    xpadding 22
+    ypadding 8
+    background Solid("#001A1A")
+
+style say_label:
+    color "#00FFD1"
+    size 32
+    bold True
+    xalign 0.0
+
+style say_dialogue:
+    color "#E8E8E8"
+    size 32
+    xpos 188
+    ypos 84
+    xsize 1544
+    line_spacing 3
+    adjust_spacing False
+
+screen input(prompt):
+    style_prefix "input"
+
+    window:
+        vbox:
+            xpos 188
+            ypos 84
+            xsize 1544
+            spacing 14
+
+            text t(prompt) style "input_prompt":
+                substitute False
+            input id "input"
+
+style input_prompt is default
+
+style input_prompt:
+    color "#7A8A99"
+    size 26
+
+style input:
+    color "#00FFD1"
+    size 30
+    xmaximum 1544
+
+transform choice_hover:
+    yoffset 0
+    linear 0.1 yoffset -2
+
+transform bar_slide:
+    xoffset -3
+    linear 0.12 xoffset 0
+
+transform pulse_dot:
+    zoom 1.0 alpha 1.0
+    linear 0.7 zoom 0.6 alpha 0.3
+    linear 0.7 zoom 1.0 alpha 1.0
+    repeat
+
+transform choice_appear(delay=0.0):
+    alpha 0.0
+    xoffset 16
+    pause delay
+    parallel:
+        linear 0.18 alpha 1.0
+        linear 0.18 xoffset 0
+
+transform panel_rise:
+    yoffset 24
+    alpha 0.0
+    linear 0.22 yoffset 0 alpha 1.0
+
+screen choice(items):
+    default choice_hovered = -1
+
+    if len(items) > 0:
+        key "K_1" action items[0].action
+        key "K_KP1" action items[0].action
+    if len(items) > 1:
+        key "K_2" action items[1].action
+        key "K_KP2" action items[1].action
+
+    $ panel_h = max(270, 100 + len(items) * 85)
+
+    fixed at panel_rise:
+        xfill True
+        yalign 1.0
+        ysize panel_h
+
+        add VerticalFade("#0A0F1A", "#0A0F1A", 0, 247) xsize config.screen_width ysize panel_h
+
+        frame:
+            xfill True
+            ysize 8
+            ypos 18
+            background Solid("#00FFD10A")
+            padding (0, 0)
+
+        add HorizontalSignalLine("#00FFD1") xsize config.screen_width ysize 1 ypos 26
+
+        vbox:
+            xfill True
+            yalign 1.0
+            yoffset -24
+            spacing 14
+
+            frame:
+                xalign 0.5
+                background Solid("#0A0F1ACC")
+                padding (18, 6)
+
+                hbox:
+                    spacing 16
+
+                    hbox:
+                        spacing 6
+                        yalign 0.5
+
+                        frame at pulse_dot:
+                            xsize 5
+                            ysize 5
+                            yalign 0.5
+                            background Solid("#00FFD1")
+                            padding (0, 0)
+
+                        text t("// DECISION REQUIRED"):
+                            style "choice_terminal_header"
+                            color "#00FFD1"
+                            yalign 0.5
+
+                    frame:
+                        xsize 1
+                        ysize 14
+                        yalign 0.5
+                        background Solid("#FFFFFF14")
+                        padding (0, 0)
+
+                    text t("SELECT ACTION  [1] [2]"):
+                        style "choice_terminal_header"
+                        color "#E8E8E8AA"
+                        yalign 0.5
+                        substitute False
+
+            vbox:
+                xalign 0.5
+                xmaximum 860
+                spacing 10
+
+                for index, item in enumerate(items):
+                    $ is_hovered = choice_hovered == index
+                    $ accent_idle = "#00FFD1"
+                    $ accent = "#00FFD1"
+                    $ appear_delay = 0.06 + min(index, 5) * 0.08
+
+                    hbox at choice_appear(appear_delay):
+                        xfill True
+                        ysize 74
+                        spacing 0
+
+                        frame:
+                            xsize 3
+                            ysize 74
+                            background Solid(accent if is_hovered else accent_idle + "40")
+                            padding (0, 0)
+                            at bar_slide
+
+                        button:
+                            action item.action
+                            hovered SetScreenVariable("choice_hovered", index)
+                            unhovered SetScreenVariable("choice_hovered", -1)
+                            xfill True
+                            ysize 74
+                            background Solid("#111827" if is_hovered else "#0D1320")
+                            hover_background Solid("#111827")
+                            padding (20, 12)
+
+                            fixed:
+                                xfill True
+                                yfill True
+
+                                frame:
+                                    xfill True
+                                    ysize 1
+                                    ypos 0
+                                    background Solid(accent + "40" if is_hovered else "#FFFFFF0D")
+                                    padding (0, 0)
+
+                                frame:
+                                    xfill True
+                                    ysize 1
+                                    yalign 1.0
+                                    background Solid(accent + "40" if is_hovered else "#FFFFFF0D")
+                                    padding (0, 0)
+
+                                frame:
+                                    xsize 1
+                                    yfill True
+                                    xalign 1.0
+                                    background Solid(accent + "40" if is_hovered else "#FFFFFF0D")
+                                    padding (0, 0)
+
+                                hbox:
+                                    xfill True
+                                    yalign 0.5
+                                    spacing 16
+
+                                    frame:
+                                        xsize 28
+                                        ysize 28
+                                        yalign 0.5
+                                        background Solid(accent + "2E" if is_hovered else accent_idle + "14")
+                                        padding (0, 0)
+
+                                        fixed:
+                                            xfill True
+                                            yfill True
+
+                                            frame:
+                                                xfill True
+                                                ysize 1
+                                                ypos 0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "33")
+                                                padding (0, 0)
+                                            frame:
+                                                xfill True
+                                                ysize 1
+                                                yalign 1.0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "33")
+                                                padding (0, 0)
+                                            frame:
+                                                xsize 1
+                                                yfill True
+                                                xpos 0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "33")
+                                                padding (0, 0)
+                                            frame:
+                                                xsize 1
+                                                yfill True
+                                                xalign 1.0
+                                                background Solid(accent + "59" if is_hovered else accent_idle + "33")
+                                                padding (0, 0)
+
+                                            text "[index + 1]":
+                                                style "choice_index_text"
+                                                color accent
+                                                xalign 0.5
+                                                yalign 0.5
+
+                                    text t(item.caption):
+                                        style "choice_caption_text"
+                                        color ("#FFFFFF" if is_hovered else "#E8E8E8")
+                                        xfill True
+                                        yalign 0.5
+                                        substitute False
+
+
+
+
+
+screen choice_key_hint(key_label, action_label):
+    frame:
+        yalign 0.5
+        background Solid("#FFFFFF0A")
+        padding (6, 4)
+
+        fixed:
+            xsize (30 if len(key_label) <= 1 else 44)
+            ysize 14
+
+            frame:
+                xfill True
+                ysize 1
+                ypos 0
+                background Solid("#FFFFFF1A")
+                padding (0, 0)
+            frame:
+                xfill True
+                ysize 2
+                yalign 1.0
+                background Solid("#FFFFFF26")
+                padding (0, 0)
+            frame:
+                xsize 1
+                yfill True
+                xpos 0
+                background Solid("#FFFFFF1A")
+                padding (0, 0)
+            frame:
+                xsize 1
+                yfill True
+                xalign 1.0
+                background Solid("#FFFFFF1A")
+                padding (0, 0)
+
+            text t(key_label):
+                style "choice_key_text"
+                xalign 0.5
+                yalign 0.5
+
+    text t(action_label):
+        style "choice_key_label_text"
+        yalign 0.5
+
+screen quick_menu():
+    zorder 100
+
+    if quick_menu and not main_menu:
+        $ medium_layout = is_medium_layout()
+        $ quick_xalign = 0.5 if medium_layout else 1.0
+        $ quick_xoffset = 0 if medium_layout else -30
+        $ quick_yoffset = 18 if medium_layout else 24
+        hbox:
+            xalign quick_xalign
+            yalign 0.0
+            xoffset quick_xoffset
+            yoffset quick_yoffset
+            spacing 8
+            style_prefix "quick"
+
+            textbutton t("Back") action Rollback() text_font settings_ui_font(mono=True)
+            textbutton t("History") action ShowMenu("history") text_font settings_ui_font(mono=True)
+            textbutton t("Notes") action Show("notebook_panel") text_font settings_ui_font(mono=True)
+            textbutton t("Save") action ShowMenu("save") text_font settings_ui_font(mono=True)
+            textbutton t("Prefs") action ShowMenu("preferences") text_font settings_ui_font(mono=True)
+
+    key "ctrl_K_i" action ShowMenu("dossier")
+
+screen game_hud():
+    zorder 90
+
+    if show_hud:
+        $ compact = is_medium_layout()
+        $ status_title_size = 16 if compact else 14
+        $ chapter_size = 22 if compact else 19
+        $ stat_size = 17 if compact else 16
+        $ suspicion_bar_xsize = 280 if compact else 210
+
+        frame:
+            if compact:
+                xalign 0.98
+                yalign 0.02
+                xsize 330
+                padding (16, 14)
+            else:
+                xalign 1.0
+                yalign 0.0
+                xoffset -30
+                yoffset 76
+                xsize 260
+                padding (18, 16)
+            background Solid("#0F1423E6")
+
+            vbox:
+                spacing 10
+
+                text t("FIELD STATUS"):
+                    color "#7A8A99"
+                    size status_title_size
+                    bold True
+
+                text t("CHAPTER [current_chapter]/5"):
+                    color "#E8E8E8"
+                    size chapter_size
+                    bold True
+
+                hbox:
+                    xfill True
+                    text t("Knowledge"):
+                        color "#7A8A99"
+                        size stat_size
+                    text t("[knowledge_score]"):
+                        color "#7A8A99"
+                        size stat_size
+                        bold True
+                        xalign 1.0
+
+                hbox:
+                    xfill True
+                    text t("Trust"):
+                        color "#7A8A99"
+                        size stat_size
+                    text t("[trust_score]"):
+                        color "#E8E8E8"
+                        size stat_size
+                        bold True
+                        xalign 1.0
+
+                hbox:
+                    xfill True
+                    text t("Notes"):
+                        color "#7A8A99"
+                        size stat_size
+                    text t("[notebook_entry_count()]"):
+                        color "#E8E8E8"
+                        size stat_size
+                        bold True
+                        xalign 1.0
+
+                text t("Suspicion"):
+                    color "#7A8A99"
+                    size stat_size
+
+                bar:
+                    value suspicion_level
+                    range 5
+                    xsize suspicion_bar_xsize
+                    ysize 10
+                    left_bar Solid("#7A8A99")
+                    right_bar Solid("#111720")
+
+transform notebook_cursor_blink:
+    alpha 1.0
+    linear 0.4 alpha 0.0
+    linear 0.4 alpha 1.0
+    repeat
+
+transform notebook_empty_pulse:
+    alpha 1.0
+    linear 1.0 alpha 0.6
+    linear 1.0 alpha 1.0
+    repeat
+
+transform notebook_note_slide:
+    yoffset 10
+    easein 0.2 yoffset 0
+
+image notebook_caret:
+    Text("_", color="#00FFD1", size=24)
+    notebook_cursor_blink
+
+style notebook_button:
+    ysize 56
+    padding (10, 10)
+
+style notebook_scrollbar:
+    xsize 6
+    unscrollable "hide"
+    base_bar Solid("#0B101A")
+    thumb Solid("#00A388")
+
+transform boot_line_1:
+    alpha 0.0
+    pause 0.3
+    linear 0.1 alpha 1.0
+
+transform boot_line_2:
+    alpha 0.0
+    pause 0.8
+    linear 0.1 alpha 1.0
+
+transform boot_line_3:
+    alpha 0.0
+    pause 1.4
+    linear 0.1 alpha 1.0
+
+transform boot_line_4:
+    alpha 0.0
+    pause 2.0
+    linear 0.1 alpha 1.0
+
+transform boot_line_5:
+    alpha 0.0
+    pause 2.6
+    linear 0.1 alpha 1.0
+
+transform notebook_boot_cursor_blink:
+    alpha 1.0
+    pause 2.7
+    block:
+        linear 0.4 alpha 0.0
+        linear 0.4 alpha 1.0
+        repeat
+
+screen notebook_panel():
+    modal True
+    zorder 210
+
+    $ compact = is_compact_layout()
+    $ viewport_width, viewport_height = current_viewport_size()
+    $ notebook_xsize = min(1460 if compact else 1820, max(520, viewport_width - 48))
+    $ notebook_ysize = min(860 if compact else 920, max(620, viewport_height - 48))
+    $ notebook_title_size = 26 if compact else 30
+    $ notebook_body_size = 18 if compact else 20
+    $ notebook_body_max = notebook_xsize - 100
+    $ notebook_input_size = 24 if compact else 26
+    $ notebook_entry_size = 19 if compact else 21
+    $ notebook_empty_size = 24 if compact else 28
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize notebook_xsize
+        ysize notebook_ysize
+        background Solid("#0D1320") # bg_main
+        padding (0, 0)
+
+        vbox:
+            spacing 0
+            xfill True
+            yfill True
+
+            # ── HEADER ──
+            frame:
+                xfill True
+                ysize 84
+                background Solid("#0F1423") # header_bg
+                padding (28, 0)
+
+                hbox:
+                    xfill True
+                    yalign 0.5
+
+                    text t("FIELD NOTEBOOK"):
+                        color "#E8E8E8" # text_main
+                        size notebook_title_size
+                        font settings_ui_font(mono=True)
+                        bold True
+                        yalign 0.5
+
+                    # "X entries" badge
+                    frame:
+                        xalign 1.0
+                        yalign 0.5
+                        background Solid("#00FFD14c") # accent glow for border
+                        padding (1, 1, 1, 1)
+                        frame:
+                            background Solid("#0D1320") # bg_main
+                            padding (12, 6)
+                            text t("[[ [notebook_entry_count()] ENTRIES ]"):
+                                color "#7A8A99" # text_muted
+                                size 16
+                                font settings_ui_font(mono=True)
+                                bold True
+                                yalign 0.5
+                                
+            # Horizontal divider
+            frame:
+                xfill True
+                ysize 1
+                background Solid("#00FFD126") # divider
+
+            # ── BODY ──
+            frame:
+                xfill True
+                ysize (notebook_ysize - 220)
+                background Solid("#0D1320") # bg_main
+                padding (28, 24)
+
+                # Background texture watermark (Option B)
+                add Text("FIELD_OPS_LOG", font=settings_ui_font(mono=True), size=120, color="#00FFD108") at Transform(rotate=-15, xanchor=1.0, yanchor=1.0, xpos=1.0, ypos=1.0, xoffset=-20, yoffset=-40)
+
+                vbox:
+                    spacing 18
+                    xfill True
+                    yfill True
+
+                    text t("Write short reminders for yourself while you play. Important clues, terms, and decisions can live here."):
+                        color "#7A8A99" # text_muted
+                        size notebook_body_size
+                        xmaximum notebook_body_max
+
+                    # INPUT FIELD
+                    frame:
+                        xfill True
+                        background Solid("#00FFD14c") # glow border
+                        padding (1, 1, 1, 1)
+                        frame:
+                            xfill True
+                            background Solid("#111827") # bg_card
+                            padding (18, 16)
+
+                            hbox:
+                                spacing 12
+                                yalign 0.0
+
+                                text ">_":
+                                    color "#00FFD1" # accent
+                                    size notebook_input_size
+                                    font settings_ui_font(mono=True)
+                                    bold True
+                                    yalign 0.5
+
+                                input:
+                                    value VariableInputValue("notebook_draft")
+                                    length 180
+                                    color "#E8E8E8" # text_main
+                                    size notebook_input_size
+                                    caret "notebook_caret"
+                                    xfill True
+                                    yalign 0.5
+
+                    # NOTES LIST AREA
+                    frame:
+                        xfill True
+                        yfill True
+                        background None
+                        padding (0, 10)
+
+                        if notebook_entries:
+                            viewport:
+                                xfill True
+                                yfill True
+                                mousewheel True
+                                draggable True
+                                scrollbars "vertical"
+                                style_prefix "notebook"
+
+                                vbox:
+                                    spacing 12
+                                    xfill True
+
+                                    for index, entry in enumerate(notebook_entries, 1):
+                                        button:
+                                            xfill True
+                                            ysize None
+                                            action NullAction()
+                                            background Solid("#111827") # bg_card
+                                            hover_background Solid("#1A2436") # bg_hover
+                                            padding (0, 0)
+                                            at notebook_note_slide
+
+                                            fixed:
+                                                fit_first True
+                                                xfill True
+                                                
+                                                # Card content
+                                                frame:
+                                                    background None
+                                                    padding (18, 16, 16, 16)
+                                                    xfill True
+                                                    
+                                                    vbox:
+                                                        xfill True
+                                                        spacing 8
+                                                        
+                                                        hbox:
+                                                            xfill True
+                                                            text t("ENTRY #[index]"):
+                                                                color "#00A388" # accent_dim
+                                                                size 14
+                                                                font settings_ui_font(mono=True)
+                                                                bold True
+                                                            text "[SYS.LOG]":
+                                                                color "#00A388" # accent_dim
+                                                                size 14
+                                                                font settings_ui_font(mono=True)
+                                                                xalign 1.0
+                                                                substitute False
+
+                                                        text entry:
+                                                            color "#E8E8E8" # text_main
+                                                            size notebook_entry_size
+                                                            xfill True
+                                                            substitute False
+
+                                                # Left border
+                                                frame:
+                                                    xsize 2
+                                                    yfill True
+                                                    xpos 0
+                                                    background Solid("#00FFD1") # accent
+                        else:
+                            # EMPTY STATE
+                            vbox:
+                                xalign 0.5
+                                yalign 0.45
+                                spacing 8
+
+                                text "INITIALIZING  FIELD_LOG..." at boot_line_1:
+                                    color "#00A388"
+                                    size 18
+                                    font settings_ui_font(mono=True)
+
+                                hbox at boot_line_2:
+                                    xalign 0.5
+                                    spacing 6
+                                    text "LOADING  " color "#005C4D" size 16 font settings_ui_font(mono=True)
+                                    text "████████░░░░" color "#00FFD1" size 16 
+                                    text "  67%" color "#00A388" size 16 font settings_ui_font(mono=True)
+
+                                text "ACCESS GRANTED" at boot_line_3:
+                                    color "#00FFD1"
+                                    size 18
+                                    font settings_ui_font(mono=True)
+
+                                null height 6
+
+                                text "SCANNING FOR ENTRIES..." at boot_line_4:
+                                    color "#00A388"
+                                    size 16
+                                    font settings_ui_font(mono=True)
+
+                                hbox at boot_line_5:
+                                    xalign 0.5
+                                    spacing 0
+                                    text "> NO DATA FOUND  —  AWAITING INPUT":
+                                        color "#E8E8E8"
+                                        size 16
+                                        font settings_ui_font(mono=True)
+                                    text "▌" at notebook_boot_cursor_blink:
+                                        color "#00FFD1"
+                                        size 16
+
+            # ── FOOTER ──
+            frame:
+                xfill True
+                ysize 1
+                background Solid("#00FFD126") # divider
+
+            frame:
+                xfill True
+                background Solid("#0D1320") # bg_main
+                padding (24, 20, 24, 24)
+
+                vbox:
+                    spacing 12
+                    xfill True
+
+                    text t("Exports are saved automatically as a plain .txt file directly to your Desktop."):
+                        color "#7A8A99" # text_muted
+                        size 16
+                        xalign 0.5
+                        text_align 0.5
+                        xmaximum 1100
+
+                    hbox:
+                        spacing 16
+                        xalign 0.5
+
+                        # EXPORT
+                        button:
+                            xsize 220
+                            ysize 56
+                            action Function(export_notebook_txt)
+                            padding (1, 1)
+                            background Solid("#008066")
+                            hover_background Solid("#00FFD1")
+                            frame:
+                                background Solid("#002B22")
+                                xfill True
+                                yfill True
+                                text t("EXPORT"):
+                                    xalign 0.5
+                                    yalign 0.5
+                                    color "#E8E8E8"
+                                    font settings_ui_font(mono=True)
+                                    size 20
+                                    bold True
+
+                        # SAVE NOTE
+                        button:
+                            xsize 220
+                            ysize 56
+                            action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
+                            padding (1, 1)
+                            background Solid("#008066")
+                            hover_background Solid("#00FFD1")
+                            frame:
+                                background Solid("#00221A")
+                                xfill True
+                                yfill True
+                                text t("SAVE NOTE"):
+                                    xalign 0.5
+                                    yalign 0.5
+                                    color "#00FFD1"
+                                    font settings_ui_font(mono=True)
+                                    size 20
+                                    bold True
+
+                        # CLEAR
+                        button:
+                            xsize 220
+                            ysize 56
+                            action Function(clear_notebook_entries)
+                            padding (1, 1)
+                            background Solid("#7a3535")
+                            hover_background Solid("#e07070")
+                            frame:
+                                background Solid("#2e1515")
+                                xfill True
+                                yfill True
+                                text t("CLEAR"):
+                                    xalign 0.5
+                                    yalign 0.5
+                                    color "#e07070"
+                                    font settings_ui_font(mono=True)
+                                    size 20
+                                    bold True
+
+                        # CLOSE
+                        button:
+                            xsize 220
+                            ysize 56
+                            action Hide("notebook_panel")
+                            padding (1, 1)
+                            background Solid("#00594D")
+                            hover_background Solid("#00FFD1")
+                            frame:
+                                background Solid("#0D1320") # Transparent/main bg
+                                xfill True
+                                yfill True
+                                text t("CLOSE"):
+                                    xalign 0.5
+                                    yalign 0.5
+                                    color "#00FFD1"
+                                    font settings_ui_font(mono=True)
+                                    size 20
+                                    bold True
+
+    key "game_menu" action Hide("notebook_panel")
+    key "ctrl_K_n" action Hide("notebook_panel")
+    key "K_RETURN" action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
+    key "K_KP_ENTER" action [Function(add_notebook_entry, notebook_draft), SetVariable("notebook_draft", "")]
+
+screen notebook_toggle():
+    zorder 95
+
+    if show_hud and not main_menu and not renpy.get_screen("pause_hub"):
+        hbox:
+            xalign 1.0
+            xoffset 48
+            yalign 1.0
+            yoffset 54
+            spacing 10
+            at Transform(zoom=0.5, alpha=0.85)
+
+            fixed:
+                fit_first True
+
+                imagebutton:
+                    idle Transform("images/ui/notebook_closed.png", matrixcolor=TintMatrix("#003A3A"))
+                    hover Transform("images/ui/notebook_open.png", matrixcolor=TintMatrix("#003A3A"))
+                    selected_idle Transform("images/ui/notebook_open.png", matrixcolor=TintMatrix("#003A3A"))
+                    selected_hover Transform("images/ui/notebook_open.png", matrixcolor=TintMatrix("#003A3A"))
+                    selected renpy.get_screen("dossier") is not None
+                    focus_mask True
+                    action ShowMenu("dossier")
+                    tooltip t("Dossier (Ctrl+I)")
+
+                text t("DOSSIER"):
+                    align (0.5, 0.45)
+                    color "#00FFD1"
+                    size 28
+                    bold True
+                    outlines [(2, "#001A1A", 0, 0)]
+
+            fixed:
+                fit_first True
+
+                imagebutton:
+                    idle "images/ui/notebook_closed.png"
+                    hover "images/ui/notebook_open.png"
+                    selected_idle "images/ui/notebook_open.png"
+                    selected_hover "images/ui/notebook_open.png"
+                    selected renpy.get_screen("notebook_panel") is not None
+                    focus_mask True
+                    action ToggleScreen("notebook_panel")
+                    tooltip t("Notebook (Ctrl+N)")
+
+                text t("NOTEBOOK"):
+                    align (0.5, 0.45)
+                    color "#7A8A99"
+                    size 28
+                    bold True
+                    outlines [(2, "#101523", 0, 0)]
+
+        key "ctrl_K_n" action ToggleScreen("notebook_panel")
+
+screen suspicion_lockdown_watch():
+    zorder 300
+
+    if (
+        show_hud
+        and suspicion_level >= 5
+        and not suspicion_lockdown_triggered
+        and not main_menu
+    ):
+        timer 0.01 action [SetVariable("suspicion_lockdown_triggered", True), Jump("max_suspicion_game_over")]
+
+screen scene_stage_line():
+    zorder 5
+
+    if not main_menu and renpy.get_screen("say") and not renpy.get_screen("pause_hub"):
+        add Solid("#02030466"):
+            xpos 0
+            ypos 822
+            xsize 1920
+            ysize 258
+
+        add Solid("#003A3A22"):
+            xpos 0
+            ypos 804
+            xsize 1920
+            ysize 8
+
+transform mm_pulse_dot:
+    alpha 1.0
+    easeout 0.9 alpha 0.35
+    easein 0.9 alpha 1.0
+    repeat
+
+transform mm_accent_drift:
+    alpha 0.55
+    easeout 1.6 alpha 1.0
+    easein 1.6 alpha 0.55
+    repeat
+
+screen main_menu():
+    tag menu
+
+    $ compact = is_medium_layout()
+    $ menu_frame_xsize = 1840 if compact else 1500
+    $ menu_frame_ysize = 990 if compact else 1020
+    $ menu_padding_x = 36 if compact else 56
+    $ menu_padding_y = 30 if compact else 44
+    $ menu_content_max = 1660 if compact else 940
+    $ menu_spacing = 12 if compact else 14
+    $ title_fixed_xsize = 1500 if compact else 880
+    $ menu_title_size = 60 if compact else 72
+    $ menu_desc_size = 22 if compact else 18
+    $ menu_desc_max = 1200 if compact else 740
+    $ menu_quote_size = 24 if compact else 18
+    $ corner_size = 22
+
+    use ui_backdrop
+
+    add Solid("#003A3A0E"):
+        xsize 480
+        ysize 1080
+        xpos 0
+    add Solid("#003A3A0E"):
+        xsize 480
+        ysize 1080
+        xalign 1.0
+
+    add Solid("#7A8A9918"):
+        xsize 1920
+        ysize 2
+        ypos 96
+
+    add Solid("#7A8A9918"):
+        xsize 1920
+        ysize 2
+        ypos 982
+
+    fixed:
+        xpos 0
+        ypos 28
+        xsize 1920
+        ysize 36
+
+        hbox:
+            xpos 60
+            yalign 0.5
+            spacing 18
+
+            frame:
+                background Solid("#00FF8826")
+                xsize 12
+                ysize 12
+                yalign 0.5
+                at mm_pulse_dot
+
+            text t("SYSTEM ONLINE"):
+                color "#00FF88"
+                size 14
+                bold True
+                kerning 3
+                yalign 0.5
+
+            text t("·"):
+                color "#3A4A55"
+                size 16
+                yalign 0.5
+
+            text t("SECURE CHANNEL // AES-256"):
+                color "#7A8A99"
+                size 13
+                bold True
+                kerning 2
+                yalign 0.5
+
+        hbox:
+            xalign 1.0
+            xoffset -60
+            yalign 0.5
+            spacing 18
+
+            text t("CLEARANCE: TS//SCI"):
+                color "#FFD700"
+                size 13
+                bold True
+                kerning 2
+                yalign 0.5
+
+            text t("·"):
+                color "#3A4A55"
+                size 16
+                yalign 0.5
+
+            text t("NODE 0451"):
+                color "#7A8A99"
+                size 13
+                bold True
+                kerning 2
+                yalign 0.5
+
+    fixed:
+        xalign 0.5
+        yalign 0.5
+        xsize menu_frame_xsize
+        ysize menu_frame_ysize
+
+        frame:
+            xfill True
+            yfill True
+            background Solid("#003A3A18")
+
+        frame:
+            xpos 4
+            ypos 4
+            xsize (menu_frame_xsize - 8)
+            ysize (menu_frame_ysize - 8)
+            background Solid("#0E1321C0")
+            padding (menu_padding_x, menu_padding_y)
+
+            add Solid("#003A3A"):
+                xsize 3
+                ysize (menu_frame_ysize - 160)
+                xpos 0
+                yalign 0.5
+                at mm_accent_drift
+            add Solid("#003A3A"):
+                xsize 3
+                ysize (menu_frame_ysize - 160)
+                xalign 1.0
+                yalign 0.5
+                at mm_accent_drift
+
+            add Solid("#003A3A"):
+                xsize corner_size
+                ysize 3
+                xpos 12
+                ypos 12
+            add Solid("#003A3A"):
+                xsize 3
+                ysize corner_size
+                xpos 12
+                ypos 12
+
+            add Solid("#003A3A"):
+                xsize corner_size
+                ysize 3
+                xalign 1.0
+                xoffset -12
+                ypos 12
+            add Solid("#003A3A"):
+                xsize 3
+                ysize corner_size
+                xalign 1.0
+                xoffset -12
+                ypos 12
+
+            add Solid("#003A3A"):
+                xsize corner_size
+                ysize 3
+                xpos 12
+                yalign 1.0
+                yoffset -15
+            add Solid("#003A3A"):
+                xsize 3
+                ysize corner_size
+                xpos 12
+                yalign 1.0
+                yoffset -12
+
+            add Solid("#003A3A"):
+                xsize corner_size
+                ysize 3
+                xalign 1.0
+                xoffset -12
+                yalign 1.0
+                yoffset -15
+            add Solid("#003A3A"):
+                xsize 3
+                ysize corner_size
+                xalign 1.0
+                xoffset -12
+                yalign 1.0
+                yoffset -12
+
+            vbox:
+                xalign 0.5
+                yalign 0.5
+                xmaximum menu_content_max
+                spacing menu_spacing
+
+                hbox:
+                    xalign 0.5
+                    spacing 12
+
+                    add Solid("#003A3A"):
+                        xsize 48
+                        ysize 1
+                        yalign 0.5
+
+                    text t("// CLASSIFIED INTERFACE //"):
+                        color "#7A8A99"
+                        size 16
+                        bold True
+                        text_align 0.5
+                        kerning 4
+
+                    add Solid("#003A3A"):
+                        xsize 48
+                        ysize 1
+                        yalign 0.5
+
+                add "images/logo.png":
+                    xalign 0.5
+                    ysize 128
+                    fit "contain"
+
+                fixed:
+                    xsize title_fixed_xsize
+                    ysize 100
+                    xalign 0.5
+
+                    text "ENEMY OF THE STATE":
+                        xalign 0.5
+                        yalign 0.5
+                        text_align 0.5
+                        color "#0C5D52"
+                        size menu_title_size
+                        bold True
+                        outlines [(6, "#003A3A14", 0, 0), (3, "#00FFD116", 0, 0)]
+
+                    text "ENEMY OF THE STATE" at title_glitch:
+                        xalign 0.5
+                        yalign 0.5
+                        text_align 0.5
+                        color "#EFFFFA"
+                        size menu_title_size
+                        bold True
+                        outlines [(2, "#00FFD155", 0, 0), (6, "#00FFD10E", 0, 0)]
+
+                    text "ENEMY OF THE STATE":
+                        xalign 0.5
+                        yalign 0.5
+                        text_align 0.5
+                        xoffset 2
+                        yoffset -2
+                        color "#7A8A9924"
+                        size menu_title_size
+                        bold True
+
+                hbox:
+                    xalign 0.5
+                    spacing 8
+
+                    add Solid("#3A4A5580"):
+                        xsize 80
+                        ysize 1
+                        yalign 0.5
+
+                    add Solid("#003A3A"):
+                        xsize 6
+                        ysize 6
+                        yalign 0.5
+
+                    add Solid("#3A4A5580"):
+                        xsize 80
+                        ysize 1
+                        yalign 0.5
+
+                text t("A visual novel about surveillance, trust, and digital security under pressure."):
+                    color "#7A8A99"
+                    size menu_desc_size
+                    xalign 0.5
+                    text_align 0.5
+                    xmaximum menu_desc_max
+
+                text t("\"The truth will always find a way out.\""):
+                    color "#7A8A99"
+                    size menu_quote_size
+                    italic True
+                    xalign 0.5
+                    text_align 0.5
+
+                null height 4
+
+                vbox:
+                    xalign 0.5
+                    spacing 8
+
+                    textbutton t("– START"):
+                        style "modal_action_button"
+                        xalign 0.5
+                        action Start()
+                        text_font settings_ui_font(mono=True)
+
+                    if renpy.newest_slot():
+                        textbutton t("– CONTINUE"):
+                            style "modal_action_button"
+                            xalign 0.5
+                            action Continue()
+                            text_font settings_ui_font(mono=True)
+
+                    textbutton t("– DOSSIER"):
+                        style "modal_action_button"
+                        xalign 0.5
+                        action ShowMenu("dossier")
+                        text_font settings_ui_font(mono=True)
+
+                    textbutton t("– STORY TREE"):
+                        style "modal_action_button"
+                        xalign 0.5
+                        action ShowMenu("story_tree")
+                        text_font settings_ui_font(mono=True)
+
+                    textbutton t("– SETTINGS"):
+                        style "modal_action_button"
+                        xalign 0.5
+                        action ShowMenu("preferences")
+                        text_font settings_ui_font(mono=True)
+
+                    if renpy.variant("pc"):
+                        textbutton t("— EXIT"):
+                            style "modal_action_button"
+                            xalign 0.5
+                            background Solid("#241926")
+                            hover_background Solid("#3A4A55")
+                            action Quit(confirm=True)
+                            text_font settings_ui_font(mono=True)
+
+                null height 6
+
+                hbox:
+                    xalign 0.5
+                    spacing 14
+
+                    text t("BUILD STABLE"):
+                        color "#3A4A55"
+                        size 13
+                        bold True
+                        kerning 2
+                        yalign 0.5
+
+                    text t("·"):
+                        color "#3A4A55"
+                        size 14
+                        yalign 0.5
+
+                    text t("v[config.version]"):
+                        color "#7A8A99"
+                        size 14
+                        yalign 0.5
+
+screen pause_hub():
+    tag menu
+    modal True
+
+    $ compact = is_compact_layout()
+
+    use ui_backdrop
+    use shell_header(
+        "ESC MENU",
+        "MISSION CONTROL",
+        "Resume, save, adjust settings, or inspect the branch map without dropping into the default Ren'Py interface."
+    )
+
+    if compact:
+        frame:
+            xpos 24
+            ypos 188
+            xsize 1872
+            ysize 844
+            background Solid("#0E1321EE")
+            padding (24, 24)
+
+            viewport:
+                xfill True
+                yfill True
+                mousewheel True
+                draggable True
+                scrollbars "vertical"
+
+                vbox:
+                    spacing 18
+                    xfill True
+
+                    frame:
+                        xfill True
+                        background Solid("#101523EE")
+                        padding (22, 20)
+
+                        vbox:
+                            spacing 12
+
+                            text t("MISSION ACTIONS"):
+                                color "#7A8A99"
+                                size 18
+                                bold True
+
+                            textbutton t("RESUME"):
+                                style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
+                                xfill True
+                                action Return()
+
+                            textbutton t("OPEN NOTEBOOK"):
+                                style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
+                                xfill True
+                                action Show("notebook_panel")
+
+                            textbutton t("DOSSIER"):
+                                style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
+                                xfill True
+                                action ShowMenu("dossier")
+
+                            textbutton t("SAVE"):
+                                style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
+                                xfill True
+                                action ShowMenu("save")
+
+                            textbutton t("SETTINGS"):
+                                style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
+                                xfill True
+                                action ShowMenu("preferences")
+
+                            textbutton t("STORY TREE"):
+                                style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
+                                xfill True
+                                action ShowMenu("story_tree")
+
+                            textbutton t("START OVER"):
+                                style "modal_action_button"
+                                text_font settings_ui_font(mono=True)
+                                xfill True
+                                action Start()
+
+                            if renpy.variant("pc"):
+                                textbutton t("EXIT"):
+                                    style "modal_action_button"
+                                    text_font settings_ui_font(mono=True)
+                                    xfill True
+                                    background Solid("#241926")
+                                    hover_background Solid("#3A4A55")
+                                    action Quit(confirm=True)
+
+                    text t("TACTICAL STATUS"):
+                        color "#7A8A99"
+                        size 18
+                        bold True
+
+                    for title, value, body, accent in [
+                        ("Current chapter", "[current_chapter]/5", "Operation branch currently in progress.", "#001A1A"),
+                        ("Knowledge", "[knowledge_score]", "Educational progress accumulated so far.", "#171C30"),
+                        ("Trust", "[trust_score]", "Relationship capital built during the mission.", "#171C30"),
+                        ("Suspicion", "[suspicion_level]/5", "Operational pressure currently on the player.", "#171C30"),
+                        ("Notebook", "[notebook_entry_count()]", "Personal notes saved for quick review.", "#171C30"),
+                    ]:
+                        frame:
+                            xfill True
+                            background Solid(accent)
+                            padding (22, 18)
+
+                            vbox:
+                                spacing 8
+                                text t(title):
+                                    color "#7A8A99"
+                                    size 16
+                                    bold True
+                                text t(value):
+                                    color "#E8E8E8"
+                                    size 34
+                                    bold True
+                                text t(body):
+                                    color "#7A8A99"
+                                    size 17
+    else:
+        frame:
+            xpos 32
+            ypos 190
+            xsize 620
+            ysize 850
+            background Solid("#101523CC")
+            padding (34, 30)
+
+            vbox:
+                spacing 14
+
+                textbutton t("RESUME"):
+                    style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
+                    action Return()
+
+                textbutton t("OPEN NOTEBOOK"):
+                    style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
+                    action Show("notebook_panel")
+
+                textbutton t("DOSSIER"):
+                    style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
+                    action ShowMenu("dossier")
+
+                textbutton t("START"):
+                    style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
+                    action Start()
+
+                textbutton t("SAVE"):
+                    style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
+                    action ShowMenu("save")
+
+                textbutton t("SETTINGS"):
+                    style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
+                    action ShowMenu("preferences")
+
+                textbutton t("STORY TREE"):
+                    style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
+                    action ShowMenu("story_tree")
+
+                if renpy.variant("pc"):
+                    textbutton t("EXIT"):
+                        style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
+                        background Solid("#241926")
+                        hover_background Solid("#3A4A55")
+                        action Quit(confirm=True)
+
+        frame:
+            xalign 1.0
+            xoffset -32
+            ypos 190
+            xsize 1196
+            ysize 850
+            background Solid("#0E1321C0")
+            padding (36, 32)
+
+            vbox:
+                spacing 18
+
+                text t("TACTICAL STATUS"):
+                    color "#7A8A99"
+                    size 17
+                    bold True
+
+                hbox:
+                    spacing 18
+
+                    frame:
+                        xsize 320
+                        ysize 150
+                        background Solid("#001A1A")
+                        padding (22, 18)
+
+                        vbox:
+                            spacing 8
+                            text t("Current chapter"):
+                                color "#7A8A99"
+                                size 15
+                                bold True
+                            text t("[current_chapter]/5"):
+                                color "#E8E8E8"
+                                size 34
+                                bold True
+                            text t("Operation branch currently in progress."):
+                                color "#7A8A99"
+                                size 16
+
+                    frame:
+                        xsize 320
+                        ysize 150
+                        background Solid("#171C30")
+                        padding (22, 18)
+
+                        vbox:
+                            spacing 8
+                            text t("Knowledge"):
+                                color "#7A8A99"
+                                size 15
+                                bold True
+                            text t("[knowledge_score]"):
+                                color "#E8E8E8"
+                                size 34
+                                bold True
+                            text t("Educational progress accumulated so far."):
+                                color "#7A8A99"
+                                size 16
+
+                    frame:
+                        xsize 320
+                        ysize 150
+                        background Solid("#171C30")
+                        padding (22, 18)
+
+                        vbox:
+                            spacing 8
+                            text t("Suspicion"):
+                                color "#7A8A99"
+                                size 15
+                                bold True
+                            text t("[suspicion_level]/5"):
+                                color "#E8E8E8"
+                                size 34
+                                bold True
+                            text t("Operational pressure currently on the player."):
+                                color "#7A8A99"
+                                size 16
+
+                frame:
+                    xfill True
+                    ysize 1
+                    background Solid("#111720")
+
+                text t("This pause menu now uses the same spacing system as the rest of the UI, so buttons, cards, and text blocks stay aligned on different screens."):
+                    color "#7A8A99"
+                    size 18
+                    xmaximum 960
+
+    key "game_menu" action Return()
+
+screen dossier():
+    tag menu
+
+    $ compact = is_compact_layout()
+    $ dossier_xpos = 24 if compact else 72
+    $ dossier_ypos = 24 if compact else 44
+    $ dossier_xsize = 1872 if compact else 1776
+    $ dossier_ysize = 1012 if compact else 992
+    $ dossier_viewport_ysize = (680 if compact else 660)
+    $ dossier_term_size = 22 if compact else 20
+    $ dossier_definition_size = 17 if compact else 16
+    $ dossier_footer_size = 14 if compact else 13
+    $ dossier_entry_count = len(DOSSIER_ENTRIES)
+
+    # ── BACKGROUND: dark base + grid + scanline ──
+    add Solid("#090D13")
+
+    fixed:
+        xfill True
+        yfill True
+
+        # horizontal grid lines
+        for y in range(0, 1080, 24):
+            add Solid("#0E1A2218") xpos 0 ypos y xsize 1920 ysize 1
+
+        # vertical grid lines
+        for x in range(0, 1920, 24):
+            add Solid("#0E1A2212") xpos x ypos 0 xsize 1 ysize 1080
+
+        # slow full-screen scanline
+        add Solid("#FFFFFF06") at dossier_scanline_slow
+
+    # ── MAIN SHELL FRAME ──
+    frame:
+        xpos dossier_xpos
+        ypos dossier_ypos
+        xsize dossier_xsize
+        ysize dossier_ysize
+        style "dossier_shell_frame"
+
+        fixed:
+            xfill True
+            yfill True
+
+            # panel fill
+            add Solid("#0B1019F0")
+
+            # inner scanline overlay (faster, header area feel)
+            fixed:
+                xfill True
+                yfill True
+                add Solid("#00E5B008") at dossier_header_scanline
+
+            vbox:
+                xfill True
+                spacing 14
+
+                # ━━━━━━ HEADER SECTION ━━━━━━
+                frame:
+                    xfill True
+                    background Solid("#0D151F")
+                    padding (24, 18)
+
+                    fixed:
+                        xfill True
+                        yfit True
+
+                        # faint top border accent
+                        add Solid("#00E5B030") xpos 0 ypos 0 xsize 9999 ysize 1
+
+                        vbox:
+                            spacing 8
+                            xfill True
+                            yoffset 4
+
+                            hbox:
+                                spacing 6
+
+                                text t("REFERENCE DATABASE"):
+                                    style "dossier_header_kicker"
+
+                                text "█":
+                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    size 13
+                                    color "#00E5B0"
+                                    at dossier_cursor_blink_fast
+
+                                null width 20
+
+                                text "[dossier_entry_count] ENTRIES LOADED":
+                                    font "fonts/ShareTechMono-Regular.ttf"
+                                    size 11
+                                    color "#3A5060"
+                                    kerning 1.5
+                                    yalign 0.5
+
+                            text t("NETWORK SECURITY DOSSIER"):
+                                style "dossier_header_title"
+                                at dossier_title_glow
+
+                            # animated divider line
+                            frame:
+                                xfill True
+                                ysize 2
+                                background Solid("#00E5B0")
+                                at dossier_divider_draw
+
+                            # secondary dim divider
+                            frame:
+                                xfill True
+                                ysize 1
+                                yoffset 2
+                                background Solid("#00E5B018")
+
+                            text t("Core cyber-security concepts presented in one scrollable reference layout."):
+                                style "dossier_header_body"
+
+                # ━━━━━━ ENTRIES VIEWPORT ━━━━━━
+                side "c r":
+                    spacing 8
+                    xfill True
+                    ysize dossier_viewport_ysize
+
+                    viewport id "dossier_vp":
+                        xfill True
+                        mousewheel True
+                        draggable True
+                        pagekeys True
+
+                        vbox:
+                            spacing 6
+                            xfill True
+
+                            for term, definition in DOSSIER_ENTRIES:
+                                button:
+                                    style "dossier_card_button"
+                                    xfill True
+                                    action NullAction()
+
+                                    # outer: accent bar color as background
+                                    frame:
+                                        xfill True
+                                        background Solid("#00E5B0")
+                                        left_padding 4
+                                        right_padding 0
+                                        top_padding 0
+                                        bottom_padding 0
+
+                                        # inner: card body sits on top, exposing 4px accent on the left
+                                        frame:
+                                            xfill True
+                                            background Solid("#0D151F")
+                                            padding (18, 14, 18, 14)
+
+                                            vbox:
+                                                spacing 6
+                                                xfill True
+
+                                                text t(term):
+                                                    style "dossier_term_title"
+                                                    size dossier_term_size
+                                                    substitute False
+
+                                                text t(definition):
+                                                    style "dossier_term_body"
+                                                    size dossier_definition_size
+                                                    xfill True
+                                                    substitute False
+
+                    vbar value YScrollValue("dossier_vp"):
+                        style "dossier_scrollbar"
+
+                # ━━━━━━ FOOTER ━━━━━━
+                frame:
+                    xfill True
+                    background Solid("#0A1018")
+                    padding (24, 14)
+
+                    hbox:
+                        xfill True
+
+                        # left: info text
+                        vbox:
+                            yalign 0.5
+
+                            text t("Exports are saved as plain .txt files to an exports folder or to your user profile if needed."):
+                                style "dossier_footer_text"
+                                size dossier_footer_size
+                                text_align 0.0
+                                substitute False
+
+                        # right: action buttons
+                        hbox:
+                            spacing 12
+                            xalign 1.0
+                            yalign 0.5
+
+                            textbutton t("EXPORT TXT"):
+                                style "dossier_action_button"
+                                text_style "dossier_action_button_text"
+                                at dossier_button_pulse
+                                action Function(export_dossier_txt)
+
+                            textbutton t("RETURN"):
+                                style "dossier_action_button"
+                                text_style "dossier_action_button_text"
+                                at dossier_button_pulse
+                                action Return()
+
+    key "game_menu" action Return()
+
+screen intro_fullscreen_prompt():
+    modal True
+
+    $ compact = is_compact_layout()
+    $ intro_xsize = 1820 if compact else 1080
+    $ intro_title_size = 30 if compact else 26
+    $ intro_text_size = 22 if compact else 19
+    $ intro_text_max = 1600 if compact else 920
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize intro_xsize
+        background Solid("#0E1321F2")
+        padding (0, 0)
+
+        vbox:
+            spacing 0
+
+            frame:
+                xfill True
+                ysize 66
+                background Solid("#241926")
+                padding (28, 0)
+
+                text t("DISPLAY MODE"):
+                    color "#E8E8E8"
+                    size 26
+                    bold True
+                    xalign 0.5
+                    yalign 0.5
+
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (36, 30)
+
+                vbox:
+                    spacing 18
+
+                    text t("Fullscreen recommended"):
+                        color "#E8E8E8"
+                        size intro_title_size
+                        bold True
+
+                    text t("For the best experience, play in fullscreen mode. This helps dialogue, menus, and minigames fit better on itch.io embeds and mobile browsers."):
+                        color "#7A8A99"
+                        size intro_text_size
+                        xmaximum intro_text_max
+
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (24, 22)
+
+                hbox:
+                    spacing 14
+                    xalign 0.5
+
+                    textbutton t("GO FULLSCREEN"):
+                        style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
+                        xsize 320
+                        action [Preference("display", "fullscreen"), Return()]
+
+                    textbutton t("SKIP"):
+                        style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
+                        xsize 260
+                        background Solid("#171C30")
+                        hover_background Solid("#3A4A55")
+                        action Skip()
+
+screen intro_shortcuts_screen():
+    modal True
+
+    $ compact = is_compact_layout()
+    $ intro_xsize = 1820 if compact else 1080
+    $ intro_title_size = 30 if compact else 26
+    $ intro_control_size = 20 if compact else 18
+    $ intro_control_label_xsize = 520 if compact else 330
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize intro_xsize
+        background Solid("#0E132188")
+        padding (0, 0)
+
+        vbox:
+            spacing 0
+
+            frame:
+                xfill True
+                ysize 66
+                background Solid("#001A1A")
+                padding (28, 0)
+
+                text t("CLASSIFIED BRIEFING"):
+                    color "#E8E8E8"
+                    size 26
+                    bold True
+                    xalign 0.5
+                    yalign 0.5
+
+            frame:
+                xfill True
+                background Solid("#10152380")
+                padding (36, 30)
+
+                vbox:
+                    spacing 18
+
+                    text t("Controls & shortcuts"):
+                        color "#E8E8E8"
+                        size intro_title_size
+                        bold True
+
+                    frame:
+                        xfill True
+                        background Solid("#171C3080")
+                        padding (24, 20)
+
+                        vbox:
+                            spacing 10
+
+                            text t("Controls"):
+                                color "#7A8A99"
+                                size 22
+                                bold True
+
+                            for control, description in [
+                                ("Click / Enter / Space", t("Advance dialogue and confirm UI actions.")),
+                                ("Esc / Right Click / MENU", t("Open mission control and game settings.")),
+                                ("Back / Page Up", t("Review previous dialogue.")),
+                                ("Ctrl+N", t("                   Open / close the field notebook.")),
+                                ("Ctrl+I", t("                   Open the network security dossier.")),
+                                ("Notebook", t("              Save your own reminders while playing.")),
+                            ]:
+                                hbox:
+                                    spacing 14
+                                    xfill True
+
+                                    text control:
+                                        color "#E8E8E8"
+                                        size intro_control_size
+                                        bold True
+                                        xsize intro_control_label_xsize
+
+                                    text description:
+                                        color "#7A8A99"
+                                        size intro_control_size
+                                        xfill True
+
+            frame:
+                xfill True
+                background Solid("#171C3080")
+                padding (24, 22)
+
+                hbox:
+                    spacing 14
+                    xalign 0.5
+
+                    textbutton t("BEGIN MISSION"):
+                        style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
+                        xsize 320
+                        action Return()
+
+screen briefing_screen():
+    modal True
+
+    $ compact = is_compact_layout()
+    $ briefing_xsize = 1820 if compact else 980
+    $ briefing_title_size = 26 if compact else 24
+    $ briefing_meta_size = 22 if compact else 20
+    $ briefing_body_size = 24 if compact else 22
+    $ briefing_body2_size = 20 if compact else 18
+    $ briefing_body_max = 1600 if compact else 860
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize briefing_xsize
+        background Solid("#0E1321F2")
+        padding (0, 0)
+
+        vbox:
+            spacing 0
+
+            frame:
+                xfill True
+                ysize 66
+                background Solid("#241926")
+                padding (28, 0)
+
+                text t("CLASSIFIED BRIEFING"):
+                    color "#E8E8E8"
+                    size 26
+                    bold True
+                    xalign 0.5
+                    yalign 0.5
+
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (36, 30)
+
+                vbox:
+                    spacing 18
+
+                    text t("OPERATIVE: [[CLASSIFIED]"):
+                        color "#E8E8E8"
+                        size briefing_title_size
+                        bold True
+
+                    text t("ASSIGNMENT: NSA Systems Administrator"):
+                        color "#7A8A99"
+                        size briefing_meta_size
+
+                    text t("CLEARANCE: TS/SCI"):
+                        color "#7A8A99"
+                        size briefing_meta_size
+                        bold True
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#111720")
+
+                    text t("Navigate the moral and technical challenges of one of the most significant intelligence leaks in modern history."):
+                        color "#E8E8E8"
+                        size briefing_body_size
+                        xmaximum briefing_body_max
+
+                    text t("Your decisions affect trust, suspicion, and what information can survive the operation."):
+                        color "#7A8A99"
+                        size briefing_body2_size
+                        xmaximum briefing_body_max
+
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (24, 22)
+
+                textbutton t("ACCEPT MISSION"):
+                    style "modal_action_button"
+                    text_font settings_ui_font(mono=True)
+                    xalign 0.5
+                    action Return()
+
+screen chapter_title_screen(number, title, subtitle):
+    modal True
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 1100
+        background Solid("#0E1321EE")
+        padding (40, 36)
+
+        vbox:
+            xalign 0.5
+            spacing 12
+
+            text t("CHAPTER [number]"):
+                color "#7A8A99"
+                size 18
+                bold True
+                xalign 0.5
+
+            text title:
+                color "#E8E8E8"
+                size 58
+                bold True
+                xalign 0.5
+
+            text subtitle:
+                color "#7A8A99"
+                size 23
+                italic True
+                xalign 0.5
+
+    timer 3.0 action Return()
+    key "dismiss" action Return()
+
+screen chapter_summary(chapter_num, chapter_name):
+    modal True
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 980
+        background Solid("#0E1321F0")
+        padding (0, 0)
+
+        vbox:
+            spacing 0
+
+            frame:
+                xfill True
+                ysize 80
+                background Solid("#171C30")
+                padding (30, 0)
+
+                vbox:
+                    xalign 0.5
+                    yalign 0.5
+                    spacing 4
+
+                    text t("CHAPTER [chapter_num] COMPLETE"):
+                        color "#7A8A99"
+                        size 16
+                        bold True
+                        xalign 0.5
+
+                    text chapter_name:
+                        color "#E8E8E8"
+                        size 28
+                        bold True
+                        xalign 0.5
+
+            frame:
+                xfill True
+                background Solid("#101523")
+                padding (34, 28)
+
+                vbox:
+                    spacing 16
+
+                    hbox:
+                        xfill True
+                        text t("Knowledge Score"):
+                            color "#7A8A99"
+                            size 21
+                        text t("[knowledge_score]"):
+                            color "#E8E8E8"
+                            size 21
+                            bold True
+                            xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text t("Trust Score"):
+                            color "#7A8A99"
+                            size 21
+                        text t("[trust_score]"):
+                            color "#E8E8E8"
+                            size 21
+                            bold True
+                            xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text t("Suspicion Level"):
+                            color "#7A8A99"
+                            size 21
+                        text t("[suspicion_level]/5"):
+                            color "#E8E8E8"
+                            size 21
+                            bold True
+                            xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text t("Contacts Secured"):
+                            color "#7A8A99"
+                            size 21
+                        text t("[contacts_secured]"):
+                            color "#E8E8E8"
+                            size 21
+                            bold True
+                            xalign 1.0
+
+                    hbox:
+                        xfill True
+                        text t("Evidence"):
+                            color "#7A8A99"
+                            size 21
+                        if evidence_secured:
+                            text t("SECURED"):
+                                color "#E8E8E8"
+                                size 21
+                                bold True
+                                xalign 1.0
+                        else:
+                            text t("NOT YET"):
+                                color "#E8E8E8"
+                                size 21
+                                bold True
+                                xalign 1.0
+
+            frame:
+                xfill True
+                background Solid("#171C30")
+                padding (24, 22)
+
+                if chapter_num < 5:
+                    textbutton t("CONTINUE TO CHAPTER [chapter_num + 1]"):
+                        style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
+                        xalign 0.5
+                        action Return()
+                else:
+                    textbutton t("PROCEED TO FINAL ASSESSMENT"):
+                        style "modal_action_button"
+                        text_font settings_ui_font(mono=True)
+                        xalign 0.5
+                        action Return()
+
+screen mcq_question(question, answers, correct_index, explanation, helper_text=None):
+    modal True
+    default selected = -1
+    default answered = False
+
+    key "game_menu" action NullAction()
+    key "hide_windows" action NullAction()
+    key "rollback" action NullAction()
+    key "rollforward" action NullAction()
+    key "skip" action NullAction()
+    key "toggle_skip" action NullAction()
+
+    if not answered:
+        if len(answers) > 0:
+            key "K_1" action [SetScreenVariable("selected", 0), SetScreenVariable("answered", True)]
+            key "K_KP1" action [SetScreenVariable("selected", 0), SetScreenVariable("answered", True)]
+        if len(answers) > 1:
+            key "K_2" action [SetScreenVariable("selected", 1), SetScreenVariable("answered", True)]
+            key "K_KP2" action [SetScreenVariable("selected", 1), SetScreenVariable("answered", True)]
+        if len(answers) > 2:
+            key "K_3" action [SetScreenVariable("selected", 2), SetScreenVariable("answered", True)]
+            key "K_KP3" action [SetScreenVariable("selected", 2), SetScreenVariable("answered", True)]
+        if len(answers) > 3:
+            key "K_4" action [SetScreenVariable("selected", 3), SetScreenVariable("answered", True)]
+            key "K_KP4" action [SetScreenVariable("selected", 3), SetScreenVariable("answered", True)]
+    else:
+        if selected == correct_index:
+            key "K_RETURN" action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+            key "K_KP_ENTER" action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+        else:
+            key "K_RETURN" action Return()
+            key "K_KP_ENTER" action Return()
+
+    add Solid("#040810", xysize=(1920, 1080))
+    add Solid("#001E3212", xysize=(1500, 780)) xalign 0.5 yalign 0.5
+    add ScanlineOverlay(1920, 1080)
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 1260
+        background Solid("#00FFD114")
+        padding (0, 0)
+
+        frame:
+            xfill True
+            background Solid("#040810")
+            padding (36, 32)
+
+            fixed:
+                xfill True
+                yfit True
+
+                add ScanlineOverlay(1260, 720, line_spacing=3, line_width=1)
+
+                vbox:
+                    xfill True
+                    spacing 0
+
+                    hbox:
+                        spacing 6
+                        
+                        # Circular markers
+                        add Frame(Solid("#FF5F57"), 4, 4) xsize 8 ysize 8 yalign 0.5
+                        add Frame(Solid("#FEBC2E"), 4, 4) xsize 8 ysize 8 yalign 0.5
+                        add Frame(Solid("#28C840"), 4, 4) xsize 8 ysize 8 yalign 0.5
+
+                        null width 12
+
+                        text t("SNOWDEN_TERMINAL - KNOWLEDGE_CHECK.sh"):
+                            style "mcq_terminal_header"
+                            yalign 0.5
+
+                    null height 20
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00FFD120")
+                        padding (0, 0)
+
+                    null height 24
+
+                    hbox:
+                        spacing 12
+                        xfill True
+
+                        text ">":
+                            style "mcq_prompt_arrow"
+
+                        vbox:
+                            spacing 10
+                            xfill True
+
+                            text question:
+                                style "mcq_question_terminal"
+                                xmaximum 1080
+
+                            if helper_text:
+                                text helper_text:
+                                    style "mcq_helper_terminal"
+                                    xmaximum 1080
+
+                    null height 24
+
+                    vbox:
+                        spacing 2
+                        xfill True
+
+                        for i, answer in enumerate(answers):
+                            $ option_num = str(i + 1)
+                            $ is_correct = answered and i == correct_index
+                            $ is_wrong = answered and i == selected and selected != correct_index
+                            $ opt_bar = "#00FF88" if is_correct else "#FF2D55" if is_wrong else "#00FFD120"
+                            $ opt_bg = "#00FF880A" if is_correct else "#FF2D550A" if is_wrong else "#00000000"
+                            $ num_color = "#00FF88" if is_correct else "#FF2D55" if is_wrong else "#00FFD180"
+                            $ text_color = "#E8E8E8" if is_correct or is_wrong else "#C8D0D8"
+
+                            button:
+                                xfill True
+                                yminimum 46
+                                background Solid(opt_bg)
+                                hover_background Solid("#00FFD108" if not answered else opt_bg)
+                                padding (0, 6)
+                                action If(
+                                    not answered,
+                                    [SetScreenVariable("selected", i), SetScreenVariable("answered", True)],
+                                    NullAction()
+                                )
+
+                                hbox:
+                                    spacing 14
+                                    yalign 0.5
+
+                                    frame:
+                                        xsize 2
+                                        ysize 30
+                                        background Solid(opt_bar)
+                                        padding (0, 0)
+
+                                    text "[{}]".format(option_num):
+                                        style "mcq_option_num"
+                                        color num_color
+                                        yalign 0.5
+                                        substitute False
+
+                                    text answer:
+                                        style "mcq_option_text"
+                                        color text_color
+                                        yalign 0.5
+
+                    if answered:
+                        null height 10
+
+                        frame:
+                            background Solid("#00FF8808" if selected == correct_index else "#FF2D5508")
+                            padding (10, 4)
+                            xmaximum 700 # Ensure it doesn't grow too large
+
+                            hbox:
+                                spacing 12
+
+                                frame:
+                                    xsize 2
+                                    ysize 60 # Set a reasonable height that fits the header
+                                    background Solid("#00FF8880" if selected == correct_index else "#FF2D5580")
+                                    padding (0, 0)
+
+                                vbox:
+                                    spacing 2
+
+                                    if selected == correct_index:
+                                        text t("CORRECT - MATCH CONFIRMED"):
+                                            style "mcq_result_line"
+                                            color "#00FF88"
+                                    else:
+                                        $ correct_number = correct_index + 1
+                                        $ correct_answer = answers[correct_index]
+                                        text "INCORRECT - Correct answer: [{}] {}".format(correct_number, correct_answer):
+                                            style "mcq_result_line"
+                                            color "#FF2D55"
+                                            substitute False
+
+                                    viewport:
+                                        ymaximum 140 # Lowered to match the red line in example.png
+                                        mousewheel True
+                                        scrollbars "vertical"
+                                        
+                                        vbox:
+                                            text explanation:
+                                                style "mcq_result_text"
+                                                xmaximum 580
+
+                    null height 24
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00FFD114")
+                        padding (0, 0)
+
+                    null height 16
+
+                    hbox:
+                        spacing 16
+                        yalign 0.5
+
+                        frame at blink_cursor:
+                            xsize 8
+                            ysize 18
+                            yalign 0.5
+                            background Solid("#00FFD1")
+                            padding (0, 0)
+
+                        frame:
+                            background Solid("#00FFD160") # Border color
+                            padding (1, 1) # Border thickness
+                            
+                            frame:
+                                background Solid("#040810") # Match window background
+                                padding (0, 0)
+                                
+                                textbutton t("EXECUTE: CONTINUE"):
+                                    style "mcq_terminal_continue"
+                                    text_style "mcq_terminal_continue_text"
+                                    sensitive answered
+                                    if answered and selected == correct_index:
+                                        action [SetVariable("knowledge_score", knowledge_score + 1), Return()]
+                                    elif answered:
+                                        action Return()
+                                    else:
+                                        action NullAction()
+
+screen navigation():
+    vbox:
+        spacing 12
+
+        if main_menu:
+            textbutton t("Start"):
+                style "shell_nav_button"
+                action Start()
+        else:
+            textbutton t("History"):
+                style "shell_nav_button"
+                action ShowMenu("history")
+
+            textbutton t("Save"):
+                style "shell_nav_button"
+                action ShowMenu("save")
+
+        textbutton t("Load"):
+            style "shell_nav_button"
+            action ShowMenu("load")
+
+        textbutton t("Preferences"):
+            style "shell_nav_button"
+            action ShowMenu("preferences")
+
+        textbutton t("Dossier"):
+            style "shell_nav_button"
+            action ShowMenu("dossier")
+
+        textbutton t("Story Tree"):
+            style "shell_nav_button"
+            action ShowMenu("story_tree")
+
+        if _in_replay:
+            textbutton t("End Replay"):
+                style "shell_nav_button"
+                action EndReplay(confirm=True)
+        elif not main_menu:
+            textbutton t("Main Menu"):
+                style "shell_nav_button"
+                action MainMenu()
+
+        textbutton t("About"):
+            style "shell_nav_button"
+            action ShowMenu("about")
+
+        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+            textbutton t("Help"):
+                style "shell_nav_button"
+                action ShowMenu("help")
+
+        if renpy.variant("pc"):
+            textbutton t("Quit"):
+                style "shell_nav_button"
+                background Solid("#241926")
+                hover_background Solid("#3A4A55")
+                action Quit(confirm=not main_menu)
+
+screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, show_header=True, header_kicker=None, header_body=None):
+    tag menu
+
+    $ compact = is_compact_layout()
+    $ menu_header_kicker = header_kicker if header_kicker is not None else "ARCHIVE INTERFACE"
+    $ menu_header_body = header_body if header_body is not None else "A single menu grid now drives save, load, settings, history, help, and reference screens."
+    $ compact_ypos = 188 if show_header else 120
+    $ standard_ypos = 214 if show_header else 146
+
+    use ui_backdrop
+    if show_header:
+        use shell_header(
+            menu_header_kicker,
+            "[title]",
+            menu_header_body
+        )
+
+    if compact:
+        # Compact: single column, full-width card below the header
+        frame:
+            xpos 24
+            ypos compact_ypos
+            xsize 1872
+            ysize (912 if not show_header else 844)
+            background Solid("#0E1321EE")
+            padding (20, 24 if not show_header else 20)
+
+            viewport:
+                xfill True
+                yfill True
+                mousewheel True
+                draggable True
+                scrollbars "vertical"
+
+                vbox:
+                    spacing 18
+                    xfill True
+
+                    frame:
+                        xfill True
+                        background Solid("#101523")
+                        padding (18, 18)
+
+                        vbox:
+                            spacing 14
+
+                            use navigation
+
+                            textbutton t("Notes"):
+                                style "shell_nav_button"
+                                xfill True
+                                action Show("notebook_panel")
+
+                            textbutton t("Return"):
+                                style "shell_nav_button"
+                                xfill True
+                                action ShowMenu(menu_return_screen())
+
+                    frame:
+                        xfill True
+                        background Solid("#101523")
+                        padding (24, 24)
+
+                        if scroll == "viewport":
+                            viewport:
+                                style "game_menu_viewport"
+                                yinitial yinitial
+                                xfill True
+                                yfill True
+                                scrollbars "vertical"
+                                mousewheel True
+                                draggable True
+                                pagekeys True
+
+                                vbox:
+                                    spacing spacing
+                                    xfill True
+                                    transclude
+
+                        elif scroll == "vpgrid":
+                            vpgrid:
+                                cols 1
+                                yinitial yinitial
+                                xfill True
+                                yfill True
+                                scrollbars "vertical"
+                                mousewheel True
+                                draggable True
+                                pagekeys True
+                                spacing spacing
+
+                                transclude
+
+                        else:
+                            transclude
+    else:
+        hbox:
+            xpos 72
+            ypos standard_ypos
+            spacing 20
+
+            frame:
+                xsize 360
+                ysize (838 if not show_header else 770)
+                background Solid("#0E1321EE")
+                padding (20, 24 if not show_header else 20)
+
+                vbox:
+                    spacing 18
+
+                    use navigation
+
+                    null height 6
+
+                    textbutton t("Notes"):
+                        style "shell_nav_button"
+                        action Show("notebook_panel")
+
+                    textbutton t("Return"):
+                        style "shell_nav_button"
+                        action ShowMenu(menu_return_screen())
+
+            frame:
+                xsize 1396
+                ysize (838 if not show_header else 770)
+                background Solid("#0E1321EE")
+                padding (24, 28 if not show_header else 24)
+                # RIGHT: content area
+                frame:
+                    xfill True
+                    yfill True
+                    background Solid("#0E1321EE")
+                    padding (24, 24)
+
+                    if scroll == "viewport":
+                        viewport:
+                            style "game_menu_viewport"
+                            yinitial yinitial
+                            xfill True
+                            yfill True
+                            scrollbars "vertical"
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+
+                            vbox:
+                                spacing spacing
+                                xfill True
+                                transclude
+
+                    elif scroll == "vpgrid":
+                        vpgrid:
+                            cols 1
+                            yinitial yinitial
+                            xfill True
+                            yfill True
+                            scrollbars "vertical"
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+                            spacing spacing
+
+                            transclude
+
+                    else:
+                        transclude
+
+    if main_menu:
+        key "game_menu" action ShowMenu("main_menu")
+    else:
+        key "game_menu" action ShowMenu("pause_hub")
+
+screen about():
+    tag menu
+
+    use game_menu(t("About"), scroll="viewport", spacing=18):
+        frame:
+            xfill True
+            background Solid("#171C30")
+            padding (28, 24)
+
+            vbox:
+                spacing 14
+
+                text t("[config.name!t]"):
+                    color "#E8E8E8"
+                    size 32
+                    bold True
+
+                text t("Version [config.version!t]"):
+                    color "#7A8A99"
+                    size 20
+
+                if gui.about:
+                    text t("[gui.about!t]"):
+                        color "#7A8A99"
+                        size 19
+
+                text t("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]."):
+                    color "#7A8A99"
+                    size 18
+
+                text t("[renpy.license!t]"):
+                    color "#7A8A99"
+                    size 16
+
+screen save():
+    tag menu
+    use file_slots(t("Save"))
+
+screen load():
+    tag menu
+    use file_slots(t("Load"))
+
+screen file_slots(title):
+    default page_name_value = FilePageNameInputValue(pattern=t("Page {}"), auto=t("Automatic saves"), quick=t("Quick saves"))
+    default hovered_file_slot = -1
+    $ is_save_screen = (title == t("Save"))
+    $ is_load_screen = (title == t("Load"))
+    $ archive_title = "// SAVE ARCHIVE //" if is_save_screen else "// LOAD ARCHIVE //"
+    $ archive_body = "Encrypted field snapshots stored for rapid recovery and chapter rollback."
+    $ current_file_page = FileCurrentPage()
+    $ page_chip_label = "CHAPTER SAVES" if current_file_page == "chapter" else None
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        background None
+        xfill True
+        yfill True
+        padding (64, 68)
+
+        hbox:
+            xfill True
+            yfill True
+            spacing 24
+
+            frame:
+                xsize 320
+                yfill True
+                background Solid("#111827")
+                padding (28, 22)
+
+                vbox:
+                    xfill True
+                    yfill True
+                    spacing 14
+
+                    vbox:
+                        xfill True
+                        spacing 6
+
+                        text "ARCHIVE INTERFACE":
+                            font settings_ui_font(mono=True)
+                            size 15
+                            color "#8B9CB0"
+
+                        text archive_title:
+                            font settings_ui_font(mono=True)
+                            size 30
+                            color "#00E5B0"
+
+                        text archive_body:
+                            font settings_ui_font(mono=True)
+                            size 14
+                            color "#8B9CB0"
+                            line_spacing 2
+                            xfill True
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00E5B026")
+                        padding (0, 0)
+
+                    vbox:
+                        xfill True
+                        spacing 8
+
+                        use history_nav_button("History", ShowMenu("history"), item_id="history")
+                        use history_nav_button("Save", ShowMenu("save"), style_name="menu_item_active" if is_save_screen else "menu_item_default", item_id="save", active=is_save_screen)
+                        use history_nav_button("Load", ShowMenu("load"), style_name="menu_item_active" if is_load_screen else "menu_item_default", item_id="load", active=is_load_screen)
+                        use history_nav_button("Preferences", ShowMenu("preferences"), item_id="preferences")
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00E5B014")
+                        padding (0, 0)
+
+                    vbox:
+                        xfill True
+                        spacing 8
+
+                        use history_nav_button("Dossier", ShowMenu("dossier"), item_id="dossier")
+                        use history_nav_button("Story Tree", ShowMenu("story_tree"), item_id="story_tree")
+                        use history_nav_button("Notes", Show("notebook_panel"), item_id="notes")
+
+                    null height 0
+
+                    vbox:
+                        xfill True
+                        yalign 1.0
+                        spacing 8
+
+                        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+                            use history_nav_button("Help", ShowMenu("help"), item_id="help")
+
+                        use history_nav_button("Main Menu", MainMenu(), item_id="main_menu")
+                        use history_nav_button("Return", ShowMenu(menu_return_screen()), item_id="return")
+
+                        if renpy.variant("pc"):
+                            use history_nav_button("Quit", Quit(confirm=not main_menu), style_name="menu_item_quit", item_id="quit")
+
+            fixed:
+                xsize 1
+                yfill True
+                add Solid("#00E5B026")
+
+            frame:
+                xfill True
+                yfill True
+                background Solid("#0D1117")
+                padding (34, 26)
+
+                fixed:
+                    xfill True
+                    yfill True
+
+                    add Solid("#111827")
+
+                    for y in range(0, 1600, 4):
+                        frame:
+                            xpos 0
+                            ypos y
+                            xfill True
+                            ysize 1
+                            background Solid("#00E5B005")
+                            padding (0, 0)
+
+                    hbox:
+                        xfill True
+                        yfill True
+                        spacing 16
+
+                        viewport:
+                            id "file_slots_viewport"
+                            xfill True
+                            yfill True
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+
+                            vbox:
+                                xfill True
+                                spacing 18
+
+                                hbox:
+                                    xfill True
+                                    spacing 14
+
+                                    button:
+                                        background Solid("#101523")
+                                        hover_background Solid("#1A2332")
+                                        padding (18, 10)
+                                        action If(current_file_page == "chapter", NullAction(), page_name_value.Toggle())
+
+                                        if current_file_page == "chapter":
+                                            text t("Chapter saves"):
+                                                font settings_ui_font(mono=True)
+                                                color "#E0E0E0"
+                                                size 20
+                                                xalign 0.5
+                                                text_align 0.5
+                                        else:
+                                            input:
+                                                value page_name_value
+                                                font settings_ui_font(mono=True)
+                                                color "#E0E0E0"
+                                                size 20
+                                                xalign 0.5
+                                                text_align 0.5
+
+                                    null width 0
+
+                                grid gui.file_slot_cols gui.file_slot_rows:
+                                    xfill True
+                                    spacing 16
+
+                                    for i in range(gui.file_slot_cols * gui.file_slot_rows):
+                                        $ slot = i + 1
+                                        $ slot_bg = "#1A2332" if hovered_file_slot == slot else "#101523"
+
+                                        button:
+                                            xfill True
+                                            ysize 298
+                                            background Solid("#00E5B040")
+                                            hover_background Solid("#00E5B0")
+                                            padding (2, 0, 0, 0)
+                                            action FileAction(slot)
+                                            hovered SetScreenVariable("hovered_file_slot", slot)
+                                            unhovered SetScreenVariable("hovered_file_slot", -1)
+
+                                            frame:
+                                                xfill True
+                                                yfill True
+                                                background Solid(slot_bg)
+                                                padding (14, 14)
+
+                                                vbox:
+                                                    xfill True
+                                                    spacing 12
+
+                                                    frame:
+                                                        xfill True
+                                                        ysize 196
+                                                        background Solid("#0D1117")
+                                                        padding (0, 0)
+
+                                                        add FileScreenshot(slot) xalign 0.5 yalign 0.5
+
+                                                    text FileTime(slot, format=t("{#file_time}%A, %B %d %Y, %H:%M"), empty=t("Empty slot")):
+                                                        font settings_ui_font(mono=True)
+                                                        color "#8B9CB0"
+                                                        size 14
+                                                        xalign 0.0
+
+                                                    text FileSaveName(slot):
+                                                        font settings_ui_font(mono=True)
+                                                        color "#E0E0E0"
+                                                        size 17
+                                                        xalign 0.0
+
+                                                    key "save_delete" action FileDelete(slot)
+
+                                hbox:
+                                    xalign 0.5
+                                    spacing 10
+
+                                    if current_file_page == "chapter":
+                                        textbutton t("<"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage("auto")
+                                            text_font settings_ui_font(mono=True)
+                                    else:
+                                        textbutton t("<"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePagePrevious()
+                                            text_font settings_ui_font(mono=True)
+
+                                    if config.has_autosave:
+                                        textbutton t("{#auto_page}A"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage("auto")
+                                            text_font settings_ui_font(mono=True)
+
+                                    textbutton t("{#chapter_page}C"):
+                                        style "shell_nav_button"
+                                        xsize 74
+                                        action FilePage("chapter")
+                                        text_font settings_ui_font(mono=True)
+
+                                    if config.has_quicksave:
+                                        textbutton t("{#quick_page}Q"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage("quick")
+                                            text_font settings_ui_font(mono=True)
+
+                                    for page in range(1, 10):
+                                        textbutton t("[page]"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage(page)
+                                            text_font settings_ui_font(mono=True)
+
+                                    if current_file_page == "chapter":
+                                        textbutton t(">"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePage(1)
+                                            text_font settings_ui_font(mono=True)
+                                    else:
+                                        textbutton t(">"):
+                                            style "shell_nav_button"
+                                            xsize 74
+                                            action FilePageNext()
+                                            text_font settings_ui_font(mono=True)
+
+                        vbar value YScrollValue("file_slots_viewport"):
+                            style "history_scrollbar"
+
+transform appear_slide:
+    alpha 0.0
+    xoffset 14
+    linear 0.22 alpha 1.0 xoffset 0
+
+transform row_hover:
+    xoffset 0
+    linear 0.18 xoffset 4
+
+transform pulse_dot:
+    zoom 1.0 alpha 1.0
+    linear 0.7 zoom 0.6 alpha 0.3
+    linear 0.7 zoom 1.0 alpha 1.0
+    repeat
+
+transform bar_accent_slide:
+    xoffset -4
+    linear 0.14 xoffset 0
+
+transform blink:
+    alpha 1.0
+    linear 0.5 alpha 0.0
+    linear 0.5 alpha 1.0
+    repeat
+
+screen kbd_chip(txt):
+    frame:
+        style "pref_kbd_chip"
+        xalign 1.0 yalign 0.5
+        text t(txt) style "pref_kbd_chip_text":
+            font settings_ui_font(mono=True)
+
+screen pref_tab(txt, current_tab, act):
+    button:
+        if current_tab == txt:
+            style "pref_tab_active"
+        else:
+            style "pref_tab"
+        text t(txt):
+            if current_tab == txt:
+                style "pref_tab_text_active"
+            else:
+                style "pref_tab_text"
+            font settings_ui_font(mono=True)
+        action act
+
+screen hotkey_row(key_txt, val_txt):
+    fixed:
+        xfill True
+        ysize 28
+        text t(val_txt) style "pref_hotkey_val" xalign 0.0 yalign 0.5:
+            font settings_ui_font(mono=True)
+        use kbd_chip(key_txt)
+
+screen preset_chip(txt):
+    button:
+        xfill True
+        if persistent.theme_preset == txt:
+            style "pref_preset_chip_active"
+            text t(txt) style "pref_preset_chip_active_text":
+                font settings_ui_font(mono=True)
+        else:
+            style "pref_preset_chip"
+            text t(txt) style "pref_preset_chip_text":
+                font settings_ui_font(mono=True)
+        action SetField(persistent, "theme_preset", txt)
+
+screen pref_section_heading(txt):
+    frame:
+        style "pref_section_heading"
+        text t(txt) style "pref_label":
+            font settings_ui_font(mono=True)
+
+screen pref_row_toggle(icon, title, desc, pref_action):
+    $ is_sel = pref_action.get_selected()
+    button:
+        style "pref_row_button"
+        action pref_action
+        at appear_slide
+        
+        fixed:
+            fit_first True
+            xfill True
+            
+            hbox:
+                style "pref_row"
+                xalign 0.0 yalign 0.5
+                
+                frame:
+                    style "pref_icon_frame"
+                    text icon style "pref_icon_text"
+                    
+                vbox:
+                    style "pref_content_block"
+                    text t(title) style "pref_title":
+                        font settings_ui_font(semibold=True)
+                    text t(desc) style "pref_desc":
+                        font settings_ui_font()
+                    
+            hbox:
+                style "pref_toggle_control"
+                xalign 1.0 yalign 0.5
+                if is_sel:
+                    text t("ENABLED") style "pref_toggle_label_on":
+                        font settings_ui_font(mono=True)
+                    frame:
+                        style "pref_toggle_frame_on"
+                        frame:
+                            style "pref_toggle_knob_on"
+                else:
+                    text t("DISABLED") style "pref_toggle_label_off":
+                        font settings_ui_font(mono=True)
+                    frame:
+                        style "pref_toggle_frame_off"
+                        frame:
+                            style "pref_toggle_knob_off"
+
+screen pref_row_slider(icon, title, desc, pref_value):
+    frame:
+        style "pref_row_frame"
+        at appear_slide
+        
+        fixed:
+            fit_first True
+            xfill True
+            
+            hbox:
+                style "pref_row"
+                xalign 0.0 yalign 0.5
+                
+                frame:
+                    style "pref_icon_frame"
+                    text icon style "pref_icon_text"
+                    
+                vbox:
+                    style "pref_content_block"
+                    text t(title) style "pref_title":
+                        font settings_ui_font(semibold=True)
+                    text t(desc) style "pref_desc":
+                        font settings_ui_font()
+                    
+            hbox:
+                style "pref_slider_control"
+                xalign 1.0 yalign 0.5
+                bar:
+                    style "pref_slider"
+                    value pref_value
+                text t("VAL") style "pref_slider_val":
+                    font settings_ui_font(mono=True)
+
+screen pref_row_stepper(icon, title, desc, pref_actions):
+    frame:
+        style "pref_row_frame"
+        at appear_slide
+        
+        fixed:
+            fit_first True
+            xfill True
+            
+            hbox:
+                style "pref_row"
+                xalign 0.0 yalign 0.5
+                
+                frame:
+                    style "pref_icon_frame"
+                    text icon style "pref_icon_text"
+                    
+                vbox:
+                    style "pref_content_block"
+                    text t(title) style "pref_title":
+                        font settings_ui_font(semibold=True)
+                    text t(desc) style "pref_desc":
+                        font settings_ui_font()
+                    
+            hbox:
+                style "pref_stepper_control"
+                xalign 1.0 yalign 0.5
+                for label, act in pref_actions:
+                    $ is_sel = act.get_selected()
+                    button:
+                        if is_sel:
+                            style "pref_stepper_chip_active"
+                        else:
+                            style "pref_stepper_chip"
+                        text label:
+                            if is_sel:
+                                style "pref_stepper_chip_text_active"
+                            else:
+                                style "pref_stepper_chip_text"
+                            font settings_ui_font(mono=True)
+                        action act
+
+screen pref_row_button_only(icon, title, desc, btn_label, btn_action):
+    frame:
+        style "pref_row_frame"
+        at appear_slide
+        
+        fixed:
+            fit_first True
+            xfill True
+            
+            hbox:
+                style "pref_row"
+                xalign 0.0 yalign 0.5
+                
+                frame:
+                    style "pref_icon_frame"
+                    text icon style "pref_icon_text"
+                    
+                vbox:
+                    style "pref_content_block"
+                    text t(title) style "pref_title":
+                        font settings_ui_font(semibold=True)
+                    text t(desc) style "pref_desc":
+                        font settings_ui_font()
+                    
+            button:
+                style "pref_stepper_chip"
+                xalign 1.0 yalign 0.5
+                text t(btn_label) style "pref_stepper_chip_text":
+                    font settings_ui_font(mono=True)
+                action btn_action
+
+screen pref_tab_general():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// DISPLAY")
+        use pref_row_toggle("FS", "Fullscreen Mode", "Switch between windowed and fullscreen display.", Preference("display", "toggle"))
+        
+        $ has_lang_chooser = False
+        python:
+            try:
+                has_lang_chooser = config.enable_language_chooser
+            except Exception:
+                pass
+        
+        if has_lang_chooser:
+            use pref_row_stepper("LG", "Language", "Select dialogue and UI language.", [
+                (language_self_name(None), SelectTranslationLanguage(None)),
+                (language_self_name("dutch"), SelectTranslationLanguage("dutch")),
+                (language_self_name("french"), SelectTranslationLanguage("french"))
+            ])
+            
+        null height 18
+        
+        use pref_section_heading("// BEHAVIOUR")
+        use pref_row_toggle("SK", "Skip Unseen Text", "Fast-forward through unread scenes.", Preference("skip", "toggle"))
+        use pref_row_toggle("SC", "Skip After Choices", "Continue skipping after dialogue decisions.", Preference("after choices", "toggle"))
+        use pref_row_toggle("BS", "Skip Mode", "Trigger fast-forward immediately on scene load.", Preference("begin skipping", "toggle"))
+
+screen pref_tab_text():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// READABILITY")
+        use pref_row_slider("TS", "Text Display Speed", "Controls how fast each character appears during dialogue.", Preference("text speed"))
+        use pref_row_slider("AF", "Auto-Forward Delay", "Delay before the game advances automatically in auto mode.", Preference("auto-forward time"))
+        
+        if config.joystick:
+            use pref_row_button_only("JS", "Joystick / Gamepad", "Configure gamepad bindings for navigation.", "CALIBRATE", GamepadCalibrate())
+
+screen pref_tab_audio():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// VOLUME CHANNELS")
+        use pref_row_slider("MV", "Master Volume", "Global volume affecting all audio channels.", Preference("main volume"))
+        use pref_row_slider("MS", "Music", "Background score and ambient tracks.", Preference("music volume"))
+        use pref_row_slider("SX", "Sound Effects", "UI clicks, ambient sounds, and scene effects.", Preference("sound volume"))
+        
+        if config.has_voice:
+            use pref_row_slider("VC", "Voice / Narration", "Character speech and narration tracks.", Preference("voice volume"))
+            
+        use pref_row_toggle("MU", "Mute When Minimised", "Silence all audio when the window loses focus.", ToggleField(_preferences, "audio_when_minimized", true_value=False, false_value=True))
+
+screen pref_tab_visual():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// GRAPHICS")
+        use pref_row_stepper("GL", "Renderer", "Active rendering engine. Changing requires restart.", [
+            (t("Auto"), SetField(persistent, "dummy_renderer", "Auto")),
+            ("GL2", SetField(persistent, "dummy_renderer", "GL2")),
+            ("Angle2", SetField(persistent, "dummy_renderer", "Angle2"))
+        ])
+        
+        use pref_row_stepper("FR", "Target Frame Rate", "Limit FPS for performance; default 60.", [
+            ("30 FPS", SetField(persistent, "dummy_fps", 30)),
+            ("60 FPS", SetField(persistent, "dummy_fps", 60))
+        ])
+        
+        use pref_row_toggle("TR", "Scene Transitions", "Enable or disable visual transition effects between scenes.", ToggleTransitions())
+        
+        null height 18
+        
+        use pref_section_heading("// SCREEN")
+        use pref_row_toggle("SV", "Self-Voicing (Screen Reader)", "Read UI text aloud for accessibility.", Preference("self voicing", "toggle"))
+
+screen pref_tab_accessibility():
+    vbox:
+        style "pref_tab_content"
+        
+        use pref_section_heading("// READABILITY ASSISTS")
+        use pref_row_stepper("FO", "Accessibility Font", "Override story fonts with a high-legibility alternative.", [
+            (t("Standard"), SetAccessibilityFont("Standard")),
+            (t("Dyslexic"), SetAccessibilityFont("Dyslexic"))
+        ])
+        
+        use pref_row_slider("FS", "Font Size Adjustment", "Scale all dialogue and UI text globally.", Preference("font size"))
+        
+        use pref_row_toggle("HC", "High Contrast Mode", "Boost text contrast for dark background scenes.", ToggleHighContrast())
+
+default persistent.theme_preset = "TERMINAL"
+default persistent.dummy_renderer = "Auto"
+default persistent.dummy_fps = 60
+default persistent.dummy_font = "Standard"
+
+init python:
+    def apply_high_contrast():
+        pass
+
+    def apply_accessibility_font():
+        if getattr(persistent, "dummy_font", "Standard") == "Dyslexic":
+            config.font_replacement_map[("fonts/Rajdhani-Regular.ttf", False, False)] = ("fonts/DejaVuSans.ttf", False, False)
+            config.font_replacement_map[("fonts/Rajdhani-SemiBold.ttf", False, False)] = ("fonts/DejaVuSans.ttf", True, False)
+            config.font_replacement_map[("fonts/ShareTechMono-Regular.ttf", False, False)] = ("fonts/DejaVuSans.ttf", False, False)
+        else:
+            config.font_replacement_map.pop(("fonts/Rajdhani-Regular.ttf", False, False), None)
+            config.font_replacement_map.pop(("fonts/Rajdhani-SemiBold.ttf", False, False), None)
+            config.font_replacement_map.pop(("fonts/ShareTechMono-Regular.ttf", False, False), None)
+
+    class SetAccessibilityFont(Action):
+        def __init__(self, val):
+            self.val = val
+        def __call__(self):
+            persistent.dummy_font = self.val
+            apply_accessibility_font()
+            renpy.free_memory()
+            renpy.restart_interaction()
+        def get_selected(self):
+            return getattr(persistent, "dummy_font", "Standard") == self.val
+
+    class ToggleHighContrast(Action):
+        def __call__(self):
+            _preferences.high_contrast = not getattr(_preferences, "high_contrast", False)
+            renpy.free_memory()
+            renpy.restart_interaction()
+        def get_selected(self):
+            return getattr(_preferences, "high_contrast", False)
+
+
+    class ToggleTransitions(Action):
+        """Toggles scene transitions via both the native Ren'Py preference
+        (_preferences.transitions) and persistent.no_transitions so that any
+        custom `with (None if persistent.no_transitions else dissolve)` guards
+        in script files also respect the player's preference."""
+        def __call__(self):
+            # 0 = transitions off, 1 = transitions on (Ren'Py native)
+            new_val = 0 if _preferences.transitions else 1
+            _preferences.transitions = new_val
+            persistent.no_transitions = (new_val == 0)
+            renpy.restart_interaction()
+        def get_selected(self):
+            # Returns True (ENABLED) when transitions are ON
+            return bool(_preferences.transitions)
+
+    def reset_to_field_defaults():
+        _preferences.text_cps = 32
+        _preferences.afm_time = 15
+        for m in ["main", "master", "music", "sfx", "voice"]:
+            if m in _preferences.volumes:
+                _preferences.volumes[m] = 1.0
+        _preferences.skip_unseen = False
+        _preferences.skip_after_choices = False
+        _preferences.desktop_self_voicing = False
+        _preferences.transitions = 1
+        persistent.no_transitions = False
+        persistent.theme_preset = "TERMINAL"
+        persistent.dummy_font = "Standard"
+        apply_accessibility_font()
+        renpy.free_memory()
+        renpy.restart_interaction()
+
+screen preferences():
+    tag menu
+    modal True
+    # style_prefix overrides the default `frame` style (which carries
+    # gui.frame_borders padding) so the full-screen backdrop frames use
+    # the zero-padding full_settings_frame variant instead.
+    style_prefix "full_settings"
+    
+    default active_tab = "General"
+    $ pref_view_w, pref_view_h = current_viewport_size()
+    $ pref_panel_w = pref_view_w
+    $ pref_left_w = 720 if pref_panel_w <= 1240 else 860 if pref_panel_w <= 1400 else 980 if pref_panel_w <= 1600 else 1200
+    $ pref_side_w = 260 if pref_panel_w <= 1240 else 300 if pref_panel_w <= 1400 else 340 if pref_panel_w <= 1600 else 400
+    $ pref_footer_h = 112
+    
+    # 2.1 Full-Screen Backdrop — xfill/yfill ensure 100% coverage at any resolution
+    add Solid("#07090F")
+    
+    
+    # 2.1 Full-Screen Backdrop — xfill/yfill ensure 100% coverage at any resolution
+    add Solid("#07090F")
+    
+    # Full-screen outer container — no absolute pixel sizes so 1080p and 4K both work
+    frame:
+        xfill True
+        yfill True
+        background Solid("#07090F")
+        padding (0, 0)
+    
+    # Main Panel Container — centred card inside the full-screen frame
+    frame:
+        xfill True
+        yfill True
+        background Solid("#0D1320")
+        
+        # Top glow bloom
+        frame:
+            xfill True ysize 10
+            yoffset -10
+            background Solid("#00FFD11a")
+            
+        # Border top
+        frame:
+            background Solid("#00FFD1")
+            xfill True
+            ysize 2
+            yalign 0.0
+        # Border bottom
+        frame:
+            background Solid("#ffffff0f")
+            xfill True
+            ysize 1
+            yalign 1.0
+        # Border sides
+        frame:
+            background Solid("#ffffff0f")
+            yfill True
+            xsize 1
+            xalign 0.0
+        frame:
+            background Solid("#ffffff0f")
+            yfill True
+            xsize 1
+            xalign 1.0
+        
+        vbox:
+            xfill True
+            yfill True
+            
+            # Panel Header Row
+            frame:
+                style "pref_header_row"
+                hbox:
+                    xfill True
+                    
+                    # Left cluster
+                    hbox:
+                        spacing 12
+                        yalign 0.5
+                        add Solid("#00FFD1") xsize 7 ysize 7 at pulse_dot yalign 0.5
+                        text t("// SYSTEM CONFIGURATION") style "pref_header_label" yalign 0.5:
+                            font settings_ui_font(mono=True)
+                        add Solid("#ffffff14") xsize 1 ysize 14 yalign 0.5
+                        text t("PROJECT: SNOWDEN  |  CH.2/5") style "pref_header_chapter" yalign 0.5:
+                            font settings_ui_font(mono=True)
+                        
+                    # Right cluster
+                    hbox:
+                        spacing 8
+                        xalign 1.0
+                        yalign 0.5
+                        use kbd_chip("ESC")
+                        use kbd_chip("TAB")
+                        use kbd_chip("ENTER")
+
+            # Tab Navigation Bar
+            frame:
+                style "pref_tab_bar"
+                hbox:
+                    xalign 0.5
+                    spacing 0
+                    use pref_tab("General", active_tab, SetScreenVariable("active_tab", "General"))
+                    use pref_tab("Text", active_tab, SetScreenVariable("active_tab", "Text"))
+                    use pref_tab("Audio", active_tab, SetScreenVariable("active_tab", "Audio"))
+                    use pref_tab("Visual", active_tab, SetScreenVariable("active_tab", "Visual"))
+                    use pref_tab("Accessibility", active_tab, SetScreenVariable("active_tab", "Accessibility"))
+
+            # Main Body Layout
+            hbox:
+                style "pref_body_layout"
+                xalign 0.5
+                
+                # LEFT: main settings list
+                frame:
+                    style "pref_left_col"
+                    xsize pref_left_w
+                    
+                    if active_tab == "General":
+                        use pref_tab_general
+                    elif active_tab == "Text":
+                        use pref_tab_text
+                    elif active_tab == "Audio":
+                        use pref_tab_audio
+                    elif active_tab == "Visual":
+                        use pref_tab_visual
+                    elif active_tab == "Accessibility":
+                        use pref_tab_accessibility
+
+                # RIGHT: status column
+                frame:
+                    style "pref_side_col"
+                    xsize pref_side_w
+                    
+                    vbox:
+                        spacing 18
+                        xfill True
+                        
+                        # 2.8.1 Current Tab Label
+                        frame:
+                            style "pref_side_card"
+                            vbox:
+                                text t("ACTIVE SECTION") style "pref_side_card_title":
+                                    font settings_ui_font(mono=True)
+                                text t(active_tab) style "pref_side_card_value":
+                                    font settings_ui_font(semibold=True)
+                                
+                        # 2.8.2 Quick Keyboard Reference
+                        frame:
+                            style "pref_side_card_dark"
+                            vbox:
+                                text t("// HOTKEYS") style "pref_side_card_title":
+                                    font settings_ui_font(mono=True)
+                                null height 8
+                                use hotkey_row("TAB", "Next")
+                                use hotkey_row("Shift+TAB", "Prev")
+                                use hotkey_row("ENTER", "Toggle")
+                                use hotkey_row("ESC", "Back")
+                                use hotkey_row("1-5", "Tab switch")
+                                use hotkey_row("R", "Reset")
+                                
+                        # 2.8.3 Preset Selector
+                        frame:
+                            style "pref_side_card"
+                            vbox:
+                                text t("// THEME PRESET") style "pref_side_card_title":
+                                    font settings_ui_font(mono=True)
+                                null height 8
+                                use preset_chip("TERMINAL")
+                                use preset_chip("DOSSIER")
+                                use preset_chip("MINIMAL")
+                                
+                        # 2.8.4 Action Buttons
+                        vbox:
+                            yalign 1.0
+                            spacing 10
+                            xfill True
+                            textbutton t("APPLY SETTINGS") style "pref_btn_apply" action Return():
+                                text_font settings_ui_font(mono=True)
+                            textbutton t("RESET TO FIELD DEFAULTS") style "pref_btn_ghost" action Function(reset_to_field_defaults):
+                                text_font settings_ui_font(mono=True)
+                            textbutton t("BACK") style "pref_btn_ghost" action Return():
+                                text_font settings_ui_font(mono=True)
+
+            null yfill True
+
+            # Panel Footer Strip
+            frame:
+                style "pref_footer_strip"
+                ysize pref_footer_h
+                vbox:
+                    xfill True
+                    spacing 12
+
+                    null height 4
+
+                    hbox:
+                        xalign 0.5
+                        spacing 16
+
+                        textbutton language_self_name(None):
+                            style "shell_nav_button"
+                            xminimum 240
+                            selected current_translation_language() is None
+                            action language_change_action(None)
+                            text_font settings_ui_font(mono=True)
+
+                        textbutton language_self_name("dutch"):
+                            style "shell_nav_button"
+                            xminimum 240
+                            selected current_translation_language() == "dutch"
+                            action language_change_action("dutch")
+                            text_font settings_ui_font(mono=True)
+
+                        textbutton language_self_name("french"):
+                            style "shell_nav_button"
+                            xminimum 240
+                            selected current_translation_language() == "french"
+                            action language_change_action("french")
+                            text_font settings_ui_font(mono=True)
+
+
+                    frame:
+                        xfill True
+                        background None
+                        padding (24, 0)
+                        
+                        hbox:
+                            xfill True
+                            spacing 12
+                            yalign 0.5
+
+                        add Solid("#00FFD1") xsize 8 ysize 18 at blink yalign 0.5
+
+                        text t("SETTINGS ACTIVE — CHANGES APPLY IMMEDIATELY") style "pref_footer_center" yalign 0.5:
+                            font settings_ui_font(mono=True)
+
+                        text t("SYS.TIME") style "pref_footer_right" xalign 1.0 yalign 0.5:
+                            font settings_ui_font(mono=True)
+
+    # Keybinds
+    key "K_ESCAPE" action Return()
+    key "K_RETURN" action Return()
+    key "K_KP_ENTER" action Return()
+    key "1" action SetScreenVariable("active_tab", "General")
+    key "2" action SetScreenVariable("active_tab", "Text")
+    key "3" action SetScreenVariable("active_tab", "Audio")
+    key "4" action SetScreenVariable("active_tab", "Visual")
+    key "5" action SetScreenVariable("active_tab", "Accessibility")
+
+screen history_nav_button(label, action, style_name="menu_item_default", item_id=None, active=False):
+    $ base_text_color = "#E07070" if style_name == "menu_item_quit" else ("#00E5B0" if active else "#E0E0E0")
+
+    fixed:
+        xfill True
+        ysize 52
+
+        if active:
+            add Solid("#00E5B0") xsize 3 ysize 52
+
+        textbutton t(label):
+            style style_name
+            xfill True
+            action action
+            text_font settings_ui_font(mono=True)
+            text_size 22
+            text_color base_text_color
+            text_hover_color "#00E5B0"
+            text_xalign 0.0
+            text_yalign 0.5
+
+screen history():
+    tag menu
+    predict False
+    default hovered_history_card = -1
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        background None
+        xfill True
+        yfill True
+        padding (64, 68)
+
+        hbox:
+            xfill True
+            yfill True
+            spacing 24
+
+            frame:
+                xsize 320
+                yfill True
+                background Solid("#111827")
+                padding (28, 22)
+
+                vbox:
+                    xfill True
+                    yfill True
+                    spacing 14
+
+                    vbox:
+                        xfill True
+                        spacing 6
+
+                        text "ARCHIVE INTERFACE":
+                            font settings_ui_font(mono=True)
+                            size 15
+                            color "#8B9CB0"
+
+                        text "// TRANSMISSION LOG //":
+                            font settings_ui_font(mono=True)
+                            size 30
+                            color "#00E5B0"
+
+                        text "A single menu grid now drives save, load, settings, history, help, and reference screens.":
+                            font settings_ui_font(mono=True)
+                            size 14
+                            color "#8B9CB0"
+                            line_spacing 2
+                            xfill True
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00E5B026")
+                        padding (0, 0)
+
+                    vbox:
+                        xfill True
+                        spacing 8
+
+                        use history_nav_button("History", ShowMenu("history"), style_name="menu_item_active", item_id="history", active=True)
+                        use history_nav_button("Save", ShowMenu("save"), item_id="save")
+                        use history_nav_button("Load", ShowMenu("load"), item_id="load")
+                        use history_nav_button("Preferences", ShowMenu("preferences"), item_id="preferences")
+
+                    frame:
+                        xfill True
+                        ysize 1
+                        background Solid("#00E5B014")
+                        padding (0, 0)
+
+                    vbox:
+                        xfill True
+                        spacing 8
+
+                        use history_nav_button("Dossier", ShowMenu("dossier"), item_id="dossier")
+                        use history_nav_button("Story Tree", ShowMenu("story_tree"), item_id="story_tree")
+                        use history_nav_button("Notes", Show("notebook_panel"), item_id="notes")
+
+                    null height 0
+
+                    vbox:
+                        xfill True
+                        yalign 1.0
+                        spacing 8
+
+                        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+                            use history_nav_button("Help", ShowMenu("help"), item_id="help")
+
+                        use history_nav_button("Main Menu", MainMenu(), item_id="main_menu")
+                        use history_nav_button("Return", ShowMenu(menu_return_screen()), item_id="return")
+
+                        if renpy.variant("pc"):
+                            use history_nav_button("Quit", Quit(confirm=not main_menu), style_name="menu_item_quit", item_id="quit")
+
+            fixed:
+                xsize 1
+                yfill True
+                add Solid("#00E5B026")
+
+            frame:
+                xfill True
+                yfill True
+                background Solid("#0D1117")
+                padding (34, 26)
+
+                fixed:
+                    xfill True
+                    yfill True
+
+                    add Solid("#111827")
+
+                    for y in range(0, 1600, 4):
+                        frame:
+                            xpos 0
+                            ypos y
+                            xfill True
+                            ysize 1
+                            background Solid("#00E5B005")
+                            padding (0, 0)
+
+                    hbox:
+                        xfill True
+                        yfill True
+                        spacing 16
+
+                        viewport:
+                            id "history_log_viewport"
+                            xfill True
+                            yfill True
+                            mousewheel True
+                            draggable True
+                            pagekeys True
+
+                            vbox:
+                                xfill True
+                                spacing 6
+
+                                if _history_list:
+                                    for i, h in enumerate(_history_list):
+                                        $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
+                                        $ lines = [line.strip() for line in what.split("\n") if line.strip()]
+                                        $ is_quote_card = (i == 0 and not h.who and ("Edward Snowden" in what or what.strip().startswith(("\"", "“"))))
+                                        $ quote_body = "\n".join(lines[:-1]) if is_quote_card and len(lines) > 1 and "Edward Snowden" in lines[-1] else what
+                                        $ quote_attribution = lines[-1].lstrip("-– ").strip() if is_quote_card and len(lines) > 1 and "Edward Snowden" in lines[-1] else None
+                                        $ history_card_style = "history_quote_card" if is_quote_card else "history_window"
+                                        $ history_card_bg = "#1A2332" if hovered_history_card == i else ("#131C14" if is_quote_card else "#111827")
+                                        $ history_border_color = "#00E5B0" if is_quote_card else "#00E5B040"
+                                        $ history_border_width = 3 if is_quote_card else 2
+
+                                        button:
+                                            style history_card_style
+                                            action NullAction()
+                                            hovered SetScreenVariable("hovered_history_card", i)
+                                            unhovered SetScreenVariable("hovered_history_card", -1)
+                                            xfill True
+                                            background None
+                                            left_padding 0
+                                            right_padding 0
+                                            top_padding 0
+                                            bottom_padding 0
+
+                                            frame:
+                                                xfill True
+                                                background Solid(history_border_color)
+                                                padding (history_border_width, 0, 0, 0)
+
+                                                frame:
+                                                    xfill True
+                                                    background Solid(history_card_bg)
+                                                    padding (16, 12)
+
+                                                    vbox:
+                                                        xfill True
+                                                        spacing 10
+
+                                                        if h.who and not is_quote_card:
+                                                            if "color" in h.who_args:
+                                                                text t(h.who):
+                                                                    style "history_name"
+                                                                    color h.who_args["color"]
+                                                                    substitute False
+                                                            else:
+                                                                text t(h.who):
+                                                                    style "history_name"
+                                                                    substitute False
+
+                                                        if is_quote_card:
+                                                            text trich(quote_body):
+                                                                style "history_text"
+                                                                italic True
+                                                                size 17
+                                                                substitute False
+
+                                                            if quote_attribution:
+                                                                text "– [quote_attribution]":
+                                                                    font settings_ui_font(mono=True)
+                                                                    size 14
+                                                                    color "#00A07A"
+                                                                    xalign 1.0
+                                                        else:
+                                                            text trich(what):
+                                                                style "history_text"
+                                                                substitute False
+                                else:
+                                    frame:
+                                        xfill True
+                                        background Solid("#00E5B040")
+                                        padding (2, 0, 0, 0)
+
+                                        frame:
+                                            xfill True
+                                            background Solid("#111827")
+                                            padding (16, 12)
+                                            text t("The dialogue history is empty."):
+                                                style "history_text"
+                                                color "#8B9CB0"
+
+                        vbar value YScrollValue("history_log_viewport"):
+                            style "history_scrollbar"
+
+define gui.history_allow_tags = { "alt", "noalt", "rt", "rb", "art" }
+
+style history_window is button:
+    background Solid("#111827")
+    hover_background Solid("#1A2332")
+    xfill True
+    left_padding 16
+    right_padding 16
+    top_padding 12
+    bottom_padding 12
+
+style history_name is text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 18
+    bold True
+    color "#8B9CB0"
+
+style history_text is text:
+    font "fonts/ShareTechMono-Regular.ttf"
+    size 17
+    color "#E0E0E0"
+    line_spacing 4
+
+style history_quote_card is button:
+    background Solid("#131C14")
+    hover_background Solid("#1A2332")
+    xfill True
+    left_padding 16
+    right_padding 16
+    top_padding 12
+    bottom_padding 12
+
+style menu_item_default is button:
+    xfill True
+    ysize 52
+    left_padding 18
+    right_padding 18
+    top_padding 10
+    bottom_padding 10
+    background Solid("#0D1117")
+    hover_background Solid("#1A2332")
+
+style menu_item_active is button:
+    xfill True
+    ysize 52
+    left_padding 21
+    right_padding 18
+    top_padding 10
+    bottom_padding 10
+    background Solid("#111827")
+    hover_background Solid("#1A2332")
+
+style menu_item_quit is button:
+    xfill True
+    ysize 52
+    left_padding 18
+    right_padding 18
+    top_padding 10
+    bottom_padding 10
+    background Solid("#2E1515")
+    hover_background Solid("#1A2332")
+
+style history_scrollbar is vscrollbar:
+    xsize 4
+    unscrollable "hide"
+    base_bar Solid("#00E5B014")
+    thumb Solid("#00E5B099")
+
+screen help():
+    tag menu
+    default device = "keyboard"
+
+    use game_menu(t("Help"), scroll="viewport", spacing=18):
+        hbox:
+            spacing 12
+
+            textbutton t("Keyboard"):
+                style "shell_nav_button"
+                xsize 190
+                action SetScreenVariable("device", "keyboard")
+
+            textbutton t("Mouse"):
+                style "shell_nav_button"
+                xsize 190
+                action SetScreenVariable("device", "mouse")
+
+            if GamepadExists():
+                textbutton t("Gamepad"):
+                    style "shell_nav_button"
+                    xsize 190
+                    action SetScreenVariable("device", "gamepad")
+
+        frame:
+            xfill True
+            background Solid("#171C30")
+            padding (24, 22)
+
+            if device == "keyboard":
+                use keyboard_help
+            elif device == "mouse":
+                use mouse_help
+            else:
+                use gamepad_help
+
+screen keyboard_help():
+    vbox:
+        spacing 12
+
+        for key_name, desc in [
+            (t("Enter"), t("Advances dialogue and activates the interface.")),
+            (t("Space"), t("Advances dialogue without selecting choices.")),
+            (t("Arrow Keys"), t("Navigate the interface.")),
+            (t("Escape"), t("Opens the custom mission control menu.")),
+            (t("Ctrl"), t("Skips dialogue while held down.")),
+            (t("Tab"), t("Toggles dialogue skipping.")),
+            (t("Page Up"), t("Rolls back to earlier dialogue.")),
+            (t("Page Down"), t("Rolls forward to later dialogue.")),
+            ("H", t("Hides the user interface.")),
+            ("S", t("Takes a screenshot.")),
+            ("V", t("Toggles self-voicing.")),
+            (t("Shift+A"), t("Opens the accessibility menu.")),
+        ]:
+            hbox:
+                spacing 20
+                xfill True
+
+                text key_name:
+                    color "#7A8A99"
+                    size 20
+                    bold True
+                    xsize 220
+
+                text desc:
+                    color "#E8E8E8"
+                    size 19
+                    xfill True
+
+screen mouse_help():
+    vbox:
+        spacing 12
+
+        for key_name, desc in [
+            (t("Left Click"), t("Advances dialogue and activates the interface.")),
+            (t("Middle Click"), t("Hides the user interface.")),
+            (t("Right Click"), t("Opens the custom mission control menu.")),
+            (t("Wheel Up"), t("Rolls back to earlier dialogue.")),
+            (t("Wheel Down"), t("Rolls forward to later dialogue.")),
+        ]:
+            hbox:
+                spacing 20
+                xfill True
+
+                text key_name:
+                    color "#7A8A99"
+                    size 20
+                    bold True
+                    xsize 220
+
+                text desc:
+                    color "#E8E8E8"
+                    size 19
+                    xfill True
+
+screen gamepad_help():
+    vbox:
+        spacing 12
+
+        for key_name, desc in [
+            (t("A / Bottom Button"), t("Advances dialogue and activates the interface.")),
+            (t("Left Trigger"), t("Rolls back to earlier dialogue.")),
+            (t("Right Shoulder"), t("Rolls forward to later dialogue.")),
+            (t("D-Pad / Sticks"), t("Navigate the interface.")),
+            (t("Start / B"), t("Opens the custom mission control menu.")),
+            (t("Y / Top Button"), t("Hides the user interface.")),
+        ]:
+            hbox:
+                spacing 20
+                xfill True
+
+                text key_name:
+                    color "#7A8A99"
+                    size 20
+                    bold True
+                    xsize 320
+
+                text desc:
+                    color "#E8E8E8"
+                    size 19
+                    xfill True
+
+        textbutton t("Calibrate"):
+            style "shell_nav_button"
+            xsize 220
+            action GamepadCalibrate()
+
+screen confirm(message, yes_action, no_action):
+    modal True
+    zorder 200
+
+    use ui_backdrop
+    add "logo_watermark"
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 860
+        background Solid("#0E1321F2")
+        padding (32, 28)
+
+        vbox:
+            spacing 22
+            xalign 0.5
+
+            text t(message):
+                color "#E8E8E8"
+                size 28
+                bold True
+                xalign 0.5
+                text_align 0.5
+                xmaximum 720
+                substitute False
+
+            hbox:
+                spacing 14
+                xalign 0.5
+
+                textbutton t("Yes"):
+                    style "modal_action_button"
+                    xsize 220
+                    action yes_action
+                    text_font settings_ui_font(mono=True)
+
+                textbutton t("No"):
+                    style "modal_action_button"
+                    xsize 220
+                    background Solid("#171C30")
+                    hover_background Solid("#3A4A55")
+                    action no_action
+                    text_font settings_ui_font(mono=True)
+
+    key "game_menu" action no_action
+
+screen skip_indicator():
+    zorder 100
+
+    frame:
+        xpos 28
+        ypos 24
+        background Solid("#0E1321E6")
+        padding (16, 10)
+
+        hbox:
+            spacing 8
+            text t("Skipping"):
+                color "#E8E8E8"
+                size 18
+            text t(">>"):
+                color "#7A8A99"
+                size 18
+
+screen notify(message):
+    zorder 300
+
+    frame:
+        xalign 1.0
+        yalign 0.0
+        xoffset -26
+        yoffset 28
+        background Solid("#0E1321E6")
+        padding (16, 12)
+
+        text t("[message!tq]"):
+            color "#E8E8E8"
+            size 18
+
+    timer 3.25 action Hide("notify")
+
+screen nvl(dialogue, items=None):
+    window:
+        style "nvl_window"
+
+        has vbox:
+            spacing gui.nvl_spacing
+
+        if gui.nvl_height:
+            vpgrid:
+                cols 1
+                yinitial 1.0
+                use nvl_dialogue(dialogue)
+        else:
+            use nvl_dialogue(dialogue)
+
+        for i in items:
+            textbutton i.caption:
+                action i.action
+                style "nvl_button"
+
+    add SideImage() xalign 0.0 yalign 1.0
+
+screen nvl_dialogue(dialogue):
+    for d in dialogue:
+        window:
+            id d.window_id
+
+            fixed:
+                yfit gui.nvl_height is None
+
+                if d.who is not None:
+                    text d.who:
+                        id d.who_id
+
+                text d.what:
+                    id d.what_id
+
+define config.nvl_list_length = gui.nvl_list_length
+
+style nvl_window is default
+style nvl_entry is default
+style nvl_label is say_label
+style nvl_dialogue is say_dialogue
+style nvl_button is button
+style nvl_button_text is button_text
+
+style nvl_window:
+    xfill True
+    yfill True
+    background Solid("#0E1321F0")
+    padding (24, 24, 24, 24)
+
+style nvl_entry:
+    xfill True
+    ysize gui.nvl_height
+
+style nvl_label:
+    xpos gui.nvl_name_xpos
+    xanchor gui.nvl_name_xalign
+    ypos gui.nvl_name_ypos
+    yanchor 0.0
+    xsize gui.nvl_name_width
+    min_width gui.nvl_name_width
+    textalign gui.nvl_name_xalign
+
+style nvl_dialogue:
+    xpos gui.nvl_text_xpos
+    xanchor gui.nvl_text_xalign
+    ypos gui.nvl_text_ypos
+    xsize gui.nvl_text_width
+    min_width gui.nvl_text_width
+    textalign gui.nvl_text_xalign
+
+style nvl_thought:
+    xpos gui.nvl_thought_xpos
+    xanchor gui.nvl_thought_xalign
+    ypos gui.nvl_thought_ypos
+    xsize gui.nvl_thought_width
+    min_width gui.nvl_thought_width
+    textalign gui.nvl_thought_xalign
+
+style nvl_button:
+    background Solid("#0D1117")
+    hover_background Solid("#003A3A")
+    left_padding 18
+    right_padding 18
+    top_padding 12
+    bottom_padding 12
+    xpos gui.nvl_button_xpos
+    xanchor gui.nvl_button_xalign
+
+style nvl_button_text:
+    color "#E8E8E8"
+    size 22
+
+screen bubble(who, what):
+    style_prefix "bubble"
+
+    window:
+        id "window"
+
+        if who is not None:
+            window:
+                id "namebox"
+                style "bubble_namebox"
+
+                text who:
+                    id "who"
+
+        text what:
+            id "what"
+
+        default ctc = None
+        showif ctc:
+            add ctc
+
+style bubble_window is empty
+style bubble_namebox is empty
+style bubble_who is default
+style bubble_what is default
+
+style bubble_window:
+    xpadding 30
+    top_padding 5
+    bottom_padding 5
+
+style bubble_namebox:
+    xalign 0.5
+
+style bubble_who:
+    xalign 0.5
+    textalign 0.5
+    color "#000"
+
+style bubble_what:
+    align (0.5, 0.5)
+    text_align 0.5
+    color "#000"
+
+define bubble.frame = Frame("gui/bubble.png", 55, 55, 55, 95)
+define bubble.thoughtframe = Frame("gui/thoughtbubble.png", 55, 55, 55, 55)
+
+define bubble.properties = {
+    "bottom_left": {
+        "window_background": Transform(bubble.frame, xzoom=1, yzoom=1),
+        "window_bottom_padding": 27,
+    },
+    "bottom_right": {
+        "window_background": Transform(bubble.frame, xzoom=-1, yzoom=1),
+        "window_bottom_padding": 27,
+    },
+    "top_left": {
+        "window_background": Transform(bubble.frame, xzoom=1, yzoom=-1),
+        "window_top_padding": 27,
+    },
+    "top_right": {
+        "window_background": Transform(bubble.frame, xzoom=-1, yzoom=-1),
+        "window_top_padding": 27,
+    },
+    "thought": {
+        "window_background": bubble.thoughtframe,
+    }
+}
+
+define bubble.expand_area = {
+    "bottom_left": (0, 0, 0, 22),
+    "bottom_right": (0, 0, 0, 22),
+    "top_left": (0, 22, 0, 0),
+    "top_right": (0, 22, 0, 0),
+    "thought": (0, 0, 0, 0),
+}
+
+screen quick_menu():
+    variant "touch"
+
+    zorder 100
+
+    if quick_menu and not main_menu:
+        hbox:
+            xalign 0.5
+            yalign 1.0
+            yoffset -18
+            spacing 10
+            style_prefix "quick"
+
+            textbutton t("Back") action Rollback() text_font settings_ui_font(mono=True)
+            textbutton t("Notes") action Show("notebook_panel") text_font settings_ui_font(mono=True)
+            textbutton t("Save") action ShowMenu("save") text_font settings_ui_font(mono=True)
+            textbutton t("Menu") action ShowMenu("pause_hub") text_font settings_ui_font(mono=True)

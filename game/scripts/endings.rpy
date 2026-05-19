@@ -8,6 +8,7 @@
 ################################################################################
 
 label max_suspicion_game_over:
+    $ stop_ambient(0.6)
     $ show_hud = False
     $ quick_menu = True
     $ ending_type = "silenced"
@@ -16,6 +17,7 @@ label max_suspicion_game_over:
 
 
 label determine_ending:
+    $ stop_ambient(0.6)
     # Calculate the ending based on accumulated flags
     if knowledge_score >= 8 and escape_successful and contacts_secured >= 2 and not identity_exposed:
         $ ending_type = "hero"
@@ -54,29 +56,51 @@ label ending_hero:
 
     show logo_watermark
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0057_narrator_voice_eb5c85c0b4.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The documents are out. Every major newspaper in the world carries the story."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0059_narrator_voice_1b96c4ca9e.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "PRISM. XKeyscore. Boundless Informant. The names of the programs become household words."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0061_narrator_voice_18b05159ff.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "Governments scramble to explain. Citizens demand answers. The conversation about privacy changes forever."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0063_narrator_voice_a78a11feab.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "You sit in a modest apartment in Moscow, watching the world you set in motion."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0065_narrator_voice_5db6799d79.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "You are wanted by the most powerful nation on Earth. You may never go home again."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0067_narrator_voice_40b142ca57.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "But the truth is out. And it can never be taken back."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0069_narrator_voice_eaba96f8cc.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "In boardrooms and bedrooms, in parliaments and classrooms, people are asking the question he wanted them to ask: {i}Who is watching the watchers?{/i}"
 
     call screen ending_screen(
-        title="// ENDING 1: THE HERO //",
+        title=t("// ENDING 1: THE HERO //"),
         color="#00FFD1",
-        description="You successfully leaked all documents, escaped to safety, and your disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed.",
+        description=t("You successfully leaked all documents, escaped to safety, and your disclosures sparked global privacy reform. Companies adopted end-to-end encryption. Governments passed new oversight laws. The world changed."),
         lessons=[
             "Strong encryption (AES-256, PGP) is the foundation of digital privacy. Without it, no communication is truly private.",
             "Operational Security (OpSec) is not optional — every step in the chain must be secured, from encrypted channels to physical device security.",
             "Whistleblowing platforms like SecureDrop exist to protect sources. Technology can be a shield for truth."
-        ]
+        ],
+        bg_image="images/endings/thehero.png"
     )
     if _return == "restart":
         jump start
@@ -94,29 +118,51 @@ label ending_fugitive:
 
     show logo_watermark
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0097_narrator_voice_9831448d21.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The documents reach the journalists. The stories are published."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0099_narrator_voice_1fc0a784eb.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "But the coverage is incomplete. Some of the most damning evidence never makes it to print."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0101_narrator_voice_e2354b03d5.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "You escape, barely. Your passport is revoked mid-flight. You are stranded in a Moscow airport for 40 days."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0103_narrator_voice_a306110d65.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "Russia grants you asylum — not out of kindness, but politics."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0105_narrator_voice_0bf3a1bd1c.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "You become a symbol, but an incomplete one. A person trapped between two superpowers."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0107_narrator_voice_6788bdfba3.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The truth is out there, some of it. But the cost is measured in a life lived in exile."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0109_narrator_voice_f143930b2f.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "You will never eat at your favorite diner again. Never see your family without a screen between you. The price of partial truth."
 
     call screen ending_screen(
-        title="// ENDING 2: THE FUGITIVE //",
+        title=t("// ENDING 2: THE FUGITIVE //"),
         color="#FFD700",
-        description="You leaked crucial files and escaped, but live in permanent exile. The truth reached the public, but gaps in your operational security meant some evidence was lost. The surveillance debate continues, but reform is slow.",
+        description=t("You leaked crucial files and escaped, but live in permanent exile. The truth reached the public, but gaps in your operational security meant some evidence was lost. The surveillance debate continues, but reform is slow."),
         lessons=[
             "VPNs encrypt your traffic, but they don't make you invisible. Your VPN provider can still see your activity — trust matters.",
             "Metadata (who you contacted, when, from where) can be as revealing as message content. Stripping metadata from files before sharing is essential.",
             "Digital security requires constant vigilance — one mistake can compromise months of careful planning."
-        ]
+        ],
+        bg_image="images/endings/fugitive.png"
     )
     if _return == "restart":
         jump start
@@ -134,29 +180,51 @@ label ending_imprisoned:
 
     show logo_watermark
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0137_narrator_voice_ec85050cf2.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "They were waiting for him at the airport."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0139_narrator_voice_540b4abcaf.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The moment your passport was scanned, the system flagged you. Every camera, every sensor, every algorithm turned its eye toward Gate 14."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0141_narrator_voice_87a93064d0.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "Men in dark suits. No badges. No names. Just a quiet walk to a windowless room."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0143_narrator_voice_afd37c1eb1.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The charges: espionage, theft of government property, violation of the Espionage Act of 1917."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0145_narrator_voice_58862349a7.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The trial is closed to the public. The evidence is classified. The verdict is predetermined."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0147_narrator_voice_8c733adaa6.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "In a federal supermax facility, you watch the news through a 4-inch window of reinforced glass. The surveillance programs continue unchanged."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0149_narrator_voice_1b352eea14.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The truth dies in a cell. And the machine keeps running."
 
     call screen ending_screen(
-        title="// ENDING 3: IMPRISONED //",
+        title=t("// ENDING 3: IMPRISONED //"),
         color="#FF2D55",
-        description="Your identity was exposed before you could escape. You were arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed.",
+        description=t("Your identity was exposed before you could escape. You were arrested, charged under the Espionage Act, and sentenced to decades in federal prison. The surveillance programs continued unchecked. Nothing changed."),
         lessons=[
             "IP tracking and digital forensics can identify you in minutes if you leave traces. Always use Tor and VPNs together on untrusted networks.",
             "The Espionage Act of 1917 doesn't distinguish between whistleblowers and spies — legal protections for digital whistleblowers remain weak.",
             "Physical security is as important as digital security. Cameras, keyloggers, and 'evil maid' attacks can bypass the strongest encryption."
-        ]
+        ],
+        bg_image="images/endings/imprissioned.png"
     )
     if _return == "restart":
         jump start
@@ -174,29 +242,51 @@ label ending_silenced:
 
     show logo_watermark
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0177_narrator_voice_132068f71e.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The internal monitoring system flagged your access patterns three weeks before you planned to act."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0179_narrator_voice_72bc1b56af.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "Unusual file access. After-hours logins. Queries that didn't match your assigned projects."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0181_narrator_voice_250b25329f.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "A quiet reassignment. Your clearance revoked overnight. Your workstation wiped."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0183_narrator_voice_5fbdee97e5.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "No arrest. No trial. No headlines. Just silence."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0185_narrator_voice_ca6ba452d0.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "You find yourself working IT support in a suburban Virginia office park. No access. No power. No story."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0187_narrator_voice_7e01c18a47.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The journalists wait for a contact that never comes. The documents remain locked in NSA servers."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0189_narrator_voice_a1a530c9af.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The greatest surveillance apparatus in history continues to grow, invisible and unchallenged."
 
     call screen ending_screen(
-        title="// ENDING 4: SILENCED //",
+        title=t("// ENDING 4: SILENCED //"),
         color="#FF2D55",
-        description="NSA internal monitors detected your suspicious behavior before you could act. Your clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret.",
+        description=t("NSA internal monitors detected your suspicious behavior before you could act. Your clearance was revoked, access terminated. The files never reached journalists. The programs continue in secret."),
         lessons=[
             "Network monitoring tools like intrusion detection systems (IDS) track access patterns. Unusual behavior triggers automated alerts.",
             "Insider threat programs use behavioral analytics to detect anomalies — accessing files outside your clearance level is immediately flagged.",
             "Firewalls work both ways: they keep threats out, but they also monitor what goes out. Data Loss Prevention (DLP) systems watch for unauthorized transfers."
-        ]
+        ],
+        bg_image="images/endings/silenced.png"
     )
     if _return == "restart":
         jump start
@@ -214,29 +304,51 @@ label ending_betrayed:
 
     show logo_watermark
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0217_narrator_voice_d9291690bf.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The journalist's email was compromised from the start."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0219_narrator_voice_4d6ea8bc9f.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "What you thought was a secure PGP channel was actually a honeypot — a man-in-the-middle operation run by the very agency you were trying to expose."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0221_narrator_voice_59ed008334.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "Every document you shared was intercepted. Every plan you made was monitored. Every ally you trusted was catalogued."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0223_narrator_voice_60535234d5.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "The co-worker who offered to help? An informant. The encrypted channel? Broken by a zero-day exploit."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0225_narrator_voice_715b6fcba8.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "You disappeared on a Tuesday morning. No announcement. No media coverage."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0227_narrator_voice_09854d3a44.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "Your apartment was cleaned out within 24 hours. Your digital footprint scrubbed from every server."
 
+    $ localized_voice = voice_for_current_language("audio/voice/en/endings_0229_narrator_voice_df310931cc.mp3")  # edge-tts-auto
+    if localized_voice:  # edge-tts-auto
+        voice localized_voice  # edge-tts-auto
     narrator_voice "It was as if you never existed at all."
 
     call screen ending_screen(
-        title="// ENDING 5: BETRAYED //",
+        title=t("// ENDING 5: BETRAYED //"),
         color="#FF2D55",
-        description="Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. You vanished without a trace.",
+        description=t("Everything collapsed. A trusted contact was an NSA informant. The encrypted channel was compromised. No leaks, no escape, no legacy. You vanished without a trace."),
         lessons=[
             "Man-in-the-middle attacks can compromise even encrypted channels if you don't verify the other party's identity through key fingerprints.",
             "Trust verification is critical — in cryptography, you must independently verify public keys through a separate channel, not just accept them.",
             "Zero-day exploits can break any system. Defense in depth (multiple layers of security) is the only way to mitigate unknown vulnerabilities."
-        ]
+        ],
+        bg_image="images/endings/betrayed.png"
     )
     if _return == "restart":
         jump start
@@ -261,11 +373,18 @@ transform slide_up_delay(d):
     pause d
     easein 1.0 alpha 1.0 yoffset 0
 
-screen ending_screen(title, color, description, lessons):
+screen ending_screen(title, color, description, lessons, bg_image=None):
     modal True
-    
+    on "show" action Play("sound", "audio/sfx/transition.wav")
     # ── Background Layer ──────────────────────────────────────────────
-    add "#080C10"
+    if bg_image:
+        add bg_image:
+            xsize 1920 ysize 1080
+            fit "cover"
+            align (0.5, 0.5)
+        add Solid("#080C1040") # ~25% opacity overlay so the background is very bright and clear
+    else:
+        add "#080C10"
     
     add Solid("#00FFD105")
     
@@ -300,13 +419,13 @@ screen ending_screen(title, color, description, lessons):
             vbox:
                 xalign 0.5
                 spacing 10
-                text "// MISSION COMPLETE //" color "#7A8A99" size 16 bold True font "DejaVuSans.ttf" xalign 0.5
-                text title:
+                text t("// MISSION COMPLETE //") color "#7A8A99" size 16 bold True font "fonts/DejaVuSans.ttf" xalign 0.5
+                text t(title):
                     color color
                     size 72
                     bold True
                     xalign 0.5
-                    font "DejaVuSans.ttf"
+                    font "fonts/DejaVuSans.ttf"
                     at terminal_glitch
                 frame:
                     xalign 0.5 xsize 400 ysize 2
@@ -314,9 +433,9 @@ screen ending_screen(title, color, description, lessons):
             
             # ── DESCRIPTION CARD ──
             frame:
-                xalign 0.5 xsize 1000
-                background "#0D1117F0"
-                padding (40, 30)
+                xalign 0.5 xsize 1190
+                background "#0D1117E6"
+                padding (50, 36)
                 at slide_up_delay(0.4)
                 
                 text description:
@@ -324,7 +443,7 @@ screen ending_screen(title, color, description, lessons):
                     size 24
                     text_align 0.5
                     line_spacing 6
-                    font "DejaVuSans.ttf"
+                    font "fonts/DejaVuSans.ttf"
             
             # ── METRICS & LOGS ──
             hbox:
@@ -333,17 +452,17 @@ screen ending_screen(title, color, description, lessons):
                 
                 # Left Side: Mission Metrics
                 frame:
-                    xsize 580 ysize 420
-                    background "#0D1117F0"
-                    padding (24, 20)
+                    xsize 580 ysize 440
+                    background "#0D1117E6"
+                    padding (30, 26)
                     at slide_up_delay(0.8)
                     
                     vbox:
                         spacing 15
                         hbox:
                             xfill True
-                            text "MISSION METRICS" color "#00FFD1" size 14 bold True font "DejaVuSans.ttf"
-                            text "[config.version]" color "#3A4A55" size 12 font "DejaVuSans.ttf" xalign 1.0
+                            text t("MISSION METRICS") color "#00FFD1" size 14 bold True font "fonts/DejaVuSans.ttf"
+                            text t("[config.version]") color "#3A4A55" size 12 font "fonts/DejaVuSans.ttf" xalign 1.0
                         
                         null height 10
                         
@@ -352,13 +471,13 @@ screen ending_screen(title, color, description, lessons):
                             spacing 4
                             hbox:
                                 xfill True
-                                text "OPERATIONAL KNOWLEDGE" color "#7A8A99" size 12 font "DejaVuSans.ttf"
-                                text "[knowledge_score]/10" color "#00FFD1" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("OPERATIONAL KNOWLEDGE") color "#7A8A99" size 12 font "fonts/DejaVuSans.ttf"
+                                text t("[knowledge_score]/10") color "#00FFD1" size 12 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
                             frame:
                                 xfill True ysize 8
                                 background "#1A2530"
                                 frame:
-                                    xsize int(532 * (knowledge_score / 10.0)) ysize 8
+                                    xsize int(520 * (knowledge_score / 10.0)) ysize 8
                                     background "#00FFD1"
                         
                         # Suspicion Bar (Inverted Color)
@@ -366,13 +485,13 @@ screen ending_screen(title, color, description, lessons):
                             spacing 4
                             hbox:
                                 xfill True
-                                text "NSA SUSPICION LEVEL" color "#7A8A99" size 12 font "DejaVuSans.ttf"
-                                text "[suspicion_level]/5" color "#FF2D55" size 12 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("NSA SUSPICION LEVEL") color "#7A8A99" size 12 font "fonts/DejaVuSans.ttf"
+                                text t("[suspicion_level]/5") color "#FF2D55" size 12 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
                             frame:
                                 xfill True ysize 8
                                 background "#1A2530"
                                 frame:
-                                    xsize int(532 * (suspicion_level / 5.0)) ysize 8
+                                    xsize int(520 * (suspicion_level / 5.0)) ysize 8
                                     background "#FF2D55"
 
                         null height 10
@@ -384,43 +503,43 @@ screen ending_screen(title, color, description, lessons):
                         # Toggle Stats
                         hbox:
                             xfill True
-                            text "IDENTITY STATUS:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("IDENTITY STATUS:") color "#7A8A99" size 14 font "fonts/DejaVuSans.ttf"
                             if identity_exposed:
-                                text "EXPOSED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("EXPOSED") color "#FF2D55" size 14 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
                             else:
-                                text "SECURE" color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("SECURE") color "#00FF88" size 14 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
                         
                         hbox:
                             xfill True
-                            text "EVIDENCE STATUS:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("EVIDENCE STATUS:") color "#7A8A99" size 14 font "fonts/DejaVuSans.ttf"
                             if evidence_secured:
-                                text "ENCRYPTED & SENT" color "#00FFD1" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("ENCRYPTED & SENT") color "#00FFD1" size 14 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
                             else:
-                                text "LOST/RECOVERED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("LOST/RECOVERED") color "#FF2D55" size 14 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
 
                         hbox:
                             xfill True
-                            text "ESCAPE ROUTE:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
+                            text t("ESCAPE ROUTE:") color "#7A8A99" size 14 font "fonts/DejaVuSans.ttf"
                             if escape_successful:
-                                text "SUCCESSFUL" color "#00FF88" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("SUCCESSFUL") color "#00FF88" size 14 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
                             else:
-                                text "COMPROMISED" color "#FF2D55" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                                text t("COMPROMISED") color "#FF2D55" size 14 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
 
                         hbox:
                             xfill True
-                            text "CONTACTS SECURED:" color "#7A8A99" size 14 font "DejaVuSans.ttf"
-                            text "[contacts_secured]" color "#FFD700" size 14 bold True xalign 1.0 font "DejaVuSans.ttf"
+                            text t("CONTACTS SECURED:") color "#7A8A99" size 14 font "fonts/DejaVuSans.ttf"
+                            text t("[contacts_secured]") color "#FFD700" size 14 bold True xalign 1.0 font "fonts/DejaVuSans.ttf"
 
                 # Right Side: Post-Mortem Analysis
                 frame:
-                    xsize 580 ysize 420
-                    background "#0D1117F0"
-                    padding (24, 20)
+                    xsize 580 ysize 440
+                    background "#0D1117E6"
+                    padding (30, 26)
                     at slide_up_delay(1.2)
                     
                     vbox:
                         spacing 15
-                        text "POST-MORTEM ANALYSIS" color "#FFD700" size 14 bold True font "DejaVuSans.ttf"
+                        text t("POST-MORTEM ANALYSIS") color "#FFD700" size 14 bold True font "fonts/DejaVuSans.ttf"
                         
                         null height 5
                         
@@ -433,8 +552,8 @@ screen ending_screen(title, color, description, lessons):
                                 for i, lesson in enumerate(lessons):
                                     hbox:
                                         spacing 12
-                                        text str(i+1) color "#FFD700" size 14 bold True font "DejaVuSans.ttf" xsize 20
-                                        text lesson color "#B8C8D8" size 14 font "DejaVuSans.ttf" line_spacing 4
+                                        text str(i+1) color "#FFD700" size 14 bold True font "fonts/DejaVuSans.ttf" xsize 20
+                                        text lesson color "#B8C8D8" size 14 font "fonts/DejaVuSans.ttf" line_spacing 4
 
             # ── ACTION BUTTONS ──
             hbox:
@@ -442,25 +561,25 @@ screen ending_screen(title, color, description, lessons):
                 spacing 60
                 at slide_up_delay(1.6)
                 
-                textbutton "> REBOOT SYSTEM (RESTART)":
+                textbutton t("> REBOOT SYSTEM (RESTART)"):
                     background "#1A2530"
                     hover_background "#00FFD1"
                     text_color "#00FFD1"
                     text_hover_color "#080C10"
-                    text_size 20
+                    text_size 23
                     text_bold True
-                    text_font "DejaVuSans.ttf"
+                    text_font "fonts/DejaVuSans.ttf"
                     padding (40, 16)
                     action [Return("restart")]
 
-                textbutton "> TERMINATE SESSION (EXIT)":
+                textbutton t("> TERMINATE SESSION (EXIT)"):
                     background "#251A20"
                     hover_background "#FF2D55"
                     text_color "#FF2D55"
                     text_hover_color "#FFFFFF"
-                    text_size 20
+                    text_size 23
                     text_bold True
-                    text_font "DejaVuSans.ttf"
+                    text_font "fonts/DejaVuSans.ttf"
                     padding (40, 16)
                     action MainMenu()
 
@@ -478,11 +597,95 @@ screen ending_screen(title, color, description, lessons):
 ## DEV SHORTCUT: ENDING SELECTOR
 ################################################################################
 
+label dev_prepare_minigame_state:
+    $ stop_ambient(0.3)
+    $ quick_menu = True
+    $ show_hud = False
+    $ trust_score = 0
+    $ knowledge_score = 0
+    $ suspicion_level = 0
+    $ contacts_secured = 0
+    $ evidence_secured = False
+    $ identity_exposed = False
+    $ escape_successful = False
+    $ mg_firewall_score = 0
+    $ mg_decrypt_solved = False
+    $ mg_opsec_score = 0
+    $ mg_trace_solved = False
+    return
+
+label dev_minigame_selector:
+    scene black with dissolve
+
+    menu:
+        "Minigame 1: Firewall Breach":
+            jump dev_launch_minigame_1
+
+        "Minigame 2: Decrypt the Message":
+            jump dev_launch_minigame_2
+
+        "Minigame 3: Brute Force":
+            jump dev_launch_minigame_3
+
+        "Minigame 4: Cover Your Tracks":
+            jump dev_launch_minigame_4
+
+        "Back to developer menu":
+            jump dev_ending_selector
+
+        "Cancel":
+            return
+
+label dev_launch_minigame_1:
+    call dev_prepare_minigame_state
+    window hide
+    $ mg_intro = renpy.call_screen("minigame_briefing", challenge_title="FIREWALL BREACH", subtitle="Eight packets. Eight decisions.\nOne wrong call exposes the network.", mission_id="OPS-01-01-2013", classification="TOP SECRET // SCI", challenge_type="NETWORK SECURITY", estimated_time="60-90 SECONDS", difficulty=2, difficulty_label="ANALYST", succeed_reward="knowledge_score +2", fail_penalty="suspicion_level +1", learn_concept="Firewalls filter traffic using ports,\nIP addresses, and protocol rules.", briefing_text="You are monitoring the NSA firewall.\nIncoming data packets are attempting to enter the network.\n\nEach packet shows three pieces of information:\n  WHERE it is coming from  (IP address)\n  Which DOOR it is using   (Port number)\n  What TYPE of data it is  (Protocol)\n\nYour job: decide ALLOW or BLOCK for each packet.", controls=[("ALLOW", "Permit the packet through"),("BLOCK", "Reject the packet")])
+
+    if mg_intro:
+        $ quick_menu = False
+        $ show_hud = False
+        $ mg_firewall_score = renpy.call_screen("minigame_firewall")
+        $ quick_menu = True
+        $ show_hud = False
+
+        if mg_firewall_score == "SKIP":
+            jump dev_minigame_selector
+        elif mg_firewall_score >= 6:
+            $ knowledge_score += 2
+            call screen minigame_result(True, "FIREWALL BREACH", "Developer launch complete. Strong packet filtering and protocol analysis.")
+        else:
+            $ suspicion_level += 1
+            call screen minigame_result(False, "FIREWALL BREACH", "Developer launch complete. The network stayed exposed to suspicious traffic.")
+    jump dev_minigame_selector
+
+label dev_launch_minigame_2:
+    call dev_prepare_minigame_state
+    call minigame_2_decrypt
+    jump dev_minigame_selector
+
+label dev_launch_minigame_3:
+    call dev_prepare_minigame_state
+    window hide
+    $ mg_intro3 = renpy.call_screen("minigame_briefing", challenge_title="BRUTE FORCE", subtitle="Passwords are only as strong as their entropy.\nTime to crack the hashes.", mission_id="OPS-03-09-2013", classification="TOP SECRET // EYES ONLY", challenge_type="CRYPTANALYSIS", estimated_time="120 SECONDS", difficulty=3, difficulty_label="OPERATIVE", succeed_reward="access_granted +1", fail_penalty="suspicion_level +1", learn_concept="Dictionary attacks and rule-based mutations\ncan break weak passwords instantly.", briefing_text="You intercepted an NSA internal system hash.\nYour task is to work through the terminal like a real operator, not just fire one command.\n\nRound 1: inspect the file, then run a basic dictionary attack.\nRound 2: inspect John's rules, then add the right mutation rules.\nRound 3: identify the hash type, then prove bcrypt plus a strong password is too slow to crack.\n\nRead each objective, type the command, press Enter to execute it, and use TAB only to complete the current token when you already know what comes next.", controls=[("BACKSPACE", "Delete typed text"),("TAB", "Complete current token"),("ENTER", "Execute operation")])
+    if mg_intro3:
+        call minigame_3_brute_force
+    jump dev_minigame_selector
+
+label dev_launch_minigame_4:
+    call dev_prepare_minigame_state
+    window hide
+    $ mg_intro4 = renpy.call_screen("minigame_briefing", challenge_title="COVER YOUR TRACKS", subtitle="NSA forensics are knocking. Destroy the evidence.", mission_id="OPS-04-10-2013", classification="TOP SECRET // BLACK", challenge_type="DIGITAL FORENSICS", estimated_time="90 SECONDS", difficulty=4, difficulty_label="EXPERT", succeed_reward="escape_secured = True", fail_penalty="evidence_compromised = True", learn_concept="Secure deletion requires overwriting data,\nnot just deleting file pointers.", briefing_text="NSA forensic agents are knocking on the hotel door.\nYou have 90 seconds to wipe your digital footprints from the laptop before they image your hard drive.\n\nEach trace uses one of three modes:\n1. GUIDED: study the pre-filled command and execute it.\n2. ASSEMBLY: click tokens in the correct order to build the command.\n3. SELECT: choose the safest command from the list.\n\nHints and mistakes can add time pressure, so move quickly and wipe all 8 traces.", controls=[("CLICK", "Pick tokens or command options"),("ENTER", "Execute operation"),("HINT", "Get help for a 5s penalty")])
+    if mg_intro4:
+        call minigame_4_cover_tracks
+    jump dev_minigame_selector
+
 label dev_ending_selector:
     scene black with dissolve
     
     menu:
-        "Select Ending to View (Dev Tool):"
+        "Minigames (choose 1 of 4)":
+            jump dev_minigame_selector
+
         "Ending 1: The Hero":
             # Set minimum requirements for the UI breakdown to not look weird
             $ knowledge_score = 10
@@ -540,3 +743,6 @@ label dev_ending_selector:
 screen secret_ending_shortcut():
     key "shift_K_0" action Jump("dev_ending_selector")
     key "shift_0" action Jump("dev_ending_selector")
+    key "shift_K_9" action Jump("dev_minigame_selector")
+    key "shift_9" action Jump("dev_minigame_selector")
+
