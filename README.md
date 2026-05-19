@@ -1,6 +1,6 @@
 # SNOWDEN VISUAL NOVEL
 
-# Game Website Link: https://noah-weckx.github.io/Enemy_Of_The_State_Web/
+## Game Website Link: https://noah-weckx.github.io/Enemy_Of_The_State_Web/
 
 ## `TOP SECRET // EDUCATIONAL // INTERACTIVE`
 
